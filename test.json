@@ -1,20 +1,5 @@
-[
-    {
-      "LineTotal": 8.61,
-      "Product": "Daffodil",
-      "Quantity": 7,
-      "UnitPrice": 1.23
-    },
-    {
-      "LineTotal": 11.75,
-      "Product": "Sunflower",
-      "Quantity": 5,
-      "UnitPrice": 2.35
-    },
-    {
-      "LineTotal": 19.25,
-      "Product": "Bluebell",
-      "Quantity": 11,
-      "UnitPrice": 1.75
-    }
-]
+{
+	"NameOfGeneralContractor": "JTTC",
+	"AddressOfGeneralContractor": "1010 Northern Blvd, Great Neck, NY 11021",
+	"GeneralContractNum": "A-37139"
+}
