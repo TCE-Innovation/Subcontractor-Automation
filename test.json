@@ -1,5 +1,6 @@
 {
 	"NameOfGeneralContractor": "JTTC",
 	"AddressOfGeneralContractor": "1010 Northern Blvd, Great Neck, NY 11021",
-	"GeneralContractNum": "A-37139"
+	"GeneralContractNum": "A-37139",
+	"ContractIsFederallyFunded": "Yes"
 }
