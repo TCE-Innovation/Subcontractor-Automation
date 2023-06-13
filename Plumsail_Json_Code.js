@@ -34,7 +34,7 @@
 fd.rendered(function () {
     
     async function externalFile() {
-    const data = get('https://kyleh2420.github.io/test.json');
+    const data = $.get('https://kyleh2420.github.io/test.json');
     return data;
 }
 
