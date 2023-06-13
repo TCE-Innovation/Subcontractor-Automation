@@ -56,8 +56,10 @@ fd.rendered(function () {
         fd.field('GeneralContractNum').value = data.GeneralContractNum;
         fd.field('ContractIsFederallyFunded').value = data.ContractIsFederallyFunded; */
 
-        const {NameOfGeneralContractor, AddressOfGeneralContractor, GeneralContractNum, ContractIsFederallyFunded} = data
-        
+        //const {GeneralInformation, AddressOfGeneralContractor, GeneralContractNum, ContractIsFederallyFunded} = data
+        const {GCName, GCAddress} = {GCName: data.map(a => a.GeneralContracotr), GCAddress: data.map(a => a.GCAddress)}
+        fd.field('NameOfGeneralContractor').value = GCName;
+        fd.field('AddressOfGeneralContractor').value = GCAddress;
 })
     }
     

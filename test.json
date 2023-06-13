@@ -1,6 +1,11 @@
 {
-	"NameOfGeneralContractor": "JTTC",
-	"AddressOfGeneralContractor": "1010 Northern Blvd, Great Neck, NY 11021",
-	"GeneralContractNum": "A-37139",
-	"ContractIsFederallyFunded": "Yes"
+	"General Information": {
+		"General Contractor": "JTTC",
+		"GCAddress": "1010 Northern Blvd, Great Neck, NY 11021",
+		"ContractNo": "A-37139",
+		"FederallyFunded": "Yes"
+	},
+	"SQS": {
+		"ProposedSub": "IEEE Inc."
+	}
 }
