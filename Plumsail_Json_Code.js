@@ -51,10 +51,12 @@ fd.rendered(function () {
         */
         externalFile().then(function(data){
         console.log("Running Code");
-        fd.field('NameOfGeneralContractor').value = data.NameOfGeneralContractor;
+        /*fd.field('NameOfGeneralContractor').value = data.NameOfGeneralContractor;
         fd.field('AddressOfGeneralContractor').value = data.AddressOfGeneralContractor;
         fd.field('GeneralContractNum').value = data.GeneralContractNum;
-        fd.field('ContractIsFederallyFunded').value = data.ContractIsFederallyFunded;
+        fd.field('ContractIsFederallyFunded').value = data.ContractIsFederallyFunded; */
+
+        const {NameOfGeneralContractor, AddressOfGeneralContractor, GeneralContractNum, ContractIsFederallyFunded} = data
         
 })
     }
