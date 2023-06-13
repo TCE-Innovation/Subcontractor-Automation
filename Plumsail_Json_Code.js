@@ -32,7 +32,6 @@
 
 
 fd.rendered(function () {
-    
     async function externalFile() {
     const data = $.get('https://kyleh2420.github.io/test.json');
     return data;
@@ -40,12 +39,10 @@ fd.rendered(function () {
 
     // The function populates FullName with values from FirstName and LastName
     function autoPopulateGenContractor() {
-        /*
         fd.field('NameOfGeneralContractor').value = "JTTC";
         fd.field('AddressOfGeneralContractor').value = "1010 Northern Blvd, Great Neck, NY 11021";
         fd.field('GeneralContractNum').value = "A-37139";
-        
-        */
+        /*
         externalFile().then(function(data){
         console.log("Running Code");
         fd.field('NameOfGeneralContractor').value = data.NameOfGeneralContractor;
@@ -53,7 +50,7 @@ fd.rendered(function () {
         fd.field('GeneralContractNum').value = data.GeneralContractNum;
         fd.field('ContractIsFederallyFunded').value = data.ContractIsFederallyFunded;
         
-})
+})*/
     }
     
     function showHideQ3() {
