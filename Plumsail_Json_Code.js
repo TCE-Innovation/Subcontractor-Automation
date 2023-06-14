@@ -58,7 +58,23 @@ fd.rendered(function () {
 
         //const {GeneralInformation, AddressOfGeneralContractor, GeneralContractNum, ContractIsFederallyFunded} = data
         //const {GCName, GCAddress} = {GCName: data.map(a => a.GeneralContractor), GCAddress: data.map(a => a.GCAddress)}
+        //Attempting to do nested Object Deconstruction
         const {GeneralInformation: GI, SQS: Form1} = data;
+        console.log(GI);
+        console.log(SQS);
+
+        const{
+            GeneralInformation: {
+                GeneralContractor: GC,
+                GCAddress: GCAddy,
+                ContractNo:CNo,
+            },
+        } = data;
+
+        console.log("----------------------");
+        console.log(GC);
+        console.log(GCAddy);
+        console.log(CNo);
         fd.field('NameOfGeneralContractor').value = GI.generalContractor;
         fd.field('AddressOfGeneralContractor').value = GI.GCAddress;
 })
