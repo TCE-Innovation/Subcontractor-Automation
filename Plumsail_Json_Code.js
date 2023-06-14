@@ -155,26 +155,15 @@ function autoPopulateGenInfo() {
 
 function showHideQ3() {
     if (fd.field('CorpOrCoPartner').value === 'Corporation'){
-        fd.field('IncorporationDate').hidden = true;
-        fd.field('PresidentsName').hidden = true;
-        fd.field('VicePresidentsName').hidden = true;
-        fd.field('SecretarysName').hidden = true;
-        fd.field('TreasurersName').hidden = true;
-        
-        fd.field('DateOfOrganization').hidden = false;
-        fd.field('CountyClerk').hidden = false;
-        fd.field('Partners').hidden = false;
-    } else /*if (fd.field('CorpOrCoPartner').value === 'Co-partnership')*/ {
-        fd.field('IncorporationDate').hidden = false;
-        fd.field('PresidentsName').hidden = false;
-        fd.field('VicePresidentsName').hidden = false;
-        fd.field('SecretarysName').hidden = false;
-        fd.field('TreasurersName').hidden = false;
-        
-        fd.field('DateOfOrganization').hidden = true;
-        fd.field('CountyClerk').hidden = true;
-        fd.field('Partners').hidden = true;
-    } 
+        $('.SQSCorporation').attr('style', 'display:block;');
+        $('.SQSCoPartnership').attr('style', 'display:none;');
+    } else if (fd.field('CorpOrCoPartner').value === 'Co-partnership') {
+        $('.SQSCorporation').attr('style', 'display:none;');
+        $('.SQSCoPartnership').attr('style', 'display:block;');
+    } else {
+        $('.SQSCorporation').attr('style', 'display:none;');
+        $('.SQSCoPartnership').attr('style', 'display:none;');
+    }
 }
 
 function toggleScheduleB1() {
