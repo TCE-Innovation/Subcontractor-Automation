@@ -49,11 +49,11 @@ fd.rendered(function () {
     
     //Functions that run initially
     autoPopulateGenInfo();
-    showHideQ3();
+    toggleSQS();
     
 
     //Items that change on action
-    fd.field('CorpOrCoPartner').$on('change',showHideQ3);
+    fd.field('CorpOrCoPartner').$on('change',toggleSQS);
     fd.field('B1Question').$on('change', toggleScheduleB1);
 });
 
@@ -153,7 +153,7 @@ function autoPopulateGenInfo() {
     })
 }
 
-function showHideQ3() {
+function toggleSQS() {
     if (fd.field('CorpOrCoPartner').value === 'Corporation'){
         $('.SQSCorporation').attr('style', 'display:block;');
         $('.SQSCoPartnership').attr('style', 'display:none;');
@@ -167,12 +167,17 @@ function showHideQ3() {
 }
 
 function toggleScheduleB1() {
-    console.log("Trying to enable B1")
     if(fd.field('B1Question').value === 'I need to fill out Schedule B1'){
-        console.log("Trying to show the class")
         $('.ScheduleB1Class').attr('style', 'display:block;');
     } else{
-        console.log("Trying to block the class");
         $('.ScheduleB1Class').attr('style','display:none;');
+    }
+}
+
+function toggleF3Material() {
+    if(fd.field('ScheduleF3Q3').value === 'b. Material Change') {
+        $('.ScheduleF3MaterialChange').attr('style', 'display:block;');
+    } else{
+        $('.ScheduleF3MaterialChange').attr('style','display:none;');
     }
 }
