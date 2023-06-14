@@ -178,7 +178,10 @@ function showHideQ3() {
 }
 
 function toggleScheduleB1() {
+    console.log("Trying to enable B1")
     if(fd.field('B1Question').value === 'I need to fill out Schedule B1'){
         $('ScheduleB1Class').attr('style', 'display:block;');
+    } else{
+        $('.class-to-hide').attr('style','display:none;');
     }
 }
