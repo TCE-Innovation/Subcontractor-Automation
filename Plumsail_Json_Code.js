@@ -61,7 +61,8 @@ fd.rendered(function () {
         //Attempting to do nested Object Deconstruction
         const {GeneralInformation: GI, SQS: Form1} = data;
         console.log(GI);
-        //console.log(SQS);
+        console.log(Form1);
+        console.log(GI.GeneralContractor);
 
         const{
             GeneralInformation: {
