@@ -41,44 +41,61 @@ fd.rendered(function () {
 }
 
     // The function populates FullName with values from FirstName and LastName
-    function autoPopulateGenContractor() {
+    function autoPopulateGenInfo() {
 
         /*
         fd.field('NameOfGeneralContractor').value = "JTTC";
         fd.field('AddressOfGeneralContractor').value = "1010 Northern Blvd, Great Neck, NY 11021";
         fd.field('GeneralContractNum').value = "A-37139";
-        
         */
+
         externalFile().then(function(data){
-        console.log("Running Code");
-        /*fd.field('NameOfGeneralContractor').value = data.NameOfGeneralContractor;
-        fd.field('AddressOfGeneralContractor').value = data.AddressOfGeneralContractor;
-        fd.field('GeneralContractNum').value = data.GeneralContractNum;
-        fd.field('ContractIsFederallyFunded').value = data.ContractIsFederallyFunded; */
-
-        //const {GeneralInformation, AddressOfGeneralContractor, GeneralContractNum, ContractIsFederallyFunded} = data
-        //const {GCName, GCAddress} = {GCName: data.map(a => a.GeneralContractor), GCAddress: data.map(a => a.GCAddress)}
-        //Attempting to do nested Object Deconstruction
-        const {GeneralInformation: GI, SQS: Form1} = data;
-        console.log(GI);
-        console.log(Form1);
-        console.log(GI.GeneralContractor);
-
-        const{
-            GeneralInformation: {
-                GeneralContractor: GC,
-                GCAddress: GCAddy,
-                ContractNo:CNo,
-            },
-        } = data;
-
-        console.log("----------------------");
-        console.log(GC);
-        console.log(GCAddy);
-        console.log(CNo);
-        fd.field('NameOfGeneralContractor').value = GI.generalContractor;
-        fd.field('AddressOfGeneralContractor').value = GI.GCAddress;
-})
+            console.log("Running Code");
+            /*
+                The following shows two ways of object deconstruction of multiple objects and subarrays
+                Say we are given the following JSON file in "data"
+                            {
+                                "GeneralInformation": {
+                                    "GeneralContractor": "JTTC",
+                                    "GCAddress": "1010 Northern Blvd, Great Neck, NY 11021",
+                                    "ContractNo": "A-37139",
+                                    "FederallyFunded": "Yes"
+                                },
+                                "SQS": {
+                                    "ProposedSub": "IEEE Inc.",
+                                    "Business Address": "600 Circle Road, Stony Brook, NY 11790",
+                                    "CorpOrCoPartner": "Corporation"
+                                }
+                            }
+                We can extract the objects "GeneralInformation" and "SQS" as its own objects like below. 
+                It will then be available for reference as "GeneralInformation" and "SQS"
+                            const {GeneralInformation, SQS} = data;
+                                Use: GeneralInformation.GeneralContractor
+                
+                You can do the same, but rename the variables that would be referenced.
+                The following will now be available for reference as "GI" or "Form1"
+                            const {GeneralInformation: GI, SQS: Form1} = data;
+                                Use: GI.GeneralContractor
+                
+                Alternatively, you could deconstruct a specific object in the code, such as by isolating "GeneralInformation".
+                Thus, you will be able to use the variables "GC", "GCAddy", "CNo" in your code
+                            const{
+                                GeneralInformation: {
+                                    GeneralContractor: GC,
+                                    GCAddress: GCAddy,
+                                    ContractNo:CNo,
+                                },
+                            } = data;
+            */
+            const {GeneralInformation: GI} = data;
+            console.log(GI);
+            console.log(GI.GeneralContractor);
+            
+            fd.field('GCName').value = GI.GeneralContractor;
+            fd.field('GCAddress').value = GI.GCAddress;
+            fd.field('ContractNo').value = GI.ContractNo;
+            fd.field('FederallyFunded').value = GI.FederallyFunded;
+        })
     }
     
     function showHideQ3() {
@@ -106,8 +123,8 @@ fd.rendered(function () {
     }
     
 
-    // Populate FullName when the form is rendered
-    autoPopulateGenContractor();
+    //Autopopulate fields with general information
+    autoPopulateGenInfo();
     //showHideQ3();
     
     //On Field change
