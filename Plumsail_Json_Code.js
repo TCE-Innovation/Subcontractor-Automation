@@ -57,9 +57,10 @@ fd.rendered(function () {
         fd.field('ContractIsFederallyFunded').value = data.ContractIsFederallyFunded; */
 
         //const {GeneralInformation, AddressOfGeneralContractor, GeneralContractNum, ContractIsFederallyFunded} = data
-        const {GCName, GCAddress} = {GCName: data.map(a => a.GeneralContractor), GCAddress: data.map(a => a.GCAddress)}
-        fd.field('NameOfGeneralContractor').value = GCName;
-        fd.field('AddressOfGeneralContractor').value = GCAddress;
+        //const {GCName, GCAddress} = {GCName: data.map(a => a.GeneralContractor), GCAddress: data.map(a => a.GCAddress)}
+        const {GeneralInformation: GI, SQS: Form1} = data;
+        fd.field('NameOfGeneralContractor').value = GI.generalContractor;
+        fd.field('AddressOfGeneralContractor').value = GI.GCAddress;
 })
     }
     
