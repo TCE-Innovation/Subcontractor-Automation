@@ -49,7 +49,7 @@ fd.rendered(function () {
     
     //Functions that run initially
     autoPopulateGenInfo();
-    //showHideQ3();
+    showHideQ3();
     
 
     //Items that change on action
