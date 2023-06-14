@@ -46,10 +46,7 @@ document.getElementsByTagName('head')[0].appendChild(script);
 //  EXAMPLE 1: The code is executed right after rendering the form 
 // ================================================================
 fd.rendered(function () {
-    async function externalFile() {
-    const data = $.get('https://kyleh2420.github.io/test.json');
-    return data;
-}
+    
     //Functions that run initially
     autoPopulateGenInfo();
     //showHideQ3();
@@ -88,6 +85,11 @@ fd.saved(function (result) {
 /*
     The following are user defined functions - functions that help with the functionality of the page
 */
+async function externalFile() {
+    const data = $.get('https://kyleh2420.github.io/test.json');
+    return data;
+}
+
 function autoPopulateGenInfo() {
 
     //A Manual approach to populating fields
