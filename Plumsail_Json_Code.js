@@ -175,9 +175,12 @@ function toggleScheduleB1() {
 }
 
 function toggleF3Material() {
+    console.log("F3 toggle");
     if(fd.field('ScheduleF3Q3').value === 'b. Material Change') {
         $('.ScheduleF3MaterialChange').attr('style', 'display:block;');
+        console.log("F3 shown (Attempt)");
     } else{
         $('.ScheduleF3MaterialChange').attr('style','display:none;');
+        console.log("F3 Hidden (Attempt)");
     }
 }
