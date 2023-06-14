@@ -55,7 +55,7 @@ fd.rendered(function () {
     //Items that change on action
     fd.field('CorpOrCoPartner').$on('change',toggleSQS);
     fd.field('B1Question').$on('change', toggleScheduleB1);
-    fd.field('ScheduleF3Q3').$on('change', toggleF3Material)
+    fd.field('ScheduleF3Q3').$on('change', toggleF3Material);
 });
 
 /*
