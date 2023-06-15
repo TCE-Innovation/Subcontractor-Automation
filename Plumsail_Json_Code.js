@@ -177,6 +177,12 @@ function toggleFields() {
         $('.SQSCorporation').attr('style', 'display:none;');
         $('.SQSCoPartnership').attr('style', 'display:none;');
     }
+    //Toggles Schedule F, Form F
+    if (fd.field('F3NA').value === 'Not Applicable'){
+        $('.ScheduleFFormF3').attr('style', 'display:block;');
+    }else {
+        $('.ScheduleFFormF3').attr('style', 'display:none;');
+    }
 
     //Toggles Schedule B
     if(fd.field('ScheduleBQuestion').value === 'I need to fill out schedule B'){
