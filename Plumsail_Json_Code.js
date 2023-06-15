@@ -48,7 +48,7 @@ document.getElementsByTagName('head')[0].appendChild(script);
 fd.rendered(function () {
     
     //Functions that run initially
-    autoPopulateGenInfo();
+    //autoPopulateGenInfo();
     toggleFields();
     
 
