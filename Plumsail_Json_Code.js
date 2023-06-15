@@ -141,6 +141,7 @@ function autoPopulateGenInfo() {
         console.log(GI);
         Object.keys(GI).forEach(el => {
             console.log(el);
+            console.log(GI.el);
         });
 /*
         Object.keys(GI).forEach().forEach(el => {
