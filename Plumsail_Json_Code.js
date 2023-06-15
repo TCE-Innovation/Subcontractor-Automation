@@ -166,6 +166,8 @@ function autoPopulateGenInfo() {
 */
 
 function toggleFields() {
+    console.log("Toggling Fields");
+
     //Toggles the SQS Form
     if (fd.field('CorpOrCoPartner').value === 'Corporation'){
         $('.SQSCorporation').attr('style', 'display:block;');
@@ -177,10 +179,11 @@ function toggleFields() {
         $('.SQSCorporation').attr('style', 'display:none;');
         $('.SQSCoPartnership').attr('style', 'display:none;');
     }
+
     //Toggles Schedule F, Form F
     if (fd.field('F3NA').value === 'Not Applicable'){
         $('.ScheduleFFormF3').attr('style', 'display:block;');
-    }else {
+    } else {
         $('.ScheduleFFormF3').attr('style', 'display:none;');
     }
 
