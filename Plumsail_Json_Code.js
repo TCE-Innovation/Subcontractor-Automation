@@ -56,6 +56,7 @@ fd.rendered(function () {
     fd.field('CorpOrCoPartner').$on('change',toggleFields);
     fd.field('B1Question').$on('change', toggleFields);
     fd.field('ScheduleF3Q3').$on('change', toggleFields);
+    fd.field('ScheduleBQuestion').$on('change', toggleFields);
 });
 
 /*
@@ -139,7 +140,6 @@ function autoPopulateGenInfo() {
         */
         //const {GeneralInformation: GI} = data;
         //console.log(GI);
-        //console.log(JSON.parse(data));
         Object.entries(data).forEach(el => {
             const [elKey, elValue] = el;
             try{
@@ -178,6 +178,12 @@ function toggleFields() {
         $('.SQSCoPartnership').attr('style', 'display:none;');
     }
 
+    //Toggles Schedule B
+    if(fd.field('ScheduleBQuestion').value === 'I need to fill out schedule B'){
+        $('.ScheduleBClass').attr('style', 'display:block;');
+    } else{
+        $('.ScheduleBClass').attr('style','display:none;');
+    }
 
     //Toggles Schedule B1
     if(fd.field('B1Question').value === 'I need to fill out Schedule B1'){
