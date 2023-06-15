@@ -146,7 +146,7 @@ function autoPopulateGenInfo() {
                 fd.field(elKey).value = JSON.parse(data);
             }
             catch(err) {
-                console.log("Failed Autofill " + el);
+                console.log("Failed Autofill Key: " + elKey + ". Value: "+ elValue);
             }
             
         });
