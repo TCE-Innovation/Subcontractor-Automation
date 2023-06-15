@@ -48,7 +48,7 @@ document.getElementsByTagName('head')[0].appendChild(script);
 fd.rendered(function () {
     
     //Functions that run initially
-    //autoPopulateGenInfo();
+    autoPopulateGenInfo();
     toggleFields();
     
 
@@ -158,7 +158,11 @@ function autoPopulateGenInfo() {
         */
     })
 }
+/*
+    This function will toggle all the disappearing/conditional fields and update every them every time 
+    it is called. When called, it will attempt to hide/show fields that correspond to the css class.
 
+*/
 
 function toggleFields() {
     //Toggles the SQS Form
@@ -182,7 +186,6 @@ function toggleFields() {
     }
 
     //Toggles F3 Materials List
-    console.log("F3 toggle");
     if(fd.field('ScheduleF3Q3').value === 'b. Material Change') {
         $('.ScheduleF3MaterialChange').attr('style', 'display:block;');
         console.log("F3 shown (Attempt)");
