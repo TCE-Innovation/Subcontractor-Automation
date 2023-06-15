@@ -57,6 +57,7 @@ fd.rendered(function () {
     fd.field('B1Question').$on('change', toggleFields);
     fd.field('ScheduleF3Q3').$on('change', toggleFields);
     fd.field('ScheduleBQuestion').$on('change', toggleFields);
+    fd.field('F3NA').$on('change', toggleFields);
 });
 
 /*
@@ -182,9 +183,9 @@ function toggleFields() {
 
     //Toggles Schedule F, Form F
     if (fd.field('F3NA').value === 'Not Applicable'){
-        $('.ScheduleFFormF3').attr('style', 'display:block;');
-    } else {
         $('.ScheduleFFormF3').attr('style', 'display:none;');
+    } else {
+        $('.ScheduleFFormF3').attr('style', 'display:block;');
     }
 
     //Toggles Schedule B
