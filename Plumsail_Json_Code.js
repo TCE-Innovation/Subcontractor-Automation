@@ -140,24 +140,16 @@ function autoPopulateGenInfo() {
         const {GeneralInformation: GI} = data;
         console.log(GI);
         Object.entries(GI).forEach(el => {
-            console.log(el);
             const [elKey, elValue] = el;
-            console.log("Attempting fd.field(" + elKey + ").value = " + elValue);
-            fd.field(elKey).value = elValue;
+            try{
+                fd.field(elKey).value = elValue;
+            }
+            catch(err) {
+                console.log("Failed Autofill fd.field(" + elKey + ").value = " + elValue);
+            }
             
         });
-/*
-        Object.keys(GI).forEach().forEach(el => {
-            console.log(GI.el);
-            fd.field(el).value = GI.el;
-        });
-
-        fd.fields().forEach( el => {
-            // access data -> title and value
-            console.log(el.title);
-            console.log(el.value);
-        });
-        
+/*   
         fd.field('GCName').value = GI.GeneralContractor;
         fd.field('GCAddress').value = GI.GCAddress;
         fd.field('ContractNo').value = GI.ContractNo;
