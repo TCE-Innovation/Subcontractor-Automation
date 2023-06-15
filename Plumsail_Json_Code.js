@@ -139,7 +139,7 @@ function autoPopulateGenInfo() {
         */
         //const {GeneralInformation: GI} = data;
         //console.log(GI);
-        console.log(JSON.parse(data));
+        //console.log(JSON.parse(data));
         Object.entries(data).forEach(el => {
             const [elKey, elValue] = el;
             try{
