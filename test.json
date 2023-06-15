@@ -1,10 +1,6 @@
 {
 	"GeneralInformation": {
-		"GeneralContractor": "JTTC",
-		"GCFields": [
-			"NameOfGeneralContractor",
-			"PrimeContractor"
-		],
+		"GCName": "JTTC",
 		"GCAddress": "1010 Northern Blvd, Great Neck, NY 11021",
 		"ContractNo": "A-37139",
 		"FederallyFunded": "Yes"
