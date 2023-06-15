@@ -140,8 +140,10 @@ function autoPopulateGenInfo() {
         const {GeneralInformation: GI} = data;
         console.log(GI);
         Object.entries(GI).forEach(el => {
+            console.log(el);
             const [elKey, elValue] = el;
             fd.field(elKey).value = elValue;
+            console.log("Attempting fd.field(" + elKey + ").value = " + elValue);
         });
 /*
         Object.keys(GI).forEach().forEach(el => {
