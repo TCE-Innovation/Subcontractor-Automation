@@ -137,15 +137,16 @@ function autoPopulateGenInfo() {
                             },
                         } = data;
         */
-        const {GeneralInformation: GI} = data;
-        console.log(GI);
-        Object.entries(GI).forEach(el => {
+        //const {GeneralInformation: GI} = data;
+        //console.log(GI);
+        Object.entries(data).forEach(el => {
             const [elKey, elValue] = el;
             try{
-                fd.field(elKey).value = elValue;
+                //fd.field(elKey).value = elValue;
+                fd.field(elKey).value = JSON.parse(data);
             }
             catch(err) {
-                console.log("Failed Autofill fd.field(" + elKey + ").value = " + elValue);
+                console.log("Failed Autofill " + el);
             }
             
         });
