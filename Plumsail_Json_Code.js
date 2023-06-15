@@ -101,7 +101,6 @@ function autoPopulateGenInfo() {
     */
 
     externalFile().then(function(data){
-        console.log("Running Code");
         /*
             The following shows two ways of object deconstruction of multiple objects and subarrays
             Say we are given the following JSON file in "data"
@@ -140,8 +139,13 @@ function autoPopulateGenInfo() {
         */
         const {GeneralInformation: GI} = data;
         console.log(GI);
-        console.log(GI.GeneralContractor);
-        fd.fields().forEach( el => function(el) {
+
+        GI.forEach().forEach(el => {
+            console.log(GI.el);
+            fd.field(el).value = GI.el;
+        });
+/*
+        fd.fields().forEach( el => {
             // access data -> title and value
             console.log(el.title);
             console.log(el.value);
@@ -151,6 +155,7 @@ function autoPopulateGenInfo() {
         fd.field('GCAddress').value = GI.GCAddress;
         fd.field('ContractNo').value = GI.ContractNo;
         fd.field('FederallyFunded').value = GI.FederallyFunded;
+        */
     })
 }
 
