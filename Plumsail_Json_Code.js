@@ -139,11 +139,12 @@ function autoPopulateGenInfo() {
         */
         //const {GeneralInformation: GI} = data;
         //console.log(GI);
+        console.log(JSON.parse(data));
         Object.entries(data).forEach(el => {
             const [elKey, elValue] = el;
             try{
-                //fd.field(elKey).value = elValue;
-                fd.field(elKey).value = JSON.parse(data);
+                fd.field(elKey).value = elValue;
+                //fd.field(elKey).value = JSON.parse(data);
             }
             catch(err) {
                 console.log("Failed Autofill Key: " + elKey + ". Value: "+ elValue);
