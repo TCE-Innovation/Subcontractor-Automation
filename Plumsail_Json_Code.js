@@ -141,28 +141,26 @@ function autoPopulateGenInfo() {
         */
 
 /*
-This bit of code controls the autofill behavior. 
+This bit of code controls the autofill behavior. First, we will look for an arry in the JSON
+called "EditableItems". This indicates the autofilled items that should be editable. Otherwise, autofilled items
+are not editable. Anything not mentioned is not named".
 */
         try{const {EditableItems: editable} = data;}
         catch(err) {
             console.log("There is nothing editable in this document");
             EditableItems = [];
         }
+//Any un-autofilled code should be editable. Thus, we reset before disabling.
+        fd.fields().forEach(el => {
+            fd.field(el.internalName).disabled = false;
+        });
 
         Object.entries(data).forEach(el => {
             const [elKey, elValue] = el;
 
-            //Any un-autofilled code should be editable. Thus, we reset before disabling.
-            try{
-                if (elKey !== "EditableItems") {
-                fd.field(elKey).disabled = false;
-            }}
-            catch(err) {console.log("Error setting editable " + elKey + ". Value: "+ elValue);}
-            
-            
             try{
                 fd.field(elKey).value = elValue;
-                if (!editable.includes(elKey) && elKey !== "EditableItems") {
+                if (!editable.includes(elKey)) {
                     fd.field(elKey).disabled = true;
                 }
             }
