@@ -42,6 +42,7 @@ var script = document.createElement('script');
 script.src = '//code.jquery.com/jquery-1.11.0.min.js'; 
 document.getElementsByTagName('head')[0].appendChild(script);
 
+$(document).ready(function() {
 // ================================================================
 //  EXAMPLE 1: The code is executed right after rendering the form 
 // ================================================================
@@ -312,3 +313,4 @@ function genSummary() {
     summaryContainer.append(table);
 
 }
+});
