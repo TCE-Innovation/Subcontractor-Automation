@@ -140,10 +140,15 @@ function autoPopulateGenInfo() {
                         } = data;
         */
 
-                        /*
+/*
 This bit of code controls the autofill behavior. 
-                        */
-        const {EditableItems: editable} = data;
+*/
+        try{const {EditableItems: editable} = data;}
+        catch(err) {
+            console.log("There is nothing editable in this document");
+            EditableItems = [];
+        }
+
         Object.entries(data).forEach(el => {
             const [elKey, elValue] = el;
 
@@ -157,7 +162,7 @@ This bit of code controls the autofill behavior.
             
             try{
                 fd.field(elKey).value = elValue;
-                if (!editable.includes(elKey)) {
+                if (!editable.includes(elKey) && elKey !== "EditableItems") {
                     fd.field(elKey).disabled = true;
                 }
             }
