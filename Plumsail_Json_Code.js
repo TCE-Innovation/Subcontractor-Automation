@@ -146,7 +146,9 @@ called "EditableItems". This indicates the autofilled items that should be edita
 are not editable. Anything not mentioned is not named".
 */
         let editable = [];
-        try{const {EditableItems: editable} = data;
+        try{const {EditableItems: editableItems} = data;
+            console.log(editableItems);
+            editable = editableItems;
             console.log(editable);
             console.log("Theres editible content!");
         }
