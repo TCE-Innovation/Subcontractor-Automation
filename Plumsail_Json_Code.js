@@ -50,7 +50,7 @@ fd.rendered(function () {
     //Functions that run initially
     autoPopulateGenInfo();
     toggleFields();
-    
+    genSummary();
 
     //Items that change on action
     fd.field('CorpOrCoPartner').$on('change',toggleFields);
@@ -58,6 +58,10 @@ fd.rendered(function () {
     fd.field('ScheduleF3Q3').$on('change', toggleFields);
     fd.field('ScheduleBQuestion').$on('change', toggleFields);
     fd.field('F3NA').$on('change', toggleFields);
+
+
+    //This item controls the summary tab at the very end.
+    fd.fields().forEach(field => field.$on('change', genSummary));
 });
 
 /*
@@ -171,7 +175,7 @@ are not editable. Anything not mentioned is not named".
             }
             catch(err) {
                 console.log("Failed Autofill Key: " + elKey + ". Value: "+ elValue);
-                console.log(!editable.includes(elKey));
+                console.log("Does editable include elKey?: " + editable.includes(elKey));
             }
             
         });
@@ -225,5 +229,86 @@ function toggleFields() {
     } else{
         $('.ScheduleF3MaterialChange').hide();
     }
+
+}
+
+
+// this function will generate divs that include the titles of containers and titles and values of fields within each one
+
+function genSummary() {
+
+    // get reference to parent container element
+
+    const summaryContainer = document.getElementById('data-preview');
+
+    summaryContainer.innerHTML = "";
+
+    // create table element
+
+    const table = document.createElement("table");
+
+
+
+
+    // create table header row
+
+    const headerRow = document.createElement("tr");
+
+    const headerTitles = ["Title", "Value"];
+
+
+
+
+    headerTitles.forEach(ht => {
+
+        const th = document.createElement("th");
+
+        th.textContent = ht;
+
+        headerRow.appendChild(th);
+
+    });
+
+    table.append(headerRow);
+
+
+
+
+    // create table rows for JSON data
+
+    fd.fields().forEach(field => {
+
+        const row = document.createElement("tr");
+
+
+
+
+        // create table cells for each property in JSON object
+
+        const cellTitle = document.createElement("td");
+
+       
+
+        console.log(field.title);
+
+        console.log(field.value);
+
+        const titleCell = document.createElement("td");
+
+        titleCell.textContent = field.title;
+
+        row.appendChild(titleCell);
+
+        const valueCell = document.createElement("td");
+
+        valueCell.textContent = field.value;
+
+        row.appendChild(valueCell);
+
+        table.appendChild(row);
+
+    })
+
+    summaryContainer.append(table);
 
 }
