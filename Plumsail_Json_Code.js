@@ -141,12 +141,16 @@ function autoPopulateGenInfo() {
         */
         //const {GeneralInformation: GI} = data;
         //console.log(GI);
+        const {EditableItems: editable} = data;
         Object.entries(data).forEach(el => {
             const [elKey, elValue] = el;
+            //Any un-autofilled code should be editable. Thus, we reset before disabling.
+            fd.field(elKey).disabled = false;
             try{
                 fd.field(elKey).value = elValue;
-                //fd.field(elKey).value = JSON.parse(data);
-                fd.field(elKey).disabled = true;
+                if (!editable.includes(elKey)) {
+                    fd.field(elKey).disabled = true;
+                }
             }
             catch(err) {
                 console.log("Failed Autofill Key: " + elKey + ". Value: "+ elValue);
