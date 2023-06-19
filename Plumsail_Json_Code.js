@@ -29,16 +29,6 @@
 *                                                                                                      *
 *******************************************************************************************************/
 
-/*
-    I've included the following code due to my use of the $ for JQuery. Plumsail natively supports 
-    JQuery and it can be used externally, but this file is apparently loaded before Plumsail calls JQuery.
-    Thus, this is a hacky workaround - I call for JQuery myself.
-
-    The ideal solution would be to figure out how to reference this document after JQuery has loaded, but
-    still retain the fd.rendered() function in this script. Alternatively, load the JSON file another way.
-*/
-
-
 // ================================================================
 //  EXAMPLE 1: The code is executed right after rendering the form 
 // ================================================================
@@ -89,8 +79,18 @@ fd.saved(function (result) {
 /*
     The following are user defined functions - functions that help with the functionality of the page
 */
+
+/*
+    This function will call a specific JSON file if specified in the URL. If none is specified, it will rely on the
+    default one to produce the functionality this form.
+*/
 async function externalFile() {
-    const data = $.get('https://kyleh2420.github.io/default.json');
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    jsonFile = urlParams.get('loc')
+    console.log(urlParams);
+    urlOfJSON = "https://kyleh2420.github.io/" + jsonFile + ".json";
+    const data = $.get(urlOfJSON);
     return data;
 }
 
