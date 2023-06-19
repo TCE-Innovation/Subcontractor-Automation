@@ -148,8 +148,9 @@ are not editable. Anything not mentioned is not named".
         try{const {EditableItems: editable} = data;}
         catch(err) {
             console.log("There is nothing editable in this document");
-            EditableItems = [];
+            editable = [];
         }
+        console.log(editable)
 //Any un-autofilled code should be editable. Thus, we reset before disabling.
         fd.fields().forEach(el => {
             fd.field(el.internalName).disabled = false;
