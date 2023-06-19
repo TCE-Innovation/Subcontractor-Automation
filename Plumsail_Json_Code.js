@@ -145,10 +145,10 @@ This bit of code controls the autofill behavior. First, we will look for an arry
 called "EditableItems". This indicates the autofilled items that should be editable. Otherwise, autofilled items
 are not editable. Anything not mentioned is not named".
 */
+        let editable = [];
         try{const {EditableItems: editable} = data;}
         catch(err) {
             console.log("There is nothing editable in this document");
-            editable = [];
         }
         console.log(editable)
 //Any un-autofilled code should be editable. Thus, we reset before disabling.
