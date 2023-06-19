@@ -166,6 +166,7 @@ are not editable. Anything not mentioned is not named".
             }
             catch(err) {
                 console.log("Failed Autofill Key: " + elKey + ". Value: "+ elValue);
+                console.log(!editable.includes(elKey));
             }
             
         });
