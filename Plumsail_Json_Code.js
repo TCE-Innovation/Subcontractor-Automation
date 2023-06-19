@@ -171,43 +171,43 @@ function toggleFields() {
 
     //Toggles the SQS Form
     if (fd.field('CorpOrCoPartner').value === 'Corporation'){
-        $('.SQSCorporation').attr('style', 'display:block;');
-        $('.SQSCoPartnership').attr('style', 'display:none;');
+        $('.SQSCorporation').show();
+        $('.SQSCoPartnership').hide();
     } else if (fd.field('CorpOrCoPartner').value === 'Co-partnership') {
-        $('.SQSCorporation').attr('style', 'display:none;');
-        $('.SQSCoPartnership').attr('style', 'display:block;');
+        $('.SQSCorporation').hide();
+        $('.SQSCoPartnership').show();
     } else {
-        $('.SQSCorporation').attr('style', 'display:none;');
-        $('.SQSCoPartnership').attr('style', 'display:none;');
+        $('.SQSCorporation').hide();
+        $('.SQSCoPartnership').hide();
     }
 
     //Toggles Schedule F, Form F
     if (fd.field('F3NA').value === 'Not Applicable'){
-        $('.ScheduleFFormF3').attr('style', 'display:none;');
+        $('.ScheduleFFormF3').hide();
     } else {
-        $('.ScheduleFFormF3').attr('style', 'display:block;');
+        $('.ScheduleFFormF3').show();
     }
 
     //Toggles Schedule B
     if(fd.field('ScheduleBQuestion').value === 'I need to fill out schedule B'){
-        $('.ScheduleBClass').attr('style', 'display:block;');
+        $('.ScheduleBClass').show();
     } else{
         $('.ScheduleBClass').attr('style','display:none;');
     }
 
     //Toggles Schedule B1
     if(fd.field('B1Question').value === 'I need to fill out Schedule B1'){
-        $('.ScheduleB1Class').attr('style', 'display:block;');
+        $('.ScheduleB1Class').show();
     } else{
         $('.ScheduleB1Class').attr('style','display:none;');
     }
 
     //Toggles F3 Materials List
     if(fd.field('ScheduleF3Q3').value === 'b. Material Change') {
-        $('.ScheduleF3MaterialChange').attr('style', 'display:block;');
+        $('.ScheduleF3MaterialChange').show();
         console.log("F3 shown (Attempt)");
     } else{
-        $('.ScheduleF3MaterialChange').attr('style','display:none;');
+        $('.ScheduleF3MaterialChange').hide();
         console.log("F3 Hidden (Attempt)");
     }
 
