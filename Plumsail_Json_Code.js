@@ -89,7 +89,11 @@ async function externalFile() {
     const urlParams = new URLSearchParams(queryString);
     jsonFile = urlParams.get('loc')
     console.log(urlParams);
-    urlOfJSON = "https://kyleh2420.github.io/" + jsonFile + ".json";
+    if (jsonFile === null) {
+    urlOfJSON = "https://kyleh2420.github.io/default.json";
+    } else {
+        urlOfJSON = "https://kyleh2420.github.io/" + jsonFile + ".json";
+    }
     const data = $.get(urlOfJSON);
     return data;
 }
