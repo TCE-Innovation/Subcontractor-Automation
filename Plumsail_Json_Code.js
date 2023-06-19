@@ -146,11 +146,15 @@ called "EditableItems". This indicates the autofilled items that should be edita
 are not editable. Anything not mentioned is not named".
 */
         let editable = [];
-        try{const {EditableItems: editable} = data;}
+        try{const {EditableItems: editable} = data;
+            console.log(editable);
+            console.log("Theres editible content!");
+        }
         catch(err) {
             console.log("There is nothing editable in this document");
         }
         console.log(editable)
+        
 //Any un-autofilled code should be editable. Thus, we reset before disabling.
         fd.fields().forEach(el => {
             fd.field(el.internalName).disabled = false;
