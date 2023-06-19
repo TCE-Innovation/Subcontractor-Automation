@@ -53,12 +53,12 @@ fd.rendered(function () {
     genSummary();
 
     //Items that change on action
-    fd.field('CorpOrCoPartner').$on('change',toggleFields);
-    fd.field('B1Question').$on('change', toggleFields);
-    fd.field('ScheduleF3Q3').$on('change', toggleFields);
-    fd.field('ScheduleBQuestion').$on('change', toggleFields);
-    fd.field('F3NA').$on('change', toggleFields);
-
+    onActionItems = ['CorpOrCoPartner', 
+    'B1Question',
+    'ScheduleF3Q3',
+    'ScheduleBQuestion',
+    'F3NA'];
+    onActionItems.forEach(field => fd.field(field).$on('change',toggleFields));
 
     //This item controls the summary tab at the very end.
     fd.fields().forEach(field => field.$on('change', genSummary));
