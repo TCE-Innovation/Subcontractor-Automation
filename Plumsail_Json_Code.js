@@ -139,15 +139,20 @@ function autoPopulateGenInfo() {
                             },
                         } = data;
         */
-        //const {GeneralInformation: GI} = data;
-        //console.log(GI);
+
+                        /*
+This bit of code controls the autofill behavior. 
+                        */
         const {EditableItems: editable} = data;
         Object.entries(data).forEach(el => {
             const [elKey, elValue] = el;
 
             //Any un-autofilled code should be editable. Thus, we reset before disabling.
-            try{fd.field(elKey).disabled = false;}
-            catch(err) {console.log("Setting to ediable" + elKey + ". Value: "+ elValue);}
+            try{
+                if (elKey !== "EditableItems") {
+                fd.field(elKey).disabled = false;
+            }}
+            catch(err) {console.log("Error setting editable " + elKey + ". Value: "+ elValue);}
             
             
             try{
@@ -161,12 +166,6 @@ function autoPopulateGenInfo() {
             }
             
         });
-/*   
-        fd.field('GCName').value = GI.GeneralContractor;
-        fd.field('GCAddress').value = GI.GCAddress;
-        fd.field('ContractNo').value = GI.ContractNo;
-        fd.field('FederallyFunded').value = GI.FederallyFunded;
-        */
     })
 }
 /*
