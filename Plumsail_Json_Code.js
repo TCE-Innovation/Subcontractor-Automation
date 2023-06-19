@@ -89,7 +89,7 @@ fd.saved(function (result) {
     The following are user defined functions - functions that help with the functionality of the page
 */
 async function externalFile() {
-    const data = $.get('https://kyleh2420.github.io/test.json');
+    const data = $.get('https://kyleh2420.github.io/default.json');
     return data;
 }
 
@@ -146,6 +146,7 @@ function autoPopulateGenInfo() {
             try{
                 fd.field(elKey).value = elValue;
                 //fd.field(elKey).value = JSON.parse(data);
+                fd.field(elKey).disabled = true;
             }
             catch(err) {
                 console.log("Failed Autofill Key: " + elKey + ". Value: "+ elValue);
@@ -192,23 +193,21 @@ function toggleFields() {
     if(fd.field('ScheduleBQuestion').value === 'I need to fill out schedule B'){
         $('.ScheduleBClass').show();
     } else{
-        $('.ScheduleBClass').attr('style','display:none;');
+        $('.ScheduleBClass').hide();
     }
 
     //Toggles Schedule B1
     if(fd.field('B1Question').value === 'I need to fill out Schedule B1'){
         $('.ScheduleB1Class').show();
     } else{
-        $('.ScheduleB1Class').attr('style','display:none;');
+        $('.ScheduleB1Class').hide();
     }
 
     //Toggles F3 Materials List
     if(fd.field('ScheduleF3Q3').value === 'b. Material Change') {
         $('.ScheduleF3MaterialChange').show();
-        console.log("F3 shown (Attempt)");
     } else{
         $('.ScheduleF3MaterialChange').hide();
-        console.log("F3 Hidden (Attempt)");
     }
 
 }
