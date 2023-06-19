@@ -147,27 +147,25 @@ are not editable. Anything not mentioned is not named".
 */
         let editable = [];
         try{const {EditableItems: editableItems} = data;
-            console.log(editableItems);
             editable = editableItems;
-            console.log(editable);
-            console.log("Theres editible content!");
+            //console.log("Theres editible content!");
         }
         catch(err) {
-            console.log("There is nothing editable in this document");
+            //console.log("There is nothing editable in this document");
         }
-        console.log(editable)
         
 //Any un-autofilled code should be editable. Thus, we reset before disabling.
         fd.fields().forEach(el => {
             fd.field(el.internalName).disabled = false;
         });
 
+        //Finally, we will fill each key in
         Object.entries(data).forEach(el => {
             const [elKey, elValue] = el;
 
             try{
                 fd.field(elKey).value = elValue;
-                if (!editable.includes(elKey)) {
+                if (!editable.includes(elKey) && elKey !== "EditableItems") {
                     fd.field(elKey).disabled = true;
                 }
             }
