@@ -37,12 +37,8 @@
     The ideal solution would be to figure out how to reference this document after JQuery has loaded, but
     still retain the fd.rendered() function in this script. Alternatively, load the JSON file another way.
 */
-var script = document.createElement('script'); 
- 
-script.src = '//code.jquery.com/jquery-1.11.0.min.js'; 
-document.getElementsByTagName('head')[0].appendChild(script);
 
-jQuery(document).ready(function() {
+
 // ================================================================
 //  EXAMPLE 1: The code is executed right after rendering the form 
 // ================================================================
@@ -290,9 +286,9 @@ function genSummary() {
 
        
 
-        console.log(field.title);
+        //console.log(field.title);
 
-        console.log(field.value);
+        //console.log(field.value);
 
         const titleCell = document.createElement("td");
 
@@ -313,4 +309,3 @@ function genSummary() {
     summaryContainer.append(table);
 
 }
-});
