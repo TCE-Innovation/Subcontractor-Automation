@@ -87,12 +87,12 @@ fd.saved(function (result) {
 async function externalFile() {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    jsonFile = urlParams.get('loc')
+    jsonFileName = urlParams.get('loc')
     console.log(urlParams);
-    if (jsonFile === null) {
+    if (jsonFileName === null) {
     urlOfJSON = "https://kyleh2420.github.io/default.json";
     } else {
-        urlOfJSON = "https://kyleh2420.github.io/" + jsonFile + ".json";
+        urlOfJSON = "https://kyleh2420.github.io/" + jsonFileName + ".json";
     }
     const data = $.get(urlOfJSON);
     return data;
