@@ -36,6 +36,7 @@ fd.rendered(function () {
     
     //Functions that run initially
     autoPopulateGenInfo();
+    disableFields();
     toggleFields();
     genSummary();
 
@@ -214,17 +215,20 @@ are not editable. Anything not mentioned is not named".
 
 */
 
+
+function disableFields() {
+    // make Unit Price column read-only
+    const premiumColumn = fd.control("InsurancePremium").columns.find(c => c.field === 'premium');
+    premiumColumn.editable = () => false;
+    fd.field("WorkHoursTotal").disabled = true;
+    fd.field("EstimatedLimitedPayrollTotal").disabled = true;
+    fd.field("PremiumTotal").disabled = true;
+}
+
 //To be more efficient (And not run everything all at once) turn this function into an object
 //And call upong specific portions in the object
 function toggleFields() {
     var formFields = fd.fields();
-
-    // make Unit Price column read-only
-    const unitPriceColumn = fd.control("InsurancePremium").columns.find(c => c.field === 'premium');
-    unitPriceColumn.editable = () => false;
-    fd.field("WorkHoursTotal").disabled = true;
-    fd.field("EstimatedLimitedPayrollTotal").disabled = true;
-    fd.field("PremiumTotal").disabled = true;
 
     //Toggles the SQS Form
     if (fd.field('CorpOrCoPartner').value === 'Corporation'){
