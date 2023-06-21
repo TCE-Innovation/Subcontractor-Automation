@@ -58,7 +58,7 @@ fd.rendered(function () {
             }
         }
 
-        /*
+        
         var workHours = 0;
         var estPayroll = 0;
         var premium = 0;
@@ -69,12 +69,11 @@ fd.rendered(function () {
                 estPayroll += value[i].payroll;
                 premium += value[i].premium;
             }
+        }
 
-            fd.field("WorkHoursTotal").value = workHours;
+        fd.field("WorkHoursTotal").value = workHours;
             fd.field("EstimatedLimitedPayrollTotal").value = estPayroll;
             fd.field("PremiumTotal").value = premium;
-        }
-        */
     });
 
     
