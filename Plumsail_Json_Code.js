@@ -48,7 +48,7 @@ fd.rendered(function () {
     'RMSAQuestion'];
     onActionItems.forEach(field => fd.field(field).$on('change',toggleFields));
 
-    /*
+    
 
     fd.control('InsurancePremium').$on('change', function(value) {
         //Autopopulates the premium row in OCIP B Section II
@@ -58,6 +58,7 @@ fd.rendered(function () {
             }
         }
 
+        /*
         var workHours = 0;
         var estPayroll = 0;
         var premium = 0;
@@ -73,9 +74,10 @@ fd.rendered(function () {
             fd.field("EstimatedLimitedPayrollTotal").value = estPayroll;
             fd.field("PremiumTotal").value = premium;
         }
+        */
     });
 
-    */
+    
     //This item ontrols the summary tab at the very end.
     //fd.fields().forEach(field => field.$on('change', genSummary));
 });
