@@ -44,7 +44,8 @@ fd.rendered(function () {
     'B1Question',
     'ScheduleF3Q3',
     'ScheduleBQuestion',
-    'F3NA'];
+    'F3NA',
+    'RMSAQuestion'];
     onActionItems.forEach(field => fd.field(field).$on('change',toggleFields));
 
     //This item controls the summary tab at the very end.
@@ -99,14 +100,6 @@ async function externalFile() {
 }
 
 function autoPopulateGenInfo() {
-
-    //A Manual approach to populating fields
-    /*
-    fd.field('NameOfGeneralContractor').value = "JTTC";
-    fd.field('AddressOfGeneralContractor').value = "1010 Northern Blvd, Great Neck, NY 11021";
-    fd.field('GeneralContractNum').value = "A-37139";
-    */
-
     externalFile().then(function(data){
         /*
             The following shows two ways of object deconstruction of multiple objects and subarrays
@@ -189,7 +182,7 @@ are not editable. Anything not mentioned is not named".
 */
 
 function toggleFields() {
-    console.log("Toggling Fields");
+    var formFields = fd.fields();
 
     //Toggles the SQS Form
     if (fd.field('CorpOrCoPartner').value === 'Corporation'){
@@ -231,6 +224,22 @@ function toggleFields() {
         $('.ScheduleF3MaterialChange').hide();
     }
 
+    //Toggles the visibiliy and requirement of the RMSA form
+    if(fd.field('RMSAQuestion').value === 'Yes') {
+        formFields.forEach(field => {
+            if (field.$el.closest(".RMSAControl") != null) {
+                field.required = true;
+                field.hidden = false;
+            }
+        })
+    } else{
+        formFields.forEach(field => {
+            if (field.$el.closest(".RMSAControl") != null) {
+                field.required = false;
+                field.hidden = true;
+            }
+        })
+    }
 }
 
 
