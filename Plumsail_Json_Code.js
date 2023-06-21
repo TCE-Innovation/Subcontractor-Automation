@@ -48,12 +48,13 @@ fd.rendered(function () {
     'RMSAQuestion'];
     onActionItems.forEach(field => fd.field(field).$on('change',toggleFields));
 
+    /*
 
     fd.control('InsurancePremium').$on('change', function(value) {
         //Autopopulates the premium row in OCIP B Section II
         if (value) { //If there are records in the table
             for (var i = 0; i < value.length; i++) {
-                value[i].set('Premium', value[i].Payroll * value[i].WCRate / 100);
+                value[i].set('Premium', value[i].payroll * value[i].wCRate / 100);
             }
         }
 
@@ -63,9 +64,9 @@ fd.rendered(function () {
         //Autopopulates the totals below the data table
         if (value) {
             for (var i = 0; i < value.length; i++) {
-                workHours += parseFloat(value[i].workHours);
-                estPayroll += parseFloat(value[i].payroll);
-                premium += parseFloat(value[i].premium);
+                workHours += value[i].workHours;
+                estPayroll += value[i].payroll;
+                premium += value[i].premium;
             }
 
             fd.field("WorkHoursTotal").value = workHours;
@@ -74,8 +75,9 @@ fd.rendered(function () {
         }
     });
 
-    //This item controls the summary tab at the very end.
-    fd.fields().forEach(field => field.$on('change', genSummary));
+    */
+    //This item ontrols the summary tab at the very end.
+    //fd.fields().forEach(field => field.$on('change', genSummary));
 });
 
 function dataTableCalculator() {
