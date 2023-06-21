@@ -49,9 +49,9 @@ fd.rendered(function () {
     onActionItems.forEach(field => fd.field(field).$on('change',toggleFields));
     fd.control('InsurancePremium').$on('change', function() {
         console.log($(this));
-        j = $(this);
+        j = fd.control('InsurancePremium').value;
         console.log(j.value);
-        j.value.forEach(item => item.Premium = item.Payroll * item.WCRate / 100);
+        j.forEach(item => item.Premium = item.Payroll * item.WCRate / 100);
     });
 
     //This item controls the summary tab at the very end.
