@@ -49,6 +49,12 @@ fd.rendered(function () {
     onActionItems.forEach(field => fd.field(field).$on('change',toggleFields));
     fd.control('InsurancePremium').$on('change', function(value) {
         console.log(value);
+        if (value) {
+            value.forEach(record => {
+                console.log(i + record[i]);
+                record[i].set('Premium', record[i].Payroll * record[i].WCRate / 100);
+            });
+        }
     });
 
     //This item controls the summary tab at the very end.
