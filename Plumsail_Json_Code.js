@@ -48,7 +48,10 @@ fd.rendered(function () {
     'RMSAQuestion'];
     onActionItems.forEach(field => fd.field(field).$on('change',toggleFields));
     fd.control('InsurancePremium').$on('change', function() {
-        $(this).forEach(item => item.Premium = item.Payroll * item.WCRate / 100);
+        console.log($(this));
+        j = $(this);
+        console.log(j);
+        j.forEach(item => item.Premium = item.Payroll * item.WCRate / 100);
     });
 
     //This item controls the summary tab at the very end.
