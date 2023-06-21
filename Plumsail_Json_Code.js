@@ -50,11 +50,27 @@ fd.rendered(function () {
 
 
     fd.control('InsurancePremium').$on('change', function(value) {
-        if (value) {
+        //Autopopulates the premium row in OCIP B Section II
+        if (value) { //If there are records in the table
             for (var i = 0; i < value.length; i++) {
-                // populate UnitPrice column
                 value[i].set('Premium', value[i].Payroll * value[i].WCRate / 100);
             }
+        }
+
+        var workHours = 0;
+        var estPayroll = 0;
+        var premium = 0;
+        //Autopopulates the totals below the data table
+        if (value) {
+            for (var i = 0; i < value.length; i++) {
+                workHours += parseFloat(value[i].workHours);
+                estPayroll += parseFloat(value[i].payroll);
+                premium += parseFloat(value[i].premium);
+            }
+
+            fd.field("WorkHoursTotal").value = workHours;
+            fd.field("EstimatedLimitedPayrollTotal").value = estPayroll;
+            fd.field("PremiumTotal").value = premium;
         }
     });
 
