@@ -227,19 +227,19 @@ function toggleFields() {
     //Toggles the visibiliy and requirement of the RMSA form
     if(fd.field('RMSAQuestion').value === 'Yes') {
         $('.RMSAControl').show();
-        formFields.forEach(field => {
-            if (field.$el.closest(".RMSAControl") != null) {
-                field.required = true;
-            }
-        })
+        toggleReq(formFields, "RMSAControl");
     } else{
         $('.RMSAControl').hide();
-        formFields.forEach(field => {
-            if (field.$el.closest(".RMSAControl") != null) {
-                field.required = false;
-            }
-        })
+        toggleReq(formFields, "RMSAControl");
     }
+}
+//This function assists in removing the required for all fields inside a given list
+function toggleReq(list, name) {
+    list.forEach(field => {
+        if (field.$el.closest("." + name) != null) {
+            field.required = !field.required;
+        }
+    })
 }
 
 
