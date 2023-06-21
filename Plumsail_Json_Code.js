@@ -47,6 +47,9 @@ fd.rendered(function () {
     'F3NA',
     'RMSAQuestion'];
     onActionItems.forEach(field => fd.field(field).$on('change',toggleFields));
+    fd.control('InsurancePremium').$on('change', function(value) {
+        console.log(value);
+    });
 
     //This item controls the summary tab at the very end.
     fd.fields().forEach(field => field.$on('change', genSummary));
