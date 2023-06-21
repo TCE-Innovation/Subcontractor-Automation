@@ -47,11 +47,15 @@ fd.rendered(function () {
     'F3NA',
     'RMSAQuestion'];
     onActionItems.forEach(field => fd.field(field).$on('change',toggleFields));
-    fd.control('InsurancePremium').$on('change', function() {
-        console.log($(this));
-        j = fd.control('InsurancePremium').value;
-        console.log(j.value);
-        j.forEach(item => item.Premium = item.Payroll * item.WCRate / 100);
+
+    
+    fd.control('InsurancePremium').$on('change', function(value) {
+        if (value) {
+            for (var i = 0; i < value.length; i++) {
+                // populate UnitPrice column
+                value[i].set('Premium', item.Payroll * item.WCRate / 100);
+            }
+        }
     });
 
     //This item controls the summary tab at the very end.
