@@ -50,8 +50,8 @@ fd.rendered(function () {
     fd.control('InsurancePremium').$on('change', function() {
         console.log($(this));
         j = $(this);
-        console.log(j);
-        j.forEach(item => item.Premium = item.Payroll * item.WCRate / 100);
+        console.log(j.value);
+        j.value.forEach(item => item.Premium = item.Payroll * item.WCRate / 100);
     });
 
     //This item controls the summary tab at the very end.
