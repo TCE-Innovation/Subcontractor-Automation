@@ -54,7 +54,7 @@ fd.rendered(function () {
         //Autopopulates the premium row in OCIP B Section II
         if (value) { //If there are records in the table
             for (var i = 0; i < value.length; i++) {
-                value[i].set('Premium', value[i].payroll * value[i].wCRate / 100);
+                value[i].set('premium', value[i].payroll * value[i].wCRate / 100);
             }
         }
 
@@ -72,8 +72,8 @@ fd.rendered(function () {
         }
 
         fd.field("WorkHoursTotal").value = workHours;
-            fd.field("EstimatedLimitedPayrollTotal").value = estPayroll;
-            fd.field("PremiumTotal").value = premium;
+        fd.field("EstimatedLimitedPayrollTotal").value = estPayroll;
+        fd.field("PremiumTotal").value = premium;
     });
 
     
