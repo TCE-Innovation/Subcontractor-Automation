@@ -48,12 +48,12 @@ fd.rendered(function () {
     'RMSAQuestion'];
     onActionItems.forEach(field => fd.field(field).$on('change',toggleFields));
 
-    
+
     fd.control('InsurancePremium').$on('change', function(value) {
         if (value) {
             for (var i = 0; i < value.length; i++) {
                 // populate UnitPrice column
-                value[i].set('Premium', item.Payroll * item.WCRate / 100);
+                value[i].set('Premium', value[i].Payroll * value[i].WCRate / 100);
             }
         }
     });
