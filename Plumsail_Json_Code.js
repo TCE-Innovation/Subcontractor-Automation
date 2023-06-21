@@ -181,6 +181,8 @@ are not editable. Anything not mentioned is not named".
 
 */
 
+//To be more efficient (And not run everything all at once) turn this function into an object
+//And call upong specific portions in the object
 function toggleFields() {
     var formFields = fd.fields();
 
@@ -188,20 +190,50 @@ function toggleFields() {
     if (fd.field('CorpOrCoPartner').value === 'Corporation'){
         $('.SQSCorporation').show();
         $('.SQSCoPartnership').hide();
+
+        formFields.forEach(field => {
+            if (field.$el.closest('.SQSCorporation') != null) {
+                field.required = true;
+            }
+            if (field.$el.closest('.SQSCoPartnership') != null) {
+                field.required = false;
+            }
+        })
+
     } else if (fd.field('CorpOrCoPartner').value === 'Co-partnership') {
         $('.SQSCorporation').hide();
         $('.SQSCoPartnership').show();
+
+        formFields.forEach(field => {
+            if (field.$el.closest('.SQSCorporation') != null) {
+                field.required = false;
+            }
+            if (field.$el.closest('.SQSCoPartnership') != null) {
+                field.required = true;
+            }
+        })
+
     } else {
         $('.SQSCorporation').hide();
         $('.SQSCoPartnership').hide();
+
+        formFields.forEach(field => {
+            if (field.$el.closest('.SQSCorporation') != null) {
+                field.required = false;
+            }
+            if (field.$el.closest('.SQSCoPartnership') != null) {
+                field.required = false;
+            }
+        })
     }
 
-    //Toggles Schedule F, Form F
+    //Toggles Schedule F, Form F3
     if (fd.field('F3NA').value === 'Not Applicable'){
         $('.ScheduleFFormF3').hide();
     } else {
         $('.ScheduleFFormF3').show();
     }
+    toggleReq(formFields, "ScheduleFFormF3");
 
     //Toggles Schedule B
     if(fd.field('ScheduleBQuestion').value === 'I need to fill out schedule B'){
@@ -209,6 +241,7 @@ function toggleFields() {
     } else{
         $('.ScheduleBClass').hide();
     }
+    toggleReq(formFields, "ScheduleBClass");
 
     //Toggles Schedule B1
     if(fd.field('B1Question').value === 'I need to fill out Schedule B1'){
@@ -216,6 +249,7 @@ function toggleFields() {
     } else{
         $('.ScheduleB1Class').hide();
     }
+    toggleReq(formFields, "ScheduleB1Class");
 
     //Toggles F3 Materials List
     if(fd.field('ScheduleF3Q3').value === 'b. Material Change') {
@@ -227,11 +261,10 @@ function toggleFields() {
     //Toggles the visibiliy and requirement of the RMSA form
     if(fd.field('RMSAQuestion').value === 'Yes') {
         $('.RMSAControl').show();
-        toggleReq(formFields, "RMSAControl");
-    } else{
+    } else {
         $('.RMSAControl').hide();
-        toggleReq(formFields, "RMSAControl");
     }
+    toggleReq(formFields, "RMSAControl");
 }
 //This function assists in removing the required for all fields inside a given list
 function toggleReq(list, name) {
