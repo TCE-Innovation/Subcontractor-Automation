@@ -219,6 +219,13 @@ are not editable. Anything not mentioned is not named".
 function toggleFields() {
     var formFields = fd.fields();
 
+    // make Unit Price column read-only
+    const unitPriceColumn = fd.control("InsurancePremium").columns.find(c => c.field === 'premium');
+    unitPriceColumn.editable = () => false;
+    fd.field("WorkHoursTotal").disabled = true;
+    fd.field("EstimatedLimitedPayrollTotal").disabled = true;
+    fd.field("PremiumTotal").disabled = true;
+
     //Toggles the SQS Form
     if (fd.field('CorpOrCoPartner').value === 'Corporation'){
         $('.SQSCorporation').show();
