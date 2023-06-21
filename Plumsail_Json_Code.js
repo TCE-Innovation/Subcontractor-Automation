@@ -226,6 +226,7 @@ function toggleFields() {
 
     //Toggles the visibiliy and requirement of the RMSA form
     if(fd.field('RMSAQuestion').value === 'Yes') {
+        $(fd.control('RMSAControl').$el).show();
         formFields.forEach(field => {
             if (field.$el.closest(".RMSAControl") != null) {
                 field.required = true;
@@ -233,6 +234,7 @@ function toggleFields() {
             }
         })
     } else{
+        $(fd.control('RMSAControl').$el).hide();
         formFields.forEach(field => {
             if (field.$el.closest(".RMSAControl") != null) {
                 field.required = false;
