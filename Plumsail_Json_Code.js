@@ -52,7 +52,7 @@ fd.rendered(function () {
         if (value) {
             value.forEach(record => {
                 console.log(i + record[i]);
-                record[i].set('Premium', record[i].Payroll * record[i].WCRate / 100);
+                record.set('Premium', record.Payroll * record.WCRate / 100);
             });
         }
     });
