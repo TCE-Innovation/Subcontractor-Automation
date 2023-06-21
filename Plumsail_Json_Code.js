@@ -47,19 +47,17 @@ fd.rendered(function () {
     'F3NA',
     'RMSAQuestion'];
     onActionItems.forEach(field => fd.field(field).$on('change',toggleFields));
-    fd.control('InsurancePremium').$on('change', function(value) {
-        console.log(value);
-        if (value) {
-            value.forEach(record => {
-                console.log(i + record[i]);
-                record.set('Premium', record.Payroll * record.WCRate / 100);
-            });
-        }
+    fd.control('InsurancePremium').$on('change', function() {
+        $(this).forEach(item => item.Premium = item.Payroll * item.WCRate / 100);
     });
 
     //This item controls the summary tab at the very end.
     fd.fields().forEach(field => field.$on('change', genSummary));
 });
+
+function dataTableCalculator() {
+
+}
 
 /*
 // ========================================================
