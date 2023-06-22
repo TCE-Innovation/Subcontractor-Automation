@@ -11,20 +11,6 @@ async function externalFile() {
 
 function autoPopulateGenInfo() {
     externalFile().then(function(data){
-    let editable = [];
-        try{const {EditableItems: editableItems} = data;
-            editable = editableItems;
-            //console.log("Theres editible content!");
-        }
-        catch(err) {
-            //console.log("There is nothing editable in this document");
-        }
-        
-//Any un-autofilled code should be editable. Thus, we reset before disabling.
-        fd.fields().forEach(el => {
-            fd.field(el.internalName).disabled = false;
-        });
-
         //Finally, we will fill each key in
         Object.entries(data).forEach(el => {
             const [elKey, elValue] = el;
@@ -37,7 +23,6 @@ function autoPopulateGenInfo() {
             }
             catch(err) {
                 console.log("Failed Autofill Key: " + elKey + ". Value: "+ elValue);
-                console.log("Does editable include elKey?: " + editable.includes(elKey));
             }
          
         });
