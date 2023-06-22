@@ -1,5 +1,6 @@
 fd.rendered(function () {
     autoPopulateGenInfo();
+    $('.autoInfo').hide();
 });
 
 async function externalFile() {
