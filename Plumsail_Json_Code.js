@@ -36,10 +36,10 @@ fd.rendered(function () {
     
     //Functions that run initially
     autoPopulateGenInfo();
-    disableFields();
     toggleFields();
     genSummary();
-
+    disableFields();
+    
     //Items that change on action
     onActionItems = ['CorpOrCoPartner', 
     'B1Question',
