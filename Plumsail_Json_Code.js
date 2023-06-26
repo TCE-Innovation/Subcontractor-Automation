@@ -34,12 +34,13 @@
 // ================================================================
 fd.rendered(function () {
     
+    fd.field("WorkHoursTotal").disabled = true;
     //Functions that run initially
     autoPopulateGenInfo();
     toggleFields();
     genSummary();
     disableFields();
-    
+
     //Items that change on action
     onActionItems = ['CorpOrCoPartner', 
     'B1Question',
