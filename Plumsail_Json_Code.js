@@ -34,81 +34,60 @@
 // ================================================================
 fd.rendered(function () {
     
-    fd.field("WorkHoursTotal").disabled = true;
     //Functions that run initially
-    autoPopulateGenInfo();
-    toggleFields();
-    genSummary();
-    disableFields();
+    executeOnce();
 
     //Items that change on action
-    onActionItems = ['CorpOrCoPartner', 
+    onActionFields = ['CorpOrCoPartner', 
     'B1Question',
     'ScheduleF3Q3',
     'ScheduleBQuestion',
     'F3NA',
     'RMSAQuestion'];
-    onActionItems.forEach(field => fd.field(field).$on('change',toggleFields));
+    onActionControl = ['InsurancePremium'];
 
-    
-
-    fd.control('InsurancePremium').$on('change', function(value) {
-        //Autopopulates the premium row in OCIP B Section II
-        if (value) { //If there are records in the table
-            for (var i = 0; i < value.length; i++) {
-                value[i].set('premium', value[i].payroll * value[i].wCRate / 100);
-            }
-        }
-
-        
-        var workHours = 0;
-        var estPayroll = 0;
-        var premium = 0;
-        //Autopopulates the totals below the data table
-        if (value) {
-            for (var i = 0; i < value.length; i++) {
-                workHours += value[i].workHours;
-                estPayroll += value[i].payroll;
-                premium += value[i].premium;
-            }
-        }
-
-        fd.field("WorkHoursTotal").value = workHours;
-        fd.field("EstimatedLimitedPayrollTotal").value = estPayroll;
-        fd.field("PremiumTotal").value = premium;
-    });
-
-    
+    onActionFields.forEach(field => fd.field(field).$on('change',toggleFields));
+    onActionControl.forEach(control => fd.control(control).$on('change', updateControls));    
     //This item ontrols the summary tab at the very end.
     //fd.fields().forEach(field => field.$on('change', genSummary));
 });
 
-function dataTableCalculator() {
-
-}
-
-/*
-// ========================================================
-//  EXAMPLE 2: The code is executed before saving the form
-// ========================================================
-fd.beforeSave(function () {
-
-    // Prevent saving if StartDate is greater than EndDate
-    if (fd.field('StartDate').value > fd.field('EndDate').value) {
-        throw Error('Start Date must not be greater than End Date.');
+var executeOnce = (function() {
+    var executed = false;
+    return function() {
+        if (!executed) {
+            executed = true;
+            autoPopulateGenInfo();
+            toggleFields();
+            genSummary();
+            disableFields();
+        }
+    };
+})();
+ 
+function updateControls() {
+    //Autopopulates the premium row in OCIP B Section II
+    if (value) { //If there are records in the table
+        for (var i = 0; i < value.length; i++) {
+            value[i].set('premium', value[i].payroll * value[i].wCRate / 100);
+        }
     }
-});
+    var workHours = 0;
+    var estPayroll = 0;
+    var premium = 0;
+    //Autopopulates the totals below the data table
+    if (value) {
+        for (var i = 0; i < value.length; i++) {
+            workHours += value[i].workHours;
+            estPayroll += value[i].payroll;
+            premium += value[i].premium;
+        }
+    }
 
-
-// =============================================================
-//  EXAMPLE 3: The code is executed right after saving the form
-// =============================================================
-fd.saved(function (result) {
-
-    // Forward users to a custom Thank You page with a parameter
-    window.location = 'https://mysite.com/thank-you?email=' + fd.field('Email').value;
-});
-*/
+    fd.field("WorkHoursTotal").value = workHours;
+    fd.field("EstimatedLimitedPayrollTotal").value = estPayroll;
+    fd.field("PremiumTotal").value = premium;
+}
 
 
 
@@ -134,63 +113,34 @@ async function externalFile() {
     return data;
 }
 
-function autoPopulateGenInfo() {
-    externalFile().then(function(data){
-        /*
-            The following shows two ways of object deconstruction of multiple objects and subarrays
-            Say we are given the following JSON file in "data"
-                        {
-                            "GeneralInformation": {
-                                "GeneralContractor": "JTTC",
-                                "GCAddress": "1010 Northern Blvd, Great Neck, NY 11021",
-                                "ContractNo": "A-37139",
-                                "FederallyFunded": "Yes"
-                            },
-                            "SQS": {
-                                "ProposedSub": "IEEE Inc.",
-                                "Business Address": "600 Circle Road, Stony Brook, NY 11790",
-                                "CorpOrCoPartner": "Corporation"
-                            }
-                        }
-            We can extract the objects "GeneralInformation" and "SQS" as its own objects like below. 
-            It will then be available for reference as "GeneralInformation" and "SQS"
-                        const {GeneralInformation, SQS} = data;
-                            Use: GeneralInformation.GeneralContractor
-            
-            You can do the same, but rename the variables that would be referenced.
-            The following will now be available for reference as "GI" or "Form1"
-                        const {GeneralInformation: GI, SQS: Form1} = data;
-                            Use: GI.GeneralContractor
-            
-            Alternatively, you could deconstruct a specific object in the code, such as by isolating "GeneralInformation".
-            Thus, you will be able to use the variables "GC", "GCAddy", "CNo" in your code
-                        const{
-                            GeneralInformation: {
-                                GeneralContractor: GC,
-                                GCAddress: GCAddy,
-                                ContractNo:CNo,
-                            },
-                        } = data;
-        */
-
 /*
 This bit of code controls the autofill behavior. First, we will look for an arry in the JSON
 called "EditableItems". This indicates the autofilled items that should be editable. Otherwise, autofilled items
 are not editable. Anything not mentioned is not named".
 */
+function autoPopulateGenInfo() {
+    //3 step process
+    //Clear all items: nothing can be saved in memory
+    //  All items should also reset to editable
+    //Read the external JSON file and extract the array of editable content
+    //Loop through each field listed in the external JSON and find the corresponding field
+    //  If found, then autofill
+    //      Then, if the name does not appear on the editable array, disable the field
+    fd.clear();
+    //Any un-autofilled code should be editable. Thus, we reset before disabling.
+    fd.fields().forEach(el => {
+        fd.field(el.internalName).disabled = false;
+    });
+
+    externalFile().then(function(data){
+
         let editable = [];
         try{const {EditableItems: editableItems} = data;
             editable = editableItems;
-            //console.log("Theres editible content!");
         }
         catch(err) {
-            //console.log("There is nothing editable in this document");
+            console.log("There is nothing editable in this document");
         }
-        
-//Any un-autofilled code should be editable. Thus, we reset before disabling.
-        fd.fields().forEach(el => {
-            fd.field(el.internalName).disabled = false;
-        });
 
         //Finally, we will fill each key in
         Object.entries(data).forEach(el => {
