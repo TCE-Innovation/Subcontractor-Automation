@@ -66,6 +66,7 @@ var executeOnce = (function() {
 })();
  
 function updateControls() {
+    fd.control("InsurancePremium").$on('change', function(value){
     //Autopopulates the premium row in OCIP B Section II
     if (value) { //If there are records in the table
         for (var i = 0; i < value.length; i++) {
@@ -87,6 +88,7 @@ function updateControls() {
     fd.field("WorkHoursTotal").value = workHours;
     fd.field("EstimatedLimitedPayrollTotal").value = estPayroll;
     fd.field("PremiumTotal").value = premium;
+});
 }
 
 
@@ -107,7 +109,7 @@ async function externalFile() {
     if (jsonFileName === null) {
     urlOfJSON = "https://kyleh2420.github.io/default.json";
     } else {
-        urlOfJSON = "https://kyleh2420.github.io/" + jsonFileName + ".json";
+        urlOfJSON = jsonFileName;
     }
     const data = $.get(urlOfJSON);
     return data;
