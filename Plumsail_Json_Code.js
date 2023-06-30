@@ -101,7 +101,8 @@ function updateControls() {
     This function will call a specific JSON file if specified in the URL. If none is specified, it will rely on the
     default one to produce the functionality this form.
 */
-async function externalFile() {
+function externalFile() {
+    /*
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     jsonFileName = urlParams.get('loc')
@@ -113,7 +114,45 @@ async function externalFile() {
     }
     const data = $.get(urlOfJSON);
     return data;
+    */
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    contractNumber = urlParams.get('contract')
+    let infoToSend = {
+        "Contract": contractNumber
+    }
+
+    fetchJSONData(infoToSend)
+    .then(json => {
+        console.log(json);
+        return json
+    });
 }
+
+function fetchJSONData(contract) {
+    const url = "https://prod-73.westus.logic.azure.com:443/workflows/9f7be33c84d844ecadd0baaef7cd1a7e/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=faXNcybrgh-3IH3KD7V7wloZaKsSEshlye4N9siJdNw";
+    const headers = {
+      'Content-Type': 'application/json'
+    };
+  
+    const options = {
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify(contract)
+    };
+  
+    return fetch(url, options)
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('Error: ' + response.status);
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  }
 
 /*
 This bit of code controls the autofill behavior. First, we will look for an arry in the JSON
