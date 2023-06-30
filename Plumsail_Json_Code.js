@@ -173,33 +173,29 @@ function autoPopulateGenInfo() {
         fd.field(el.internalName).disabled = false;
     });
 
-    externalFile().then(function(data){
-
-        let editable = [];
-        try{const {EditableItems: editableItems} = data;
-            editable = editableItems;
+    data = externalFile();
+    let editable = [];
+    try{const {EditableItems: editableItems} = data;
+        editable = editableItems;
+    }
+    catch(err) {
+        console.log("There is nothing editable in this document");
+    }
+    //Finally, we will fill each key in
+    Object.entries(data).forEach(el => {
+        const [elKey, elValue] = el;
+        try{
+            fd.field(elKey).value = elValue;
+            if (!editable.includes(elKey) && elKey !== "EditableItems") {
+                fd.field(elKey).disabled = true;
+            }
         }
         catch(err) {
-            console.log("There is nothing editable in this document");
+            console.log("Failed Autofill Key: " + elKey + ". Value: "+ elValue);
+            console.log("Does editable include elKey?: " + editable.includes(elKey));
         }
-
-        //Finally, we will fill each key in
-        Object.entries(data).forEach(el => {
-            const [elKey, elValue] = el;
-
-            try{
-                fd.field(elKey).value = elValue;
-                if (!editable.includes(elKey) && elKey !== "EditableItems") {
-                    fd.field(elKey).disabled = true;
-                }
-            }
-            catch(err) {
-                console.log("Failed Autofill Key: " + elKey + ". Value: "+ elValue);
-                console.log("Does editable include elKey?: " + editable.includes(elKey));
-            }
-            
-        });
-    })
+        
+    });
 }
 /*
     This function will toggle all the disappearing/conditional fields and update every them every time 
