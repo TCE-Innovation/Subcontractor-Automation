@@ -5,12 +5,11 @@
 	"sc.RMSA.isRequired": "No",
 	"sc.SB.isSBRequired": "I don't need to fill out schedule B",
 	"B1Question": "I don't need to fill out Schedule B1",
-	"EditableItems": [
-		"B1Question",
-		"ScheduleF3Q3",
-		"ScheduleBQuestion",
-		"F3NA",
-		"CorpOrCoPartner",
-		"RMSAQuestion"
-	]
+	"EditableItems": ["B1Question", 
+					"ScheduleF3Q3", 
+					"ScheduleBQuestion", 
+					"F3NA", 
+					"CorpOrCoPartner",
+					"RMSAQuestion"
+				]
 }
