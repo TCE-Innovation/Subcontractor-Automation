@@ -38,12 +38,12 @@ fd.rendered(function () {
     executeOnce();
 
     //Items that change on action
-    onActionFields = ['CorpOrCoPartner', 
+    onActionFields = ['sc.SQS.3.corpOrCoPartner', 
     'B1Question',
-    'ScheduleF3Q3',
-    'ScheduleBQuestion',
-    'F3NA',
-    'RMSAQuestion'];
+    'sc.SF.FF3.3.reportType',
+    'sc.SB.isSBRequired',
+    'sc.SF.FF3.FF3Applicable',
+    'sc.RMSA.isRequired'];
     onActionControl = ['InsurancePremium'];
 
     onActionFields.forEach(field => fd.field(field).$on('change',toggleFields));
@@ -223,7 +223,7 @@ function toggleFields() {
     var formFields = fd.fields();
 
     //Toggles the SQS Form
-    if (fd.field('CorpOrCoPartner').value === 'Corporation'){
+    if (fd.field('sc.SQS.3.corpOrCoPartner').value === 'Corporation'){
         $('.SQSCorporation').show();
         $('.SQSCoPartnership').hide();
 
@@ -236,7 +236,7 @@ function toggleFields() {
             }
         })
 
-    } else if (fd.field('CorpOrCoPartner').value === 'Co-partnership') {
+    } else if (fd.field('sc.SQS.3.corpOrCoPartner').value === 'Co-partnership') {
         $('.SQSCorporation').hide();
         $('.SQSCoPartnership').show();
 
@@ -264,7 +264,7 @@ function toggleFields() {
     }
 
     //Toggles Schedule F, Form F3
-    if (fd.field('F3NA').value === 'Not Applicable'){
+    if (fd.field('sc.SF.FF3.FF3Applicable').value === 'Not Applicable'){
         $('.ScheduleFFormF3').hide();
     } else {
         $('.ScheduleFFormF3').show();
@@ -272,7 +272,7 @@ function toggleFields() {
     toggleReq(formFields, "ScheduleFFormF3");
 
     //Toggles Schedule B
-    if(fd.field('ScheduleBQuestion').value === 'I need to fill out schedule B'){
+    if(fd.field('sc.SB.isSBRequired').value === 'I need to fill out schedule B'){
         $('.ScheduleBClass').show();
     } else{
         $('.ScheduleBClass').hide();
@@ -288,14 +288,14 @@ function toggleFields() {
     toggleReq(formFields, "ScheduleB1Class");
 
     //Toggles F3 Materials List
-    if(fd.field('ScheduleF3Q3').value === 'b. Material Change') {
+    if(fd.field('sc.SF.FF3.FF3Applicable').value === 'b. Material Change') {
         $('.ScheduleF3MaterialChange').show();
     } else{
         $('.ScheduleF3MaterialChange').hide();
     }
 
     //Toggles the visibiliy and requirement of the RMSA form
-    if(fd.field('RMSAQuestion').value === 'Yes') {
+    if(fd.field('sc.RMSA.isRequired').value === 'Yes') {
         $('.RMSAControl').show();
     } else {
         $('.RMSAControl').hide();

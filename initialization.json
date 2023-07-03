@@ -1,9 +1,9 @@
 {
-	"FederallyFunded": "Yes",
-	"CorpOrCoPartner": "Corporation",
-	"F3NA": "Not Applicable",
-	"RMSAQuestion": "No",
-	"ScheduleBQuestion": "I don't need to fill out schedule B",
+	"sc.GI.federallyFunded": "Yes",
+	"sc.SQS.3.corpOrCoPartner": "Corporation",
+	"sc.SF.FF3.FF3Applicable": "Not Applicable",
+	"sc.RMSA.isRequired": "No",
+	"sc.SB.isSBRequired": "I don't need to fill out schedule B",
 	"B1Question": "I don't need to fill out Schedule B1",
 	"EditableItems": [
 		"B1Question",
