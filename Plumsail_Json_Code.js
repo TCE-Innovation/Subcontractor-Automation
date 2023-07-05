@@ -92,29 +92,11 @@ function updateControls() {
 }
 
 
-
 /*
-    The following are user defined functions - functions that help with the functionality of the page
-*/
-
-/*
-    This function will call a specific JSON file if specified in the URL. If none is specified, it will rely on the
-    default one to produce the functionality this form.
+    This function will parse the query in the URL, then pass this information into a function that returns a promise
+    to the contents of some JSON file.
 */
 function externalFile() {
-    /*
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    jsonFileName = urlParams.get('loc')
-    console.log(urlParams);
-    if (jsonFileName === null) {
-    urlOfJSON = "https://kyleh2420.github.io/default.json";
-    } else {
-        urlOfJSON = jsonFileName;
-    }
-    const data = $.get(urlOfJSON);
-    return data;
-    */
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     contractNumber = urlParams.get('contract');
@@ -131,6 +113,9 @@ function externalFile() {
     });
 }
 
+/*
+    This function will call upon our makeshift API to retrieve a promise of data that should be autofilled.
+*/
 function fetchJSONData(contract) {
     const url = "https://prod-73.westus.logic.azure.com:443/workflows/9f7be33c84d844ecadd0baaef7cd1a7e/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=faXNcybrgh-3IH3KD7V7wloZaKsSEshlye4N9siJdNw";
     const headers = {
@@ -274,7 +259,7 @@ function toggleFields() {
     toggleReq(formFields, "ScheduleFFormF3");
 
     //Toggles Schedule B
-    if(fd.field('sc.SB.isSBRequired').value === 'I need to fill out schedule B'){
+    if(fd.field('sc.SB.isSBRequired').value === 'Yes'){
         $('.ScheduleBClass').show();
     } else{
         $('.ScheduleBClass').hide();
