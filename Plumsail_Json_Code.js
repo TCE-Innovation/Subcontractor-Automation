@@ -117,9 +117,11 @@ function externalFile() {
     */
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    contractNumber = urlParams.get('contract')
+    contractNumber = urlParams.get('contract');
+    subcontractorName = urlParams.get('subName');
     let infoToSend = {
-        "Contract": contractNumber
+        "Contract": contractNumber,
+        "subName": subcontractorName
     }
 
     return fetchJSONData(infoToSend)
