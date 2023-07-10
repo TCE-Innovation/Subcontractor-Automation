@@ -52,6 +52,11 @@ fd.rendered(function () {
     //fd.fields().forEach(field => field.$on('change', genSummary));
 });
 
+fd.beforeSave(function () {
+    data = fd.data();
+
+});
+
 var executeOnce = (function() {
     var executed = false;
     return function() {
@@ -104,8 +109,9 @@ function externalFile() {
         "Contract": contractNumber,
         "subName": subcontractorName
     }
-
-    return fetchJSONData(infoToSend)
+    
+    const url = "https://prod-73.westus.logic.azure.com:443/workflows/9f7be33c84d844ecadd0baaef7cd1a7e/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=faXNcybrgh-3IH3KD7V7wloZaKsSEshlye4N9siJdNw";
+    return fetchJSONData(infoToSend, url)
     .then(json => {
         console.log(json);
         return json
@@ -115,8 +121,7 @@ function externalFile() {
 /*
     This function will call upon our makeshift API to retrieve a promise of data that should be autofilled.
 */
-function fetchJSONData(contract) {
-    const url = "https://prod-73.westus.logic.azure.com:443/workflows/9f7be33c84d844ecadd0baaef7cd1a7e/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=faXNcybrgh-3IH3KD7V7wloZaKsSEshlye4N9siJdNw";
+function fetchJSONData(contract, url) {
     const headers = {
       'Content-Type': 'application/json'
     };
@@ -174,7 +179,7 @@ function autoPopulateGenInfo() {
 
     //Disable everything that needs to be disabled
     fd.fields().forEach(el => {
-        if(fd.field(el.internalName) !== '' && !editableItems.includes(el.internalName)) {
+        if(fd.field(el.internalName) !== '' && !editable.includes(el.internalName)) {
             fd.field(el.internalName).disabled = true;
         }
     });
