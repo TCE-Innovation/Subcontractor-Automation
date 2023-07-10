@@ -39,7 +39,7 @@ fd.rendered(function () {
 
     //Items that change on action
     onActionFields = ['sc.SQS.3.corpOrCoPartner', 
-    'B1Question',
+    'sc.SB1.isSB1Required',
     'sc.SF.FF3.3.reportType',
     'sc.SB.isSBRequired',
     'sc.SF.FF3.FF3Applicable',
@@ -172,21 +172,7 @@ function autoPopulateGenInfo() {
         }
 
         //Finally, we will fill each key in
-        Object.entries(data).forEach(el => {
-            const [elKey, elValue] = el;
-
-            try{
-                fd.field(elKey).value = elValue;
-                if (!editable.includes(elKey) && elKey !== "EditableItems") {
-                    fd.field(elKey).disabled = true;
-                }
-            }
-            catch(err) {
-                console.log("Failed Autofill Key: " + elKey + ". Value: "+ elValue);
-                //console.log("Does editable include elKey?: " + editable.includes(elKey));
-            }
-            
-        });
+        fd.data(data);
     })
 }
 /*
