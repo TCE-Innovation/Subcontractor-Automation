@@ -164,7 +164,9 @@ function autoPopulateGenInfo() {
 
         let editable = [];
         try{const {EditableItems: editableItems} = data;
-            editable = editableItems;
+            if (editableItems !== undefined) {
+                editable = editableItems;
+            }
         }
         catch(err) {
             console.log("There is nothing editable in this document");
@@ -182,7 +184,7 @@ function autoPopulateGenInfo() {
             }
             catch(err) {
                 console.log("Failed Autofill Key: " + elKey + ". Value: "+ elValue);
-                console.log("Does editable include elKey?: " + editable.includes(elKey));
+                //console.log("Does editable include elKey?: " + editable.includes(elKey));
             }
             
         });
@@ -296,85 +298,4 @@ function toggleReq(list, name) {
             field.required = !field.required;
         }
     })
-}
-
-
-// this function will generate divs that include the titles of containers and titles and values of fields within each one
-
-function genSummary() {
-
-    // get reference to parent container element
-
-    const summaryContainer = document.getElementById('data-preview');
-
-    summaryContainer.innerHTML = "";
-
-    // create table element
-
-    const table = document.createElement("table");
-
-
-
-
-    // create table header row
-
-    const headerRow = document.createElement("tr");
-
-    const headerTitles = ["Title", "Value"];
-
-
-
-
-    headerTitles.forEach(ht => {
-
-        const th = document.createElement("th");
-
-        th.textContent = ht;
-
-        headerRow.appendChild(th);
-
-    });
-
-    table.append(headerRow);
-
-
-
-
-    // create table rows for JSON data
-
-    fd.fields().forEach(field => {
-
-        const row = document.createElement("tr");
-
-
-
-
-        // create table cells for each property in JSON object
-
-        const cellTitle = document.createElement("td");
-
-       
-
-        //console.log(field.title);
-
-        //console.log(field.value);
-
-        const titleCell = document.createElement("td");
-
-        titleCell.textContent = field.title;
-
-        row.appendChild(titleCell);
-
-        const valueCell = document.createElement("td");
-
-        valueCell.textContent = field.value;
-
-        row.appendChild(valueCell);
-
-        table.appendChild(row);
-
-    })
-
-    summaryContainer.append(table);
-
 }
