@@ -267,7 +267,7 @@ function toggleFields() {
     toggleReq(formFields, "ScheduleBClass");
 
     //Toggles Schedule B1
-    if(fd.field('B1Question').value === 'I need to fill out Schedule B1'){
+    if(fd.field('sc.SB1.isSB1Required').value === 'I need to fill out Schedule B1'){
         $('.ScheduleB1Class').show();
     } else{
         $('.ScheduleB1Class').hide();
