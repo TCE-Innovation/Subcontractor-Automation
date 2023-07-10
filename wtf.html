@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p id="demo"></p>
+
+
+<script>
+    
+var script = document.createElement('script'); 
+ 
+script.src = '//code.jquery.com/jquery-1.11.0.min.js'; 
+document.getElementsByTagName('head')[0].appendChild(script);
+
+ 
+async function externalFile() {
+    const data = $.get('test.json');
+    return data;
+}
+    externalFile().then(function(data){
+        Object.keys(GI).forEach().forEach(el => {
+                console.log(GI.el);
+                fd.field(el).value = GI.el;
+            });
+    });
+
+
+</script>
+</body>
+</html> 
+
