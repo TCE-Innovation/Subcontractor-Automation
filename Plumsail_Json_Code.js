@@ -59,7 +59,6 @@ var executeOnce = (function() {
             executed = true;
             autoPopulateGenInfo();
             toggleFields();
-            genSummary();
             disableFields();
         }
     };
