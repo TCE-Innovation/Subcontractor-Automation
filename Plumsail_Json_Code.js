@@ -148,18 +148,18 @@ are not editable. Anything not mentioned is not named".
 function autoPopulateGenInfo() {
     //3 step process
     //Clear all items: nothing can be saved in memory
-    //  All items should also reset to editable
-    //Read the external JSON file and extract the array of editable content
-    //Loop through each field listed in the external JSON and find the corresponding field
-    //  If found, then autofill
-    //      Then, if the name does not appear on the editable array, disable the field
+    //Read the external JSON file and autofill all items
+    //Extract editable fields
+    //Loop through each field and control in the form. If the item has a value or is not on the "editable items" list, disable
     fd.clear();
     //Any un-autofilled code should be editable. Thus, we reset before disabling.
     fd.fields().forEach(el => {
         fd.field(el.internalName).disabled = false;
     });
 
+    //Extract the items that should be editable
     externalFile().then(function(data){
+        fd.data(data);
 
         let editable = [];
         try{const {EditableItems: editableItems} = data;
@@ -170,10 +170,19 @@ function autoPopulateGenInfo() {
         catch(err) {
             console.log("There is nothing editable in this document");
         }
-
-        //Finally, we will fill each key in
-        fd.data(data);
     })
+
+    //Disable everything that needs to be disabled
+    fd.fields().forEach(el => {
+        if(fd.field(el.internalName) !== '' && !editableItems.includes(el.internalName)) {
+            fd.field(el.internalName).disabled = true;
+        }
+    });
+    fd.controls().forEach(el => {
+        if(fd.field(el.internalName) !== '' && !editableItems.includes(el.internalName)) {
+            fd.field(el.internalName).disabled = true;
+        }
+    });
 }
 /*
     This function will toggle all the disappearing/conditional fields and update every them every time 
