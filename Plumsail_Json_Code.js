@@ -262,94 +262,55 @@ function toggleFields() {
     if (fd.field('sc.SQS.3.corpOrCoPartner').value === 'Corporation'){
         $('.SQSCorporation').show();
         $('.SQSCoPartnership').hide();
+        targetReq(true, "SQSCorporation");
+        targetReq(false, "SQSCoPartnership");
 
-        //https://community.plumsail.com/t/disable-all-fields-in-a-grid-container/10249/2
-        formFields.forEach(field => {
-            if (field.$el.closest('.SQSCorporation') != null) {
-                field.required = true;
-            }
-            if (field.$el.closest('.SQSCoPartnership') != null) {
-                field.required = false;
-            }
-        })
-
-        formControl.forEach(control => {
-            if (control.$el.closest('.SQSCorporation') != null) {
-                control.required = true;
-            }
-            if (control.$el.closest('.SQSCoPartnership') != null) {
-                control.required = false;
-            }
-        })
 
     } else if (fd.field('sc.SQS.3.corpOrCoPartner').value === 'Co-partnership') {
         $('.SQSCorporation').hide();
         $('.SQSCoPartnership').show();
 
-        formFields.forEach(field => {
-            if (field.$el.closest('.SQSCorporation') != null) {
-                field.required = false;
-            }
-            if (field.$el.closest('.SQSCoPartnership') != null) {
-                field.required = true;
-            }
-        })
-
-        formControl.forEach(control => {
-            if (control.$el.closest('.SQSCorporation') != null) {
-                control.required = false;
-            }
-            if (control.$el.closest('.SQSCoPartnership') != null) {
-                control.required = true;
-            }
-        })
+        targetReq(false, "SQSCorporation");
+        targetReq(true, "SQSCoPartnership");
 
     } else {
         $('.SQSCorporation').hide();
         $('.SQSCoPartnership').hide();
 
-        formFields.forEach(field => {
-            if (field.$el.closest('.SQSCorporation') != null) {
-                field.required = false;
-            }
-            if (field.$el.closest('.SQSCoPartnership') != null) {
-                field.required = false;
-            }
-        })
-        formControl.forEach(control => {
-            if (control.$el.closest('.SQSCorporation') != null) {
-                control.required = false;
-            }
-            if (control.$el.closest('.SQSCoPartnership') != null) {
-                control.required = false;
-            }
-        })
+        targetReq(false, "SQSCorporation");
+        targetReq(false, "SQSCoPartnership");
         
     }
 
     //Toggles Schedule F, Form F3
     if (fd.field('sc.SF.FF3.FF3Applicable').value === 'Not Applicable'){
         $('.ScheduleFFormF3').hide();
+        targetReq(false, "ScheduleFFormF3");
     } else {
         $('.ScheduleFFormF3').show();
+        targetReq(true, "ScheduleFFormF3");
     }
-    toggleReq(formFields, "ScheduleFFormF3");
+    
 
     //Toggles Schedule B
     if(fd.field('sc.SB.isSBRequired').value === 'Yes'){
         $('.ScheduleBClass').show();
+        targetReq(true, "ScheduleBClass");
     } else{
         $('.ScheduleBClass').hide();
+        targetReq(false, "ScheduleBClass");
     }
-    toggleReq(formFields, "ScheduleBClass");
+    
 
     //Toggles Schedule B1
     if(fd.field('sc.SB1.isSB1Required').value === 'I need to fill out Schedule B1'){
         $('.ScheduleB1Class').show();
+        targetReq(true, "ScheduleB1Class");
     } else{
         $('.ScheduleB1Class').hide();
+        targetReq(false, "ScheduleB1Class");
     }
-    toggleReq(formFields, "ScheduleB1Class");
+    
 
     //Toggles F3 Materials List
     if(fd.field('sc.SF.FF3.FF3Applicable').value === 'b. Material Change') {
@@ -361,16 +322,36 @@ function toggleFields() {
     //Toggles the visibiliy and requirement of the RMSA form
     if(fd.field('sc.RMSA.isRequired').value === 'Yes') {
         $('.RMSAControl').show();
+        targetReq(true, "RMSAControl");
     } else {
         $('.RMSAControl').hide();
+        targetReq(false, "RMSAControl");
     }
-    toggleReq(formFields, "RMSAControl");
 }
 //This function assists in removing the required for all fields inside a given list
-function toggleReq(list, name) {
-    list.forEach(field => {
+function targetReq(requiredOrNot, name) {
+    var formFields = fd.fields();
+    var formControl = fd.controls();
+
+        //https://community.plumsail.com/t/disable-all-fields-in-a-grid-container/10249/2
+
+    formFields.forEach(field => {
         if (field.$el.closest("." + name) != null) {
-            field.required = !field.required;
+            if (requiredOrNot) { //if Required = true
+                field.required = true;
+            } else {
+                field.required = false;
+            }
+        }
+    })
+
+    formControl.forEach(field => {
+        if (field.$el.closest("." + name) != null) {
+            if (requiredOrNot) { //if Required = true
+                field.required = true;
+            } else {
+                field.required = false;
+            }
         }
     })
 }
