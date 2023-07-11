@@ -203,11 +203,6 @@ function autoPopulateGenInfo() {
 
             }
 
-
-
-            if(fd.field(el.internalName).value !== null && !editable.includes(el.internalName)) {
-                fd.field(el.internalName).disabled = true;
-            }
         });
 
         //There are controls with no values, such as buttons, text, hml elements, etc
