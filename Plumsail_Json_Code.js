@@ -179,6 +179,7 @@ function autoPopulateGenInfo() {
         //When a single choice or multiple hcoice is empty, it is "". Thus, we must isolate these by internal name first
         //Text internal name: t.
         //Radial Internal Name: sc
+        //Drop Down: dd
         //If the respective values are filled, and they don't need to be edited, then they're set to disabled
 
         fd.fields().forEach(el => {
@@ -192,6 +193,7 @@ function autoPopulateGenInfo() {
                             }
                             break;
                         case "t.":
+                        case "dd":
                             if(fd.field(el.internalName).value !== null) {
                                 fd.field(el.internalName).disabled = true;
                             }
