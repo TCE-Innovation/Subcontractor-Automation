@@ -177,7 +177,7 @@ function autoPopulateGenInfo() {
 
             //Disable everything that needs to be disabled
         fd.fields().forEach(el => {
-            if(fd.field(el.internalName).value !== '' && !editable.includes(el.internalName)) {
+            if(fd.field(el.internalName).value !== null && !editable.includes(el.internalName)) {
                 fd.field(el.internalName).disabled = true;
             }
         });
