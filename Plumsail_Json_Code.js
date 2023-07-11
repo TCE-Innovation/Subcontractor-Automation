@@ -313,10 +313,12 @@ function toggleFields() {
     
 
     //Toggles F3 Materials List
-    if(fd.field('sc.SF.FF3.FF3Applicable').value === 'b. Material Change') {
+    if(fd.field('sc.SF.FF3.3.reportType').value === 'b. Material Change') {
         $('.ScheduleF3MaterialChange').show();
+        targetReq(false, "ScheduleF3MaterialChange");
     } else{
         $('.ScheduleF3MaterialChange').hide();
+        targetReq(false, "ScheduleF3MaterialChange");
     }
 
     //Toggles the visibiliy and requirement of the RMSA form
