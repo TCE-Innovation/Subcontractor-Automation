@@ -180,6 +180,7 @@ function autoPopulateGenInfo() {
         //Text internal name: t.
         //Radial Internal Name: sc
         //Drop Down: dd
+        //masked text: mt
         //If the respective values are filled, and they don't need to be edited, then they're set to disabled
 
         fd.fields().forEach(el => {
@@ -194,6 +195,7 @@ function autoPopulateGenInfo() {
                             break;
                         case "t.":
                         case "dd":
+                        case "mt":
                             if(fd.field(el.internalName).value !== null) {
                                 fd.field(el.internalName).disabled = true;
                             }
