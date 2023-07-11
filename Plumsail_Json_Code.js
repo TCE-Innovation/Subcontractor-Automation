@@ -256,18 +256,29 @@ function disableFields() {
 //And call upong specific portions in the object
 function toggleFields() {
     var formFields = fd.fields();
+    var formControl = fd.controls();
 
     //Toggles the SQS Form
     if (fd.field('sc.SQS.3.corpOrCoPartner').value === 'Corporation'){
         $('.SQSCorporation').show();
         $('.SQSCoPartnership').hide();
 
+        //https://community.plumsail.com/t/disable-all-fields-in-a-grid-container/10249/2
         formFields.forEach(field => {
             if (field.$el.closest('.SQSCorporation') != null) {
                 field.required = true;
             }
             if (field.$el.closest('.SQSCoPartnership') != null) {
                 field.required = false;
+            }
+        })
+
+        formControl.forEach(control => {
+            if (control.$el.closest('.SQSCorporation') != null) {
+                control.required = true;
+            }
+            if (control.$el.closest('.SQSCoPartnership') != null) {
+                control.required = false;
             }
         })
 
@@ -284,6 +295,15 @@ function toggleFields() {
             }
         })
 
+        formControl.forEach(control => {
+            if (control.$el.closest('.SQSCorporation') != null) {
+                control.required = false;
+            }
+            if (control.$el.closest('.SQSCoPartnership') != null) {
+                control.required = true;
+            }
+        })
+
     } else {
         $('.SQSCorporation').hide();
         $('.SQSCoPartnership').hide();
@@ -296,6 +316,15 @@ function toggleFields() {
                 field.required = false;
             }
         })
+        formControl.forEach(control => {
+            if (control.$el.closest('.SQSCorporation') != null) {
+                control.required = false;
+            }
+            if (control.$el.closest('.SQSCoPartnership') != null) {
+                control.required = false;
+            }
+        })
+        
     }
 
     //Toggles Schedule F, Form F3
