@@ -181,10 +181,20 @@ function autoPopulateGenInfo() {
                 fd.field(el.internalName).disabled = true;
             }
         });
+
+        //There are controls with no values, such as buttons, text, hml elements, etc
+        //We have formatted all data tables starting with dt. We must first isolate this.
+        //Then, we check if there is anything in the data table. If there is nothing, we should not disable the field.
+        //We will also check if it needs to be edited
         fd.controls().forEach(el => {
-            if(fd.control(el.internalName).value.length > 0 && !editable.includes(el.internalName)) {
-                fd.control(el.internalName).disabled = true;
+            try{
+                if(el.internalName.substr(0, 2) === 'dt' && fd.control(el.internalName).value.length > 0 && !editable.includes(el.internalName)) {
+                    fd.control(el.internalName).disabled = true;
+                }
+            } catch (err) {
+                console.log(err);
             }
+
         });
     })
 
