@@ -175,8 +175,36 @@ function autoPopulateGenInfo() {
             console.log("There is nothing editable in this document");
         }
 
-            //Disable everything that needs to be disabled
+        //There are fields with different elements. If a text or note is unfilled, it is simply null
+        //When a single choice or multiple hcoice is empty, it is "". Thus, we must isolate these by internal name first
+        //Text internal name: t.
+        //Radial Internal Name: sc
+        //If the respective values are filled, and they don't need to be edited, then they're set to disabled
+
         fd.fields().forEach(el => {
+            try {
+                let internalName = el.internalName;
+                if (!editable.includes(el.internalName)) {
+                    switch(internalName.substr(0, 2)) {
+                        case "sc":
+                            if(fd.field(el.internalName).value !== "") {
+                                fd.field(el.internalName).disabled = true;
+                            }
+                        break;
+                        case "t.":
+                            if(fd.field(el.internalName).value !== null) {
+                                fd.field(el.internalName).disabled = true;
+                            }
+                        default:
+                            fd.field(el.internalName).disabled = false;
+                    }
+                }
+            } catch (err) {
+
+            }
+
+
+
             if(fd.field(el.internalName).value !== null && !editable.includes(el.internalName)) {
                 fd.field(el.internalName).disabled = true;
             }
