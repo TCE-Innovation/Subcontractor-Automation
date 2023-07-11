@@ -178,9 +178,12 @@ function autoPopulateGenInfo() {
         //There are fields with different elements. If a text or note is unfilled, it is simply null
         //When a single choice or multiple hcoice is empty, it is "". Thus, we must isolate these by internal name first
         //Text internal name: t.
+        //Note: n.
         //Radial Internal Name: sc
         //Drop Down: dd
         //masked text: mt
+        //date: d.
+        //num: nu
         //If the respective values are filled, and they don't need to be edited, then they're set to disabled
 
         fd.fields().forEach(el => {
@@ -189,6 +192,7 @@ function autoPopulateGenInfo() {
                 if (!editable.includes(el.internalName)) {
                     switch(internalName.substr(0, 2)) {
                         case "sc":
+                        case "n.":
                             if(fd.field(el.internalName).value !== "") {
                                 fd.field(el.internalName).disabled = true;
                             }
@@ -196,6 +200,8 @@ function autoPopulateGenInfo() {
                         case "t.":
                         case "dd":
                         case "mt":
+                        case "d.":
+                        case "nu":
                             if(fd.field(el.internalName).value !== null) {
                                 fd.field(el.internalName).disabled = true;
                             }
