@@ -188,7 +188,8 @@ function autoPopulateGenInfo() {
         //We will also check if it needs to be edited
         fd.controls().forEach(el => {
             try{
-                if(el.internalName.substr(0, 2) === 'dt' && fd.control(el.internalName).value.length > 0 && !editable.includes(el.internalName)) {
+                let internalName = el.internalName;
+                if(internalName.substr(0, 2) === 'dt' && fd.control(el.internalName).value.length > 0 && !editable.includes(el.internalName)) {
                     fd.control(el.internalName).disabled = true;
                 }
             } catch (err) {
