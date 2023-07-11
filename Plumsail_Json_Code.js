@@ -47,14 +47,13 @@ fd.rendered(function () {
     onActionControl = ['InsurancePremium'];
 
     onActionFields.forEach(field => fd.field(field).$on('change',toggleFields));
-    onActionControl.forEach(control => fd.control(control).$on('change', updateControls));    
-    //This item ontrols the summary tab at the very end.
-    //fd.fields().forEach(field => field.$on('change', genSummary));
+    onActionControl.forEach(control => fd.control(control).$on('change', updateControls));
 });
 
 fd.beforeSave(function () {
+    url = "https://prod-102.westus.logic.azure.com:443/workflows/1128de5c7a7e488e9e88a34f00eb974b/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=B_VCWVNlWNAnOJfI9ytYCVZGVLNLkvYBq2iMluENAI0";
     data = fd.data();
-
+    fetchJSONData(data, url)
 });
 
 var executeOnce = (function() {
@@ -175,19 +174,21 @@ function autoPopulateGenInfo() {
         catch(err) {
             console.log("There is nothing editable in this document");
         }
+
+            //Disable everything that needs to be disabled
+        fd.fields().forEach(el => {
+            if(fd.field(el.internalName) !== '' && !editable.includes(el.internalName)) {
+                fd.field(el.internalName).disabled = true;
+            }
+        });
+        fd.controls().forEach(el => {
+            if(fd.field(el.internalName) !== '' && !editableItems.includes(el.internalName)) {
+                fd.field(el.internalName).disabled = true;
+            }
+        });
     })
 
-    //Disable everything that needs to be disabled
-    fd.fields().forEach(el => {
-        if(fd.field(el.internalName) !== '' && !editable.includes(el.internalName)) {
-            fd.field(el.internalName).disabled = true;
-        }
-    });
-    fd.controls().forEach(el => {
-        if(fd.field(el.internalName) !== '' && !editableItems.includes(el.internalName)) {
-            fd.field(el.internalName).disabled = true;
-        }
-    });
+    
 }
 /*
     This function will toggle all the disappearing/conditional fields and update every them every time 
