@@ -190,11 +190,12 @@ function autoPopulateGenInfo() {
                             if(fd.field(el.internalName).value !== "") {
                                 fd.field(el.internalName).disabled = true;
                             }
-                        break;
+                            break;
                         case "t.":
                             if(fd.field(el.internalName).value !== null) {
                                 fd.field(el.internalName).disabled = true;
                             }
+                            break;
                         default:
                             fd.field(el.internalName).disabled = false;
                     }
