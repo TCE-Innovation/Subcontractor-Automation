@@ -64,6 +64,7 @@ var executeOnce = (function() {
             autoPopulateGenInfo();
             toggleFields();
             disableFields();
+            updateControls();
         }
     };
 })();
@@ -192,7 +193,6 @@ function autoPopulateGenInfo() {
                 if (!editable.includes(el.internalName)) {
                     switch(internalName.substr(0, 2)) {
                         case "sc":
-                        case "n.":
                             if(fd.field(el.internalName).value !== "") {
                                 fd.field(el.internalName).disabled = true;
                             }
@@ -202,6 +202,7 @@ function autoPopulateGenInfo() {
                         case "mt":
                         case "d.":
                         case "nu":
+                        case "n.":
                             if(fd.field(el.internalName).value !== null) {
                                 fd.field(el.internalName).disabled = true;
                             }
