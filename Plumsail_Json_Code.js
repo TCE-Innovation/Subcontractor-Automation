@@ -315,7 +315,7 @@ function toggleFields() {
     //Toggles F3 Materials List
     if(fd.field('sc.SF.FF3.3.reportType').value === 'b. Material Change') {
         $('.ScheduleF3MaterialChange').show();
-        targetReq(false, "ScheduleF3MaterialChange");
+        targetReq(true, "ScheduleF3MaterialChange");
     } else{
         $('.ScheduleF3MaterialChange').hide();
         targetReq(false, "ScheduleF3MaterialChange");
