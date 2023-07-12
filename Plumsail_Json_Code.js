@@ -325,12 +325,29 @@ function toggleFields() {
     }
 
     //Toggles the visibiliy and requirement of the RMSA form
-    if(fd.field('sc.RMSA.isRequired').value === 'Yes') {
-        $('.RMSAControl').show();
-        targetReq(true, "RMSAControl");
-    } else {
-        $('.RMSAControl').hide();
-        targetReq(false, "RMSAControl");
+    showHideFields('sc.RMSA.isRequired', 'Yes', 'RMSAControl');
+    // if(fd.field('sc.RMSA.isRequired').value === 'Yes') {
+    //     $('.RMSAControl').show();
+    //     targetReq(true, "RMSAControl");
+    // } else {
+    //     $('.RMSAControl').hide();
+    //     targetReq(false, "RMSAControl");
+    // }
+}
+
+//fieldName: The internal name of the field. What can be interacted with by the user.
+
+function showHideFields(fieldName, showValue, className) {
+    try{
+        if(fd.field(fieldName).value === 'showValue') {
+            $("." + className).show();
+            targetReq(true, "className");
+        } else {
+            $("." + className).hide();
+            targetReq(false, "className");
+        }
+    } catch (err) {
+        console.log(err)
     }
 }
 //This function assists in removing the required for all fields inside a given class
