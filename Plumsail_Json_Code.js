@@ -308,10 +308,10 @@ function showHideFields(fieldName, showValue, className) {
     try{
         if(fd.field(fieldName).value === showValue) {
             $("." + className).show();
-            targetReq(true, "className");
+            targetReq(true, className);
         } else {
             $("." + className).hide();
-            targetReq(false, "className");
+            targetReq(false, className);
         }
     } catch (err) {
         console.log(err)
