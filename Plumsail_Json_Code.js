@@ -69,6 +69,8 @@ var executeOnce = (function() {
     };
 })();
  
+
+
 function updateControls() {
     fd.control("InsurancePremium").$on('change', function(value){
     //Autopopulates the premium row in OCIP B Section II
@@ -244,6 +246,7 @@ function autoPopulateGenInfo() {
 
 
 function disableFields() {
+    //This affects OCIP B
     // make Unit Price column read-only
     const premiumColumn = fd.control("InsurancePremium").columns.find(c => c.field === 'premium');
     premiumColumn.editable = () => false;
@@ -283,12 +286,12 @@ function toggleFields() {
     }
 
     //Toggles Schedule F, Form F3
-    if (fd.field('sc.SF.FF3.FF3Applicable').value === 'Not Applicable'){
-        $('.ScheduleFFormF3').hide();
-        targetReq(false, "ScheduleFFormF3");
-    } else {
+    if (fd.field('sc.SF.FF3.FF3Applicable').value === 'Applicable'){
         $('.ScheduleFFormF3').show();
         targetReq(true, "ScheduleFFormF3");
+    } else {
+        $('.ScheduleFFormF3').hide();
+        targetReq(false, "ScheduleFFormF3");
     }
     
 
@@ -330,7 +333,7 @@ function toggleFields() {
         targetReq(false, "RMSAControl");
     }
 }
-//This function assists in removing the required for all fields inside a given list
+//This function assists in removing the required for all fields inside a given class
 function targetReq(requiredOrNot, name) {
     var formFields = fd.fields();
     var formControl = fd.controls();
@@ -339,21 +342,13 @@ function targetReq(requiredOrNot, name) {
 
     formFields.forEach(field => {
         if (field.$el.closest("." + name) != null) {
-            if (requiredOrNot) { //if Required = true
-                field.required = true;
-            } else {
-                field.required = false;
-            }
+                field.required = requiredOrNot;
         }
     })
 
     formControl.forEach(field => {
         if (field.$el.closest("." + name) != null) {
-            if (requiredOrNot) { //if Required = true
-                field.required = true;
-            } else {
-                field.required = false;
-            }
+            field.required = requiredOrNot;
         }
     })
 }
