@@ -262,81 +262,48 @@ function toggleFields() {
     var formControl = fd.controls();
 
     //Toggles the SQS Form
-    if (fd.field('sc.SQS.3.corpOrCoPartner').value === 'Corporation'){
-        $('.SQSCorporation').show();
-        $('.SQSCoPartnership').hide();
-        targetReq(true, "SQSCorporation");
-        targetReq(false, "SQSCoPartnership");
+    showHideFields('sc.SQS.3.corpOrCoPartner', 'Corporation', "SQSCorporation");
+    showHideFields('sc.SQS.3.corpOrCoPartner', 'Co-partnership', "SQSCoPartnership");
+    // if (fd.field('sc.SQS.3.corpOrCoPartner').value === 'Corporation'){
+    //     $('.SQSCorporation').show();
+    //     $('.SQSCoPartnership').hide();
+    //     targetReq(true, "SQSCorporation");
+    //     targetReq(false, "SQSCoPartnership");
 
 
-    } else if (fd.field('sc.SQS.3.corpOrCoPartner').value === 'Co-partnership') {
-        $('.SQSCorporation').hide();
-        $('.SQSCoPartnership').show();
+    // } else if (fd.field('sc.SQS.3.corpOrCoPartner').value === 'Co-partnership') {
+    //     $('.SQSCorporation').hide();
+    //     $('.SQSCoPartnership').show();
 
-        targetReq(false, "SQSCorporation");
-        targetReq(true, "SQSCoPartnership");
+    //     targetReq(false, "SQSCorporation");
+    //     targetReq(true, "SQSCoPartnership");
 
-    } else {
-        $('.SQSCorporation').hide();
-        $('.SQSCoPartnership').hide();
+    // } else {
+    //     $('.SQSCorporation').hide();
+    //     $('.SQSCoPartnership').hide();
 
-        targetReq(false, "SQSCorporation");
-        targetReq(false, "SQSCoPartnership");
+    //     targetReq(false, "SQSCorporation");
+    //     targetReq(false, "SQSCoPartnership");
         
-    }
+    // }
 
     //Toggles Schedule F, Form F3
-    if (fd.field('sc.SF.FF3.FF3Applicable').value === 'Applicable'){
-        $('.ScheduleFFormF3').show();
-        targetReq(true, "ScheduleFFormF3");
-    } else {
-        $('.ScheduleFFormF3').hide();
-        targetReq(false, "ScheduleFFormF3");
-    }
-    
+    showHideFields('sc.SF.FF3.FF3Applicable', 'Applicable', "ScheduleFFormF3");    
 
     //Toggles Schedule B
-    if(fd.field('sc.SB.isSBRequired').value === 'Yes'){
-        $('.ScheduleBClass').show();
-        targetReq(true, "ScheduleBClass");
-    } else{
-        $('.ScheduleBClass').hide();
-        targetReq(false, "ScheduleBClass");
-    }
-    
+    showHideFields('sc.SB.isSBRequired', 'Yes', "ScheduleBClass");
 
     //Toggles Schedule B1
-    if(fd.field('sc.SB1.isSB1Required').value === 'I need to fill out Schedule B1'){
-        $('.ScheduleB1Class').show();
-        targetReq(true, "ScheduleB1Class");
-    } else{
-        $('.ScheduleB1Class').hide();
-        targetReq(false, "ScheduleB1Class");
-    }
-    
-
+    showHideFields('sc.SB1.isSB1Required', 'I need to fill out Schedule B1', 'ScheduleB1Class');
+  
     //Toggles F3 Materials List
-    if(fd.field('sc.SF.FF3.3.reportType').value === 'b. Material Change') {
-        $('.ScheduleF3MaterialChange').show();
-        targetReq(true, "ScheduleF3MaterialChange");
-    } else{
-        $('.ScheduleF3MaterialChange').hide();
-        targetReq(false, "ScheduleF3MaterialChange");
-    }
+    showHideFields('sc.SF.FF3.3.reportType', 'b. Material Change', 'ScheduleF3MaterialChange');
 
     //Toggles the visibiliy and requirement of the RMSA form
     showHideFields('sc.RMSA.isRequired', 'Yes', 'RMSAControl');
-    // if(fd.field('sc.RMSA.isRequired').value === 'Yes') {
-    //     $('.RMSAControl').show();
-    //     targetReq(true, "RMSAControl");
-    // } else {
-    //     $('.RMSAControl').hide();
-    //     targetReq(false, "RMSAControl");
-    // }
 }
 
 //fieldName: The internal name of the field. What can be interacted with by the user.
-
 function showHideFields(fieldName, showValue, className) {
     try{
         if(fd.field(fieldName).value === showValue) {
