@@ -169,7 +169,7 @@ function autoPopulateGenInfo() {
         fd.data(data);
 
         let editable = [];
-        try{const {EditableItems: editableItems} = data;
+        try{const {editableItems: editableItems} = data;
             if (editableItems !== undefined) {
                 editable = editableItems;
             }
@@ -339,7 +339,7 @@ function toggleFields() {
 
 function showHideFields(fieldName, showValue, className) {
     try{
-        if(fd.field(fieldName).value === 'showValue') {
+        if(fd.field(fieldName).value === showValue) {
             $("." + className).show();
             targetReq(true, "className");
         } else {
