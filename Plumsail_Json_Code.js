@@ -44,7 +44,7 @@ fd.rendered(function () {
     'sc.SB.isSBRequired',
     'sc.SF.FF3.FF3Applicable',
     'sc.RMSA.isRequired'];
-    onActionControl = ['InsurancePremium'];
+    onActionControl = ['dt.OCIP.FB.S2.insurancePremium'];
 
     onActionFields.forEach(field => fd.field(field).$on('change',toggleFields));
     onActionControl.forEach(control => fd.control(control).$on('change', updateControls));
@@ -62,7 +62,7 @@ var executeOnce = (function() {
         if (!executed) {
             executed = true;
             autoPopulateGenInfo();
-            toggleFields();
+            //toggleFields();
             disableFields();
             updateControls();
         }
@@ -72,11 +72,11 @@ var executeOnce = (function() {
 
 
 function updateControls() {
-    fd.control("InsurancePremium").$on('change', function(value){
+    fd.control("dt.OCIP.FB.S2.insurancePremium").$on('change', function(value){
     //Autopopulates the premium row in OCIP B Section II
     if (value) { //If there are records in the table
         for (var i = 0; i < value.length; i++) {
-            value[i].set('premium', value[i].payroll * value[i].wCRate / 100);
+            value[i].set('colnumOCIPFB2insurancePremiumPremium', value[i].payroll * value[i].wCRate / 100);
         }
     }
     var workHours = 0;
@@ -91,9 +91,9 @@ function updateControls() {
         }
     }
 
-    fd.field("WorkHoursTotal").value = workHours;
-    fd.field("EstimatedLimitedPayrollTotal").value = estPayroll;
-    fd.field("PremiumTotal").value = premium;
+    fd.field("num.OCIP.FB.S2.workHoursTotal").value = workHours;
+    fd.field("num.OCIP.FB.S2.limitedPayrollTotal").value = estPayroll;
+    fd.field("num.OCIP.FB.S2.premiumTotal").value = premium;
 });
 }
 
@@ -187,6 +187,7 @@ function autoPopulateGenInfo() {
         //masked text: mt
         //date: d.
         //num: nu
+        //Multiple Choice: mc
         //If the respective values are filled, and they don't need to be edited, then they're set to disabled
 
         fd.fields().forEach(el => {
@@ -194,11 +195,13 @@ function autoPopulateGenInfo() {
                 let internalName = el.internalName;
                 if (!editable.includes(el.internalName)) {
                     switch(internalName.substr(0, 2)) {
+                        //When a single choice has not been selected, its value is ""
                         case "sc":
                             if(fd.field(el.internalName).value !== "") {
                                 fd.field(el.internalName).disabled = true;
                             }
                             break;
+                        //When the following has not been edited by the user, its value is null
                         case "t.":
                         case "dd":
                         case "mt":
@@ -209,6 +212,11 @@ function autoPopulateGenInfo() {
                                 fd.field(el.internalName).disabled = true;
                             }
                             break;
+                        //When the following has not been edited by the user, its length is 0
+                        case "mc":
+                            if (fd.field(el.internalName).value.length !== 0) {
+                                fd.field()(el.internalName).disabled = true;
+                            }
                         default:
                             fd.field(el.internalName).disabled = false;
                     }
@@ -230,7 +238,7 @@ function autoPopulateGenInfo() {
                     fd.control(el.internalName).disabled = true;
                 }
             } catch (err) {
-                console.log(err);
+                //console.log(err);
             }
 
         });
@@ -238,21 +246,16 @@ function autoPopulateGenInfo() {
 
     
 }
-/*
-    This function will toggle all the disappearing/conditional fields and update every them every time 
-    it is called. When called, it will attempt to hide/show fields that correspond to the css class.
 
-*/
-
-
+//This function disables the fields in OCIP B, which are automatically calculated
 function disableFields() {
     //This affects OCIP B
     // make Unit Price column read-only
-    const premiumColumn = fd.control("InsurancePremium").columns.find(c => c.field === 'premium');
+    const premiumColumn = fd.control("dt.OCIP.FB.S2.insurancePremium").columns.find(c => c.field === 'colnumOCIPFB2insurancePremiumPremium');
     premiumColumn.editable = () => false;
-    fd.field("WorkHoursTotal").disabled = true;
-    fd.field("EstimatedLimitedPayrollTotal").disabled = true;
-    fd.field("PremiumTotal").disabled = true;
+    fd.field("num.OCIP.FB.S2.workHoursTotal").disabled = true;
+    fd.field("num.OCIP.FB.S2.limitedPayrollTotal").disabled = true;
+    fd.field("num.OCIP.FB.S2.premiumTotal").disabled = true;
 }
 
 //To be more efficient (And not run everything all at once) turn this function into an object
@@ -264,28 +267,6 @@ function toggleFields() {
     //Toggles the SQS Form
     showHideFields('sc.SQS.3.corpOrCoPartner', 'Corporation', "SQSCorporation");
     showHideFields('sc.SQS.3.corpOrCoPartner', 'Co-partnership', "SQSCoPartnership");
-    // if (fd.field('sc.SQS.3.corpOrCoPartner').value === 'Corporation'){
-    //     $('.SQSCorporation').show();
-    //     $('.SQSCoPartnership').hide();
-    //     targetReq(true, "SQSCorporation");
-    //     targetReq(false, "SQSCoPartnership");
-
-
-    // } else if (fd.field('sc.SQS.3.corpOrCoPartner').value === 'Co-partnership') {
-    //     $('.SQSCorporation').hide();
-    //     $('.SQSCoPartnership').show();
-
-    //     targetReq(false, "SQSCorporation");
-    //     targetReq(true, "SQSCoPartnership");
-
-    // } else {
-    //     $('.SQSCorporation').hide();
-    //     $('.SQSCoPartnership').hide();
-
-    //     targetReq(false, "SQSCorporation");
-    //     targetReq(false, "SQSCoPartnership");
-        
-    // }
 
     //Toggles Schedule F, Form F3
     showHideFields('sc.SF.FF3.FF3Applicable', 'Applicable', "ScheduleFFormF3");    
