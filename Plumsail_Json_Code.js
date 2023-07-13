@@ -43,8 +43,10 @@ fd.rendered(function () {
     'sc.SF.FF3.3.reportType',
     'sc.SB.isSBRequired',
     'sc.SF.FF3.FF3Applicable',
-    'sc.RMSA.isRequired',
-    'sc.SQS.readAndUnderstood',
+    'sc.RMSA.isRequired'
+    ]
+    onActionControl = ['dt.OCIP.FB.S2.insurancePremium'];
+    pdfControls = ['sc.SQS.readAndUnderstood',
     'tog.SQS.hidePDF',
     'sc.SF.readAndUnderstood',
     'tog.SF.hidePDF',
@@ -61,9 +63,10 @@ fd.rendered(function () {
     'sc.OCIPB.readAndUnderstood',
     'tog.OCIPB.hidePDF'
     ];
-    onActionControl = ['dt.OCIP.FB.S2.insurancePremium'];
+    
 
     onActionFields.forEach(field => fd.field(field).$on('change',toggleFields));
+    pdfControls.forEach(field => fd.field(field).$on('change',toggleFields));
     onActionControl.forEach(control => fd.control(control).$on('change', updateControls));
 });
 
