@@ -269,13 +269,13 @@ function toggleFields() {
     showHideFields('sc.SQS.3.corpOrCoPartner', 'Co-partnership', "SQSCoPartnership");
 
     //Toggles Schedule F, Form F3
-    showHideFields('sc.SF.FF3.FF3Applicable', 'Applicable', "ScheduleFFormF3");    
+    showHideFields('sc.SF.FF3.FF3Applicable', 'Yes', "ScheduleFFormF3");    
 
     //Toggles Schedule B
     showHideFields('sc.SB.isSBRequired', 'Yes', "ScheduleBClass");
 
     //Toggles Schedule B1
-    showHideFields('sc.SB1.isSB1Required', 'I need to fill out Schedule B1', 'ScheduleB1Class');
+    showHideFields('sc.SB1.isSB1Required', 'Yes', 'ScheduleB1Class');
   
     //Toggles F3 Materials List
     showHideFields('sc.SF.FF3.3.reportType', 'b. Material Change', 'ScheduleF3MaterialChange');
@@ -284,8 +284,8 @@ function toggleFields() {
     showHideFields('sc.RMSA.isRequired', 'Yes', 'RMSAControl');
 }
 
-//fieldName: The internal name of the field. What can be interacted with by the user.
-function showHideFields(fieldName, showValue, className) {
+//showHideFields toggles the visibility of all fields inside a given class
+function showHideFields(fieldName, showValue, className, changeIfRequired = true) {
     try{
         if(fd.field(fieldName).value === showValue) {
             $("." + className).show();
