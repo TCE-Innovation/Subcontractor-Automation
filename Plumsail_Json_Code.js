@@ -202,10 +202,10 @@ function autoPopulateGenInfo() {
                         //I have also seen it as null
                         //To cover all possible scenerios, it has its own case statement that checks for both
                         case "sc":
-                            if(fd.field(el.internalName).value !== "") {
-                                fd.field(el.internalName).disabled = true;
-                            } else if(fd.field(el.internalName).value !== null) {
-                                    fd.field(el.internalName).disabled = true;
+                            if(fd.field(el.internalName).value === "") {
+                                fd.field(el.internalName).disabled = false;
+                            } else if(fd.field(el.internalName).value === null) {
+                                    fd.field(el.internalName).disabled = false;
                             }
                             break;
                         //When the following has not been edited by the user, its value is null
@@ -290,7 +290,7 @@ function toggleFields() {
 
     //Form Visibility after reviewing PDF
     showHideFields('sc.SQS.readAndUnderstood', 'Yes', 'SQSQuestions', false);
-    showHideFields('tog.SQS.hidePDF', true, 'SQSPDF', false);
+    showHideFields('tog.SQS.hidePDF', false, 'SQSPDF', false);
 }
 
 //showHideFields toggles the visibility of all fields inside a given class
