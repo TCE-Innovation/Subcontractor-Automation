@@ -45,7 +45,21 @@ fd.rendered(function () {
     'sc.SF.FF3.FF3Applicable',
     'sc.RMSA.isRequired',
     'sc.SQS.readAndUnderstood',
-    'tog.SQS.hidePDF'
+    'tog.SQS.hidePDF',
+    'sc.SF.readAndUnderstood',
+    'tog.SF.hidePDF',
+    'sc.SF1.readAndUnderstood',
+    'tog.SF1.hidePDF',
+    'sc.RMSA.readAndUnderstood',
+    'tog.RMSA.hidePDF',
+    'sc.SB.readAndUnderstood',
+    'tog.SB.hidePDF',
+    'sc.SB1.readAndUnderstood',
+    'tog.SB1.hidePDF',
+    'sc.OCIPA.readAndUnderstood',
+    'tog.OCIPA.hidePDF',
+    'sc.OCIPB.readAndUnderstood',
+    'tog.OCIPB.hidePDF'
     ];
     onActionControl = ['dt.OCIP.FB.S2.insurancePremium'];
 
