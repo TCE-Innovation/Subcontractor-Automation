@@ -196,13 +196,16 @@ function autoPopulateGenInfo() {
                 if (!editable.includes(el.internalName)) {
                     switch(internalName.substr(0, 2)) {
                         //When a single choice has not been selected, its value is ""
-                        
-                            // if(fd.field(el.internalName).value !== "") {
-                            //     fd.field(el.internalName).disabled = true;
-                            // }
-                            // break;
-                        //When the following has not been edited by the user, its value is null
+                        //I have also seen it as null
+                        //To cover all possible scenerios, it has its own case statement that checks for both
                         case "sc":
+                            if(fd.field(el.internalName).value !== "") {
+                                fd.field(el.internalName).disabled = true;
+                            } else if(fd.field(el.internalName).value !== null) {
+                                    fd.field(el.internalName).disabled = true;
+                            }
+                            break;
+                        //When the following has not been edited by the user, its value is null
                         case "t.":
                         case "dd":
                         case "mt":
