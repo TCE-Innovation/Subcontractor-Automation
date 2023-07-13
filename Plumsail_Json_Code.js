@@ -289,8 +289,37 @@ function toggleFields() {
     showHideFields('sc.RMSA.isRequired', 'Yes', 'RMSAControl');
 
     //Form Visibility after reviewing PDF
+    //SQS
     showHideFields('sc.SQS.readAndUnderstood', 'Yes', 'SQSQuestions', false);
     showHideFields('tog.SQS.hidePDF', false, 'SQSPDF', false);
+
+    //Schedule F
+    showHideFields('sc.SF.readAndUnderstood', 'Yes', 'SFQuestions', false);
+    showHideFields('tog.SF.hidePDF', false, 'SFPDF', false);
+
+    //Schedule F1
+    showHideFields('sc.SF1.readAndUnderstood', 'Yes', 'SF1Questions', false);
+    showHideFields('tog.SF1.hidePDF', false, 'SF1PDF', false);
+
+    //RMSA
+    showHideFields('sc.RMSA.readAndUnderstood', 'Yes', 'RMSAQuestions', false);
+    showHideFields('tog.RMSA.hidePDF', false, 'RMSAPDF', false);
+
+    //Schedule B
+    showHideFields('sc.SB.readAndUnderstood', 'Yes', 'SBQuestions', false);
+    showHideFields('tog.SB.hidePDF', false, 'SBPDF', false);
+
+    //Schedule B1
+    showHideFields('sc.SB1.readAndUnderstood', 'Yes', 'SB1Questions', false);
+    showHideFields('tog.SB1.hidePDF', false, 'SB1PDF', false);
+
+    //OCIP A
+    showHideFields('sc.OCIPA.readAndUnderstood', 'Yes', 'OCIPAQuestions', false);
+    showHideFields('tog.OCIPA.hidePDF', false, 'OCIPAPDF', false);
+
+    //OCIP B
+    showHideFields('sc.OCIPB.readAndUnderstood', 'Yes', 'OCIPBQuestions', false);
+    showHideFields('tog.OCIPB.hidePDF', false, 'OCIPBPDF', false);
 }
 
 //showHideFields toggles the visibility of all fields inside a given class
