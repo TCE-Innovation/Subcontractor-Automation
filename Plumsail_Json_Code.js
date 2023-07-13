@@ -283,6 +283,8 @@ function toggleFields() {
     showHideFields('sc.RMSA.isRequired', 'Yes', 'RMSAControl');
 
     //Form Visibility after reviewing PDF
+    showHideFields('sc.SQS.readAndUnderstood', 'Yes', 'SQSQuestions', false);
+    showHideFields('tog.SQS.hidePDF', true, 'SQSPDF', false);
 }
 
 //showHideFields toggles the visibility of all fields inside a given class
