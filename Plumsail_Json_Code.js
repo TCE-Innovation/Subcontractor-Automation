@@ -43,7 +43,10 @@ fd.rendered(function () {
     'sc.SF.FF3.3.reportType',
     'sc.SB.isSBRequired',
     'sc.SF.FF3.FF3Applicable',
-    'sc.RMSA.isRequired'];
+    'sc.RMSA.isRequired',
+    'sc.SQS.readAndUnderstood',
+    'tog.SQS.hidePDF'
+    ];
     onActionControl = ['dt.OCIP.FB.S2.insurancePremium'];
 
     onActionFields.forEach(field => fd.field(field).$on('change',toggleFields));
