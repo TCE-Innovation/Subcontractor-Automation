@@ -5,7 +5,7 @@ fd.rendered(function () {
 
 async function externalFile() {
     const queryString = window.location.search;
-    urlOfJSON = "https://kyleh2420.github.io/initialization.json";
+    urlOfJSON = "https://kyleh2420.github.io/Submissions/initialization.json";
     const data = $.get(urlOfJSON);
     return data;
 }
