@@ -196,12 +196,13 @@ function autoPopulateGenInfo() {
                 if (!editable.includes(el.internalName)) {
                     switch(internalName.substr(0, 2)) {
                         //When a single choice has not been selected, its value is ""
-                        case "sc":
-                            if(fd.field(el.internalName).value !== "") {
-                                fd.field(el.internalName).disabled = true;
-                            }
-                            break;
+                        
+                            // if(fd.field(el.internalName).value !== "") {
+                            //     fd.field(el.internalName).disabled = true;
+                            // }
+                            // break;
                         //When the following has not been edited by the user, its value is null
+                        case "sc":
                         case "t.":
                         case "dd":
                         case "mt":
@@ -217,6 +218,7 @@ function autoPopulateGenInfo() {
                             if (fd.field(el.internalName).value.length !== 0) {
                                 fd.field()(el.internalName).disabled = true;
                             }
+                            break;
                         default:
                             fd.field(el.internalName).disabled = false;
                     }
@@ -261,9 +263,6 @@ function disableFields() {
 //To be more efficient (And not run everything all at once) turn this function into an object
 //And call upong specific portions in the object
 function toggleFields() {
-    var formFields = fd.fields();
-    var formControl = fd.controls();
-
     //Toggles the SQS Form
     showHideFields('sc.SQS.3.corpOrCoPartner', 'Corporation', "SQSCorporation");
     showHideFields('sc.SQS.3.corpOrCoPartner', 'Co-partnership', "SQSCoPartnership");
@@ -282,6 +281,8 @@ function toggleFields() {
 
     //Toggles the visibiliy and requirement of the RMSA form
     showHideFields('sc.RMSA.isRequired', 'Yes', 'RMSAControl');
+
+    //Form Visibility after reviewing PDF
 }
 
 //showHideFields toggles the visibility of all fields inside a given class
@@ -289,10 +290,14 @@ function showHideFields(fieldName, showValue, className, changeIfRequired = true
     try{
         if(fd.field(fieldName).value === showValue) {
             $("." + className).show();
-            targetReq(true, className);
+            if (changeIfRequired) {
+                targetReq(true, className);
+            }
         } else {
             $("." + className).hide();
-            targetReq(false, className);
+            if (changeIfRequired) {
+                targetReq(false, className);
+            }
         }
     } catch (err) {
         console.log(err)
