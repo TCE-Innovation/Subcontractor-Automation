@@ -82,12 +82,31 @@ fd.rendered(function () {
                             'sc.SB.P4.F.refuseTestimonyNYS',
                             'sc.SB.P4.G.civilJudgement',
                             'sc.SB.P4.H.deferredProsecution'];
+    scheduleBPart5 = ['sc.SB.P5.D.bankruptcy',
+                        'sc.SB.P5.E.liensExcess',
+                        'sc.SB.P5.F.liensToday',
+                        'sc.SB.P5.G.failedTax',
+                        'sc.SB.P5.I.conflictOfInterest',
+                        'sc.SB.P5.N.haveSubsidiaryOrAffiliate',
+                        'sc.SB.P5.O.isContractorSubsidiaryOfGroup',
+                        'sc.SB.P5.P.ownershipOfOtherEntity',
+                        'sc.SB.P5.Q.sameBusinessGroup',
+                        'dt.SB.P5.C.pastThreeYrs',
+                        't.SB.P5.H.officeSpaceDetails',
+                        'n.SB.P5.J.sharedOfficeExplanation',
+                        'dt.SB.P5.K.2.last3YrsPenalities',
+                        'dt.SB.P5.K.3.MTAContractsWorkNotCompleted',
+                        'dt.SB.P5.K.4.activeGovtEntityContracts',
+                        'dt.SB.P5.K.5.contractsNotCompleted',
+                        'dt.SB.P5.L.contractSituations',
+                        'dt.SB.P5.M.employeesOfMTA'];
     
 
     onActionFields.forEach(field => fd.field(field).$on('change',toggleClass));
     pdfControls.forEach(field => fd.field(field).$on('change',toggleClass));
     scheduleBPart3YesOrNo.forEach(field => fd.field(field).$on('change',toggleClass));
     scheduleBPart4YesOrNo.forEach(field => fd.field(field).$on('change',toggleClass));
+    scheduleBPart5.forEach(field => fd.field(field).$on('change',toggleClass));
     onActionControl.forEach(control => fd.control(control).$on('change', updateControls));
 });
 
@@ -405,7 +424,7 @@ function toggleClass() {
             anyYes = true;
         }
     });
-    individualFieldVisibilityAndRequired('n.SB.P5.Q.explanation', anyYes)
+    individualFieldVisibilityAndRequired('n.SB.P5.Q.explanation', anyYes);
                             
 
     /*
