@@ -345,7 +345,7 @@ function toggleFields() {
                             'sc.SB.P3.G.safety',
                             'sc.SB.P3.H.compensationRating'];
     scheduleBPart3YesOrNo.forEach(field => {
-        showHideFields(field, 'yes', 'sc.SB.P3.seperateSheet');
+        showHideFields(field, 'Yes', 'sc.SB.P3.seperateSheet');
     });
 
 
