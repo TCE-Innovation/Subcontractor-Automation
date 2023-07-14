@@ -404,12 +404,13 @@ function toggleClass() {
     individualFieldVisibilityAndRequired('dt.SB.P5.C.pastThreeYrs', fd.field('sc.SB.P5.C.subcontractor').value === "Yes", "DataTable");
     individualFieldVisibilityAndRequired('t.SB.P5.H.officeSpaceDetails', fd.field('sc.SB.P5.H.officeSpace').value === "Yes");
     individualFieldVisibilityAndRequired('n.SB.P5.J.sharedOfficeExplanation', fd.field('sc.SB.P5.J.sharedOffice').value === "Yes");
-    individualFieldVisibilityAndRequired('dt.SB.P5.K.2.last3YrsPenalities', fd.field('sc.SB.P5.K.2.none').value === "YES", "DataTable");
+    individualFieldVisibilityAndRequired('dt.SB.P5.K.2.last3YrsPenalities', fd.field('sc.SB.P5.K.2.none').value === "Yes", "DataTable");
     individualFieldVisibilityAndRequired('dt.SB.P5.K.3.MTAContractsWorkNotCompleted', fd.field('sc.SB.P5.K.3.none').value === "Yes", "DataTable");
     individualFieldVisibilityAndRequired('dt.SB.P5.K.4.activeGovtEntityContracts', fd.field('sc.SB.P5.K.4.none').value === "Yes", "DataTable");
     individualFieldVisibilityAndRequired('dt.SB.P5.K.5.contractsNotCompleted', fd.field('sc.SB.P5.K.5.none').value === "Yes", "DataTable");
     individualFieldVisibilityAndRequired('dt.SB.P5.L.contractSituations', fd.field('sc.SB.P5.L.none').value === "Yes", "DataTable");
     individualFieldVisibilityAndRequired('dt.SB.P5.M.employeesOfMTA', fd.field('sc.SB.P5.M.none').value === "Yes", "DataTable");
+    showHideInClass('sc.SB.P5.K.1.none', 'Yes', 'ScheduleBPart5K', true);
     scheduleBPart5YesOrNo = ['sc.SB.P5.D.bankruptcy',
                             'sc.SB.P5.E.liensExcess',
                             'sc.SB.P5.F.liensToday',
