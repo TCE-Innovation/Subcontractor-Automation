@@ -199,7 +199,9 @@ function autoPopulateGenInfo() {
         }
 
         //There are fields with different elements. If a text or note is unfilled, it is simply null
-        //When a single choice or multiple hcoice is empty, it is "". Thus, we must isolate these by internal name first
+        //When a single choiceis empty, it is "" or null - I've seen it both ways. 
+        //When a multiple choice is empty, it's array is length 0.
+        //Due to the different ways to check if a field is empty, we must isolate these by internal name first, then check for their respective emptyness indicators
         //Text internal name: t.
         //Note: n.
         //Radial Internal Name: sc
@@ -247,12 +249,10 @@ function autoPopulateGenInfo() {
                     }
                 }
             } catch (err) {
-
             }
-
         });
 
-        //There are controls with no values, such as buttons, text, hml elements, etc
+        //There are controls with no values, such as buttons, text, html elements, etc
         //We have formatted all data tables starting with dt. We must first isolate this.
         //Then, we check if there is anything in the data table. If there is nothing, we should not disable the field.
         //We will also check if it needs to be edited
@@ -286,10 +286,15 @@ function disableFields() {
 //To be more efficient (And not run everything all at once) turn this function into an object
 //And call upong specific portions in the object
 function toggleFields() {
-    //Toggles the SQS Form
-    showHideFields('sc.SQS.3.corpOrCoPartner', 'Corporation', "SQSCorporation");
-    showHideFields('sc.SQS.3.corpOrCoPartner', 'Co-partnership', "SQSCoPartnership");
-
+    /*
+        The following are optional forms: Forms that may or may not be filled out by the subcontractor.
+        This includes:
+            Schedule B1
+            Schedule B
+            Request for Materials Supplier Approval
+            Schedule F, F3 (Technically, this is a subform, but on the wizard, we've condensed it into its own form)
+    */
+    
     //Toggles Schedule F, Form F3
     showHideFields('sc.SF.FF3.FF3Applicable', 'Yes', "ScheduleFFormF3");    
 
@@ -299,13 +304,46 @@ function toggleFields() {
     //Toggles Schedule B1
     showHideFields('sc.SB1.isSB1Required', 'Yes', 'ScheduleB1Class');
   
-    //Toggles F3 Materials List
-    showHideFields('sc.SF.FF3.3.reportType', 'b. Material Change', 'ScheduleF3MaterialChange');
-
     //Toggles the visibiliy and requirement of the RMSA form
     showHideFields('sc.RMSA.isRequired', 'Yes', 'RMSAControl');
 
-    //Form Visibility after reviewing PDF
+
+
+
+    /*
+        The following are optional fields inside forms.
+        These forms include: 
+            Schedule F, F3
+            SQS
+            Schedule B
+    */
+    //Toggles the SQS Form
+    showHideFields('sc.SQS.3.corpOrCoPartner', 'Corporation', "SQSCorporation");
+    showHideFields('sc.SQS.3.corpOrCoPartner', 'Co-partnership', "SQSCoPartnership");
+
+    //Toggles F3 Materials List
+    showHideFields('sc.SF.FF3.3.reportType', 'b. Material Change', 'ScheduleF3MaterialChange');
+
+    //Schedule B, Part 3: Contractor Representations
+    //If any of the questions on the page has been answered yes, require the text box.
+    scheduleBPart3YesOrNo = ['sc.SB.P3.A.notResponsible',
+                            'sc.SB.P3.B.debarred',
+                            'sc.SB.P3.C.pendingDebarment',
+                            'sc.SB.P3.D.terminated',
+                            'sc.SB.P3.E.suretyAgreement',
+                            'sc.SB.P3.F.monitor',
+                            'sc.SB.P3.G.safety',
+                            'sc.SB.P3.H.compensationRating'];
+    scheduleBPart3YesOrNo.forEach(field => {
+        showHideFields(field, 'yes', 'sc.SB.P3.seperateSheet');
+    });
+
+
+
+    /*
+        The following toggles the PDFs and ensures that the reader has viewed the PDF before moving onto the questions.
+        Every form except OCIP COI, Sunnary, and General Information applies here.
+    */
     //SQS
     showHideFields('sc.SQS.readAndUnderstood', 'Yes', 'SQSQuestions', false);
     showHideFields('tog.SQS.hidePDF', false, 'SQSPDF', false);
