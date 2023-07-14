@@ -91,15 +91,15 @@ fd.rendered(function () {
                         'sc.SB.P5.O.isContractorSubsidiaryOfGroup',
                         'sc.SB.P5.P.ownershipOfOtherEntity',
                         'sc.SB.P5.Q.sameBusinessGroup',
-                        'dt.SB.P5.C.pastThreeYrs',
-                        't.SB.P5.H.officeSpaceDetails',
-                        'n.SB.P5.J.sharedOfficeExplanation',
-                        'dt.SB.P5.K.2.last3YrsPenalities',
-                        'dt.SB.P5.K.3.MTAContractsWorkNotCompleted',
-                        'dt.SB.P5.K.4.activeGovtEntityContracts',
-                        'dt.SB.P5.K.5.contractsNotCompleted',
-                        'dt.SB.P5.L.contractSituations',
-                        'dt.SB.P5.M.employeesOfMTA'];
+                        'sc.SB.P5.C.subcontractor',
+                        'sc.SB.P5.H.officeSpace',
+                        'sc.SB.P5.J.sharedOffice',
+                        'sc.SB.P5.K.2.none',
+                        'sc.SB.P5.K.3.none',
+                        'sc.SB.P5.K.4.none',
+                        'sc.SB.P5.K.5.none',
+                        'sc.SB.P5.L.none',
+                        'sc.SB.P5.M.none'];
     
 
     onActionFields.forEach(field => fd.field(field).$on('change',toggleClass));
