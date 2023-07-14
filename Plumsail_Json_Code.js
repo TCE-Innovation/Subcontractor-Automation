@@ -438,5 +438,5 @@ function setRequiredInClass(requiredOrNot, name) {
 //Be sure to note: Hiding/Showing a class will not affect the visibility of a field hidden like this
 function individualFieldVisibilityAndRequired(fieldName, trueOrFalse) {
     fd.field(fieldName).hidden = trueOrFalse;
-    fd.field(fieldName).required = trueOrFalse;
+    fd.field(fieldName).required = !trueOrFalse;
 }
