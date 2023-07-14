@@ -63,10 +63,20 @@ fd.rendered(function () {
     'sc.OCIPB.readAndUnderstood',
     'tog.OCIPB.hidePDF'
     ];
+
+    scheduleBPart3YesOrNo = ['sc.SB.P3.A.notResponsible',
+                            'sc.SB.P3.B.debarred',
+                            'sc.SB.P3.C.pendingDebarment',
+                            'sc.SB.P3.D.terminated',
+                            'sc.SB.P3.E.suretyAgreement',
+                            'sc.SB.P3.F.monitor',
+                            'sc.SB.P3.G.safety',
+                            'sc.SB.P3.H.compensationRating'];
     
 
     onActionFields.forEach(field => fd.field(field).$on('change',toggleFields));
     pdfControls.forEach(field => fd.field(field).$on('change',toggleFields));
+    scheduleBPart3YesOrNo.forEach(field => fd.field(field).$on('change',toggleFields));
     onActionControl.forEach(control => fd.control(control).$on('change', updateControls));
 });
 
