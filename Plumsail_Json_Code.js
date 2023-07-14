@@ -94,6 +94,7 @@ fd.rendered(function () {
                         'sc.SB.P5.C.subcontractor',
                         'sc.SB.P5.H.officeSpace',
                         'sc.SB.P5.J.sharedOffice',
+                        'sc.SB.P5.K.1.none',
                         'sc.SB.P5.K.2.none',
                         'sc.SB.P5.K.3.none',
                         'sc.SB.P5.K.4.none',
