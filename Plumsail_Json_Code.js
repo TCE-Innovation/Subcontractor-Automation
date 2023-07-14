@@ -74,9 +74,9 @@ fd.rendered(function () {
                             'sc.SB.P3.H.compensationRating'];
     
 
-    onActionFields.forEach(field => fd.field(field).$on('change',toggleFields));
-    pdfControls.forEach(field => fd.field(field).$on('change',toggleFields));
-    scheduleBPart3YesOrNo.forEach(field => fd.field(field).$on('change',toggleFields));
+    onActionFields.forEach(field => fd.field(field).$on('change',toggleClass));
+    pdfControls.forEach(field => fd.field(field).$on('change',toggleClass));
+    scheduleBPart3YesOrNo.forEach(field => fd.field(field).$on('change',toggleClass));
     onActionControl.forEach(control => fd.control(control).$on('change', updateControls));
 });
 
@@ -92,7 +92,7 @@ var executeOnce = (function() {
         if (!executed) {
             executed = true;
             autoPopulateGenInfo();
-            //toggleFields();
+            //toggleClass();
             disableFields();
             updateControls();
         }
@@ -295,7 +295,7 @@ function disableFields() {
 
 //To be more efficient (And not run everything all at once) turn this function into an object
 //And call upong specific portions in the object
-function toggleFields() {
+function toggleClass() {
     /*
         The following are optional forms: Forms that may or may not be filled out by the subcontractor.
         This includes:
@@ -306,16 +306,16 @@ function toggleFields() {
     */
     
     //Toggles Schedule F, Form F3
-    showHideFields('sc.SF.FF3.FF3Applicable', 'Yes', "ScheduleFFormF3");    
+    showHideInClass('sc.SF.FF3.FF3Applicable', 'Yes', "ScheduleFFormF3");    
 
     //Toggles Schedule B
-    showHideFields('sc.SB.isSBRequired', 'Yes', "ScheduleBClass");
+    showHideInClass('sc.SB.isSBRequired', 'Yes', "ScheduleBClass");
 
     //Toggles Schedule B1
-    showHideFields('sc.SB1.isSB1Required', 'Yes', 'ScheduleB1Class');
+    showHideInClass('sc.SB1.isSB1Required', 'Yes', 'ScheduleB1Class');
   
     //Toggles the visibiliy and requirement of the RMSA form
-    showHideFields('sc.RMSA.isRequired', 'Yes', 'RMSAControl');
+    showHideInClass('sc.RMSA.isRequired', 'Yes', 'RMSAControl');
 
 
 
@@ -328,11 +328,11 @@ function toggleFields() {
             Schedule B
     */
     //Toggles the SQS Form
-    showHideFields('sc.SQS.3.corpOrCoPartner', 'Corporation', "SQSCorporation");
-    showHideFields('sc.SQS.3.corpOrCoPartner', 'Co-partnership', "SQSCoPartnership");
+    showHideInClass('sc.SQS.3.corpOrCoPartner', 'Corporation', "SQSCorporation");
+    showHideInClass('sc.SQS.3.corpOrCoPartner', 'Co-partnership', "SQSCoPartnership");
 
     //Toggles F3 Materials List
-    showHideFields('sc.SF.FF3.3.reportType', 'b. Material Change', 'ScheduleF3MaterialChange');
+    showHideInClass('sc.SF.FF3.3.reportType', 'b. Material Change', 'ScheduleF3MaterialChange');
 
     //Schedule B, Part 3: Contractor Representations
     //If any of the questions on the page has been answered yes, require the text box.
@@ -344,9 +344,13 @@ function toggleFields() {
                             'sc.SB.P3.F.monitor',
                             'sc.SB.P3.G.safety',
                             'sc.SB.P3.H.compensationRating'];
+    anyYes = false;
     scheduleBPart3YesOrNo.forEach(field => {
-        showHideFields(field, 'Yes', 'sc.SB.P3.seperateSheet');
+        if (fd.field(field).value === "Yes") {
+            anyYes = true;
+        }
     });
+    individualFieldVisibilityAndRequired('sc.SB.P3.seperateSheet', anyYes)
 
 
 
@@ -355,50 +359,50 @@ function toggleFields() {
         Every form except OCIP COI, Sunnary, and General Information applies here.
     */
     //SQS
-    showHideFields('sc.SQS.readAndUnderstood', 'Yes', 'SQSQuestions', false);
-    showHideFields('tog.SQS.hidePDF', false, 'SQSPDF', false);
+    showHideInClass('sc.SQS.readAndUnderstood', 'Yes', 'SQSQuestions', false);
+    showHideInClass('tog.SQS.hidePDF', false, 'SQSPDF', false);
 
     //Schedule F
-    showHideFields('sc.SF.readAndUnderstood', 'Yes', 'SFQuestions', false);
-    showHideFields('tog.SF.hidePDF', false, 'SFPDF', false);
+    showHideInClass('sc.SF.readAndUnderstood', 'Yes', 'SFQuestions', false);
+    showHideInClass('tog.SF.hidePDF', false, 'SFPDF', false);
 
     //Schedule F1
-    showHideFields('sc.SF1.readAndUnderstood', 'Yes', 'SF1Questions', false);
-    showHideFields('tog.SF1.hidePDF', false, 'SF1PDF', false);
+    showHideInClass('sc.SF1.readAndUnderstood', 'Yes', 'SF1Questions', false);
+    showHideInClass('tog.SF1.hidePDF', false, 'SF1PDF', false);
 
     //RMSA
-    showHideFields('sc.RMSA.readAndUnderstood', 'Yes', 'RMSAQuestions', false);
-    showHideFields('tog.RMSA.hidePDF', false, 'RMSAPDF', false);
+    showHideInClass('sc.RMSA.readAndUnderstood', 'Yes', 'RMSAQuestions', false);
+    showHideInClass('tog.RMSA.hidePDF', false, 'RMSAPDF', false);
 
     //Schedule B
-    showHideFields('sc.SB.readAndUnderstood', 'Yes', 'SBQuestions', false);
-    showHideFields('tog.SB.hidePDF', false, 'SBPDF', false);
+    showHideInClass('sc.SB.readAndUnderstood', 'Yes', 'SBQuestions', false);
+    showHideInClass('tog.SB.hidePDF', false, 'SBPDF', false);
 
     //Schedule B1
-    showHideFields('sc.SB1.readAndUnderstood', 'Yes', 'SB1Questions', false);
-    showHideFields('tog.SB1.hidePDF', false, 'SB1PDF', false);
+    showHideInClass('sc.SB1.readAndUnderstood', 'Yes', 'SB1Questions', false);
+    showHideInClass('tog.SB1.hidePDF', false, 'SB1PDF', false);
 
     //OCIP A
-    showHideFields('sc.OCIPA.readAndUnderstood', 'Yes', 'OCIPAQuestions', false);
-    showHideFields('tog.OCIPA.hidePDF', false, 'OCIPAPDF', false);
+    showHideInClass('sc.OCIPA.readAndUnderstood', 'Yes', 'OCIPAQuestions', false);
+    showHideInClass('tog.OCIPA.hidePDF', false, 'OCIPAPDF', false);
 
     //OCIP B
-    showHideFields('sc.OCIPB.readAndUnderstood', 'Yes', 'OCIPBQuestions', false);
-    showHideFields('tog.OCIPB.hidePDF', false, 'OCIPBPDF', false);
+    showHideInClass('sc.OCIPB.readAndUnderstood', 'Yes', 'OCIPBQuestions', false);
+    showHideInClass('tog.OCIPB.hidePDF', false, 'OCIPBPDF', false);
 }
 
-//showHideFields toggles the visibility of all fields inside a given class
-function showHideFields(fieldName, showValue, className, changeIfRequired = true) {
+//showHideInClass toggles the visibility of all fields inside a given class
+function showHideInClass(fieldName, showValue, className, changeIfRequired = true) {
     try{
         if(fd.field(fieldName).value === showValue) {
             $("." + className).show();
             if (changeIfRequired) {
-                targetReq(true, className);
+                setRequiredInClass(true, className);
             }
         } else {
             $("." + className).hide();
             if (changeIfRequired) {
-                targetReq(false, className);
+                setRequiredInClass(false, className);
             }
         }
     } catch (err) {
@@ -406,7 +410,7 @@ function showHideFields(fieldName, showValue, className, changeIfRequired = true
     }
 }
 //This function assists in removing the required for all fields inside a given class
-function targetReq(requiredOrNot, name) {
+function setRequiredInClass(requiredOrNot, name) {
     var formFields = fd.fields();
     var formControl = fd.controls();
 
@@ -423,4 +427,16 @@ function targetReq(requiredOrNot, name) {
             field.required = requiredOrNot;
         }
     })
+}
+
+//This function assumes if an item is visible, it should be required.
+//Depending on parameters, it will either make a field go away or appear
+//It will control the fields themselves, as opposed to the class that they're in.
+//This function is mostly used in Form B
+
+//Important to note: The way this is hidden is fundamentally different from the way classes are hidden.
+//Be sure to note: Hiding/Showing a class will not affect the visibility of a field hidden like this
+function individualFieldVisibilityAndRequired(fieldName, trueOrFalse) {
+    fd.field(fieldName).hidden = trueOrFalse;
+    fd.field(fieldName).required = trueOrFalse;
 }
