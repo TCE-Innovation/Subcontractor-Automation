@@ -419,6 +419,7 @@ function toggleClass() {
                             'sc.SB.P5.O.isContractorSubsidiaryOfGroup',
                             'sc.SB.P5.P.ownershipOfOtherEntity',
                             'sc.SB.P5.Q.sameBusinessGroup'];
+    anyYes = false;
     scheduleBPart5YesOrNo.forEach(field => {
         if (fd.field(field).value === "Yes") {
             anyYes = true;
