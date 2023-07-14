@@ -266,6 +266,8 @@ function autoPopulateGenInfo() {
                                 fd.field(el.internalName).disabled = false;
                             } else if(fd.field(el.internalName).value === null) {
                                     fd.field(el.internalName).disabled = false;
+                            } else {
+                                fd.field(el.internalName).disabled = true;
                             }
                             break;
                         //When the following has not been edited by the user, its value is null
