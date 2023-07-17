@@ -441,7 +441,7 @@ function toggleClass() {
     //SQS
     showHideInClass('sc.SQS.readAndUnderstood', 'Yes', 'SQSorRMSA', false);
     showHideInClass('tog.SQS.hidePDF', false, 'SQSPDF', false);
-    showHideInClass('sc.RMSA.isRequired', 'SQS', 'SQSQuestions', true);
+    showHideInClass('sc.RMSA.isRequired', 'SQS', 'SQSQuestions', true, ['d.SQS.3.dateOfOrg', 't.SQS.3.county', 'dt.SQS.3.namesAndAddrsOfPartners']);
 
     //RMSA
     showHideInClass('tog.RMSA.hidePDF', false, 'RMSAPDF', false);
@@ -474,38 +474,36 @@ function toggleClass() {
 }
 
 //showHideInClass toggles the visibility of all fields inside a given class
-function showHideInClass(fieldName, showValue, className, changeIfRequired = true) {
+function showHideInClass(fieldName, showValue, className, changeIfRequired = true, dontChangeRequired = []) {
     try{
         if(fd.field(fieldName).value === showValue) {
             $("." + className).show();
-            if (changeIfRequired) {
-                setRequiredInClass(true, className);
-            }
         } else {
             $("." + className).hide();
-            if (changeIfRequired) {
-                setRequiredInClass(false, className);
-            }
+        }
+
+        if (changeIfRequired) {
+            setRequiredInClass(true, className, dontChangeRequired);
         }
     } catch (err) {
         console.log(err)
     }
 }
 //This function assists in removing the required for all fields inside a given class
-function setRequiredInClass(requiredOrNot, name) {
+function setRequiredInClass(requiredOrNot, name, arrDontChange = []) {
     var formFields = fd.fields();
     var formControl = fd.controls();
 
         //https://community.plumsail.com/t/disable-all-fields-in-a-grid-container/10249/2
 
     formFields.forEach(field => {
-        if (field.$el.closest("." + name) != null) {
+        if (field.$el.closest("." + name) != null && !arrDontChange.includes(name)) {
                 field.required = requiredOrNot;
         }
     })
 
     formControl.forEach(field => {
-        if (field.$el.closest("." + name) != null) {
+        if (field.$el.closest("." + name) != null && !arrDontChange.includes(name)) {
             field.required = requiredOrNot;
         }
     })
