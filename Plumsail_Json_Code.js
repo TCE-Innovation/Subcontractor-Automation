@@ -499,13 +499,13 @@ function setRequiredInClass(requiredOrNot, name, arrDontChange = []) {
         //https://community.plumsail.com/t/disable-all-fields-in-a-grid-container/10249/2
 
     formFields.forEach(field => {
-        if (field.$el.closest("." + name) != null && !arrDontChange.includes(field.title)) {
+        if (field.$el.closest("." + name) != null && !arrDontChange.includes(field.internalName)) {
                 field.required = requiredOrNot;
         }
     })
 
     formControl.forEach(field => {
-        if (field.$el.closest("." + name) != null && !arrDontChange.includes(field.title)) {
+        if (field.$el.closest("." + name) != null && !arrDontChange.includes(field.internalName)) {
             field.required = requiredOrNot;
         }
     })
