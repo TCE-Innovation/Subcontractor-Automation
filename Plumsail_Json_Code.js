@@ -437,8 +437,14 @@ function toggleClass() {
         Every form except OCIP COI, Sunnary, and General Information applies here.
     */
     //SQS
-    showHideInClass('sc.SQS.readAndUnderstood', 'Yes', 'SQSQuestions', false);
+    showHideInClass('sc.SQS.readAndUnderstood', 'Yes', 'SQSorRMSA', false);
     showHideInClass('tog.SQS.hidePDF', false, 'SQSPDF', false);
+    showHideInClass('sc.RMSA.isRequired', 'SQS', 'SQSQuestions', false);
+
+    //RMSA
+    showHideInClass('tog.RMSA.hidePDF', false, 'RMSAPDF', false);
+    showHideInClass('sc.RMSA.isRequired', 'RMSA', 'RMSAQuestions', false);
+
 
     //Schedule F
     showHideInClass('sc.SF.readAndUnderstood', 'Yes', 'SFQuestions', false);
@@ -447,10 +453,6 @@ function toggleClass() {
     //Schedule F1
     showHideInClass('sc.SF1.readAndUnderstood', 'Yes', 'SF1Questions', false);
     showHideInClass('tog.SF1.hidePDF', false, 'SF1PDF', false);
-
-    //RMSA
-    showHideInClass('sc.RMSA.readAndUnderstood', 'Yes', 'RMSAQuestions', false);
-    showHideInClass('tog.RMSA.hidePDF', false, 'RMSAPDF', false);
 
     //Schedule B
     showHideInClass('sc.SB.readAndUnderstood', 'Yes', 'SBQuestions', false);
