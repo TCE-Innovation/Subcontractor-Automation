@@ -178,7 +178,7 @@ function externalFile() {
     const url = "https://prod-73.westus.logic.azure.com:443/workflows/9f7be33c84d844ecadd0baaef7cd1a7e/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=faXNcybrgh-3IH3KD7V7wloZaKsSEshlye4N9siJdNw";
     return fetchJSONData(infoToSend, url)
     .then(json => {
-        console.log(json);
+        //console.log(json);
         return json
     });
 }
@@ -441,11 +441,11 @@ function toggleClass() {
     //SQS
     showHideInClass('sc.SQS.readAndUnderstood', 'Yes', 'SQSorRMSA', false);
     showHideInClass('tog.SQS.hidePDF', false, 'SQSPDF', false);
-    showHideInClass('sc.RMSA.isRequired', 'SQS', 'SQSQuestions', false);
+    showHideInClass('sc.RMSA.isRequired', 'SQS', 'SQSQuestions', true);
 
     //RMSA
     showHideInClass('tog.RMSA.hidePDF', false, 'RMSAPDF', false);
-    showHideInClass('sc.RMSA.isRequired', 'RMSA', 'RMSAQuestions', false);
+    showHideInClass('sc.RMSA.isRequired', 'RMSA', 'RMSAQuestions', true);
 
 
     //Schedule F
