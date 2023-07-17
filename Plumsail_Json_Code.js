@@ -478,12 +478,14 @@ function showHideInClass(fieldName, showValue, className, changeIfRequired = tru
     try{
         if(fd.field(fieldName).value === showValue) {
             $("." + className).show();
+            if (changeIfRequired) {
+                setRequiredInClass(true, className, dontChangeRequired);
+            }
         } else {
             $("." + className).hide();
-        }
-
-        if (changeIfRequired) {
-            setRequiredInClass(true, className, dontChangeRequired);
+            if (changeIfRequired) {
+                setRequiredInClass(false, className, dontChangeRequired);
+            }
         }
     } catch (err) {
         console.log(err)
