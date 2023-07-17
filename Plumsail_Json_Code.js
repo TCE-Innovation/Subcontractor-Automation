@@ -56,7 +56,6 @@ fd.rendered(function () {
     'tog.SF.hidePDF',
     'sc.SF1.readAndUnderstood',
     'tog.SF1.hidePDF',
-    'sc.RMSA.readAndUnderstood',
     'tog.RMSA.hidePDF',
     'sc.SB.readAndUnderstood',
     'tog.SB.hidePDF',
