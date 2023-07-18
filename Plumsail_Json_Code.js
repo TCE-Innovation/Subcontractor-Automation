@@ -350,7 +350,8 @@ function reqForms() {
     showHideInClass('sc.SB1.isSB1Required', 'Yes', 'ScheduleB1Class');
   
     //Toggles the visibiliy and requirement of the RMSA form
-    showHideInClass('sc.RMSA.isRequired', 'RMSA', 'RMSAQuestions');
+    showHideInClass('sc.RMSA.isRequired', 'SQS', 'SQSQuestions', true, ['d.SQS.3.dateOfOrg', 't.SQS.3.county', 'dt.SQS.3.namesAndAddrsOfPartners']);
+    showHideInClass('sc.RMSA.isRequired', 'RMSA', 'RMSAQuestions', true);
 
         /*
         The following are optional fields inside forms.
@@ -376,11 +377,11 @@ function togglePDF() {
     //SQS
     showHideInClass('sc.SQS.readAndUnderstood', 'Yes', 'SQSorRMSA', false);
     showHideInClass('tog.SQS.hidePDF', false, 'SQSPDF', false);
-    showHideInClass('sc.RMSA.isRequired', 'SQS', 'SQSQuestions', true, ['d.SQS.3.dateOfOrg', 't.SQS.3.county', 'dt.SQS.3.namesAndAddrsOfPartners']);
+    
 
     //RMSA
     showHideInClass('tog.RMSA.hidePDF', false, 'RMSAPDF', false);
-    showHideInClass('sc.RMSA.isRequired', 'RMSA', 'RMSAQuestions', true);
+    
 
 
     //Schedule F
