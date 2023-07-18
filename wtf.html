@@ -1,31 +1,60 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <title>Embedded PDF from API (POST request)</title>
+</head>
 <body>
+    <div id="pdfContainer"></div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        import axios from "axios"
+        $(document).ready(function() {
+            // Define the data to be sent in the request body
+            var requestData = {
+                // Add any parameters or variables needed for the API
+                "PDF": "Schedule B1"
+            };
 
-<p id="demo"></p>
+            // Make the POST request to the server API
+            $.ajax({
+                url: 'https://prod-165.westus.logic.azure.com:443/workflows/cc45fe0447594c12b6ba99adb3e361b9/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=OIR1pjYrHYejMJpFGVJ34GzsxYAxR7Sw3cCQBiCS-cs', // Replace this with your actual API endpoint to fetch the PDF
+                method: 'POST',
+                data: JSON.stringify(requestData), // Convert data to JSON format
+                contentType: 'application/json', // Set content type to JSON
+                //dataType: 'text', // Assuming the API returns the PDF as plain text
+                success: function(data) {
+                    // Decompress the FlateDecode data using pako.js
+    var inflatedData = pako.inflate(data, { to: 'string' });
 
+    // Create a Blob from the decompressed data
+    var blob = new Blob([inflatedData], { type: 'application/pdf' });
 
-<script>
-    
-var script = document.createElement('script'); 
- 
-script.src = '//code.jquery.com/jquery-1.11.0.min.js'; 
-document.getElementsByTagName('head')[0].appendChild(script);
+    /*
+                    console.log(data);
+                    // Create a Blob from the text data
+                    var blob = new Blob([data], { type: 'application/pdf' });
 
- 
-async function externalFile() {
-    const data = $.get('test.json');
-    return data;
-}
-    externalFile().then(function(data){
-        Object.keys(GI).forEach().forEach(el => {
-                console.log(GI.el);
-                fd.field(el).value = GI.el;
+                    // Create a URL for the Blob
+                    var pdfUrl = URL.createObjectURL(blob);
+
+                    // Convert base64 encoded data to Uint8Array
+    var uint8Array = new Uint8Array(atob(data).split('').map(function (c) { return c.charCodeAt(0); }));
+
+    // Create a Blob from the Uint8Array data
+    var blob = new Blob([uint8Array], { type: 'application/pdf' });
+    */
+
+                    // Embed the PDF in the HTML using <embed> tag
+                    var pdfEmbed = '<embed src="' + pdfUrl + '" type="application/pdf" width="100%" height="600px" />';
+
+                    // Display the PDF in the pdfContainer div
+                    $('#pdfContainer').html(pdfEmbed);
+                },
+                error: function(xhr, status, error) {
+                    console.log('Error fetching PDF:', error);
+                }
             });
-    });
-
-
-</script>
+        });
+    </script>
 </body>
-</html> 
-
+</html>
