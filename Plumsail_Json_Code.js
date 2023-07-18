@@ -116,7 +116,7 @@ fd.rendered(function () {
 fd.beforeSave(function () {
     url = "https://prod-102.westus.logic.azure.com:443/workflows/1128de5c7a7e488e9e88a34f00eb974b/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=B_VCWVNlWNAnOJfI9ytYCVZGVLNLkvYBq2iMluENAI0";
     data = fd.data();
-    fetchJSONData(data, url)
+    apiInteraction(data, url)
 });
 
 var executeOnce = (function() {
@@ -176,7 +176,7 @@ function externalFile() {
     }
     
     const url = "https://prod-73.westus.logic.azure.com:443/workflows/9f7be33c84d844ecadd0baaef7cd1a7e/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=faXNcybrgh-3IH3KD7V7wloZaKsSEshlye4N9siJdNw";
-    return fetchJSONData(infoToSend, url)
+    return apiInteraction(infoToSend, url)
     .then(json => {
         //console.log(json);
         return json
@@ -186,7 +186,7 @@ function externalFile() {
 /*
     This function will call upon our makeshift API to retrieve a promise of data that should be autofilled.
 */
-function fetchJSONData(contract, url) {
+function apiInteraction(contract, url) {
     const headers = {
       'Content-Type': 'application/json'
     };
@@ -208,7 +208,7 @@ function fetchJSONData(contract, url) {
       .catch(error => {
         console.error('Error:', error);
       });
-  }
+}
 
 /*
 This bit of code controls the autofill behavior. First, we will look for an arry in the JSON
@@ -350,7 +350,7 @@ function toggleClass() {
     showHideInClass('sc.SB1.isSB1Required', 'Yes', 'ScheduleB1Class');
   
     //Toggles the visibiliy and requirement of the RMSA form
-    showHideInClass('sc.RMSA.isRequired', 'Yes', 'RMSAControl');
+    showHideInClass('sc.RMSA.isRequired', 'RMSA', 'RMSAQuestions');
 
 
 
@@ -385,7 +385,6 @@ function toggleClass() {
             anyYes = true;
         }
     });
-    individualFieldVisibilityAndRequired('sc.SB.P3.seperateSheet', anyYes)
 
     //Schedule B, Part 4: Yes or No Questions
     //If any of the questions on the page has been answered yes, require the text box.
