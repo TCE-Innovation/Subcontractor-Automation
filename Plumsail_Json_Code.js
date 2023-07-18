@@ -139,7 +139,7 @@ function updateControls() {
     //Autopopulates the premium row in OCIP B Section II
     if (value) { //If there are records in the table
         for (var i = 0; i < value.length; i++) {
-            value[i].set('colnumOCIPFB2insurancePremiumPremium', value[i].payroll * value[i].wCRate / 100);
+            value[i].set('colnumOCIPFB2insurancePremiumPremium', value[i].colnumOCIPFB2insurancePremiumPayroll * value[i].colnumOCIPFB2insurancePremiumWCRate / 100);
         }
     }
     var workHours = 0;
@@ -148,9 +148,9 @@ function updateControls() {
     //Autopopulates the totals below the data table
     if (value) {
         for (var i = 0; i < value.length; i++) {
-            workHours += value[i].workHours;
-            estPayroll += value[i].payroll;
-            premium += value[i].premium;
+            workHours += value[i].colnumOCIPFB2insurancePremiumWorkHours;
+            estPayroll += value[i].colnumOCIPFB2insurancePremiumPayroll;
+            premium += value[i].colnumOCIPFB2insurancePremiumPremium;
         }
     }
 
