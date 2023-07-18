@@ -41,7 +41,7 @@ fd.rendered(function () {
     executeOnce();
 
     //Items that change on action
-    onActionFields = ['sc.SQS.3.corpOrCoPartner', 
+    isFormRequired = ['sc.SQS.3.corpOrCoPartner', 
     'sc.SB1.isSB1Required',
     'sc.SF.FF3.3.reportType',
     'sc.SB.isSBRequired',
@@ -105,11 +105,11 @@ fd.rendered(function () {
                         'sc.SB.P5.M.none'];
 
 
-    onActionFields.forEach(field => fd.field(field).$on('change',toggleClass));
-    pdfControls.forEach(field => fd.field(field).$on('change',toggleClass));
-    scheduleBPart3YesOrNo.forEach(field => fd.field(field).$on('change',toggleClass));
-    scheduleBPart4YesOrNo.forEach(field => fd.field(field).$on('change',toggleClass));
-    scheduleBPart5.forEach(field => fd.field(field).$on('change',toggleClass));
+    isFormRequired.forEach(field => fd.field(field).$on('change',reqForms));
+    pdfControls.forEach(field => fd.field(field).$on('change',togglePDF));
+    scheduleBPart3YesOrNo.forEach(field => fd.field(field).$on('change',toggleSBP3));
+    scheduleBPart4YesOrNo.forEach(field => fd.field(field).$on('change',toggleSBP4));
+    scheduleBPart5.forEach(field => fd.field(field).$on('change',toggleSBP5));
     onActionControl.forEach(control => fd.control(control).$on('change', updateControls));
 });
 
@@ -330,8 +330,8 @@ function disableFields() {
 
 //To be more efficient (And not run everything all at once) turn this function into an object
 //And call upong specific portions in the object
-function toggleClass() {
-    /*
+function reqForms() {
+        /*
         The following are optional forms: Forms that may or may not be filled out by the subcontractor.
         This includes:
             Schedule B1
@@ -352,10 +352,7 @@ function toggleClass() {
     //Toggles the visibiliy and requirement of the RMSA form
     showHideInClass('sc.RMSA.isRequired', 'RMSA', 'RMSAQuestions');
 
-
-
-
-    /*
+        /*
         The following are optional fields inside forms.
         These forms include: 
             Schedule F, F3
@@ -369,70 +366,9 @@ function toggleClass() {
     //Toggles F3 Materials List
     showHideInClass('sc.SF.FF3.3.reportType', 'b. Material Change', 'ScheduleF3MaterialChange');
 
-    //Schedule B, Part 3: Contractor Representations
-    //If any of the questions on the page has been answered yes, require the text box.
-    scheduleBPart3YesOrNo = ['sc.SB.P3.A.notResponsible',
-                            'sc.SB.P3.B.debarred',
-                            'sc.SB.P3.C.pendingDebarment',
-                            'sc.SB.P3.D.terminated',
-                            'sc.SB.P3.E.suretyAgreement',
-                            'sc.SB.P3.F.monitor',
-                            'sc.SB.P3.G.safety',
-                            'sc.SB.P3.H.compensationRating'];
-    anyYes = false;
-    scheduleBPart3YesOrNo.forEach(field => {
-        if (fd.field(field).value === "Yes") {
-            anyYes = true;
-        }
-    });
+}
 
-    //Schedule B, Part 4: Yes or No Questions
-    //If any of the questions on the page has been answered yes, require the text box.
-    scheduleBPart4YesOrNo = ['sc.SB.P4.A.noloContendere',
-                            'sc.SB.P4.B.unfavorableTerminated',
-                            'sc.SB.P4.C.subjectOfCrime',
-                            'sc.SB.P4.D.disqualifiedBid',
-                            'sc.SB.P4.E.refuseTestimony',
-                            'sc.SB.P4.F.refuseTestimonyNYS',
-                            'sc.SB.P4.G.civilJudgement',
-                            'sc.SB.P4.H.deferredProsecution'];
-    anyYes = false;
-    scheduleBPart4YesOrNo.forEach(field => {
-        if (fd.field(field).value === "Yes") {
-            anyYes = true;
-        }
-    });
-    individualFieldVisibilityAndRequired('t.SB.P4.yesToAnyAnswerExplain', anyYes)
-
-    //Schedule B Part 5: Additional Questions
-    individualFieldVisibilityAndRequired('dt.SB.P5.C.pastThreeYrs', fd.field('sc.SB.P5.C.subcontractor').value === "Yes", "DataTable");
-    individualFieldVisibilityAndRequired('n.SB.P5.H.officeSpaceDetails', fd.field('sc.SB.P5.H.officeSpace').value === "Yes");
-    individualFieldVisibilityAndRequired('n.SB.P5.J.sharedOfficeExplanation', fd.field('sc.SB.P5.J.sharedOffice').value === "Yes");
-    individualFieldVisibilityAndRequired('dt.SB.P5.K.2.last3YrsPenalities', fd.field('sc.SB.P5.K.2.none').value === "Yes", "DataTable");
-    individualFieldVisibilityAndRequired('dt.SB.P5.K.3.MTAContractsWorkNotCompleted', fd.field('sc.SB.P5.K.3.none').value === "Yes", "DataTable");
-    individualFieldVisibilityAndRequired('dt.SB.P5.K.4.activeGovtEntityContracts', fd.field('sc.SB.P5.K.4.none').value === "Yes", "DataTable");
-    individualFieldVisibilityAndRequired('dt.SB.P5.K.5.contractsNotCompleted', fd.field('sc.SB.P5.K.5.none').value === "Yes", "DataTable");
-    individualFieldVisibilityAndRequired('dt.SB.P5.L.contractSituations', fd.field('sc.SB.P5.L.none').value === "Yes", "DataTable");
-    individualFieldVisibilityAndRequired('dt.SB.P5.M.employeesOfMTA', fd.field('sc.SB.P5.M.none').value === "Yes", "DataTable");
-    showHideInClass('sc.SB.P5.K.1.none', 'Yes', 'ScheduleBPart5K', true);
-    scheduleBPart5YesOrNo = ['sc.SB.P5.D.bankruptcy',
-                            'sc.SB.P5.E.liensExcess',
-                            'sc.SB.P5.F.liensToday',
-                            'sc.SB.P5.G.failedTax',
-                            'sc.SB.P5.I.conflictOfInterest',
-                            'sc.SB.P5.N.haveSubsidiaryOrAffiliate',
-                            'sc.SB.P5.O.isContractorSubsidiaryOfGroup',
-                            'sc.SB.P5.P.ownershipOfOtherEntity',
-                            'sc.SB.P5.Q.sameBusinessGroup'];
-    anyYes = false;
-    scheduleBPart5YesOrNo.forEach(field => {
-        if (fd.field(field).value === "Yes") {
-            anyYes = true;
-        }
-    });
-    individualFieldVisibilityAndRequired('n.SB.P5.Q.explanation', anyYes);
-                            
-
+function togglePDF() {
     /*
         The following toggles the PDFs and ensures that the reader has viewed the PDF before moving onto the questions.
         Every form except OCIP COI, Sunnary, and General Information applies here.
@@ -472,6 +408,74 @@ function toggleClass() {
     showHideInClass('tog.OCIPB.hidePDF', false, 'OCIPBPDF', false);
 }
 
+function toggleSBP3() {
+    //Schedule B, Part 3: Contractor Representations
+    //If any of the questions on the page has been answered yes, require the text box.
+    scheduleBPart3YesOrNo = ['sc.SB.P3.A.notResponsible',
+                            'sc.SB.P3.B.debarred',
+                            'sc.SB.P3.C.pendingDebarment',
+                            'sc.SB.P3.D.terminated',
+                            'sc.SB.P3.E.suretyAgreement',
+                            'sc.SB.P3.F.monitor',
+                            'sc.SB.P3.G.safety',
+                            'sc.SB.P3.H.compensationRating'];
+    anyYes = false;
+    scheduleBPart3YesOrNo.forEach(field => {
+        if (fd.field(field).value === "Yes") {
+            anyYes = true;
+        }
+    });
+}
+
+function toggleSBP4() {
+    //Schedule B, Part 4: Yes or No Questions
+    //If any of the questions on the page has been answered yes, require the text box.
+    scheduleBPart4YesOrNo = ['sc.SB.P4.A.noloContendere',
+                            'sc.SB.P4.B.unfavorableTerminated',
+                            'sc.SB.P4.C.subjectOfCrime',
+                            'sc.SB.P4.D.disqualifiedBid',
+                            'sc.SB.P4.E.refuseTestimony',
+                            'sc.SB.P4.F.refuseTestimonyNYS',
+                            'sc.SB.P4.G.civilJudgement',
+                            'sc.SB.P4.H.deferredProsecution'];
+    anyYes = false;
+    scheduleBPart4YesOrNo.forEach(field => {
+        if (fd.field(field).value === "Yes") {
+            anyYes = true;
+        }
+    });
+    individualFieldVisibilityAndRequired('t.SB.P4.yesToAnyAnswerExplain', anyYes)
+}
+
+function toggleSBP5() {
+    //Schedule B Part 5: Additional Questions
+    individualFieldVisibilityAndRequired('dt.SB.P5.C.pastThreeYrs', fd.field('sc.SB.P5.C.subcontractor').value === "Yes", "DataTable");
+    individualFieldVisibilityAndRequired('n.SB.P5.H.officeSpaceDetails', fd.field('sc.SB.P5.H.officeSpace').value === "Yes");
+    individualFieldVisibilityAndRequired('n.SB.P5.J.sharedOfficeExplanation', fd.field('sc.SB.P5.J.sharedOffice').value === "Yes");
+    individualFieldVisibilityAndRequired('dt.SB.P5.K.2.last3YrsPenalities', fd.field('sc.SB.P5.K.2.none').value === "Yes", "DataTable");
+    individualFieldVisibilityAndRequired('dt.SB.P5.K.3.MTAContractsWorkNotCompleted', fd.field('sc.SB.P5.K.3.none').value === "Yes", "DataTable");
+    individualFieldVisibilityAndRequired('dt.SB.P5.K.4.activeGovtEntityContracts', fd.field('sc.SB.P5.K.4.none').value === "Yes", "DataTable");
+    individualFieldVisibilityAndRequired('dt.SB.P5.K.5.contractsNotCompleted', fd.field('sc.SB.P5.K.5.none').value === "Yes", "DataTable");
+    individualFieldVisibilityAndRequired('dt.SB.P5.L.contractSituations', fd.field('sc.SB.P5.L.none').value === "Yes", "DataTable");
+    individualFieldVisibilityAndRequired('dt.SB.P5.M.employeesOfMTA', fd.field('sc.SB.P5.M.none').value === "Yes", "DataTable");
+    showHideInClass('sc.SB.P5.K.1.none', 'Yes', 'ScheduleBPart5K', true);
+    scheduleBPart5YesOrNo = ['sc.SB.P5.D.bankruptcy',
+                            'sc.SB.P5.E.liensExcess',
+                            'sc.SB.P5.F.liensToday',
+                            'sc.SB.P5.G.failedTax',
+                            'sc.SB.P5.I.conflictOfInterest',
+                            'sc.SB.P5.N.haveSubsidiaryOrAffiliate',
+                            'sc.SB.P5.O.isContractorSubsidiaryOfGroup',
+                            'sc.SB.P5.P.ownershipOfOtherEntity',
+                            'sc.SB.P5.Q.sameBusinessGroup'];
+    anyYes = false;
+    scheduleBPart5YesOrNo.forEach(field => {
+        if (fd.field(field).value === "Yes") {
+            anyYes = true;
+        }
+    });
+    individualFieldVisibilityAndRequired('n.SB.P5.Q.explanation', anyYes);
+}
 //showHideInClass toggles the visibility of all fields inside a given class
 function showHideInClass(fieldName, showValue, className, changeIfRequired = true, dontChangeRequired = []) {
     try{
