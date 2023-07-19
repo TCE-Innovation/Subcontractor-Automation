@@ -28,19 +28,21 @@
 * $     jQuery object                                                                                  *
 *                                                                                                      *
 *******************************************************************************************************/
-//CHANGE HERE
 
-//OIFHW(EUFHWEOFKNFWE)
-
-// ================================================================
-//  EXAMPLE 1: The code is executed right after rendering the form 
-// ================================================================
+/*
++--------------------------------------------------------------------------------------------------------------------------+
+|                                                                                                                          |
+|This function is executed after the form is rendered and sets up the event listeners for various form fields and controls.|
+|                               It is the primary base point for where things are run from.                                |
+|                                                                                                                          |
++--------------------------------------------------------------------------------------------------------------------------+
+*/
 fd.rendered(function () {
     
     //Functions that run initially
     executeOnce();
 
-    //Items that change on action
+    //Setting up the arrays of fields that require event listeners
     isFormRequired = ['sc.SQS.3.corpOrCoPartner', 
     'sc.SB1.isSB1Required',
     'sc.SF.FF3.3.reportType',
@@ -105,6 +107,7 @@ fd.rendered(function () {
                         'sc.SB.P5.M.none'];
 
 
+    //Sets up the event listeners for each of the fields.
     isFormRequired.forEach(field => fd.field(field).$on('change',reqForms));
     pdfControls.forEach(field => fd.field(field).$on('change',togglePDF));
     scheduleBPart3YesOrNo.forEach(field => fd.field(field).$on('change',toggleSBP3));
@@ -113,6 +116,20 @@ fd.rendered(function () {
     onActionControl.forEach(control => fd.control(control).$on('change', updateControls));
 });
 
+
+/*
++-----------------------------------------------------------------------------------------------------+
+|                                                                                                     |
+|This function, fd.beforeSave(), is a pre-save hook that gets executed before the form data is saved. |
+|                                                                                                     |
+|    It is set up to perform an API interaction to send the form data to a specified URL endpoint.    |
+|                                                                                                     |
+|The API interaction is achieved by invoking a Power Automate Flow, which listens for an HTTP request.|
+|                                                                                                     |
+|                      @returns {void} This function does not return any value.                       |
+|                                                                                                     |
++-----------------------------------------------------------------------------------------------------+
+*/
 fd.beforeSave(function () {
     url = "https://prod-102.westus.logic.azure.com:443/workflows/1128de5c7a7e488e9e88a34f00eb974b/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=B_VCWVNlWNAnOJfI9ytYCVZGVLNLkvYBq2iMluENAI0";
     data = fd.data();
