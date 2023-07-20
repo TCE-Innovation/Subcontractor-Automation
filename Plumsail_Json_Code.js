@@ -43,13 +43,14 @@ fd.rendered(function () {
     executeOnce();
 
     //Setting up the arrays of fields that require event listeners
+    generalInfoEvents = ['sc.GI.isMailingAddrDiff'];
     isFormRequired = ['sc.SQS.3.corpOrCoPartner', 
     'sc.SB1.isSB1Required',
     'sc.SF.FF3.3.reportType',
     'sc.SB.isSBRequired',
     'sc.SF.FF3.FF3Applicable',
     'sc.RMSA.isRequired'
-    ]
+    ];
     ocipbCalculator = ['dt.OCIP.FB.S2.insurancePremium'];
 
     pdfControls = ['sc.SQS.readAndUnderstood',
@@ -108,6 +109,7 @@ fd.rendered(function () {
 
 
     //Sets up the event listeners for each of the fields.
+    setUpEventListener(generalInfoEvents, generalInfoCallback);
     isFormRequired.forEach(field => fd.field(field).$on('change',reqForms));
     pdfControls.forEach(field => fd.field(field).$on('change',togglePDF));
     scheduleBPart3YesOrNo.forEach(field => fd.field(field).$on('change',toggleSBP3));
@@ -115,6 +117,10 @@ fd.rendered(function () {
     scheduleBPart5.forEach(field => fd.field(field).$on('change',toggleSBP5));
     ocipbCalculator.forEach(control => fd.control(control).$on('change', calculateOCIPBValues));
 });
+
+function setUpEventListener(arrayOfEvents, callbackFcn) {
+    arrayOfEvents.forEach(field => fd.field(field).$on('change', callbackFcn));
+}
 
 
 /*
@@ -175,6 +181,23 @@ function disableFields() {
     fd.field("num.OCIP.FB.S2.workHoursTotal").disabled = true;
     fd.field("num.OCIP.FB.S2.limitedPayrollTotal").disabled = true;
     fd.field("num.OCIP.FB.S2.premiumTotal").disabled = true;
+}
+
+//This function will hide or show the "Mailing address" section, if mailing is different from street address.
+//This function will also check to see that the proposes Project End Date is later than the Project start date
+function generalInfoCallback() {
+    $.getScript('https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js')
+    .then(function() {
+        var projectEnd = moment(fd.field('d.GI.projectedCompletionDate').value);
+        var projectBegin = moment(fd.field('d.GI.projectedStartDate').value);
+        if (projectEnd.isValid() && projectBegin.isValid()) {
+            if(projectEnd.diff(projectBegin, 'days', false) <= 0) {
+                alert("The projected completion date is before the start date. Please fix this in the General Information");
+            }
+        }
+    })
+
+    showHideInClass('sc.GI.isMailingAddrDiff', 'Yes', 'GeneralInfoMailingAddr');
 }
 
 /*
@@ -563,16 +586,37 @@ function toggleSBP5() {
     });
     individualFieldVisibilityAndRequired('n.SB.P5.Q.explanation', anyYes);
 }
-//showHideInClass toggles the visibility of all fields inside a given class
+/*
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                                                                                                                                                                              |
+|                   This function, showHideInClass, is designed to toggle the visibility of all fields inside a given class based on a specified condition.                    |
+|     It operates on the assumption that the fields to be controlled have a common class, and their visibility should change depending on the value of a particular field.     |
+|                     @param {string} fieldName - The field for which the change should be triggered.                                                                          |
+|                     @param {any} showValue - The value that the specified 'fieldName' should have to show the fields with the given class ('className').                     |
+|                     @param {string} className - The class whose visibility will be changing for the fields.                                                                  |
+|                     @param {boolean} changeIfRequired - Optional. Indicates whether the fields inside the                                                                    |
+|                         class should also change their 'required' status based on visibility. Default is 'true'.                                                             |
+|                     @param {Array} dontChangeRequired - Optional. An array of field internal names whose requirement will not                                                |
+|                         be affected by the change. Default is an empty array.                                                                                                |
+|                     @returns {void} This function does not return any value.                                                                                                 |
+|                                                                                                                                                                              |
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+*/
 function showHideInClass(fieldName, showValue, className, changeIfRequired = true, dontChangeRequired = []) {
     try{
+        // Check if the value of the specified 'fieldName' matches the 'showValue'.
+        // If it matches, show the fields with the given 'className' class; otherwise, hide them.
         if(fd.field(fieldName).value === showValue) {
             $("." + className).show();
+            // If 'changeIfRequired' is true, set the fields inside the class as required.
+            // The 'dontChangeRequired' array is used to specify optional fields whose requirement status will not be affected.
             if (changeIfRequired) {
                 setRequiredInClass(true, className, dontChangeRequired);
             }
         } else {
             $("." + className).hide();
+            // If 'changeIfRequired' is true, set the fields inside the class as not required.
+            // The 'dontChangeRequired' array is used to specify optional fields whose requirement status will not be affected.
             if (changeIfRequired) {
                 setRequiredInClass(false, className, dontChangeRequired);
             }
