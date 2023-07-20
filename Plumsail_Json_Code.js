@@ -123,13 +123,15 @@ function setUpEventListeners() {
     eventListenerHelper(scheduleBPart3YesOrNo, toggleSBP3);
     eventListenerHelper(scheduleBPart4YesOrNo, toggleSBP4);
     eventListenerHelper(scheduleBPart5, toggleSBP5);
-    eventListenerHelper(ocipbCalculator, calculateOCIPBValues);
+    //This is actually an event listener as well, I jsut couldn't figure out how to get this to fit the same format as the others, since it 
+    //requires an input value from the event itself. I coudln't figure out how to do this repeating (Although, technically this isn't repeating)
+    calculateOCIPBValues();
 }
 
 /*
 +-------------------------------------------------------------------------------------------------------------------------------------------------+
 |                                                                                                                                                 |
-|          eventListenerHelper, is a helper function used to set up event listeners for multiple form fields specified in the 'arrayOfEvents'.     |
+|          eventListenerHelper, is a helper function used to set up event listeners for multiple form fields specified in the 'arrayOfEvents'.    |
 |                     Each field listed in the array will trigger the provided 'callbackFcn' function when its value changes.                     |
 |              @param {Array} arrayOfEvents - An array of field internal names for which event listeners should be set up.                        |
 |              @param {Function} callbackFcn - The callback function to be executed when any of the specified fields' values change.              |
@@ -180,7 +182,6 @@ var executeOnce = (function() {
             executed = true;
             autopopulate();
             disableFields();
-            calculateOCIPBValues();
         }
     };
 })();
@@ -615,7 +616,7 @@ function toggleSBP4() {
             anyYes = true;
         }
     });
-    individualFieldVisibilityAndRequired('t.SB.P4.yesToAnyAnswerExplain', anyYes)
+    individualFieldVisibilityAndRequired('n.SB.P4.explanation', anyYes)
 }
 
 function toggleSBP5() {
