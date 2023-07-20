@@ -52,7 +52,8 @@ fd.rendered(function () {
     'sc.SB.isSBRequired',
     'sc.SF.FF3.FF3Applicable',
     'sc.RMSA.isRequired',
-    'sc.SQS.12.non-UnionOrUnion'
+    'sc.SQS.12.non-UnionOrUnion',
+    'sc.SG.isFormBApplicable'
     ];
     ocipbCalculator = ['dt.OCIP.FB.S2.insurancePremium'];
 
@@ -455,12 +456,15 @@ function reqForms() {
         This includes:
             Schedule B1
             Schedule B
-            Request for Materials Supplier Approval
+            RMSA/SQS
             Schedule F, F3 (Technically, this is a subform, but on the wizard, we've condensed it into its own form)
+            Schedule G
     */
     
     //Toggles Schedule F, Form F3
-    showHideInClass('sc.SF.FF3.FF3Applicable', 'Yes', "ScheduleFFormF3");    
+    showHideInClass('sc.SF.FF3.FF3Applicable', 'Yes', "ScheduleFFormF3", true, ['t.SF.FF3.4.tier', 't.SF.FF3.4.congressionalDistrict', 't.SF.FF3.5.congressionalDistrict',
+                                                                                't.SF.FF3.7.CFDANumber', 't.SF.FF3.8.federalActionNumber', 'num.SF.FF3.9.awardAmount', 't.SF.FF3.10.a.nameOfLobbyingRegistrant',
+                                                                                'n.SF.FF3.10.a.addrOfLobbyingRegistrant', 'n.SF.FF3.10.b.individualsPerformingServices', 'n.SF.FF3.10.b.addr']);    
 
     //Toggles Schedule B
     showHideInClass('sc.SB.isSBRequired', 'Yes', "ScheduleBClass");
@@ -472,7 +476,7 @@ function reqForms() {
     showHideInClass('sc.RMSA.isRequired', 'SQS', 'SQSQuestions', true, ['t.SQS.2a.streetAddr', 't.SQS.2a.city', 'dd.SQS.2a.state', 't.SQS.2a.zipCode']);
     //'d.SQS.3.dateOfOrg', 't.SQS.3.county', 'dt.SQS.3.namesAndAddrsOfPartners'
     showHideInClass('sc.SQS.12.non-UnionOrUnion', 'Union', 'SQSLabor');
-    showHideInClass('sc.RMSA.isRequired', 'RMSA', 'RMSAQuestions', true);
+    showHideInClass('sc.RMSA.isRequired', 'RMSA', 'RMSAQuestions', true, ['t.RMSA.localManufacturingFacility.streetAddr', 't.RMSA.localManufacturingFacility.city', 'dd.RMSA.localManufacturingFacility.state', 't.RMSA.localManufacturingFacility.zipCode']);
 
         /*
         The following are optional fields inside forms.
@@ -488,6 +492,9 @@ function reqForms() {
     //Toggles F3 Materials List
     showHideInClass('sc.SF.FF3.3.reportType', 'b. Material Change', 'ScheduleF3MaterialChange');
 
+    //Toggles the Schedule G requirement
+    showHideInClass('sc.SG.isFormBApplicable', 'Yes', 'SGInfo');
+    //REPLACE SCHEUDLEGDBE WITH CLASS NAME
 }
 
 function togglePDF() {
