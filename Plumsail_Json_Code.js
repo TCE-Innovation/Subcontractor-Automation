@@ -43,7 +43,9 @@ fd.rendered(function () {
     executeOnce();
 
     //Setting up the arrays of fields that require event listeners
-    generalInfoEvents = ['sc.GI.isMailingAddrDiff'];
+    generalInfoEvents = ['sc.GI.isMailingAddrDiff',
+                        'd.GI.projectedStartDate',
+                        'd.GI.projectedCompletionDate'];
     isFormRequired = ['sc.SQS.3.corpOrCoPartner', 
     'sc.SB1.isSB1Required',
     'sc.SF.FF3.3.reportType',
