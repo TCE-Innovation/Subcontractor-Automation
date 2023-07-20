@@ -471,7 +471,7 @@ function reqForms() {
     //Toggles the visibiliy and requirement of the RMSA form
     showHideInClass('sc.RMSA.isRequired', 'SQS', 'SQSQuestions', true, ['t.SQS.2a.streetAddr', 't.SQS.2a.city', 'dd.SQS.2a.state', 't.SQS.2a.zipCode']);
     //'d.SQS.3.dateOfOrg', 't.SQS.3.county', 'dt.SQS.3.namesAndAddrsOfPartners'
-    showHideInClass('sc.SQS.12.non-UnionOrUnion', 'Union');
+    showHideInClass('sc.SQS.12.non-UnionOrUnion', 'Union', 'SQSLabor');
     showHideInClass('sc.RMSA.isRequired', 'RMSA', 'RMSAQuestions', true);
 
         /*
