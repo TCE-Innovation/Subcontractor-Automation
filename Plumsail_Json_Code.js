@@ -190,13 +190,20 @@ function disableFields() {
 function generalInfoCallback() {
     $.getScript('https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js')
     .then(function() {
-        var projectEnd = moment(fd.field('d.GI.projectedCompletionDate').value);
-        var projectBegin = moment(fd.field('d.GI.projectedStartDate').value);
-        if (projectEnd.isValid() && projectBegin.isValid()) {
-            if(projectEnd.diff(projectBegin, 'days', false) <= 0) {
-                alert("The projected completion date is before the start date. Please fix this in the General Information");
-            }
-        }
+        fd.field('d.GI.projectedCompletionDate').addValidator({
+            name: 'Check Date',
+            error: 'Completion Date must be after start date',
+            validate: function(value) {
+                var projectEnd = moment(fd.field('d.GI.projectedCompletionDate').value);
+                var projectBegin = moment(fd.field('d.GI.projectedStartDate').value);
+                if (projectEnd.isValid() && projectBegin.isValid()) {
+                    if(projectEnd.diff(projectBegin, 'days', false) <= 0) {
+                        return false;
+                    }
+                    return true;
+                }
+            } 
+        })
     })
 
     showHideInClass('sc.GI.isMailingAddrDiff', 'Yes', 'GeneralInfoMailingAddr');
