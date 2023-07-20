@@ -119,6 +119,7 @@ function setUpEventListeners() {
     //Sets up the event listeners for each of the fields.
     eventListenerHelper(generalInfoEvents, generalInfoCallback);
     eventListenerHelper(isFormRequired, reqForms);
+    eventListenerHelper(pdfControls, togglePDF);
     eventListenerHelper(scheduleBPart3YesOrNo, toggleSBP3);
     eventListenerHelper(scheduleBPart4YesOrNo, toggleSBP4);
     eventListenerHelper(scheduleBPart5, toggleSBP5);
