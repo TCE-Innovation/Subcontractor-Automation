@@ -41,11 +41,15 @@ fd.rendered(function () {
     
     //Functions that run initially
     executeOnce();
+    setUpEventListeners();
+});
 
+function setUpEventListeners() {
     //Setting up the arrays of fields that require event listeners
     generalInfoEvents = ['sc.GI.isMailingAddrDiff',
                         'd.GI.projectedStartDate',
                         'd.GI.projectedCompletionDate'];
+
     isFormRequired = ['sc.SQS.3.corpOrCoPartner', 
     'sc.SB1.isSB1Required',
     'sc.SF.FF3.3.reportType',
@@ -113,19 +117,28 @@ fd.rendered(function () {
 
 
     //Sets up the event listeners for each of the fields.
-    setUpEventListener(generalInfoEvents, generalInfoCallback);
-    isFormRequired.forEach(field => fd.field(field).$on('change',reqForms));
-    pdfControls.forEach(field => fd.field(field).$on('change',togglePDF));
-    scheduleBPart3YesOrNo.forEach(field => fd.field(field).$on('change',toggleSBP3));
-    scheduleBPart4YesOrNo.forEach(field => fd.field(field).$on('change',toggleSBP4));
-    scheduleBPart5.forEach(field => fd.field(field).$on('change',toggleSBP5));
-    ocipbCalculator.forEach(control => fd.control(control).$on('change', calculateOCIPBValues));
-});
-
-function setUpEventListener(arrayOfEvents, callbackFcn) {
-    arrayOfEvents.forEach(field => fd.field(field).$on('change', callbackFcn));
+    eventListenerHelper(generalInfoEvents, generalInfoCallback);
+    eventListenerHelper(isFormRequired, reqForms);
+    eventListenerHelper(scheduleBPart3YesOrNo, toggleSBP3);
+    eventListenerHelper(scheduleBPart4YesOrNo, toggleSBP4);
+    eventListenerHelper(scheduleBPart5, toggleSBP5);
+    eventListenerHelper(ocipbCalculator, calculateOCIPBValues);
 }
 
+/*
++-------------------------------------------------------------------------------------------------------------------------------------------------+
+|                                                                                                                                                 |
+|          eventListenerHelper, is a helper function used to set up event listeners for multiple form fields specified in the 'arrayOfEvents'.     |
+|                     Each field listed in the array will trigger the provided 'callbackFcn' function when its value changes.                     |
+|              @param {Array} arrayOfEvents - An array of field internal names for which event listeners should be set up.                        |
+|              @param {Function} callbackFcn - The callback function to be executed when any of the specified fields' values change.              |
+|              @returns {void} This function does not return any value.                                                                           |
+|                                                                                                                                                 |
++-------------------------------------------------------------------------------------------------------------------------------------------------+
+*/
+function eventListenerHelper(arrayOfEvents, callbackFcn) {
+    arrayOfEvents.forEach(field => fd.field(field).$on('change', callbackFcn));
+}
 
 /*
 +-----------------------------------------------------------------------------------------------------+
@@ -146,13 +159,25 @@ fd.beforeSave(function () {
     apiInteraction(data, url)
 });
 
+/*
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                                                                                                                                                                                          |
+|This variable, executeOnce, is assigned an immediately-invoked function expression (IIFE) to ensure that its inner code block runs only once. This is done to handle initialization tasks.|
+|                                                                      If it hasn’t executed, it does the following:                                                                       |
+|                             autopopulate(): This function is called to auto-populate certain fields with predefined values during the form's initialization.                             |
+|                             disableFields(): This function is called to disable specific form fields to prevent user input or editing during initialization.                             |
+|                             calculateOCIPBValues(): This function is called to perform calculations and auto-populate certain fields related to the OCIP B section.                      |
+|                             @returns {void} This function does not return any value.                                                                                                     |
+|                                                                                                                                                                                          |
+|                                                                                                                                                                                          |
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+*/
 var executeOnce = (function() {
     var executed = false;
     return function() {
         if (!executed) {
             executed = true;
             autopopulate();
-            //toggleClass();
             disableFields();
             calculateOCIPBValues();
         }
@@ -187,6 +212,26 @@ function disableFields() {
     fd.field("num.OCIP.FB.S2.premiumTotal").disabled = true;
 }
 
+/*
++-------------------------------------------------------------------------------------------------------------------------------------------------+
+|                                                                                                                                                 |
+|              The function, generalInfoCallback(), handles various tasks related to the "General Information" section of the form.               |
+|                                                                                                                                                 |
+|                                                       It performs the following actions:                                                        |
+|                                                             Load Moment.js Library:                                                             |
+|                             Used to add a date validator to ensure projected completion is after projected start                                |
+|     If the "Projected Completion Date" is not valid or is earlier than or equal to the "Projected Start Date," the validator returns false,     |
+|                            indicating that the date is invalid, and an error message is displayed on the form field.                            |
+|                                                                                                                                                 |
+|                                                      Show/Hide "Mailing Address" Section:                                                       |
+|   The function calls the 'showHideInClass' function, which toggles the visibility of the "Mailing Address" section based on the value of the    |
+|field with the internal name 'sc.GI.isMailingAddrDiff'. If the value is 'Yes', the section with the class 'GeneralInfoMailingAddr' will be shown;|
+|                                                          otherwise, it will be hidden.                                                          |
+|                                                                                                                                                 |
+|                                            @returns {void} This function does not return any value.                                             |
+|                                                                                                                                                 |
++-------------------------------------------------------------------------------------------------------------------------------------------------+
+*/
 //This function will hide or show the "Mailing address" section, if mailing is different from street address.
 //This function will also check to see that the proposes Project End Date is later than the Project start date
 function generalInfoCallback() {
@@ -271,7 +316,7 @@ function calculateOCIPBValues() {
 /*
 +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                                                                                                                                                                         |
-|            This function, externalFile(), is designed to parse the query in the URL to extract specific parameters (contract number and subcontractor name).            |
+|            This function, getKnownInfo(), is designed to parse the query in the URL to extract specific parameters (contract number and subcontractor name).            |
 |It then constructs an object ('infoToSend') with these parameters and passes it to another function named 'apiInteraction' to retrieve JSON data from an external source.|
 |                                                                                                                                                                         |
 |                              @returns {Promise} A promise that resolves with the contents of the JSON file fetched from the specified URL.                              |
@@ -282,7 +327,7 @@ function calculateOCIPBValues() {
     This function will parse the query in the URL, then pass this information into a function that returns a promise
     to the contents of some JSON file.
 */
-function externalFile() {
+function getKnownInfo() {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     contractNumber = urlParams.get('contract');
@@ -357,7 +402,7 @@ function autopopulate() {
     });
 
     //Extract the items that should be editable
-    externalFile().then(function(data){
+    getKnownInfo().then(function(data){
         fd.data(data);
 
         let editable = [];
@@ -448,8 +493,6 @@ function autopopulate() {
 
 
 
-//To be more efficient (And not run everything all at once) turn this function into an object
-//And call upong specific portions in the object
 function reqForms() {
         /*
         The following are optional forms: Forms that may or may not be filled out by the subcontractor.
@@ -463,11 +506,10 @@ function reqForms() {
     
     //Toggles Schedule F, Form F3
     showHideInClass('sc.SF.FF3.FF3Applicable', 'Yes', "ScheduleFFormF3", true, ['t.SF.FF3.4.tier', 't.SF.FF3.4.congressionalDistrict', 't.SF.FF3.5.congressionalDistrict',
-                                                                                't.SF.FF3.7.CFDANumber', 't.SF.FF3.8.federalActionNumber', 'num.SF.FF3.9.awardAmount', 't.SF.FF3.10.a.nameOfLobbyingRegistrant',
-                                                                                'n.SF.FF3.10.a.addrOfLobbyingRegistrant', 'n.SF.FF3.10.b.individualsPerformingServices', 'n.SF.FF3.10.b.addr']);    
+                                                                                't.SF.FF3.7.CFDANumber', 't.SF.FF3.8.federalActionNumber', 'num.SF.FF3.9.awardAmount', 'n.SF.FF3.10.b.addr']);    
 
     //Toggles Schedule B
-    showHideInClass('sc.SB.isSBRequired', 'Yes', "ScheduleBClass");
+    showHideInClass('sc.SB.isSBRequired', 'Yes', "ScheduleBClass", true, ['n.SB.P1.D.changedAddress']);
 
     //Toggles Schedule B1
     showHideInClass('sc.SB1.isSB1Required', 'Yes', 'ScheduleB1Class');
@@ -551,6 +593,8 @@ function toggleSBP3() {
             anyYes = true;
         }
     });
+    individualFieldVisibilityAndRequired('n.SB.P3.explanation', anyYes);
+    individualFieldVisibilityAndRequired('a.SB.P3.attachments', anyYes);
 }
 
 function toggleSBP4() {
