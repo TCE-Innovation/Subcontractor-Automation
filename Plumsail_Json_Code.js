@@ -741,26 +741,30 @@ function individualFieldVisibilityAndRequired(fieldName, trueOrFalse, dataTableO
 }
 
 let dataTableFunctions = {
-    namesOfDataTables: ['dt.SQS.8.prevExp'],
+    
+    namesOfDataTables: Object.keys(fd.data()).filter((name) => /dt./.test(name)),
 
 
     //Methods
     //This function will check the data tables to ensure there are no empty spots
     checkDataTable: function (dtName) {
+        let returnValue = true;
         fd.control(dtName).value.forEach(row => {
             row.forEach(el => {
                 //Here we have the actual values of the items themselves. If the value is "", null, or undefined, the user has left it blank
                 //Thus, we should throw an error
                 if (el === "" || el === null || el === undefined) {
                     //return false to indicate an error
-                    return false;
+                    returnValue = false;
                 }
             })
-            return true;
         })
+        //If we loop through everything and it hasn't triggered the false condition, then the whole table is true
+        return returnValue;
     },
     //Will loop through all the values in the array to add a validator to all of them
     addValidators: function () {
+        this.getAllDataTables();
         this.namesOfDataTables.forEach(el => {
             fd.control(el).addValidator({
                 name: 'DataTable' + el,
