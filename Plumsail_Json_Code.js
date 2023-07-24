@@ -776,6 +776,6 @@ let dataTableFunctions = {
         })
     },
     getDataTables: function () {
-        this.namesOfDataTables = Object.keys(fd.data()).filter((name) => /dt./.test(name)),
+        this.namesOfDataTables = Object.keys(fd.data()).filter((name) => /dt./.test(name));
     }
 };
