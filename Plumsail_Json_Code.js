@@ -107,7 +107,7 @@ function setUpEventListeners() {
     ];
 
     pdfControls = Object.keys(fd.data()).filter((name) => /hidePDF/.test(name));
-    pdfControls.push(Object.keys(fd.data()).filter((name) => /readAndUnderstood/.test(name)));
+    pdfControls = pdfControls.concat(Object.keys(fd.data()).filter((name) => /readAndUnderstood/.test(name)));
 
     scheduleBPart3YesOrNo = ['sc.SB.P3.A.notResponsible',
                             'sc.SB.P3.B.debarred',
