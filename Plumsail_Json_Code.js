@@ -84,7 +84,7 @@ var executeOnce = (function() {
         if (!executed) {
             executed = true;
             autopopulate();
-            disableFields();
+            dataTableFunctions.disableFields();
             dataTableFunctions.addValidators();
         }
     };
@@ -105,24 +105,9 @@ function setUpEventListeners() {
     'sc.SQS.12.non-UnionOrUnion',
     'sc.SG.isFormBApplicable'
     ];
-    ocipbCalculator = ['dt.OCIP.FB.S2.insurancePremium'];
 
-    pdfControls = ['sc.SQS.readAndUnderstood',
-    'tog.SQS.hidePDF',
-    'sc.SF.readAndUnderstood',
-    'tog.SF.hidePDF',
-    'sc.SF1.readAndUnderstood',
-    'tog.SF1.hidePDF',
-    'tog.RMSA.hidePDF',
-    'sc.SB.readAndUnderstood',
-    'tog.SB.hidePDF',
-    'sc.SB1.readAndUnderstood',
-    'tog.SB1.hidePDF',
-    'sc.OCIPA.readAndUnderstood',
-    'tog.OCIPA.hidePDF',
-    'sc.OCIPB.readAndUnderstood',
-    'tog.OCIPB.hidePDF'
-    ];
+    pdfControls = Object.keys(fd.data()).filter((name) => /hidePDF/.test(name));
+    pdfControls.push(Object.keys(fd.data()).filter((name) => /readAndUnderstood/.test(name)));
 
     scheduleBPart3YesOrNo = ['sc.SB.P3.A.notResponsible',
                             'sc.SB.P3.B.debarred',
@@ -171,7 +156,7 @@ function setUpEventListeners() {
     eventListenerHelper(scheduleBPart5, toggleSBP5);
     //This is actually an event listener as well, I jsut couldn't figure out how to get this to fit the same format as the others, since it 
     //requires an input value from the event itself. I coudln't figure out how to do this repeating (Although, technically this isn't repeating)
-    calculateOCIPBValues();
+    dataTableFunctions.calculateOCIPBValues();
 }
 
 /*
@@ -187,33 +172,6 @@ function setUpEventListeners() {
 */
 function eventListenerHelper(arrayOfEvents, callbackFcn) {
     arrayOfEvents.forEach(field => fd.field(field).$on('change', callbackFcn));
-}
-
-/*
-+------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                                                                                                                                                                        |
-| This function, disableFields(), is designed to disable specific fields in the OCIP B section, which are automatically calculated and should not be editable by users.  |
-|                                                                                                                                                                        |
-|It affects the "dt.OCIP.FB.S2.insurancePremium" data table and disables the "colnumOCIPFB2insurancePremiumPremium" column, as well as three fields below the data table:|
-|                                                                    "num.OCIP.FB.S2.workHoursTotal",                                                                    |
-|                                                               "num.OCIP.FB.S2.limitedPayrollTotal", and                                                                |
-|                                                                     "num.OCIP.FB.S2.premiumTotal".                                                                     |
-|                                                                                                                                                                        |
-|                       By setting these fields to read-only (disabled), users won't be able to modify their values directly through the form UI,                        |
-|                                                   ensuring that the calculations are protected and remain accurate.                                                    |
-|                                                                                                                                                                        |
-|                                                        @returns {void} This function does not return any value.                                                        |
-|                                                                                                                                                                        |
-+------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-*/
-function disableFields() {
-    //This affects OCIP B
-    // make Unit Price column read-only
-    const premiumColumn = fd.control("dt.OCIP.FB.S2.insurancePremium").columns.find(c => c.field === 'colnumOCIPFB2insurancePremiumPremium');
-    premiumColumn.editable = () => false;
-    fd.field("num.OCIP.FB.S2.workHoursTotal").disabled = true;
-    fd.field("num.OCIP.FB.S2.limitedPayrollTotal").disabled = true;
-    fd.field("num.OCIP.FB.S2.premiumTotal").disabled = true;
 }
 
 /*
@@ -259,63 +217,6 @@ function generalInfoCallback() {
 
     showHideInClass('sc.GI.isMailingAddrDiff', 'Yes', 'GeneralInfoMailingAddr');
 }
-
-/*
-+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                                                                                                                                                                    |
-|This function, calculateOCIPBValues(), is designed to perform calculations and autopopulate specific fields in the form related to the OCIP B Section II data table.|
-|                                                                                                                                                                    |
-|       It sets up an event listener on the "dt.OCIP.FB.S2.insurancePremium" control to trigger the calculations whenever the value in the data table changes.       |
-|                                                                                                                                                                    |
-|   The function contains two main parts:   1. Autopopulate Premium Row in OCIP B Section II Data Table:                                                             |
-|                              When the data in the "dt.OCIP.FB.S2.insurancePremium" control changes (i.e., a new record is added or modified in the data table),    |
-|                              this part of the function calculates the "colnumOCIPFB2insurancePremiumPremium" field value for each row in the data table.           |
-|                                                                                                                                                                    |
-|                                           2. Autopopulate Totals Below the Data Table:                                                                             |
-|                              After calculating the premium for each row, this part of the function calculates the totals for "workHours,"                          |
-|                              "estPayroll,"and "premium" by summing up the corresponding values from all rows in the data table.                                    |
-|                                                                                                                                                                    |
-|                                             It then sets the values of the corresponding fields below the data table:                                              |
-|                                                                                                                                                                    |
-|                                                      "num.OCIP.FB.S2.workHoursTotal" to the total work hours,                                                      |
-|                                              "num.OCIP.FB.S2.limitedPayrollTotal" to the total estimated payroll, and                                              |
-|                                                        "num.OCIP.FB.S2.premiumTotal" to the total premium.                                                         |
-|                The function uses the 'value' parameter, which represents the data in the "dt.OCIP.FB.S2.insurancePremium" control (the data table).                |
-|                                                                                                                                                                    |
-|                        It loops through the rows in the data table to perform the calculations and updates the relevant fields accordingly.                        |
-|              Note: The exact field names used for calculations are based on the structure of the data table and the form's field naming conventions.               |
-|                               The function assumes that the required fields and controls exist with the specified names in the form.                               |
-|                                                                                                                                                                    |
-|                                                      @returns {void} This function does not return any value.                                                      |
-|                                                                                                                                                                    |
-+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-*/
-function calculateOCIPBValues() {
-    fd.control("dt.OCIP.FB.S2.insurancePremium").$on('change', function(value){
-    //Autopopulates the premium row in OCIP B Section II
-    if (value) { //If there are records in the table
-        for (var i = 0; i < value.length; i++) {
-            value[i].set('colnumOCIPFB2insurancePremiumPremium', value[i].colnumOCIPFB2insurancePremiumPayroll * value[i].colnumOCIPFB2insurancePremiumWCRate / 100);
-        }
-    }
-    var workHours = 0;
-    var estPayroll = 0;
-    var premium = 0;
-    //Autopopulates the totals below the data table
-    if (value) {
-        for (var i = 0; i < value.length; i++) {
-            workHours += value[i].colnumOCIPFB2insurancePremiumWorkHours;
-            estPayroll += value[i].colnumOCIPFB2insurancePremiumPayroll;
-            premium += value[i].colnumOCIPFB2insurancePremiumPremium;
-        }
-    }
-
-    fd.field("num.OCIP.FB.S2.workHoursTotal").value = workHours;
-    fd.field("num.OCIP.FB.S2.limitedPayrollTotal").value = estPayroll;
-    fd.field("num.OCIP.FB.S2.premiumTotal").value = premium;
-});
-}
-
 
 /*
 +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -777,5 +678,89 @@ let dataTableFunctions = {
     },
     getDataTables: function () {
         this.namesOfDataTables = Object.keys(fd.data()).filter((name) => /dt./.test(name));
+    },
+
+    /*
+    +--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+    |                                                                                                                                                                    |
+    |This function, calculateOCIPBValues(), is designed to perform calculations and autopopulate specific fields in the form related to the OCIP B Section II data table.|
+    |                                                                                                                                                                    |
+    |       It sets up an event listener on the "dt.OCIP.FB.S2.insurancePremium" control to trigger the calculations whenever the value in the data table changes.       |
+    |                                                                                                                                                                    |
+    |   The function contains two main parts:   1. Autopopulate Premium Row in OCIP B Section II Data Table:                                                             |
+    |                              When the data in the "dt.OCIP.FB.S2.insurancePremium" control changes (i.e., a new record is added or modified in the data table),    |
+    |                              this part of the function calculates the "colnumOCIPFB2insurancePremiumPremium" field value for each row in the data table.           |
+    |                                                                                                                                                                    |
+    |                                           2. Autopopulate Totals Below the Data Table:                                                                             |
+    |                              After calculating the premium for each row, this part of the function calculates the totals for "workHours,"                          |
+    |                              "estPayroll,"and "premium" by summing up the corresponding values from all rows in the data table.                                    |
+    |                                                                                                                                                                    |
+    |                                             It then sets the values of the corresponding fields below the data table:                                              |
+    |                                                                                                                                                                    |
+    |                                                      "num.OCIP.FB.S2.workHoursTotal" to the total work hours,                                                      |
+    |                                              "num.OCIP.FB.S2.limitedPayrollTotal" to the total estimated payroll, and                                              |
+    |                                                        "num.OCIP.FB.S2.premiumTotal" to the total premium.                                                         |
+    |                The function uses the 'value' parameter, which represents the data in the "dt.OCIP.FB.S2.insurancePremium" control (the data table).                |
+    |                                                                                                                                                                    |
+    |                        It loops through the rows in the data table to perform the calculations and updates the relevant fields accordingly.                        |
+    |              Note: The exact field names used for calculations are based on the structure of the data table and the form's field naming conventions.               |
+    |                               The function assumes that the required fields and controls exist with the specified names in the form.                               |
+    |                                                                                                                                                                    |
+    |                                                      @returns {void} This function does not return any value.                                                      |
+    |                                                                                                                                                                    |
+    +--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+    */
+    calculateOCIPBValues: function() {
+        fd.control("dt.OCIP.FB.S2.insurancePremium").$on('change', function(value){
+        //Autopopulates the premium row in OCIP B Section II
+        if (value) { //If there are records in the table
+            for (var i = 0; i < value.length; i++) {
+                value[i].set('colnumOCIPFB2insurancePremiumPremium', value[i].colnumOCIPFB2insurancePremiumPayroll * value[i].colnumOCIPFB2insurancePremiumWCRate / 100);
+            }
+        }
+        var workHours = 0;
+        var estPayroll = 0;
+        var premium = 0;
+        //Autopopulates the totals below the data table
+        if (value) {
+            for (var i = 0; i < value.length; i++) {
+                workHours += value[i].colnumOCIPFB2insurancePremiumWorkHours;
+                estPayroll += value[i].colnumOCIPFB2insurancePremiumPayroll;
+                premium += value[i].colnumOCIPFB2insurancePremiumPremium;
+            }
+        }
+
+        fd.field("num.OCIP.FB.S2.workHoursTotal").value = workHours;
+        fd.field("num.OCIP.FB.S2.limitedPayrollTotal").value = estPayroll;
+        fd.field("num.OCIP.FB.S2.premiumTotal").value = premium;
+    });
+    },
+    /*
+    +------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+    |                                                                                                                                                                        |
+    | This function, disableFields(), is designed to disable specific fields in the OCIP B section, which are automatically calculated and should not be editable by users.  |
+    |                                                                                                                                                                        |
+    |It affects the "dt.OCIP.FB.S2.insurancePremium" data table and disables the "colnumOCIPFB2insurancePremiumPremium" column, as well as three fields below the data table:|
+    |                                                                    "num.OCIP.FB.S2.workHoursTotal",                                                                    |
+    |                                                               "num.OCIP.FB.S2.limitedPayrollTotal", and                                                                |
+    |                                                                     "num.OCIP.FB.S2.premiumTotal".                                                                     |
+    |                                                                                                                                                                        |
+    |                       By setting these fields to read-only (disabled), users won't be able to modify their values directly through the form UI,                        |
+    |                                                   ensuring that the calculations are protected and remain accurate.                                                    |
+    |                                                                                                                                                                        |
+    |                                                        @returns {void} This function does not return any value.                                                        |
+    |                                                                                                                                                                        |
+    +------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+    */
+    disableFields: function () {
+        //This affects OCIP B
+        // make Unit Price column read-only
+        const premiumColumn = fd.control("dt.OCIP.FB.S2.insurancePremium").columns.find(c => c.field === 'colnumOCIPFB2insurancePremiumPremium');
+        premiumColumn.editable = () => false;
+        fd.field("num.OCIP.FB.S2.workHoursTotal").disabled = true;
+        fd.field("num.OCIP.FB.S2.limitedPayrollTotal").disabled = true;
+        fd.field("num.OCIP.FB.S2.premiumTotal").disabled = true;
     }
+
+
 };
