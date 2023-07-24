@@ -332,12 +332,12 @@ let eventListener = {
         pdfControls = pdfControls.concat(Object.keys(fd.data()).filter((name) => /readAndUnderstood/.test(name)));
 
         //Sets up the event listeners for each of the fields.
-        this.eventListenerHelper(generalInfoEvents, this.generalInfoCallback);
-        this.eventListenerHelper(isFormRequired, this.reqForms);
-        this.eventListenerHelper(pdfControls, this.togglePDF);
-        this.eventListenerHelper(scheduleBPart3YesOrNo, this.toggleSBP3);
-        this.eventListenerHelper(scheduleBPart4YesOrNo, this.toggleSBP4);
-        this.eventListenerHelper(scheduleBPart5, this.toggleSBP5);
+        this.eventListenerHelper(this.generalInfoEvents, this.generalInfoCallback);
+        this.eventListenerHelper(this.isFormRequired, this.reqForms);
+        this.eventListenerHelper(this.pdfControls, this.togglePDF);
+        this.eventListenerHelper(this.scheduleBPart3YesOrNo, this.toggleSBP3);
+        this.eventListenerHelper(this.scheduleBPart4YesOrNo, this.toggleSBP4);
+        this.eventListenerHelper(this.scheduleBPart5, this.toggleSBP5);
         //This is actually an event listener as well, I jsut couldn't figure out how to get this to fit the same format as the others, since it 
         //requires an input value from the event itself. I coudln't figure out how to do this repeating (Although, technically this isn't repeating)
         dataTableFunctions.calculateOCIPBValues();
