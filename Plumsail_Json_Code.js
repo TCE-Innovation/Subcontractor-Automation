@@ -331,7 +331,7 @@ let eventListener = {
     setUpEventListeners: function() {
         //Items are added here, where they will be called to add onto the arrays
         this.pdfControls = Object.keys(fd.data()).filter((name) => /hidePDF/.test(name));
-        this.pdfControls = pdfControls.concat(Object.keys(fd.data()).filter((name) => /readAndUnderstood/.test(name)));
+        this.pdfControls = this.pdfControls.concat(Object.keys(fd.data()).filter((name) => /readAndUnderstood/.test(name)));
 
         //Sets up the event listeners for each of the fields.
         this.eventListenerHelper(this.generalInfoEvents, this.generalInfoCallback);
