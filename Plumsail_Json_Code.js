@@ -325,11 +325,13 @@ let eventListener = {
                     'sc.SB.P5.L.none',
                     'sc.SB.P5.M.none'
     ],
+    pdfControls = [],
 
     //Methods
     setUpEventListeners: function() {
-        pdfControls = Object.keys(fd.data()).filter((name) => /hidePDF/.test(name));
-        pdfControls = pdfControls.concat(Object.keys(fd.data()).filter((name) => /readAndUnderstood/.test(name)));
+        //Items are added here, where they will be called to add onto the arrays
+        this.pdfControls = Object.keys(fd.data()).filter((name) => /hidePDF/.test(name));
+        this.pdfControls = pdfControls.concat(Object.keys(fd.data()).filter((name) => /readAndUnderstood/.test(name)));
 
         //Sets up the event listeners for each of the fields.
         this.eventListenerHelper(this.generalInfoEvents, this.generalInfoCallback);
