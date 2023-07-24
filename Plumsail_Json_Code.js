@@ -44,6 +44,52 @@ fd.rendered(function () {
     setUpEventListeners();
 });
 
+
+/*
++-----------------------------------------------------------------------------------------------------+
+|                                                                                                     |
+|This function, fd.beforeSave(), is a pre-save hook that gets executed before the form data is saved. |
+|                                                                                                     |
+|    It is set up to perform an API interaction to send the form data to a specified URL endpoint.    |
+|                                                                                                     |
+|The API interaction is achieved by invoking a Power Automate Flow, which listens for an HTTP request.|
+|                                                                                                     |
+|                      @returns {void} This function does not return any value.                       |
+|                                                                                                     |
++-----------------------------------------------------------------------------------------------------+
+*/
+fd.beforeSave(function () {
+    url = "https://prod-102.westus.logic.azure.com:443/workflows/1128de5c7a7e488e9e88a34f00eb974b/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=B_VCWVNlWNAnOJfI9ytYCVZGVLNLkvYBq2iMluENAI0";
+    data = fd.data();
+    apiInteraction(data, url)
+});
+
+
+/*
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                                                                                                                                                                                          |
+|This variable, executeOnce, is assigned an immediately-invoked function expression (IIFE) to ensure that its inner code block runs only once. This is done to handle initialization tasks.|
+|                                                                      If it hasn’t executed, it does the following:                                                                       |
+|                             autopopulate(): This function is called to auto-populate certain fields with predefined values during the form's initialization.                             |
+|                             disableFields(): This function is called to disable specific form fields to prevent user input or editing during initialization.                             |
+|                             calculateOCIPBValues(): This function is called to perform calculations and auto-populate certain fields related to the OCIP B section.                      |
+|                             @returns {void} This function does not return any value.                                                                                                     |
+|                                                                                                                                                                                          |
+|                                                                                                                                                                                          |
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+*/
+var executeOnce = (function() {
+    var executed = false;
+    return function() {
+        if (!executed) {
+            executed = true;
+            autopopulate();
+            disableFields();
+            dataTableFunctions.addValidators();
+        }
+    };
+})();
+
 function setUpEventListeners() {
     //Setting up the arrays of fields that require event listeners
     generalInfoEvents = ['sc.GI.isMailingAddrDiff',
@@ -142,50 +188,6 @@ function setUpEventListeners() {
 function eventListenerHelper(arrayOfEvents, callbackFcn) {
     arrayOfEvents.forEach(field => fd.field(field).$on('change', callbackFcn));
 }
-
-/*
-+-----------------------------------------------------------------------------------------------------+
-|                                                                                                     |
-|This function, fd.beforeSave(), is a pre-save hook that gets executed before the form data is saved. |
-|                                                                                                     |
-|    It is set up to perform an API interaction to send the form data to a specified URL endpoint.    |
-|                                                                                                     |
-|The API interaction is achieved by invoking a Power Automate Flow, which listens for an HTTP request.|
-|                                                                                                     |
-|                      @returns {void} This function does not return any value.                       |
-|                                                                                                     |
-+-----------------------------------------------------------------------------------------------------+
-*/
-fd.beforeSave(function () {
-    url = "https://prod-102.westus.logic.azure.com:443/workflows/1128de5c7a7e488e9e88a34f00eb974b/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=B_VCWVNlWNAnOJfI9ytYCVZGVLNLkvYBq2iMluENAI0";
-    data = fd.data();
-    apiInteraction(data, url)
-});
-
-/*
-+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                                                                                                                                                                                          |
-|This variable, executeOnce, is assigned an immediately-invoked function expression (IIFE) to ensure that its inner code block runs only once. This is done to handle initialization tasks.|
-|                                                                      If it hasn’t executed, it does the following:                                                                       |
-|                             autopopulate(): This function is called to auto-populate certain fields with predefined values during the form's initialization.                             |
-|                             disableFields(): This function is called to disable specific form fields to prevent user input or editing during initialization.                             |
-|                             calculateOCIPBValues(): This function is called to perform calculations and auto-populate certain fields related to the OCIP B section.                      |
-|                             @returns {void} This function does not return any value.                                                                                                     |
-|                                                                                                                                                                                          |
-|                                                                                                                                                                                          |
-+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-*/
-var executeOnce = (function() {
-    var executed = false;
-    return function() {
-        if (!executed) {
-            executed = true;
-            autopopulate();
-            disableFields();
-        }
-    };
-})();
- 
 
 /*
 +------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -638,11 +640,14 @@ function toggleSBP5() {
                             'sc.SB.P5.I.conflictOfInterest',
                             'sc.SB.P5.N.haveSubsidiaryOrAffiliate',
                             'sc.SB.P5.O.isContractorSubsidiaryOfGroup',
-                            'sc.SB.P5.P.ownershipOfOtherEntity',
-                            'sc.SB.P5.Q.sameBusinessGroup'];
+                            'sc.SB.P5.P.ownershipOfOtherEntity'];
     anyYes = false;
     scheduleBPart5YesOrNo.forEach(field => {
         if (fd.field(field).value === "Yes") {
+            anyYes = true;
+        }
+        //Schedule B Part 5 Q actually gets an explanation filled out if it is a 'No'
+        if (fd.field('sc.SB.P5.Q.sameBusinessGroup').value === 'No') {
             anyYes = true;
         }
     });
@@ -734,3 +739,36 @@ function individualFieldVisibilityAndRequired(fieldName, trueOrFalse, dataTableO
     }
     
 }
+
+let dataTableFunctions = {
+    namesOfDataTables: ['dt.SQS.8.prevExp'],
+
+
+    //Methods
+    //This function will check the data tables to ensure there are no empty spots
+    checkDataTable: function (dtName) {
+        fd.control(dtName).value.forEach(row => {
+            row.forEach(el => {
+                //Here we have the actual values of the items themselves. If the value is "", null, or undefined, the user has left it blank
+                //Thus, we should throw an error
+                if (el === "" || el === null || el === undefined) {
+                    //return false to indicate an error
+                    return false;
+                }
+            })
+            return true;
+        })
+    },
+    //Will loop through all the values in the array to add a validator to all of them
+    addValidators: function () {
+        this.namesOfDataTables.forEach(el => {
+            fd.control(el).addValidator({
+                name: 'DataTable' + el,
+                error: 'Please fill out the data table completely',
+                validate: function(value) {
+                    this.checkDataTable(el);
+                } 
+            })
+        })
+    }
+};
