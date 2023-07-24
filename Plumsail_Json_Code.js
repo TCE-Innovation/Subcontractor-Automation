@@ -577,7 +577,7 @@ let eventListener = {
 |                                                                                                                                                                              |
 +------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 */
-    showHideInClass: function(fieldName, showValue, className, changeIfRequired = true, notRequired = []) {
+    showHideInClass: function(fieldName, showValue, className, changeIfRequired = true, dontChangeRequired = []) {
         try{
             // Check if the value of the specified 'fieldName' matches the 'showValue'.
             // If it matches, show the fields with the given 'className' class; otherwise, hide them.
@@ -585,18 +585,17 @@ let eventListener = {
                 $("." + className).show();
                 // If 'changeIfRequired' is true, set the fields inside the class as required.
                 // The 'dontChangeRequired' array is used to specify optional fields whose requirement status will not be affected.
-                // if (changeIfRequired) {
-                //     this.setRequiredInClass(true, className, dontChangeRequired);
-                // }
+                if (changeIfRequired) {
+                    this.setRequiredInClass(true, className, dontChangeRequired);
+                }
             } else {
                 $("." + className).hide();
                 // If 'changeIfRequired' is true, set the fields inside the class as not required.
                 // The 'dontChangeRequired' array is used to specify optional fields whose requirement status will not be affected.
-                // if (changeIfRequired) {
-                //     this.setRequiredInClass(false, className, dontChangeRequired);
-                // }
+                if (changeIfRequired) {
+                    this.setRequiredInClass(false, className, dontChangeRequired);
+                }
             }
-            this.setRequiredInClass(false, className, notRequired);
         } catch (err) {
             console.log(err)
         }
@@ -611,13 +610,17 @@ let eventListener = {
         formFields.forEach(field => {
             if (field.$el.closest("." + name) != null && !arrDontChange.includes(field.internalName)) {
                     field.required = requiredOrNot;
+            } else if (field.$el.closest("." + name) != null && arrDontChange.includes(field.internalName)) {
+                    field.required = false;
             }
         })
 
         formControl.forEach(field => {
             if (field.$el.closest("." + name) != null && !arrDontChange.includes(field.internalName)) {
                 field.required = requiredOrNot;
-            }
+            } else if (field.$el.closest("." + name) != null && arrDontChange.includes(field.internalName)) {
+                field.required = false;
+        }
         })
     },
 
