@@ -358,8 +358,10 @@ let eventListener = {
     +-------------------------------------------------------------------------------------------------------------------------------------------------+
     */
     eventListenerHelper: function(arrayOfEvents, callbackFcn) {
-        arrayOfEvents.forEach(field => fd.field(field).$on('change', callbackFcn));
+        arrayOfEvents.forEach(field => fd.field(field).$on('change', (value) => callbackFcn.call(this, value)));
     },
+
+    
 
     /*
     +-------------------------------------------------------------------------------------------------------------------------------------------------+
