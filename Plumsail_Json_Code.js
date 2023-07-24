@@ -41,7 +41,6 @@ fd.rendered(function () {
     
     //Functions that run initially
     executeOnce();
-    setUpEventListeners();
 });
 
 
@@ -90,133 +89,6 @@ var executeOnce = (function() {
     };
 })();
 
-function setUpEventListeners() {
-    //Setting up the arrays of fields that require event listeners
-    generalInfoEvents = ['sc.GI.isMailingAddrDiff',
-                        'd.GI.projectedStartDate',
-                        'd.GI.projectedCompletionDate'];
-
-    isFormRequired = ['sc.SQS.3.corpOrCoPartner', 
-    'sc.SB1.isSB1Required',
-    'sc.SF.FF3.3.reportType',
-    'sc.SB.isSBRequired',
-    'sc.SF.FF3.FF3Applicable',
-    'sc.RMSA.isRequired',
-    'sc.SQS.12.non-UnionOrUnion',
-    'sc.SG.isFormBApplicable'
-    ];
-
-    pdfControls = Object.keys(fd.data()).filter((name) => /hidePDF/.test(name));
-    pdfControls = pdfControls.concat(Object.keys(fd.data()).filter((name) => /readAndUnderstood/.test(name)));
-
-    scheduleBPart3YesOrNo = ['sc.SB.P3.A.notResponsible',
-                            'sc.SB.P3.B.debarred',
-                            'sc.SB.P3.C.pendingDebarment',
-                            'sc.SB.P3.D.terminated',
-                            'sc.SB.P3.E.suretyAgreement',
-                            'sc.SB.P3.F.monitor',
-                            'sc.SB.P3.G.safety',
-                            'sc.SB.P3.H.compensationRating'];
-
-    scheduleBPart4YesOrNo = ['sc.SB.P4.A.noloContendere',
-                            'sc.SB.P4.B.unfavorableTerminated',
-                            'sc.SB.P4.C.subjectOfCrime',
-                            'sc.SB.P4.D.disqualifiedBid',
-                            'sc.SB.P4.E.refuseTestimony',
-                            'sc.SB.P4.F.refuseTestimonyNYS',
-                            'sc.SB.P4.G.civilJudgement',
-                            'sc.SB.P4.H.deferredProsecution'];
-    scheduleBPart5 = ['sc.SB.P5.D.bankruptcy',
-                        'sc.SB.P5.E.liensExcess',
-                        'sc.SB.P5.F.liensToday',
-                        'sc.SB.P5.G.failedTax',
-                        'sc.SB.P5.I.conflictOfInterest',
-                        'sc.SB.P5.N.haveSubsidiaryOrAffiliate',
-                        'sc.SB.P5.O.isContractorSubsidiaryOfGroup',
-                        'sc.SB.P5.P.ownershipOfOtherEntity',
-                        'sc.SB.P5.Q.sameBusinessGroup',
-                        'sc.SB.P5.C.subcontractor',
-                        'sc.SB.P5.H.officeSpace',
-                        'sc.SB.P5.J.sharedOffice',
-                        'sc.SB.P5.K.1.none',
-                        'sc.SB.P5.K.2.none',
-                        'sc.SB.P5.K.3.none',
-                        'sc.SB.P5.K.4.none',
-                        'sc.SB.P5.K.5.none',
-                        'sc.SB.P5.L.none',
-                        'sc.SB.P5.M.none'];
-
-
-    //Sets up the event listeners for each of the fields.
-    eventListenerHelper(generalInfoEvents, generalInfoCallback);
-    eventListenerHelper(isFormRequired, reqForms);
-    eventListenerHelper(pdfControls, togglePDF);
-    eventListenerHelper(scheduleBPart3YesOrNo, toggleSBP3);
-    eventListenerHelper(scheduleBPart4YesOrNo, toggleSBP4);
-    eventListenerHelper(scheduleBPart5, toggleSBP5);
-    //This is actually an event listener as well, I jsut couldn't figure out how to get this to fit the same format as the others, since it 
-    //requires an input value from the event itself. I coudln't figure out how to do this repeating (Although, technically this isn't repeating)
-    dataTableFunctions.calculateOCIPBValues();
-}
-
-/*
-+-------------------------------------------------------------------------------------------------------------------------------------------------+
-|                                                                                                                                                 |
-|          eventListenerHelper, is a helper function used to set up event listeners for multiple form fields specified in the 'arrayOfEvents'.    |
-|                     Each field listed in the array will trigger the provided 'callbackFcn' function when its value changes.                     |
-|              @param {Array} arrayOfEvents - An array of field internal names for which event listeners should be set up.                        |
-|              @param {Function} callbackFcn - The callback function to be executed when any of the specified fields' values change.              |
-|              @returns {void} This function does not return any value.                                                                           |
-|                                                                                                                                                 |
-+-------------------------------------------------------------------------------------------------------------------------------------------------+
-*/
-function eventListenerHelper(arrayOfEvents, callbackFcn) {
-    arrayOfEvents.forEach(field => fd.field(field).$on('change', callbackFcn));
-}
-
-/*
-+-------------------------------------------------------------------------------------------------------------------------------------------------+
-|                                                                                                                                                 |
-|              The function, generalInfoCallback(), handles various tasks related to the "General Information" section of the form.               |
-|                                                                                                                                                 |
-|                                                       It performs the following actions:                                                        |
-|                                                             Load Moment.js Library:                                                             |
-|                             Used to add a date validator to ensure projected completion is after projected start                                |
-|     If the "Projected Completion Date" is not valid or is earlier than or equal to the "Projected Start Date," the validator returns false,     |
-|                            indicating that the date is invalid, and an error message is displayed on the form field.                            |
-|                                                                                                                                                 |
-|                                                      Show/Hide "Mailing Address" Section:                                                       |
-|   The function calls the 'showHideInClass' function, which toggles the visibility of the "Mailing Address" section based on the value of the    |
-|field with the internal name 'sc.GI.isMailingAddrDiff'. If the value is 'Yes', the section with the class 'GeneralInfoMailingAddr' will be shown;|
-|                                                          otherwise, it will be hidden.                                                          |
-|                                                                                                                                                 |
-|                                            @returns {void} This function does not return any value.                                             |
-|                                                                                                                                                 |
-+-------------------------------------------------------------------------------------------------------------------------------------------------+
-*/
-//This function will hide or show the "Mailing address" section, if mailing is different from street address.
-//This function will also check to see that the proposes Project End Date is later than the Project start date
-function generalInfoCallback() {
-    $.getScript('https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js')
-    .then(function() {
-        fd.field('d.GI.projectedCompletionDate').addValidator({
-            name: 'Check Date',
-            error: 'Completion Date must be after start date',
-            validate: function(value) {
-                var projectEnd = moment(fd.field('d.GI.projectedCompletionDate').value);
-                var projectBegin = moment(fd.field('d.GI.projectedStartDate').value);
-                if (projectEnd.isValid() && projectBegin.isValid()) {
-                    if(projectEnd.diff(projectBegin, 'days', false) <= 0) {
-                        return false;
-                    }
-                    return true;
-                }
-            } 
-        })
-    })
-
-    showHideInClass('sc.GI.isMailingAddrDiff', 'Yes', 'GeneralInfoMailingAddr');
-}
 
 /*
 +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -391,14 +263,146 @@ function autopopulate() {
             }
 
         });
+
+        //Once we have recieved all the data and have finished autofilling, then set up the event listeners
+        eventListener.setUpEventListeners();
     })
 
     
 }
 
+let eventListener = {
+    //Setting up the arrays of fields that require event listeners
+    generalInfoEvents: ['sc.GI.isMailingAddrDiff',
+                        'd.GI.projectedStartDate',
+                        'd.GI.projectedCompletionDate'
+    ],
+
+    isFormRequired: ['sc.SQS.3.corpOrCoPartner', 
+                    'sc.SB1.isSB1Required',
+                    'sc.SF.FF3.3.reportType',
+                    'sc.SB.isSBRequired',
+                    'sc.SF.FF3.FF3Applicable',
+                    'sc.RMSA.isRequired',
+                    'sc.SQS.12.non-UnionOrUnion',
+                    'sc.SG.isFormBApplicable'
+    ],
+    scheduleBPart3YesOrNo: ['sc.SB.P3.A.notResponsible',
+                            'sc.SB.P3.B.debarred',
+                            'sc.SB.P3.C.pendingDebarment',
+                            'sc.SB.P3.D.terminated',
+                            'sc.SB.P3.E.suretyAgreement',
+                            'sc.SB.P3.F.monitor',
+                            'sc.SB.P3.G.safety',
+                            'sc.SB.P3.H.compensationRating'
+    ],
+    scheduleBPart4YesOrNo: ['sc.SB.P4.A.noloContendere',
+                            'sc.SB.P4.B.unfavorableTerminated',
+                            'sc.SB.P4.C.subjectOfCrime',
+                            'sc.SB.P4.D.disqualifiedBid',
+                            'sc.SB.P4.E.refuseTestimony',
+                            'sc.SB.P4.F.refuseTestimonyNYS',
+                            'sc.SB.P4.G.civilJudgement',
+                            'sc.SB.P4.H.deferredProsecution'
+    ],
+    scheduleBPart5: ['sc.SB.P5.D.bankruptcy',
+                    'sc.SB.P5.E.liensExcess',
+                    'sc.SB.P5.F.liensToday',
+                    'sc.SB.P5.G.failedTax',
+                    'sc.SB.P5.I.conflictOfInterest',
+                    'sc.SB.P5.N.haveSubsidiaryOrAffiliate',
+                    'sc.SB.P5.O.isContractorSubsidiaryOfGroup',
+                    'sc.SB.P5.P.ownershipOfOtherEntity',
+                    'sc.SB.P5.Q.sameBusinessGroup',
+                    'sc.SB.P5.C.subcontractor',
+                    'sc.SB.P5.H.officeSpace',
+                    'sc.SB.P5.J.sharedOffice',
+                    'sc.SB.P5.K.1.none',
+                    'sc.SB.P5.K.2.none',
+                    'sc.SB.P5.K.3.none',
+                    'sc.SB.P5.K.4.none',
+                    'sc.SB.P5.K.5.none',
+                    'sc.SB.P5.L.none',
+                    'sc.SB.P5.M.none'
+    ],
+
+    //Methods
+    setUpEventListeners: function() {
+        pdfControls = Object.keys(fd.data()).filter((name) => /hidePDF/.test(name));
+        pdfControls = pdfControls.concat(Object.keys(fd.data()).filter((name) => /readAndUnderstood/.test(name)));
+
+        //Sets up the event listeners for each of the fields.
+        this.eventListenerHelper(generalInfoEvents, this.generalInfoCallback);
+        this.eventListenerHelper(isFormRequired, this.reqForms);
+        this.eventListenerHelper(pdfControls, this.togglePDF);
+        this.eventListenerHelper(scheduleBPart3YesOrNo, this.toggleSBP3);
+        this.eventListenerHelper(scheduleBPart4YesOrNo, this.toggleSBP4);
+        this.eventListenerHelper(scheduleBPart5, this.toggleSBP5);
+        //This is actually an event listener as well, I jsut couldn't figure out how to get this to fit the same format as the others, since it 
+        //requires an input value from the event itself. I coudln't figure out how to do this repeating (Although, technically this isn't repeating)
+        dataTableFunctions.calculateOCIPBValues();
+    },
 
 
-function reqForms() {
+    /*
+    +-------------------------------------------------------------------------------------------------------------------------------------------------+
+    |                                                                                                                                                 |
+    |          eventListenerHelper, is a helper function used to set up event listeners for multiple form fields specified in the 'arrayOfEvents'.    |
+    |                     Each field listed in the array will trigger the provided 'callbackFcn' function when its value changes.                     |
+    |              @param {Array} arrayOfEvents - An array of field internal names for which event listeners should be set up.                        |
+    |              @param {Function} callbackFcn - The callback function to be executed when any of the specified fields' values change.              |
+    |              @returns {void} This function does not return any value.                                                                           |
+    |                                                                                                                                                 |
+    +-------------------------------------------------------------------------------------------------------------------------------------------------+
+    */
+    eventListenerHelper: function(arrayOfEvents, callbackFcn) {
+        arrayOfEvents.forEach(field => fd.field(field).$on('change', callbackFcn));
+    },
+
+    /*
+    +-------------------------------------------------------------------------------------------------------------------------------------------------+
+    |                                                                                                                                                 |
+    |              The function, generalInfoCallback(), handles various tasks related to the "General Information" section of the form.               |
+    |                                                                                                                                                 |
+    |                                                       It performs the following actions:                                                        |
+    |                                                             Load Moment.js Library:                                                             |
+    |                             Used to add a date validator to ensure projected completion is after projected start                                |
+    |     If the "Projected Completion Date" is not valid or is earlier than or equal to the "Projected Start Date," the validator returns false,     |
+    |                            indicating that the date is invalid, and an error message is displayed on the form field.                            |
+    |                                                                                                                                                 |
+    |                                                      Show/Hide "Mailing Address" Section:                                                       |
+    |   The function calls the 'showHideInClass' function, which toggles the visibility of the "Mailing Address" section based on the value of the    |
+    |field with the internal name 'sc.GI.isMailingAddrDiff'. If the value is 'Yes', the section with the class 'GeneralInfoMailingAddr' will be shown;|
+    |                                                          otherwise, it will be hidden.                                                          |
+    |                                                                                                                                                 |
+    |                                            @returns {void} This function does not return any value.                                             |
+    |                                                                                                                                                 |
+    +-------------------------------------------------------------------------------------------------------------------------------------------------+
+    */
+    //This function will hide or show the "Mailing address" section, if mailing is different from street address.
+    //This function will also check to see that the proposes Project End Date is later than the Project start date
+    generalInfoCallback: function() {
+        $.getScript('https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js')
+        .then(function() {
+            fd.field('d.GI.projectedCompletionDate').addValidator({
+                name: 'Check Date',
+                error: 'Completion Date must be after start date',
+                validate: function(value) {
+                    var projectEnd = moment(fd.field('d.GI.projectedCompletionDate').value);
+                    var projectBegin = moment(fd.field('d.GI.projectedStartDate').value);
+                    if (projectEnd.isValid() && projectBegin.isValid()) {
+                        if(projectEnd.diff(projectBegin, 'days', false) <= 0) {
+                            return false;
+                        }
+                        return true;
+                    }
+                } 
+            })
+        })
+
+        this.showHideInClass('sc.GI.isMailingAddrDiff', 'Yes', 'GeneralInfoMailingAddr');
+    }, 
+    reqForms: function() {
         /*
         The following are optional forms: Forms that may or may not be filled out by the subcontractor.
         This includes:
@@ -407,153 +411,128 @@ function reqForms() {
             RMSA/SQS
             Schedule F, F3 (Technically, this is a subform, but on the wizard, we've condensed it into its own form)
             Schedule G
-    */
-    
-    //Toggles Schedule F, Form F3
-    showHideInClass('sc.SF.FF3.FF3Applicable', 'Yes', "ScheduleFFormF3", true, ['t.SF.FF3.4.tier', 't.SF.FF3.4.congressionalDistrict', 't.SF.FF3.5.congressionalDistrict',
-                                                                                't.SF.FF3.7.CFDANumber', 't.SF.FF3.8.federalActionNumber', 'num.SF.FF3.9.awardAmount', 'n.SF.FF3.10.b.addr']);    
+        */
 
-    //Toggles Schedule B
-    showHideInClass('sc.SB.isSBRequired', 'Yes', "ScheduleBClass", true, ['n.SB.P1.D.changedAddress']);
+        //Toggles Schedule F, Form F3
+        this.showHideInClass('sc.SF.FF3.FF3Applicable', 'Yes', "ScheduleFFormF3", true, ['t.SF.FF3.4.tier', 't.SF.FF3.4.congressionalDistrict', 't.SF.FF3.5.congressionalDistrict',
+                                                                                    't.SF.FF3.7.CFDANumber', 't.SF.FF3.8.federalActionNumber', 'num.SF.FF3.9.awardAmount', 'n.SF.FF3.10.b.addr']);    
 
-    //Toggles Schedule B1
-    showHideInClass('sc.SB1.isSB1Required', 'Yes', 'ScheduleB1Class');
-  
-    //Toggles the visibiliy and requirement of the RMSA form
-    showHideInClass('sc.RMSA.isRequired', 'SQS', 'SQSQuestions', true, ['t.SQS.2a.streetAddr', 't.SQS.2a.city', 'dd.SQS.2a.state', 't.SQS.2a.zipCode']);
-    //'d.SQS.3.dateOfOrg', 't.SQS.3.county', 'dt.SQS.3.namesAndAddrsOfPartners'
-    showHideInClass('sc.SQS.12.non-UnionOrUnion', 'Union', 'SQSLabor');
-    showHideInClass('sc.RMSA.isRequired', 'RMSA', 'RMSAQuestions', true, ['t.RMSA.localManufacturingFacility.streetAddr', 't.RMSA.localManufacturingFacility.city', 'dd.RMSA.localManufacturingFacility.state', 't.RMSA.localManufacturingFacility.zipCode']);
+        //Toggles Schedule B
+        this.showHideInClass('sc.SB.isSBRequired', 'Yes', "ScheduleBClass", true, ['n.SB.P1.D.changedAddress']);
 
+        //Toggles Schedule B1
+        this.showHideInClass('sc.SB1.isSB1Required', 'Yes', 'ScheduleB1Class');
+
+        //Toggles the visibiliy and requirement of the RMSA form
+        this.showHideInClass('sc.RMSA.isRequired', 'SQS', 'SQSQuestions', true, ['t.SQS.2a.streetAddr', 't.SQS.2a.city', 'dd.SQS.2a.state', 't.SQS.2a.zipCode']);
+        //'d.SQS.3.dateOfOrg', 't.SQS.3.county', 'dt.SQS.3.namesAndAddrsOfPartners'
+        this.showHideInClass('sc.SQS.12.non-UnionOrUnion', 'Union', 'SQSLabor');
+        this.showHideInClass('sc.RMSA.isRequired', 'RMSA', 'RMSAQuestions', true, ['t.RMSA.localManufacturingFacility.streetAddr', 't.RMSA.localManufacturingFacility.city', 'dd.RMSA.localManufacturingFacility.state', 't.RMSA.localManufacturingFacility.zipCode']);
+
+            /*
+            The following are optional fields inside forms.
+            These forms include: 
+                Schedule F, F3
+                SQS
+                Schedule B
+        */
+        //Toggles the SQS Form
+        this.showHideInClass('sc.SQS.3.corpOrCoPartner', 'Corporation', "SQSCorporation");
+        this.showHideInClass('sc.SQS.3.corpOrCoPartner', 'Co-partnership', "SQSCoPartnership");
+
+        //Toggles F3 Materials List
+        this.showHideInClass('sc.SF.FF3.3.reportType', 'b. Material Change', 'ScheduleF3MaterialChange');
+
+        //Toggles the Schedule G requirement
+        this.showHideInClass('sc.SG.isFormBApplicable', 'Yes', 'SGInfo');
+    },
+
+    togglePDF: function() {
         /*
-        The following are optional fields inside forms.
-        These forms include: 
-            Schedule F, F3
-            SQS
-            Schedule B
-    */
-    //Toggles the SQS Form
-    showHideInClass('sc.SQS.3.corpOrCoPartner', 'Corporation', "SQSCorporation");
-    showHideInClass('sc.SQS.3.corpOrCoPartner', 'Co-partnership', "SQSCoPartnership");
+            The following toggles the PDFs and ensures that the reader has viewed the PDF before moving onto the questions.
+            Every form except OCIP COI, Sunnary, and General Information applies here.
+        */
+        //SQS
+        this.showHideInClass('sc.SQS.readAndUnderstood', 'Yes', 'SQSorRMSA', false);
+        this.showHideInClass('tog.SQS.hidePDF', false, 'SQSPDF', false);
 
-    //Toggles F3 Materials List
-    showHideInClass('sc.SF.FF3.3.reportType', 'b. Material Change', 'ScheduleF3MaterialChange');
+        //RMSA
+        this.showHideInClass('tog.RMSA.hidePDF', false, 'RMSAPDF', false);
 
-    //Toggles the Schedule G requirement
-    showHideInClass('sc.SG.isFormBApplicable', 'Yes', 'SGInfo');
-    //REPLACE SCHEUDLEGDBE WITH CLASS NAME
-}
+        //Schedule F
+        this.showHideInClass('sc.SF.readAndUnderstood', 'Yes', 'SFQuestions', false);
+        this.showHideInClass('tog.SF.hidePDF', false, 'SFPDF', false);
 
-function togglePDF() {
-    /*
-        The following toggles the PDFs and ensures that the reader has viewed the PDF before moving onto the questions.
-        Every form except OCIP COI, Sunnary, and General Information applies here.
-    */
-    //SQS
-    showHideInClass('sc.SQS.readAndUnderstood', 'Yes', 'SQSorRMSA', false);
-    showHideInClass('tog.SQS.hidePDF', false, 'SQSPDF', false);
+        //Schedule F1
+        this.showHideInClass('sc.SF1.readAndUnderstood', 'Yes', 'SF1Questions', false);
+        this.showHideInClass('tog.SF1.hidePDF', false, 'SF1PDF', false);
 
-    //RMSA
-    showHideInClass('tog.RMSA.hidePDF', false, 'RMSAPDF', false);
-    
-    //Schedule F
-    showHideInClass('sc.SF.readAndUnderstood', 'Yes', 'SFQuestions', false);
-    showHideInClass('tog.SF.hidePDF', false, 'SFPDF', false);
+        //Schedule B
+        this.showHideInClass('sc.SB.readAndUnderstood', 'Yes', 'SBQuestions', false);
+        this.showHideInClass('tog.SB.hidePDF', false, 'SBPDF', false);
 
-    //Schedule F1
-    showHideInClass('sc.SF1.readAndUnderstood', 'Yes', 'SF1Questions', false);
-    showHideInClass('tog.SF1.hidePDF', false, 'SF1PDF', false);
+        //Schedule B1
+        this.showHideInClass('sc.SB1.readAndUnderstood', 'Yes', 'SB1Questions', false);
+        this.showHideInClass('tog.SB1.hidePDF', false, 'SB1PDF', false);
 
-    //Schedule B
-    showHideInClass('sc.SB.readAndUnderstood', 'Yes', 'SBQuestions', false);
-    showHideInClass('tog.SB.hidePDF', false, 'SBPDF', false);
+        //OCIP A
+        this.showHideInClass('sc.OCIPA.readAndUnderstood', 'Yes', 'OCIPAQuestions', false);
+        this.showHideInClass('tog.OCIPA.hidePDF', false, 'OCIPAPDF', false);
 
-    //Schedule B1
-    showHideInClass('sc.SB1.readAndUnderstood', 'Yes', 'SB1Questions', false);
-    showHideInClass('tog.SB1.hidePDF', false, 'SB1PDF', false);
+        //OCIP B
+        this.showHideInClass('sc.OCIPB.readAndUnderstood', 'Yes', 'OCIPBQuestions', false);
+        this.showHideInClass('tog.OCIPB.hidePDF', false, 'OCIPBPDF', false);
+    },
 
-    //OCIP A
-    showHideInClass('sc.OCIPA.readAndUnderstood', 'Yes', 'OCIPAQuestions', false);
-    showHideInClass('tog.OCIPA.hidePDF', false, 'OCIPAPDF', false);
+    toggleSBP3: function() {
+        //Schedule B, Part 3: Contractor Representations
+        //If any of the questions on the page has been answered yes, require the text box.
+        anyYes = false;
+        this.scheduleBPart3YesOrNo.forEach(field => {
+            if (fd.field(field).value === "Yes") {
+                anyYes = true;
+            }
+        });
+        this.individualFieldVisibilityAndRequired('n.SB.P3.explanation', anyYes);
+        this.individualFieldVisibilityAndRequired('a.SB.P3.attachments', anyYes);
+    },
 
-    //OCIP B
-    showHideInClass('sc.OCIPB.readAndUnderstood', 'Yes', 'OCIPBQuestions', false);
-    showHideInClass('tog.OCIPB.hidePDF', false, 'OCIPBPDF', false);
-}
+    toggleSBP4: function() {
+        //Schedule B, Part 4: Yes or No Questions
+        //If any of the questions on the page has been answered yes, require the text box.
+        anyYes = false;
+        this.scheduleBPart4YesOrNo.forEach(field => {
+            if (fd.field(field).value === "Yes") {
+                anyYes = true;
+            }
+        });
+        this.individualFieldVisibilityAndRequired('n.SB.P4.explanation', anyYes)
+    },
 
-function toggleSBP3() {
-    //Schedule B, Part 3: Contractor Representations
-    //If any of the questions on the page has been answered yes, require the text box.
-    scheduleBPart3YesOrNo = ['sc.SB.P3.A.notResponsible',
-                            'sc.SB.P3.B.debarred',
-                            'sc.SB.P3.C.pendingDebarment',
-                            'sc.SB.P3.D.terminated',
-                            'sc.SB.P3.E.suretyAgreement',
-                            'sc.SB.P3.F.monitor',
-                            'sc.SB.P3.G.safety',
-                            'sc.SB.P3.H.compensationRating'];
-    anyYes = false;
-    scheduleBPart3YesOrNo.forEach(field => {
-        if (fd.field(field).value === "Yes") {
-            anyYes = true;
-        }
-    });
-    individualFieldVisibilityAndRequired('n.SB.P3.explanation', anyYes);
-    individualFieldVisibilityAndRequired('a.SB.P3.attachments', anyYes);
-}
-
-function toggleSBP4() {
-    //Schedule B, Part 4: Yes or No Questions
-    //If any of the questions on the page has been answered yes, require the text box.
-    scheduleBPart4YesOrNo = ['sc.SB.P4.A.noloContendere',
-                            'sc.SB.P4.B.unfavorableTerminated',
-                            'sc.SB.P4.C.subjectOfCrime',
-                            'sc.SB.P4.D.disqualifiedBid',
-                            'sc.SB.P4.E.refuseTestimony',
-                            'sc.SB.P4.F.refuseTestimonyNYS',
-                            'sc.SB.P4.G.civilJudgement',
-                            'sc.SB.P4.H.deferredProsecution'];
-    anyYes = false;
-    scheduleBPart4YesOrNo.forEach(field => {
-        if (fd.field(field).value === "Yes") {
-            anyYes = true;
-        }
-    });
-    individualFieldVisibilityAndRequired('n.SB.P4.explanation', anyYes)
-}
-
-function toggleSBP5() {
-    //Schedule B Part 5: Additional Questions
-    individualFieldVisibilityAndRequired('dt.SB.P5.C.pastThreeYrs', fd.field('sc.SB.P5.C.subcontractor').value === "Yes", "DataTable");
-    individualFieldVisibilityAndRequired('n.SB.P5.H.officeSpaceDetails', fd.field('sc.SB.P5.H.officeSpace').value === "Yes");
-    individualFieldVisibilityAndRequired('n.SB.P5.J.sharedOfficeExplanation', fd.field('sc.SB.P5.J.sharedOffice').value === "Yes");
-    individualFieldVisibilityAndRequired('dt.SB.P5.K.2.last3YrsPenalities', fd.field('sc.SB.P5.K.2.none').value === "Yes", "DataTable");
-    individualFieldVisibilityAndRequired('dt.SB.P5.K.3.MTAContractsWorkNotCompleted', fd.field('sc.SB.P5.K.3.none').value === "Yes", "DataTable");
-    individualFieldVisibilityAndRequired('dt.SB.P5.K.4.activeGovtEntityContracts', fd.field('sc.SB.P5.K.4.none').value === "Yes", "DataTable");
-    individualFieldVisibilityAndRequired('dt.SB.P5.K.5.contractsNotCompleted', fd.field('sc.SB.P5.K.5.none').value === "Yes", "DataTable");
-    individualFieldVisibilityAndRequired('dt.SB.P5.L.contractSituations', fd.field('sc.SB.P5.L.none').value === "Yes", "DataTable");
-    individualFieldVisibilityAndRequired('dt.SB.P5.M.employeesOfMTA', fd.field('sc.SB.P5.M.none').value === "Yes", "DataTable");
-    showHideInClass('sc.SB.P5.K.1.none', 'Yes', 'ScheduleBPart5K', true);
-    scheduleBPart5YesOrNo = ['sc.SB.P5.D.bankruptcy',
-                            'sc.SB.P5.E.liensExcess',
-                            'sc.SB.P5.F.liensToday',
-                            'sc.SB.P5.G.failedTax',
-                            'sc.SB.P5.I.conflictOfInterest',
-                            'sc.SB.P5.N.haveSubsidiaryOrAffiliate',
-                            'sc.SB.P5.O.isContractorSubsidiaryOfGroup',
-                            'sc.SB.P5.P.ownershipOfOtherEntity'];
-    anyYes = false;
-    scheduleBPart5YesOrNo.forEach(field => {
-        if (fd.field(field).value === "Yes") {
-            anyYes = true;
-        }
-        //Schedule B Part 5 Q actually gets an explanation filled out if it is a 'No'
-        if (fd.field('sc.SB.P5.Q.sameBusinessGroup').value === 'No') {
-            anyYes = true;
-        }
-    });
-    individualFieldVisibilityAndRequired('n.SB.P5.Q.explanation', anyYes);
-}
+    toggleSBP5: function() {
+        //Schedule B Part 5: Additional Questions
+        this.individualFieldVisibilityAndRequired('dt.SB.P5.C.pastThreeYrs', fd.field('sc.SB.P5.C.subcontractor').value === "Yes", "DataTable");
+        this.individualFieldVisibilityAndRequired('n.SB.P5.H.officeSpaceDetails', fd.field('sc.SB.P5.H.officeSpace').value === "Yes");
+        this.individualFieldVisibilityAndRequired('n.SB.P5.J.sharedOfficeExplanation', fd.field('sc.SB.P5.J.sharedOffice').value === "Yes");
+        this.individualFieldVisibilityAndRequired('dt.SB.P5.K.2.last3YrsPenalities', fd.field('sc.SB.P5.K.2.none').value === "Yes", "DataTable");
+        this.individualFieldVisibilityAndRequired('dt.SB.P5.K.3.MTAContractsWorkNotCompleted', fd.field('sc.SB.P5.K.3.none').value === "Yes", "DataTable");
+        this.individualFieldVisibilityAndRequired('dt.SB.P5.K.4.activeGovtEntityContracts', fd.field('sc.SB.P5.K.4.none').value === "Yes", "DataTable");
+        this.individualFieldVisibilityAndRequired('dt.SB.P5.K.5.contractsNotCompleted', fd.field('sc.SB.P5.K.5.none').value === "Yes", "DataTable");
+        this.individualFieldVisibilityAndRequired('dt.SB.P5.L.contractSituations', fd.field('sc.SB.P5.L.none').value === "Yes", "DataTable");
+        this.individualFieldVisibilityAndRequired('dt.SB.P5.M.employeesOfMTA', fd.field('sc.SB.P5.M.none').value === "Yes", "DataTable");
+        this.showHideInClass('sc.SB.P5.K.1.none', 'Yes', 'ScheduleBPart5K', true);
+        anyYes = false;
+        this.scheduleBPart5YesOrNo.forEach(field => {
+            if (fd.field(field).value === "Yes") {
+                anyYes = true;
+            }
+            //Schedule B Part 5 Q actually gets an explanation filled out if it is a 'No'
+            if (fd.field('sc.SB.P5.Q.sameBusinessGroup').value === 'No') {
+                anyYes = true;
+            }
+        });
+        this.individualFieldVisibilityAndRequired('n.SB.P5.Q.explanation', anyYes);
+    },
 /*
 +------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                                                                                                                                                                              |
@@ -570,76 +549,77 @@ function toggleSBP5() {
 |                                                                                                                                                                              |
 +------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 */
-function showHideInClass(fieldName, showValue, className, changeIfRequired = true, dontChangeRequired = []) {
-    try{
-        // Check if the value of the specified 'fieldName' matches the 'showValue'.
-        // If it matches, show the fields with the given 'className' class; otherwise, hide them.
-        if(fd.field(fieldName).value === showValue) {
-            $("." + className).show();
-            // If 'changeIfRequired' is true, set the fields inside the class as required.
-            // The 'dontChangeRequired' array is used to specify optional fields whose requirement status will not be affected.
-            if (changeIfRequired) {
-                setRequiredInClass(true, className, dontChangeRequired);
-            }
-        } else {
-            $("." + className).hide();
-            // If 'changeIfRequired' is true, set the fields inside the class as not required.
-            // The 'dontChangeRequired' array is used to specify optional fields whose requirement status will not be affected.
-            if (changeIfRequired) {
-                setRequiredInClass(false, className, dontChangeRequired);
-            }
-        }
-    } catch (err) {
-        console.log(err)
-    }
-}
-//This function assists in removing the required for all fields inside a given class
-function setRequiredInClass(requiredOrNot, name, arrDontChange = []) {
-    var formFields = fd.fields();
-    var formControl = fd.controls();
-
-        //https://community.plumsail.com/t/disable-all-fields-in-a-grid-container/10249/2
-
-    formFields.forEach(field => {
-        if (field.$el.closest("." + name) != null && !arrDontChange.includes(field.internalName)) {
-                field.required = requiredOrNot;
-        }
-    })
-
-    formControl.forEach(field => {
-        if (field.$el.closest("." + name) != null && !arrDontChange.includes(field.internalName)) {
-            field.required = requiredOrNot;
-        }
-    })
-}
-
-//This function assumes if an item is visible, it should be required.
-//Depending on parameters, it will either make a field go away or appear
-//It will control the fields themselves, as opposed to the class that they're in.
-//This function is mostly used in Form B
-
-//Important to note: The way this is hidden is fundamentally different from the way classes are hidden.
-//Be sure to note: Hiding/Showing a class will not affect the visibility of a field hidden like this
-//If parameter is true, will show and require
-function individualFieldVisibilityAndRequired(fieldName, trueOrFalse, dataTableOrField = "Field") {
-    switch (dataTableOrField) {
-        case "Field": 
-        case "field":
-            fd.field(fieldName).hidden = !trueOrFalse;
-            fd.field(fieldName).required = trueOrFalse;
-            break;
-        case "DataTable":
-        case "datatable":
-            fd.control(fieldName).required = trueOrFalse;
-            if (trueOrFalse) {
-                $(fd.control(fieldName).$el).show();
-                } else {
-                    $(fd.control(fieldName).$el).hide();
+    showHideInClass: function(fieldName, showValue, className, changeIfRequired = true, dontChangeRequired = []) {
+        try{
+            // Check if the value of the specified 'fieldName' matches the 'showValue'.
+            // If it matches, show the fields with the given 'className' class; otherwise, hide them.
+            if(fd.field(fieldName).value === showValue) {
+                $("." + className).show();
+                // If 'changeIfRequired' is true, set the fields inside the class as required.
+                // The 'dontChangeRequired' array is used to specify optional fields whose requirement status will not be affected.
+                if (changeIfRequired) {
+                    this.setRequiredInClass(true, className, dontChangeRequired);
                 }
-            break;
+            } else {
+                $("." + className).hide();
+                // If 'changeIfRequired' is true, set the fields inside the class as not required.
+                // The 'dontChangeRequired' array is used to specify optional fields whose requirement status will not be affected.
+                if (changeIfRequired) {
+                    this.setRequiredInClass(false, className, dontChangeRequired);
+                }
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    },
+    //This function assists in removing the required for all fields inside a given class
+    setRequiredInClass: function(requiredOrNot, name, arrDontChange = []) {
+        var formFields = fd.fields();
+        var formControl = fd.controls();
+
+            //https://community.plumsail.com/t/disable-all-fields-in-a-grid-container/10249/2
+
+        formFields.forEach(field => {
+            if (field.$el.closest("." + name) != null && !arrDontChange.includes(field.internalName)) {
+                    field.required = requiredOrNot;
+            }
+        })
+
+        formControl.forEach(field => {
+            if (field.$el.closest("." + name) != null && !arrDontChange.includes(field.internalName)) {
+                field.required = requiredOrNot;
+            }
+        })
+    },
+
+    //This function assumes if an item is visible, it should be required.
+    //Depending on parameters, it will either make a field go away or appear
+    //It will control the fields themselves, as opposed to the class that they're in.
+    //This function is mostly used in Form B
+
+    //Important to note: The way this is hidden is fundamentally different from the way classes are hidden.
+    //Be sure to note: Hiding/Showing a class will not affect the visibility of a field hidden like this
+    //If parameter is true, will show and require
+    individualFieldVisibilityAndRequired: function(fieldName, trueOrFalse, dataTableOrField = "Field") {
+        switch (dataTableOrField) {
+            case "Field": 
+            case "field":
+                fd.field(fieldName).hidden = !trueOrFalse;
+                fd.field(fieldName).required = trueOrFalse;
+                break;
+            case "DataTable":
+            case "datatable":
+                fd.control(fieldName).required = trueOrFalse;
+                if (trueOrFalse) {
+                    $(fd.control(fieldName).$el).show();
+                    } else {
+                        $(fd.control(fieldName).$el).hide();
+                    }
+                break;
+        }
+
     }
-    
-}
+};
 
 let dataTableFunctions = {
     
