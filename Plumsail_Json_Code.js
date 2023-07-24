@@ -514,7 +514,6 @@ let eventListener = {
     toggleSBP1: function() {
         this.showHideInClass('sc.SB.P1.organizedUnderForeignCountry', 'Yes', 'sbP1DiffCountryClass', true);
         this.showHideInClass('dd.SB.P1.G.typeOfLegalEntity', ['Joint Venture', 'Partnership'], 'sbP1PartnersPartiesClass', true);
-        this.showHideInClass('dd.SB.P1.G.typeOfLegalEntity', , 'sbP1PartnersPartiesClass', true);
         this.showHideInClass('dd.SB.P1.G.typeOfLegalEntity', 'Other', 'sbp1TypeOfEntityClass', true);
     },
     toggleSBP3: function() {
