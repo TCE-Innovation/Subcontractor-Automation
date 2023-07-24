@@ -513,8 +513,8 @@ let eventListener = {
     },
     toggleSBP1: function() {
         this.showHideInClass('sc.SB.P1.organizedUnderForeignCountry', 'Yes', 'sbP1DiffCountryClass', true);
-        this.showHideInClass('dd.SB.P1.G.typeOfLegalEntity', 'Joint Venture', 'sbP1PartnersPartiesClass', true);
-        this.showHideInClass('dd.SB.P1.G.typeOfLegalEntity', 'Partnership', 'sbP1PartnersPartiesClass', true);
+        this.showHideInClass('dd.SB.P1.G.typeOfLegalEntity', ['Joint Venture', 'Partnership'], 'sbP1PartnersPartiesClass', true);
+        this.showHideInClass('dd.SB.P1.G.typeOfLegalEntity', , 'sbP1PartnersPartiesClass', true);
         this.showHideInClass('dd.SB.P1.G.typeOfLegalEntity', 'Other', 'sbp1TypeOfEntityClass', true);
     },
     toggleSBP3: function() {
@@ -583,27 +583,35 @@ let eventListener = {
 +------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 */
     showHideInClass: function(fieldName, showValue, className, changeIfRequired = true, dontChangeRequired = []) {
+        var arrayOfValues = [];
         try{
-            // Check if the value of the specified 'fieldName' matches the 'showValue'.
-            // If it matches, show the fields with the given 'className' class; otherwise, hide them.
-            if(fd.field(fieldName).value === showValue) {
-                $("." + className).show();
-                // If 'changeIfRequired' is true, set the fields inside the class as required.
-                // The 'dontChangeRequired' array is used to specify optional fields whose requirement status will not be affected.
-                if (changeIfRequired) {
-                    this.setRequiredInClass(true, className, dontChangeRequired);
-                }
+            if(Array.isArray(showValue)) {
+                arrayOfValues.concat(showValue);
             } else {
-                $("." + className).hide();
-                // If 'changeIfRequired' is true, set the fields inside the class as not required.
-                // The 'dontChangeRequired' array is used to specify optional fields whose requirement status will not be affected.
-                if (changeIfRequired) {
-                    this.setRequiredInClass(false, className, dontChangeRequired);
-                }
+                arrayOfValues.push(showValue);
             }
+            
+            // Check if the value of the specified 'fieldName' matches the 'showValue'.
+                // If it matches, show the fields with the given 'className' class; otherwise, hide them.
+                if(arrayOfValues.includes(fd.field(fieldName).value)) {
+                    $("." + className).show();
+                    // If 'changeIfRequired' is true, set the fields inside the class as required.
+                    // The 'dontChangeRequired' array is used to specify optional fields whose requirement status will not be affected.
+                    if (changeIfRequired) {
+                        this.setRequiredInClass(true, className, dontChangeRequired);
+                    }
+                } else {
+                    $("." + className).hide();
+                    // If 'changeIfRequired' is true, set the fields inside the class as not required.
+                    // The 'dontChangeRequired' array is used to specify optional fields whose requirement status will not be affected.
+                    if (changeIfRequired) {
+                        this.setRequiredInClass(false, className, dontChangeRequired);
+                    }
+                }
         } catch (err) {
-            console.log(err)
+            //console.log(err)
         }
+
     },
     //This function assists in removing the required for all fields inside a given class
     setRequiredInClass: function(requiredOrNot, name, arrDontChange = []) {
