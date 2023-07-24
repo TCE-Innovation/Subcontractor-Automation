@@ -305,6 +305,15 @@ let eventListener = {
                             'sc.SB.P4.G.civilJudgement',
                             'sc.SB.P4.H.deferredProsecution'
     ],
+    scheduleBPart5YesOrNo: ['sc.SB.P5.D.bankruptcy',
+                            'sc.SB.P5.E.liensExcess',
+                            'sc.SB.P5.F.liensToday',
+                            'sc.SB.P5.G.failedTax',
+                            'sc.SB.P5.I.conflictOfInterest',
+                            'sc.SB.P5.N.haveSubsidiaryOrAffiliate',
+                            'sc.SB.P5.O.isContractorSubsidiaryOfGroup',
+                            'sc.SB.P5.P.ownershipOfOtherEntity'
+    ],
     scheduleBPart5: ['sc.SB.P5.D.bankruptcy',
                     'sc.SB.P5.E.liensExcess',
                     'sc.SB.P5.F.liensToday',
