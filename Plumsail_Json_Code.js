@@ -764,7 +764,6 @@ let dataTableFunctions = {
     },
     //Will loop through all the values in the array to add a validator to all of them
     addValidators: function () {
-        this.getAllDataTables();
         this.namesOfDataTables.forEach(el => {
             fd.control(el).addValidator({
                 name: 'DataTable' + el,
