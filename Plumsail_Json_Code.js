@@ -742,7 +742,7 @@ function individualFieldVisibilityAndRequired(fieldName, trueOrFalse, dataTableO
 
 let dataTableFunctions = {
     
-    namesOfDataTables: Object.keys(fd.data()).filter((name) => /dt./.test(name)),
+    namesOfDataTables: [],
 
 
     //Methods
@@ -764,6 +764,7 @@ let dataTableFunctions = {
     },
     //Will loop through all the values in the array to add a validator to all of them
     addValidators: function () {
+        this.getDataTables();
         this.namesOfDataTables.forEach(el => {
             fd.control(el).addValidator({
                 name: 'DataTable' + el,
@@ -773,5 +774,8 @@ let dataTableFunctions = {
                 } 
             })
         })
+    },
+    getDataTables: function () {
+        this.namesOfDataTables = Object.keys(fd.data()).filter((name) => /dt./.test(name)),
     }
 };
