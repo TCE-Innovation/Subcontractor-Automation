@@ -679,7 +679,7 @@ let dataTableFunctions = {
         })
 //This validator should make sure this doesn't exceed 3 entries
         fd.control("dt.SB.P5.K.1.contractsCompletedLast3Yrs").addValidator({
-            name: 'DataTable' + el,
+            name: 'SBP5K1Validator',
             error: 'Do not add more than 3 entries',
             validate: (value) => {
                 if(value.length > 3) {
