@@ -325,7 +325,7 @@ let eventListener = {
                     'sc.SB.P5.L.none',
                     'sc.SB.P5.M.none'
     ],
-    pdfControls = [],
+    pdfControls: [],
 
     //Methods
     setUpEventListeners: function() {
