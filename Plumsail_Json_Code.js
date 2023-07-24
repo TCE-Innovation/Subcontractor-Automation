@@ -288,7 +288,9 @@ let eventListener = {
                     'sc.SG.isFormBApplicable'
     ],
     scheduleBPart1: [
-        'dd.SB.P1.G.typeOfLegalEntity'
+        'dd.SB.P1.G.typeOfLegalEntity',
+        'sc.SB.P1.organizedUnderForeignCountry'
+        
     ],
     scheduleBPart3YesOrNo: ['sc.SB.P3.A.notResponsible',
                             'sc.SB.P3.B.debarred',
@@ -435,7 +437,7 @@ let eventListener = {
                                                                                     't.SF.FF3.7.CFDANumber', 't.SF.FF3.8.federalActionNumber', 'num.SF.FF3.9.awardAmount', 'n.SF.FF3.10.b.addr']);    
 
         //Toggles Schedule B
-        this.showHideInClass('sc.SB.isSBRequired', 'Yes', "ScheduleBClass", true, ['n.SB.P1.D.changedAddress']);
+        this.showHideInClass('sc.SB.isSBRequired', 'Yes', "ScheduleBClass", true, ['n.SB.P1.D.changedAddress', 't.SB.P1.H.country']);
 
         //Toggles Schedule B1
         this.showHideInClass('sc.SB1.isSB1Required', 'Yes', 'ScheduleB1Class');
@@ -510,7 +512,10 @@ let eventListener = {
 
     },
     toggleSBP1: function() {
-        
+        this.showHideInClass('sc.SB.P1.organizedUnderForeignCountry', 'Yes', 'sbP1DiffCountryClass', true);
+        this.showHideInClass('dd.SB.P1.G.typeOfLegalEntity', 'Joint Venture', 'sbP1PartnersPartiesClass', true);
+        this.showHideInClass('dd.SB.P1.G.typeOfLegalEntity', 'Partnership', 'sbP1PartnersPartiesClass', true);
+        this.showHideInClass('dd.SB.P1.G.typeOfLegalEntity', 'Other', 'sbp1TypeOfEntityClass', true);
     },
     toggleSBP3: function() {
         //Schedule B, Part 3: Contractor Representations
