@@ -677,6 +677,17 @@ let dataTableFunctions = {
                 } 
             })
         })
+//This validator should make sure this doesn't exceed 3 entries
+        fd.control("dt.SB.P5.K.1.contractsCompletedLast3Yrs").addValidator({
+            name: 'DataTable' + el,
+            error: 'Do not add more than 3 entries',
+            validate: (value) => {
+                if(value.length > 3) {
+                    return false;
+                }
+                return true;
+            } 
+        })
     },
     getDataTables: function () {
         this.namesOfDataTables = Object.keys(fd.data()).filter((name) => /dt./.test(name));
