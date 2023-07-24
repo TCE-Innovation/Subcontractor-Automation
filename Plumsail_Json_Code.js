@@ -287,6 +287,9 @@ let eventListener = {
                     'sc.SQS.12.non-UnionOrUnion',
                     'sc.SG.isFormBApplicable'
     ],
+    scheduleBPart1: [
+        'dd.SB.P1.G.typeOfLegalEntity'
+    ],
     scheduleBPart3YesOrNo: ['sc.SB.P3.A.notResponsible',
                             'sc.SB.P3.B.debarred',
                             'sc.SB.P3.C.pendingDebarment',
@@ -346,6 +349,7 @@ let eventListener = {
         this.eventListenerHelper(this.generalInfoEvents, this.generalInfoCallback);
         this.eventListenerHelper(this.isFormRequired, this.reqForms);
         this.eventListenerHelper(this.pdfControls, this.togglePDF);
+        this.eventListenerHelper(this.scheduleBPart1, this.toggleSBP1);
         this.eventListenerHelper(this.scheduleBPart3YesOrNo, this.toggleSBP3);
         this.eventListenerHelper(this.scheduleBPart4YesOrNo, this.toggleSBP4);
         this.eventListenerHelper(this.scheduleBPart5, this.toggleSBP5);
@@ -505,7 +509,9 @@ let eventListener = {
 
 
     },
-
+    toggleSBP1: function() {
+        
+    },
     toggleSBP3: function() {
         //Schedule B, Part 3: Contractor Representations
         //If any of the questions on the page has been answered yes, require the text box.
@@ -571,7 +577,7 @@ let eventListener = {
 |                                                                                                                                                                              |
 +------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 */
-    showHideInClass: function(fieldName, showValue, className, changeIfRequired = true, dontChangeRequired = []) {
+    showHideInClass: function(fieldName, showValue, className, changeIfRequired = true, notRequired = []) {
         try{
             // Check if the value of the specified 'fieldName' matches the 'showValue'.
             // If it matches, show the fields with the given 'className' class; otherwise, hide them.
@@ -579,17 +585,18 @@ let eventListener = {
                 $("." + className).show();
                 // If 'changeIfRequired' is true, set the fields inside the class as required.
                 // The 'dontChangeRequired' array is used to specify optional fields whose requirement status will not be affected.
-                if (changeIfRequired) {
-                    this.setRequiredInClass(true, className, dontChangeRequired);
-                }
+                // if (changeIfRequired) {
+                //     this.setRequiredInClass(true, className, dontChangeRequired);
+                // }
             } else {
                 $("." + className).hide();
                 // If 'changeIfRequired' is true, set the fields inside the class as not required.
                 // The 'dontChangeRequired' array is used to specify optional fields whose requirement status will not be affected.
-                if (changeIfRequired) {
-                    this.setRequiredInClass(false, className, dontChangeRequired);
-                }
+                // if (changeIfRequired) {
+                //     this.setRequiredInClass(false, className, dontChangeRequired);
+                // }
             }
+            this.setRequiredInClass(false, className, notRequired);
         } catch (err) {
             console.log(err)
         }
