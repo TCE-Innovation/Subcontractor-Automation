@@ -480,6 +480,9 @@ let eventListener = {
         this.showHideInClass('sc.SF1.readAndUnderstood', 'Yes', 'SF1Questions', false);
         this.showHideInClass('tog.SF1.hidePDF', false, 'SF1PDF', false);
 
+        //Schedule A
+        this.showHideInClass('tog.SA.hidePDF', false, 'SAPDF', false);
+        
         //Schedule B
         this.showHideInClass('sc.SB.readAndUnderstood', 'Yes', 'SBQuestions', false);
         this.showHideInClass('tog.SB.hidePDF', false, 'SBPDF', false);
@@ -488,6 +491,10 @@ let eventListener = {
         this.showHideInClass('sc.SB1.readAndUnderstood', 'Yes', 'SB1Questions', false);
         this.showHideInClass('tog.SB1.hidePDF', false, 'SB1PDF', false);
 
+        //Schedule G
+        this.showHideInClass('sc.SG.readAndUnderstood', 'Yes', 'SGQuestions', false);
+        this.showHideInClass('tog.SG.hidePDF', false, 'SGPDF', false);
+
         //OCIP A
         this.showHideInClass('sc.OCIPA.readAndUnderstood', 'Yes', 'OCIPAQuestions', false);
         this.showHideInClass('tog.OCIPA.hidePDF', false, 'OCIPAPDF', false);
@@ -495,6 +502,8 @@ let eventListener = {
         //OCIP B
         this.showHideInClass('sc.OCIPB.readAndUnderstood', 'Yes', 'OCIPBQuestions', false);
         this.showHideInClass('tog.OCIPB.hidePDF', false, 'OCIPBPDF', false);
+
+
     },
 
     toggleSBP3: function() {
