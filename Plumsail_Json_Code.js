@@ -765,8 +765,8 @@ let dataTableFunctions = {
             fd.control(el).addValidator({
                 name: 'DataTable' + el,
                 error: 'Please fill out the data table completely',
-                validate: function(value) {
-                    this.checkDataTable(el);
+                validate: (value) => {
+                    return this.checkDataTable(el);
                 } 
             })
         })
