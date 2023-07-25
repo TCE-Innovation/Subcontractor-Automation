@@ -288,6 +288,8 @@ let eventListener = {
                     'sc.SQS.12.non-UnionOrUnion',
                     'sc.SG.isFormBApplicable'
     ],
+    scheduleF: ['sc.SF.FF3.4.primeOrSubawardee'
+    ],
     scheduleBPart1: [
         'dd.SB.P1.G.typeOfLegalEntity',
         'sc.SB.P1.organizedUnderForeignCountry'
@@ -300,7 +302,8 @@ let eventListener = {
                             'sc.SB.P3.E.suretyAgreement',
                             'sc.SB.P3.F.monitor',
                             'sc.SB.P3.G.safety',
-                            'sc.SB.P3.H.compensationRating'
+                            'sc.SB.P3.H.compensationRating',
+                            'sc.SB.P3.attachments'
     ],
     scheduleBPart4YesOrNo: ['sc.SB.P4.A.noloContendere',
                             'sc.SB.P4.B.unfavorableTerminated',
@@ -340,6 +343,7 @@ let eventListener = {
                     'sc.SB.P5.L.none',
                     'sc.SB.P5.M.none'
     ],
+    scheduleB1: ['sc.SB1.1.attachment'],
     pdfControls: [],
 
     //Methods
@@ -352,10 +356,12 @@ let eventListener = {
         this.eventListenerHelper(this.generalInfoEvents, this.generalInfoCallback);
         this.eventListenerHelper(this.isFormRequired, this.reqForms);
         this.eventListenerHelper(this.pdfControls, this.togglePDF);
+        this.eventListenerHelper(this.scheduleF, this.toggleSF);
         this.eventListenerHelper(this.scheduleBPart1, this.toggleSBP1);
         this.eventListenerHelper(this.scheduleBPart3YesOrNo, this.toggleSBP3);
         this.eventListenerHelper(this.scheduleBPart4YesOrNo, this.toggleSBP4);
         this.eventListenerHelper(this.scheduleBPart5, this.toggleSBP5);
+        this.eventListenerHelper(this.scheduleB1, this.toggleSB1);
         //This is actually an event listener as well, I jsut couldn't figure out how to get this to fit the same format as the others, since it 
         //requires an input value from the event itself. I coudln't figure out how to do this repeating (Although, technically this isn't repeating)
         dataTableFunctions.calculateOCIPBValues();
@@ -515,6 +521,9 @@ let eventListener = {
 
 
     },
+    toggleSF: function() {
+        this.showHideInClass('sc.SF.FF3.4.primeOrSubawardee', 'Subawardee', 'SFF3Q5');
+    },
     toggleSBP1: function() {
         this.showHideInClass('sc.SB.P1.organizedUnderForeignCountry', 'Yes', 'sbP1DiffCountryClass', true);
         this.showHideInClass('dd.SB.P1.G.typeOfLegalEntity', ['Joint Venture', 'Partnership'], 'sbP1PartnersPartiesClass', true);
@@ -531,6 +540,8 @@ let eventListener = {
         });
         this.individualFieldVisibilityAndRequired('n.SB.P3.explanation', anyYes);
         this.individualFieldVisibilityAndRequired('a.SB.P3.attachments', anyYes);
+
+        this.showHideInClass('sc.SB.P3.attachments', 'yes', 'SBP3attachment', false);
     },
 
     toggleSBP4: function() {
@@ -568,6 +579,9 @@ let eventListener = {
             }
         });
         this.individualFieldVisibilityAndRequired('n.SB.P5.Q.explanation', anyYes);
+    },
+    toggleSB1: function() {
+        this.showHideInClass('sc.SB1.1.attachment', 'Yes', 'SB1Q1attachment', true);
     },
 /*
 +------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
