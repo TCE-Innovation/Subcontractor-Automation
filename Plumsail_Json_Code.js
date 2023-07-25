@@ -812,7 +812,7 @@ let attachmentFunctions = {
     },
     validator: function () {
         this.attachmentFields.forEach(el => {
-            fd.control(el).addValidator({
+            fd.field(el).addValidator({
                 name: 'Attachment' + el,
                 error: 'Only add one attachment',
                 validate: (value) => {
