@@ -625,7 +625,7 @@ let eventListener = {
         formFields.forEach(field => {
             if (field.$el.closest("." + name) != null && !arrDontChange.includes(field.internalName)) {
                     field.required = requiredOrNot;
-            } else if (field.$el.closest("." + name) != null && arrDontChange.includes(field.internalName)) {
+            } else if (arrDontChange.includes(field.internalName)) {
                     field.required = false;
             }
         })
@@ -633,7 +633,7 @@ let eventListener = {
         formControl.forEach(field => {
             if (field.$el.closest("." + name) != null && !arrDontChange.includes(field.internalName)) {
                 field.required = requiredOrNot;
-            } else if (field.$el.closest("." + name) != null && arrDontChange.includes(field.internalName)) {
+            } else if (arrDontChange.includes(field.internalName)) {
                 field.required = false;
         }
         })
