@@ -580,7 +580,7 @@ let eventListener = {
         });
         this.individualFieldVisibilityAndRequired('n.SB.P5.Q.explanation', anyYes);
 
-        this.showHideInClass('n.SB.P5.J.sharedOfficeExplanation', 'Yes', 'SBP5Jexplanation');
+        this.showHideInClass('sc.SB.P5.J.sharedOffice', 'Yes', 'SBP5Jexplanation');
     },
     toggleSB1: function() {
         this.showHideInClass('sc.SB1.1.attachment', 'Yes', 'SB1Q1attachment', true);
