@@ -85,6 +85,7 @@ var executeOnce = (function() {
             autopopulate();
             dataTableFunctions.disableFields();
             dataTableFunctions.addValidators();
+            attachmentFunctions.initialize();
         }
     };
 })();
@@ -800,5 +801,32 @@ let dataTableFunctions = {
         fd.field("num.OCIP.FB.S2.premiumTotal").disabled = true;
     }
 
+
+};
+
+let attachmentFunctions = {
+    attachmentFields: [],
+
+    findFields: function () {
+        this.attachmentFields = Object.keys(fd.data()).filter((name) => /^a\..*/.test(name));
+    },
+    validator: function () {
+        this.attachmentFields.forEach(el => {
+            fd.control(el).addValidator({
+                name: 'Attachment' + el,
+                error: 'Only add one attachment',
+                validate: (value) => {
+                    if(value.length > 1) {
+                        return false;
+                    }
+                    return true;
+                } 
+            })
+        })
+    },
+    initialize: function () {
+        this.findFields();
+        this.validator();
+    }
 
 };
