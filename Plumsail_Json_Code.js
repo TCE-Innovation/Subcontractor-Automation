@@ -706,13 +706,13 @@ let dataTableFunctions = {
         return returnValue;
     },
     checkTele: function (dtName) {
-        let returnValue = true;
+        
+
         fd.control(dtName).value.forEach(row => {
 
         })
     },
-    //Will loop through all the values in the array to add a validator to all of them
-    addValidators: function () {
+    rowValidators: function () {
         this.getDataTables();
         this.namesOfDataTables.forEach(el => {
             fd.control(el).addValidator({
@@ -734,16 +734,62 @@ let dataTableFunctions = {
                 return true;
             } 
         })
-        //Will verify for all phone numbers within each row 
+    },
+    columnValidators: function() {
+        
+        //For each data table, search through all columns
         this.namesOfDataTables.forEach(el => {
-            fd.control(el).addValidator({
-                name: 'DataTable' + el,
-                error: 'Please fill out the data table completely',
-                validate: (value) => {
-                    return this.checkTele(el);
-                } 
+            let dtColumns = [];
+            let phoneFormat = [];
+            let emailFormat = [];
+            let contractNumFormat = [];
+            //Obtain all the internal column names of the given data table
+            fd.control(el).columns.forEach(column => {
+                if(column.field !== undefined) {
+                    dtColumns.push(column.field);
+                }
             })
+            //Isolate all the columns within the data table that may require proper formatting.
+            phoneFormat = dtColumns.filter((item) => /phone/i.test(item));
+            emailFormat = dtColumns.filter((item) => /email/i.test(item));
+            contractNumFormat = dtColumns.filter((item) => /contract number/i.test(item));
+            
+            //Phone Formatting
+            phoneFormat.forEach(column => {
+                fd.control(el).addColumnValidator(column, {
+                    error: 'Please correct the formatting.',
+                    validate: (value) => {
+                        /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}(?: *x(\d+))?$|^\d{10}(?: *x(\d+))?$/.test(value);
+                    } 
+                })
+            })
+
+            //Phone Formatting
+            emailFormat.forEach(column => {
+                fd.control(el).addColumnValidator(column, {
+                    error: 'Please correct the formatting.',
+                    validate: (value) => {
+                        /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(value);
+                    } 
+                })
+            })
+
+            //Phone Formatting
+            contractNumFormat.forEach(column => {
+                fd.control(el).addColumnValidator(column, {
+                    error: 'Please correct the formatting.',
+                    validate: (value) => {
+                        /^[A-Za-z]-\d{5}$/.test(value);
+                    } 
+                })
+            })
+            
         })
+    },
+    //Will loop through all the values in the array to add a validator to all of them
+    addValidators: function () {
+        this.rowValidators();
+        this.columnValidators();
     },
     getDataTables: function () {
         this.namesOfDataTables = Object.keys(fd.data()).filter((name) => /dt./.test(name));
