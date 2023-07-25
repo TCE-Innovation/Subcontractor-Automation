@@ -759,7 +759,7 @@ let dataTableFunctions = {
                 fd.control(el).addColumnValidator(column, {
                     error: 'Please correct the formatting.',
                     validate: (value) => {
-                        /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}(?: *x(\d+))?$|^\d{10}(?: *x(\d+))?$/.test(value);
+                        return /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}(?: *x(\d+))?$|^\d{10}(?: *x(\d+))?$/.test(value);
                     } 
                 })
             })
@@ -769,7 +769,7 @@ let dataTableFunctions = {
                 fd.control(el).addColumnValidator(column, {
                     error: 'Please correct the formatting.',
                     validate: (value) => {
-                        /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(value);
+                        return /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(value);
                     } 
                 })
             })
@@ -779,11 +779,10 @@ let dataTableFunctions = {
                 fd.control(el).addColumnValidator(column, {
                     error: 'Please correct the formatting.',
                     validate: (value) => {
-                        /^[A-Za-z]-\d{5}$/.test(value);
+                        return /^[A-Za-z]-\d{5}$/.test(value);
                     } 
                 })
             })
-            
         })
     },
     //Will loop through all the values in the array to add a validator to all of them
