@@ -83,8 +83,7 @@ var executeOnce = (function() {
         if (!executed) {
             executed = true;
             autopopulate();
-            dataTableFunctions.disableFields();
-            dataTableFunctions.addValidators();
+            dataTableFunctions.initialize();
             attachmentFunctions.initialize();
         }
     };
@@ -691,13 +690,13 @@ let dataTableFunctions = {
 
     //Methods
     //This function will check the data tables to ensure there are no empty spots
-    checkDataTable: function (dtName) {
+    isDTFilled: function (dtName) {
         let returnValue = true;
         fd.control(dtName).value.forEach(row => {
             row.forEach(el => {
                 //Here we have the actual values of the items themselves. If the value is "", null, or undefined, the user has left it blank
                 //Thus, we should throw an error
-                if (el === "" || el === null || el === undefined) {
+                if (el === "" || el === null || el === undefined || el == []) {
                     //return false to indicate an error
                     returnValue = false;
                 }
@@ -705,6 +704,12 @@ let dataTableFunctions = {
         })
         //If we loop through everything and it hasn't triggered the false condition, then the whole table is true
         return returnValue;
+    },
+    checkTele: function (dtName) {
+        let returnValue = true;
+        fd.control(dtName).value.forEach(row => {
+
+        })
     },
     //Will loop through all the values in the array to add a validator to all of them
     addValidators: function () {
@@ -714,7 +719,7 @@ let dataTableFunctions = {
                 name: 'DataTable' + el,
                 error: 'Please fill out the data table completely',
                 validate: (value) => {
-                    return this.checkDataTable(el);
+                    return this.isDTFilled(el);
                 } 
             })
         })
@@ -728,6 +733,16 @@ let dataTableFunctions = {
                 }
                 return true;
             } 
+        })
+        //Will verify for all phone numbers within each row 
+        this.namesOfDataTables.forEach(el => {
+            fd.control(el).addValidator({
+                name: 'DataTable' + el,
+                error: 'Please fill out the data table completely',
+                validate: (value) => {
+                    return this.checkTele(el);
+                } 
+            })
         })
     },
     getDataTables: function () {
@@ -814,6 +829,10 @@ let dataTableFunctions = {
         fd.field("num.OCIP.FB.S2.workHoursTotal").disabled = true;
         fd.field("num.OCIP.FB.S2.limitedPayrollTotal").disabled = true;
         fd.field("num.OCIP.FB.S2.premiumTotal").disabled = true;
+    },
+    initialize: function() {
+        this.disableFields();
+        this.addValidators();
     }
 
 
