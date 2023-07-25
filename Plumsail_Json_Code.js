@@ -446,7 +446,7 @@ let eventListener = {
         this.showHideInClass('sc.SB.isSBRequired', 'Yes', "ScheduleBClass", true, ['n.SB.P1.D.changedAddress', 't.SB.P1.H.country']);
 
         //Toggles Schedule B1
-        this.showHideInClass('sc.SB1.isSB1Required', 'Yes', 'ScheduleB1Class');
+        this.showHideInClass('sc.SB1.isSB1Required', 'Yes', 'ScheduleB1Class', false);
 
         //Toggles the visibiliy and requirement of the RMSA form
         this.showHideInClass('sc.RMSA.isRequired', 'SQS', 'SQSQuestions', true, ['t.SQS.2a.streetAddr', 't.SQS.2a.city', 'dd.SQS.2a.state', 't.SQS.2a.zipCode']);
