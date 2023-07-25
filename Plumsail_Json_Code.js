@@ -587,7 +587,7 @@ let eventListener = {
             if(Array.isArray(showValue)) {
                 arrayOfValues = arrayOfValues.concat(showValue);
             } else {
-                arrayOfValues = arrayOfValues.push(showValue);
+                arrayOfValues.push(showValue);
             }
             
             // Check if the value of the specified 'fieldName' matches the 'showValue'.
