@@ -88,8 +88,8 @@ let sendData = {
     },
     getFormData: function() {
         var formData = fd.data();
-        var dtEmail = this.extractData(listOfEmails, "email");
-        var dtCompany = this.extractData(listOfEmails, "company");
+        var dtEmail = this.extractData("listOfEmails", "email");
+        var dtCompany = this.extractData("listOfEmails", "company");
         delete formData.listOfEmails;
 
         formData.emailList = dtEmail;
