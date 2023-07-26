@@ -16,8 +16,8 @@ The MTA requires all subcontractors to fill out some permutation of the followin
 TCE has had problems with these forms in the past - mainly subcontractors leaving required items uncompleted or misspelling information unknown to them, such as General Contractor information. The goal of this project is to minimize these mistakes as much as possible. This project will guide subcontractors through completing these forms, checking for correct formatting and mandating sections be filled where required. 
 ## Authors
 
-- [@Kyleh2420](https://www.github.com/Kyleh2420)
-- [@Rachel Leong](https://github.com/RLL24187)
+- [Kyle Han (@Kyleh2420)](https://www.github.com/Kyleh2420)
+- [Rachel Leong (@RLL24187)](https://github.com/RLL24187)
 
 
 ## Tech Stack
@@ -29,7 +29,7 @@ TCE has had problems with these forms in the past - mainly subcontractors leavin
 
 ## Lessons Learned
 
-What did you learn while building this project? What challenges did you face and how did you overcome them?
+Consider a custom implementation, such as through a native web application, as opposed to building off existing "productivity" apps. These productivity apps were not designed with such a scale in mind, and therefore is unsuitable for a project like this.
 
 
 ## API Reference
