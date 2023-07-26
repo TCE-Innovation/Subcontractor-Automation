@@ -270,120 +270,7 @@ function autopopulate() {
 
     
 }
-let elFunctions = {
-    /*
-    +-------------------------------------------------------------------------------------------------------------------------------------------------+
-    |                                                                                                                                                 |
-    |          eventListenerHelper, is a helper function used to set up event listeners for multiple form fields specified in the 'arrayOfEvents'.    |
-    |                     Each field listed in the array will trigger the provided 'callbackFcn' function when its value changes.                     |
-    |              @param {Array} arrayOfEvents - An array of field internal names for which event listeners should be set up.                        |
-    |              @param {Function} callbackFcn - The callback function to be executed when any of the specified fields' values change.              |
-    |              @returns {void} This function does not return any value.                                                                           |
-    |                                                                                                                                                 |
-    +-------------------------------------------------------------------------------------------------------------------------------------------------+
-    */
-    eventListenerHelper: function(arrayOfEvents, callbackFcn) {
-        arrayOfEvents.forEach(field => fd.field(field).$on('change', (value) => callbackFcn.call(this, value)));
-    },
-    /*
-+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                                                                                                                                                                              |
-|                   This function, showHideInClass, is designed to toggle the visibility of all fields inside a given class based on a specified condition.                    |
-|     It operates on the assumption that the fields to be controlled have a common class, and their visibility should change depending on the value of a particular field.     |
-|                     @param {string} fieldName - The field for which the change should be triggered.                                                                          |
-|                     @param {any} showValue - The value that the specified 'fieldName' should have to show the fields with the given class ('className').                     |
-|                     @param {string} className - The class whose visibility will be changing for the fields.                                                                  |
-|                     @param {boolean} changeIfRequired - Optional. Indicates whether the fields inside the                                                                    |
-|                         class should also change their 'required' status based on visibility. Default is 'true'.                                                             |
-|                     @param {Array} dontChangeRequired - Optional. An array of field internal names whose requirement will not                                                |
-|                         be affected by the change. Default is an empty array.                                                                                                |
-|                     @returns {void} This function does not return any value.                                                                                                 |
-|                                                                                                                                                                              |
-+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-*/
-showHideInClass: function(fieldName, showValue, className, changeIfRequired = true, dontChangeRequired = []) {
-    var arrayOfValues = [];
-    try{
-        if(Array.isArray(showValue)) {
-            arrayOfValues = arrayOfValues.concat(showValue);
-        } else {
-            arrayOfValues.push(showValue);
-        }
-        
-        // Check if the value of the specified 'fieldName' matches the 'showValue'.
-            // If it matches, show the fields with the given 'className' class; otherwise, hide them.
-            if(arrayOfValues.includes(fd.field(fieldName).value)) {
-                $("." + className).show();
-                // If 'changeIfRequired' is true, set the fields inside the class as required.
-                // The 'dontChangeRequired' array is used to specify optional fields whose requirement status will not be affected.
-                if (changeIfRequired) {
-                    this.setRequiredInClass(true, className, dontChangeRequired);
-                }
-            } else {
-                $("." + className).hide();
-                // If 'changeIfRequired' is true, set the fields inside the class as not required.
-                // The 'dontChangeRequired' array is used to specify optional fields whose requirement status will not be affected.
-                if (changeIfRequired) {
-                    this.setRequiredInClass(false, className, dontChangeRequired);
-                }
-            }
-    } catch (err) {
-        //console.log(err)
-    }
 
-},
-//This function assists in removing the required for all fields inside a given class
-setRequiredInClass: function(requiredOrNot, name, arrDontChange = []) {
-    var formFields = fd.fields();
-    var formControl = fd.controls();
-
-        //https://community.plumsail.com/t/disable-all-fields-in-a-grid-container/10249/2
-
-    formFields.forEach(field => {
-        if (field.$el.closest("." + name) != null && !arrDontChange.includes(field.internalName)) {
-                field.required = requiredOrNot;
-        } else if (arrDontChange.includes(field.internalName)) {
-                field.required = false;
-        }
-    })
-
-    formControl.forEach(field => {
-        if (field.$el.closest("." + name) != null && !arrDontChange.includes(field.internalName)) {
-            field.required = requiredOrNot;
-        } else if (arrDontChange.includes(field.internalName)) {
-            field.required = false;
-    }
-    })
-},
-
-//This function assumes if an item is visible, it should be required.
-//Depending on parameters, it will either make a field go away or appear
-//It will control the fields themselves, as opposed to the class that they're in.
-//This function is mostly used in Form B
-
-//Important to note: The way this is hidden is fundamentally different from the way classes are hidden.
-//Be sure to note: Hiding/Showing a class will not affect the visibility of a field hidden like this
-//If parameter is true, will show and require
-individualFieldVisibilityAndRequired: function(fieldName, trueOrFalse, dataTableOrField = "Field") {
-    switch (dataTableOrField) {
-        case "Field": 
-        case "field":
-            fd.field(fieldName).hidden = !trueOrFalse;
-            fd.field(fieldName).required = trueOrFalse;
-            break;
-        case "DataTable":
-        case "datatable":
-            fd.control(fieldName).required = trueOrFalse;
-            if (trueOrFalse) {
-                $(fd.control(fieldName).$el).show();
-                } else {
-                    $(fd.control(fieldName).$el).hide();
-                }
-            break;
-    }
-
-}
-};
 let eventListener = {
     //Setting up the arrays of fields that require event listeners
     generalInfoEvents: ['sc.GI.isMailingAddrDiff',
@@ -466,15 +353,15 @@ let eventListener = {
         this.pdfControls = this.pdfControls.concat(Object.keys(fd.data()).filter((name) => /readAndUnderstood/.test(name)));
 
         //Sets up the event listeners for each of the fields.
-        elFunctions.eventListenerHelper(this.generalInfoEvents, this.generalInfoCallback);
-        elFunctions.eventListenerHelper(this.isFormRequired, this.reqForms);
-        elFunctions.eventListenerHelper(this.pdfControls, this.togglePDF);
-        elFunctions.eventListenerHelper(this.scheduleF, this.toggleSF);
-        elFunctions.eventListenerHelper(this.scheduleBPart1, this.toggleSBP1);
-        elFunctions.eventListenerHelper(this.scheduleBPart3YesOrNo, this.toggleSBP3);
-        elFunctions.eventListenerHelper(this.scheduleBPart4YesOrNo, this.toggleSBP4);
-        elFunctions.eventListenerHelper(this.scheduleBPart5, this.toggleSBP5);
-        elFunctions.eventListenerHelper(this.scheduleB1, this.toggleSB1);
+        this.eventListenerHelper(this.generalInfoEvents, this.generalInfoCallback);
+        this.eventListenerHelper(this.isFormRequired, this.reqForms);
+        this.eventListenerHelper(this.pdfControls, this.togglePDF);
+        this.eventListenerHelper(this.scheduleF, this.toggleSF);
+        this.eventListenerHelper(this.scheduleBPart1, this.toggleSBP1);
+        this.eventListenerHelper(this.scheduleBPart3YesOrNo, this.toggleSBP3);
+        this.eventListenerHelper(this.scheduleBPart4YesOrNo, this.toggleSBP4);
+        this.eventListenerHelper(this.scheduleBPart5, this.toggleSBP5);
+        this.eventListenerHelper(this.scheduleB1, this.toggleSB1);
         this.OCIPAValidator();
         //This is actually an event listener as well, I jsut couldn't figure out how to get this to fit the same format as the others, since it 
         //requires an input value from the event itself. I coudln't figure out how to do this repeating (Although, technically this isn't repeating)
@@ -482,6 +369,20 @@ let eventListener = {
     },
 
 
+    /*
+    +-------------------------------------------------------------------------------------------------------------------------------------------------+
+    |                                                                                                                                                 |
+    |          eventListenerHelper, is a helper function used to set up event listeners for multiple form fields specified in the 'arrayOfEvents'.    |
+    |                     Each field listed in the array will trigger the provided 'callbackFcn' function when its value changes.                     |
+    |              @param {Array} arrayOfEvents - An array of field internal names for which event listeners should be set up.                        |
+    |              @param {Function} callbackFcn - The callback function to be executed when any of the specified fields' values change.              |
+    |              @returns {void} This function does not return any value.                                                                           |
+    |                                                                                                                                                 |
+    +-------------------------------------------------------------------------------------------------------------------------------------------------+
+    */
+    eventListenerHelper: function(arrayOfEvents, callbackFcn) {
+        arrayOfEvents.forEach(field => fd.field(field).$on('change', (value) => callbackFcn.call(this, value)));
+    },
 
     
 
@@ -526,7 +427,7 @@ let eventListener = {
             })
         })
 
-        elFunctions.showHideInClass('sc.GI.isMailingAddrDiff', 'Yes', 'GeneralInfoMailingAddr');
+        this.showHideInClass('sc.GI.isMailingAddrDiff', 'Yes', 'GeneralInfoMailingAddr');
     }, 
     reqForms: function() {
         /*
@@ -540,21 +441,21 @@ let eventListener = {
         */
 
         //Toggles Schedule F, Form F3
-        elFunctions.showHideInClass('sc.SF.FF3.FF3Applicable', 'Yes', "ScheduleFFormF3", true, ['t.SF.FF3.4.tier', 't.SF.FF3.4.congressionalDistrict', 't.SF.FF3.5.congressionalDistrict',
+        this.showHideInClass('sc.SF.FF3.FF3Applicable', 'Yes', "ScheduleFFormF3", true, ['t.SF.FF3.4.tier', 't.SF.FF3.4.congressionalDistrict', 't.SF.FF3.5.congressionalDistrict',
                                                                                     't.SF.FF3.7.CFDANumber', 't.SF.FF3.8.federalActionNumber', 'num.SF.FF3.9.awardAmount', 'n.SF.FF3.10.b.addr']);    
 
         //Toggles Schedule B
-        elFunctions.showHideInClass('sc.SB.isSBRequired', 'Yes', "ScheduleBClass", true, ['n.SB.P1.D.changedAddress', 't.SB.P1.H.country']);
+        this.showHideInClass('sc.SB.isSBRequired', 'Yes', "ScheduleBClass", true, ['n.SB.P1.D.changedAddress', 't.SB.P1.H.country']);
 
         //Toggles Schedule B1
-        elFunctions.showHideInClass('sc.SB1.isSB1Required', 'Yes', 'ScheduleB1Class', false);
-        elFunctions.showHideInClass('sc.SB1.isSB1Required', 'Yes', 'SB1AttachPDF');
+        this.showHideInClass('sc.SB1.isSB1Required', 'Yes', 'ScheduleB1Class', false);
+        this.showHideInClass('sc.SB1.isSB1Required', 'Yes', 'SB1AttachPDF');
 
         //Toggles the visibiliy and requirement of the RMSA form
-        elFunctions.showHideInClass('sc.RMSA.isRequired', 'SQS', 'SQSQuestions', true, ['t.SQS.2a.streetAddr', 't.SQS.2a.city', 'dd.SQS.2a.state', 't.SQS.2a.zipCode']);
+        this.showHideInClass('sc.RMSA.isRequired', 'SQS', 'SQSQuestions', true, ['t.SQS.2a.streetAddr', 't.SQS.2a.city', 'dd.SQS.2a.state', 't.SQS.2a.zipCode']);
         //'d.SQS.3.dateOfOrg', 't.SQS.3.county', 'dt.SQS.3.namesAndAddrsOfPartners'
-        elFunctions.showHideInClass('sc.SQS.12.non-UnionOrUnion', 'Union', 'SQSLabor');
-        elFunctions.showHideInClass('sc.RMSA.isRequired', 'RMSA', 'RMSAQuestions', true, ['t.RMSA.localManufacturingFacility.streetAddr', 't.RMSA.localManufacturingFacility.city', 'dd.RMSA.localManufacturingFacility.state', 't.RMSA.localManufacturingFacility.zipCode',
+        this.showHideInClass('sc.SQS.12.non-UnionOrUnion', 'Union', 'SQSLabor');
+        this.showHideInClass('sc.RMSA.isRequired', 'RMSA', 'RMSAQuestions', true, ['t.RMSA.localManufacturingFacility.streetAddr', 't.RMSA.localManufacturingFacility.city', 'dd.RMSA.localManufacturingFacility.state', 't.RMSA.localManufacturingFacility.zipCode',
                                                                                     //These fields are in SQS, which should be made not required if the user switches over to RMSA. Otherwise, it will softlock them.
                                                                                     'd.SQS.3.incorporationDate', "t.SQS.3.president'sName", "t.SQS.3.vicePresident'sName", "t.SQS.3.treasurer'sName", "t.SQS.3.secretary'sName", "d.SQS.3.dateOfOrg", "t.SQS.3.county", "dt.SQS.3.namesAndAddrsOfPartners",
                                                                                     't.SQS.12.unionName', 't.SQS.12.addr', 't.SQS.12.localNo', 't.SQS.12.telephone']);
@@ -567,14 +468,14 @@ let eventListener = {
                 Schedule B
         */
         //Toggles the SQS Form
-        elFunctions.showHideInClass('sc.SQS.3.corpOrCoPartner', 'Corporation', "SQSCorporation");
-        elFunctions.showHideInClass('sc.SQS.3.corpOrCoPartner', 'Co-partnership', "SQSCoPartnership");
+        this.showHideInClass('sc.SQS.3.corpOrCoPartner', 'Corporation', "SQSCorporation");
+        this.showHideInClass('sc.SQS.3.corpOrCoPartner', 'Co-partnership', "SQSCoPartnership");
 
         //Toggles F3 Materials List
-        elFunctions.showHideInClass('sc.SF.FF3.3.reportType', 'b. Material Change', 'ScheduleF3MaterialChange');
+        this.showHideInClass('sc.SF.FF3.3.reportType', 'b. Material Change', 'ScheduleF3MaterialChange');
 
         //Toggles the Schedule G requirement
-        elFunctions.showHideInClass('sc.SG.isFormBApplicable', 'Yes', 'SGInfo');
+        this.showHideInClass('sc.SG.isFormBApplicable', 'Yes', 'SGInfo');
     },
 
     togglePDF: function() {
@@ -583,52 +484,52 @@ let eventListener = {
             Every form except OCIP COI, Sunnary, and General Information applies here.
         */
         //SQS
-        elFunctions.showHideInClass('sc.SQS.readAndUnderstood', 'Yes', 'SQSorRMSA', false);
-        elFunctions.showHideInClass('tog.SQS.hidePDF', false, 'SQSPDF', false);
+        this.showHideInClass('sc.SQS.readAndUnderstood', 'Yes', 'SQSorRMSA', false);
+        this.showHideInClass('tog.SQS.hidePDF', false, 'SQSPDF', false);
 
         //RMSA
-        elFunctions.showHideInClass('tog.RMSA.hidePDF', false, 'RMSAPDF', false);
+        this.showHideInClass('tog.RMSA.hidePDF', false, 'RMSAPDF', false);
 
         //Schedule F
-        elFunctions.showHideInClass('sc.SF.readAndUnderstood', 'Yes', 'SFQuestions', false);
-        elFunctions.showHideInClass('tog.SF.hidePDF', false, 'SFPDF', false);
+        this.showHideInClass('sc.SF.readAndUnderstood', 'Yes', 'SFQuestions', false);
+        this.showHideInClass('tog.SF.hidePDF', false, 'SFPDF', false);
 
         //Schedule F1
-        elFunctions.showHideInClass('sc.SF1.readAndUnderstood', 'Yes', 'SF1Questions', false);
-        elFunctions.showHideInClass('tog.SF1.hidePDF', false, 'SF1PDF', false);
+        this.showHideInClass('sc.SF1.readAndUnderstood', 'Yes', 'SF1Questions', false);
+        this.showHideInClass('tog.SF1.hidePDF', false, 'SF1PDF', false);
 
         //Schedule A
-        elFunctions.showHideInClass('tog.SA.hidePDF', false, 'SAPDF', false);
+        this.showHideInClass('tog.SA.hidePDF', false, 'SAPDF', false);
         
         //Schedule B
-        elFunctions.showHideInClass('sc.SB.readAndUnderstood', 'Yes', 'SBQuestions', false);
-        elFunctions.showHideInClass('tog.SB.hidePDF', false, 'SBPDF', false);
+        this.showHideInClass('sc.SB.readAndUnderstood', 'Yes', 'SBQuestions', false);
+        this.showHideInClass('tog.SB.hidePDF', false, 'SBPDF', false);
 
         //Schedule B1
-        elFunctions.showHideInClass('sc.SB1.readAndUnderstood', 'Yes', 'SB1Questions', false);
-        elFunctions.showHideInClass('tog.SB1.hidePDF', false, 'SB1PDF', false);
+        this.showHideInClass('sc.SB1.readAndUnderstood', 'Yes', 'SB1Questions', false);
+        this.showHideInClass('tog.SB1.hidePDF', false, 'SB1PDF', false);
 
         //Schedule G
-        elFunctions.showHideInClass('sc.SG.readAndUnderstood', 'Yes', 'SGQuestions', false);
-        elFunctions.showHideInClass('tog.SG.hidePDF', false, 'SGPDF', false);
+        this.showHideInClass('sc.SG.readAndUnderstood', 'Yes', 'SGQuestions', false);
+        this.showHideInClass('tog.SG.hidePDF', false, 'SGPDF', false);
 
         //OCIP A
-        elFunctions.showHideInClass('sc.OCIPA.readAndUnderstood', 'Yes', 'OCIPAQuestions', false);
-        elFunctions.showHideInClass('tog.OCIPA.hidePDF', false, 'OCIPAPDF', false);
+        this.showHideInClass('sc.OCIPA.readAndUnderstood', 'Yes', 'OCIPAQuestions', false);
+        this.showHideInClass('tog.OCIPA.hidePDF', false, 'OCIPAPDF', false);
 
         //OCIP B
-        elFunctions.showHideInClass('sc.OCIPB.readAndUnderstood', 'Yes', 'OCIPBQuestions', false);
-        elFunctions.showHideInClass('tog.OCIPB.hidePDF', false, 'OCIPBPDF', false);
+        this.showHideInClass('sc.OCIPB.readAndUnderstood', 'Yes', 'OCIPBQuestions', false);
+        this.showHideInClass('tog.OCIPB.hidePDF', false, 'OCIPBPDF', false);
 
 
     },
     toggleSF: function() {
-        elFunctions.showHideInClass('sc.SF.FF3.4.primeOrSubawardee', 'Subawardee', 'SFF3Q5');
+        this.showHideInClass('sc.SF.FF3.4.primeOrSubawardee', 'Subawardee', 'SFF3Q5');
     },
     toggleSBP1: function() {
-        elFunctions.showHideInClass('sc.SB.P1.organizedUnderForeignCountry', 'Yes', 'sbP1DiffCountryClass', true);
-        elFunctions.showHideInClass('dd.SB.P1.G.typeOfLegalEntity', ['Joint Venture', 'Partnership'], 'sbP1PartnersPartiesClass', true);
-        elFunctions.showHideInClass('dd.SB.P1.G.typeOfLegalEntity', 'Other', 'sbp1TypeOfEntityClass', true);
+        this.showHideInClass('sc.SB.P1.organizedUnderForeignCountry', 'Yes', 'sbP1DiffCountryClass', true);
+        this.showHideInClass('dd.SB.P1.G.typeOfLegalEntity', ['Joint Venture', 'Partnership'], 'sbP1PartnersPartiesClass', true);
+        this.showHideInClass('dd.SB.P1.G.typeOfLegalEntity', 'Other', 'sbp1TypeOfEntityClass', true);
     },
     toggleSBP3: function() {
         //Schedule B, Part 3: Contractor Representations
@@ -639,10 +540,10 @@ let eventListener = {
                 anyYes = true;
             }
         });
-        elFunctions.individualFieldVisibilityAndRequired('n.SB.P3.explanation', anyYes);
-        elFunctions.individualFieldVisibilityAndRequired('a.SB.P3.attachments', anyYes);
+        this.individualFieldVisibilityAndRequired('n.SB.P3.explanation', anyYes);
+        this.individualFieldVisibilityAndRequired('a.SB.P3.attachments', anyYes);
 
-        elFunctions.showHideInClass('sc.SB.P3.attachments', 'yes', 'SBP3attachment', false);
+        this.showHideInClass('sc.SB.P3.attachments', 'yes', 'SBP3attachment', false);
     },
 
     toggleSBP4: function() {
@@ -654,20 +555,20 @@ let eventListener = {
                 anyYes = true;
             }
         });
-        elFunctions.individualFieldVisibilityAndRequired('n.SB.P4.explanation', anyYes)
+        this.individualFieldVisibilityAndRequired('n.SB.P4.explanation', anyYes)
     },
 
     toggleSBP5: function() {
         //Schedule B Part 5: Additional Questions
-        elFunctions.individualFieldVisibilityAndRequired('dt.SB.P5.C.pastThreeYrs', fd.field('sc.SB.P5.C.subcontractor').value === "Yes", "DataTable");
-        elFunctions.individualFieldVisibilityAndRequired('n.SB.P5.H.officeSpaceDetails', fd.field('sc.SB.P5.H.officeSpace').value === "Yes");
-        elFunctions.individualFieldVisibilityAndRequired('dt.SB.P5.K.2.last3YrsPenalities', fd.field('sc.SB.P5.K.2.none').value === "Yes", "DataTable");
-        elFunctions.individualFieldVisibilityAndRequired('dt.SB.P5.K.3.MTAContractsWorkNotCompleted', fd.field('sc.SB.P5.K.3.none').value === "Yes", "DataTable");
-        elFunctions.individualFieldVisibilityAndRequired('dt.SB.P5.K.4.activeGovtEntityContracts', fd.field('sc.SB.P5.K.4.none').value === "Yes", "DataTable");
-        elFunctions.individualFieldVisibilityAndRequired('dt.SB.P5.K.5.contractsNotCompleted', fd.field('sc.SB.P5.K.5.none').value === "Yes", "DataTable");
-        elFunctions.individualFieldVisibilityAndRequired('dt.SB.P5.L.contractSituations', fd.field('sc.SB.P5.L.none').value === "Yes", "DataTable");
-        elFunctions.individualFieldVisibilityAndRequired('dt.SB.P5.M.employeesOfMTA', fd.field('sc.SB.P5.M.none').value === "Yes", "DataTable");
-        elFunctions.showHideInClass('sc.SB.P5.K.1.none', 'Yes', 'ScheduleBPart5K', true);
+        this.individualFieldVisibilityAndRequired('dt.SB.P5.C.pastThreeYrs', fd.field('sc.SB.P5.C.subcontractor').value === "Yes", "DataTable");
+        this.individualFieldVisibilityAndRequired('n.SB.P5.H.officeSpaceDetails', fd.field('sc.SB.P5.H.officeSpace').value === "Yes");
+        this.individualFieldVisibilityAndRequired('dt.SB.P5.K.2.last3YrsPenalities', fd.field('sc.SB.P5.K.2.none').value === "Yes", "DataTable");
+        this.individualFieldVisibilityAndRequired('dt.SB.P5.K.3.MTAContractsWorkNotCompleted', fd.field('sc.SB.P5.K.3.none').value === "Yes", "DataTable");
+        this.individualFieldVisibilityAndRequired('dt.SB.P5.K.4.activeGovtEntityContracts', fd.field('sc.SB.P5.K.4.none').value === "Yes", "DataTable");
+        this.individualFieldVisibilityAndRequired('dt.SB.P5.K.5.contractsNotCompleted', fd.field('sc.SB.P5.K.5.none').value === "Yes", "DataTable");
+        this.individualFieldVisibilityAndRequired('dt.SB.P5.L.contractSituations', fd.field('sc.SB.P5.L.none').value === "Yes", "DataTable");
+        this.individualFieldVisibilityAndRequired('dt.SB.P5.M.employeesOfMTA', fd.field('sc.SB.P5.M.none').value === "Yes", "DataTable");
+        this.showHideInClass('sc.SB.P5.K.1.none', 'Yes', 'ScheduleBPart5K', true);
         anyYes = false;
         this.scheduleBPart5YesOrNo.forEach(field => {
             if (fd.field(field).value === "Yes") {
@@ -678,12 +579,12 @@ let eventListener = {
                 anyYes = true;
             }
         });
-        elFunctions.individualFieldVisibilityAndRequired('n.SB.P5.Q.explanation', anyYes);
+        this.individualFieldVisibilityAndRequired('n.SB.P5.Q.explanation', anyYes);
 
-        elFunctions.showHideInClass('sc.SB.P5.J.sharedOffice', 'Yes', 'SBP5Jexplanation');
+        this.showHideInClass('sc.SB.P5.J.sharedOffice', 'Yes', 'SBP5Jexplanation');
     },
     toggleSB1: function() {
-        elFunctions.showHideInClass('sc.SB1.1.attachment', 'Yes', 'SB1Q1attachment', true);
+        this.showHideInClass('sc.SB1.1.attachment', 'Yes', 'SB1Q1attachment', true);
     },
     OCIPAValidator: function () {
         $.getScript('https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js')
@@ -703,6 +604,104 @@ let eventListener = {
                 } 
             })
         })
+    },
+/*
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                                                                                                                                                                              |
+|                   This function, showHideInClass, is designed to toggle the visibility of all fields inside a given class based on a specified condition.                    |
+|     It operates on the assumption that the fields to be controlled have a common class, and their visibility should change depending on the value of a particular field.     |
+|                     @param {string} fieldName - The field for which the change should be triggered.                                                                          |
+|                     @param {any} showValue - The value that the specified 'fieldName' should have to show the fields with the given class ('className').                     |
+|                     @param {string} className - The class whose visibility will be changing for the fields.                                                                  |
+|                     @param {boolean} changeIfRequired - Optional. Indicates whether the fields inside the                                                                    |
+|                         class should also change their 'required' status based on visibility. Default is 'true'.                                                             |
+|                     @param {Array} dontChangeRequired - Optional. An array of field internal names whose requirement will not                                                |
+|                         be affected by the change. Default is an empty array.                                                                                                |
+|                     @returns {void} This function does not return any value.                                                                                                 |
+|                                                                                                                                                                              |
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+*/
+    showHideInClass: function(fieldName, showValue, className, changeIfRequired = true, dontChangeRequired = []) {
+        var arrayOfValues = [];
+        try{
+            if(Array.isArray(showValue)) {
+                arrayOfValues = arrayOfValues.concat(showValue);
+            } else {
+                arrayOfValues.push(showValue);
+            }
+            
+            // Check if the value of the specified 'fieldName' matches the 'showValue'.
+                // If it matches, show the fields with the given 'className' class; otherwise, hide them.
+                if(arrayOfValues.includes(fd.field(fieldName).value)) {
+                    $("." + className).show();
+                    // If 'changeIfRequired' is true, set the fields inside the class as required.
+                    // The 'dontChangeRequired' array is used to specify optional fields whose requirement status will not be affected.
+                    if (changeIfRequired) {
+                        this.setRequiredInClass(true, className, dontChangeRequired);
+                    }
+                } else {
+                    $("." + className).hide();
+                    // If 'changeIfRequired' is true, set the fields inside the class as not required.
+                    // The 'dontChangeRequired' array is used to specify optional fields whose requirement status will not be affected.
+                    if (changeIfRequired) {
+                        this.setRequiredInClass(false, className, dontChangeRequired);
+                    }
+                }
+        } catch (err) {
+            //console.log(err)
+        }
+
+    },
+    //This function assists in removing the required for all fields inside a given class
+    setRequiredInClass: function(requiredOrNot, name, arrDontChange = []) {
+        var formFields = fd.fields();
+        var formControl = fd.controls();
+
+            //https://community.plumsail.com/t/disable-all-fields-in-a-grid-container/10249/2
+
+        formFields.forEach(field => {
+            if (field.$el.closest("." + name) != null && !arrDontChange.includes(field.internalName)) {
+                    field.required = requiredOrNot;
+            } else if (arrDontChange.includes(field.internalName)) {
+                    field.required = false;
+            }
+        })
+
+        formControl.forEach(field => {
+            if (field.$el.closest("." + name) != null && !arrDontChange.includes(field.internalName)) {
+                field.required = requiredOrNot;
+            } else if (arrDontChange.includes(field.internalName)) {
+                field.required = false;
+        }
+        })
+    },
+
+    //This function assumes if an item is visible, it should be required.
+    //Depending on parameters, it will either make a field go away or appear
+    //It will control the fields themselves, as opposed to the class that they're in.
+    //This function is mostly used in Form B
+
+    //Important to note: The way this is hidden is fundamentally different from the way classes are hidden.
+    //Be sure to note: Hiding/Showing a class will not affect the visibility of a field hidden like this
+    //If parameter is true, will show and require
+    individualFieldVisibilityAndRequired: function(fieldName, trueOrFalse, dataTableOrField = "Field") {
+        switch (dataTableOrField) {
+            case "Field": 
+            case "field":
+                fd.field(fieldName).hidden = !trueOrFalse;
+                fd.field(fieldName).required = trueOrFalse;
+                break;
+            case "DataTable":
+            case "datatable":
+                fd.control(fieldName).required = trueOrFalse;
+                if (trueOrFalse) {
+                    $(fd.control(fieldName).$el).show();
+                    } else {
+                        $(fd.control(fieldName).$el).hide();
+                    }
+                break;
+        }
+
     }
 };
 
