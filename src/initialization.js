@@ -98,13 +98,13 @@ let sendData = {
         return formData;
     },
     init: function() {
-        this.interactWithAPI(this.getFormData(), url);
+        this.interactWithAPI(this.getFormData(), this.url);
     },
     /*
     +-----------------------------------------------------------------------------------------------+
     |                                                                                               |
     |This function will extract all the values in a column in a data table and return it as an array|
-    |                                                                                               |
+    |        Both parameters are strings                                                            |
     +-----------------------------------------------------------------------------------------------+
     */
     extractData: function(dt, col) {
