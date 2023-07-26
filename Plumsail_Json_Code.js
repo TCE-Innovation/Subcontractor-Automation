@@ -383,7 +383,7 @@ individualFieldVisibilityAndRequired: function(fieldName, trueOrFalse, dataTable
     }
 
 }
-},
+};
 let eventListener = {
     //Setting up the arrays of fields that require event listeners
     generalInfoEvents: ['sc.GI.isMailingAddrDiff',
