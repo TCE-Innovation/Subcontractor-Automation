@@ -53,7 +53,7 @@ function autoPopulateGenInfo() {
 }
 
 let sendData = {
-    url: "https://prod-76.westus.logic.azure.com:443/workflows/34545c436ff04f18a535e11258c53ad7/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=QaY6UKMxwRLFyre2HKECVA9N8c_3k2WYfX5ZuYYngrg",
+    url: "https://prod-97.westus.logic.azure.com:443/workflows/79624e3979234007ac16711c3885e1d1/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=mvPb8uflUl-q1IfGlGahKamYT0UBPRQm4MUMOlTczrA",
 
     /*
     +-------------------------------------------------------------------------------------------+
@@ -98,7 +98,7 @@ let sendData = {
         return formData;
     },
     init: function() {
-        this.interactWithAPI(getFormData(), url);
+        this.interactWithAPI(this.getFormData(), url);
     },
     /*
     +-----------------------------------------------------------------------------------------------+
