@@ -344,6 +344,7 @@ let eventListener = {
     ],
     scheduleB1: ['sc.SB1.1.attachment'],
     pdfControls: [],
+    OCIPA: ['d.OCIP.FA.S2.workersCompEffective','d.OCIP.FA.S2.workersCompExpiration'],
 
     //Methods
     setUpEventListeners: function() {
@@ -582,6 +583,25 @@ let eventListener = {
     },
     toggleSB1: function() {
         this.showHideInClass('sc.SB1.1.attachment', 'Yes', 'SB1Q1attachment', true);
+    },
+    toggleOCIPA: function () {
+        $.getScript('https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js')
+        .then(function() {
+            fd.field('d.OCIP.FA.S2.workersCompExpiration').addValidator({
+                name: 'Check Date',
+                error: 'Expiration date must be after start date.',
+                validate: function(value) {
+                    var projectEnd = moment(fd.field('d.OCIP.FA.S2.workersCompExpiration').value);
+                    var projectBegin = moment(fd.field('d.OCIP.FA.S2.workersCompEffective').value);
+                    if (projectEnd.isValid() && projectBegin.isValid()) {
+                        if(projectEnd.diff(projectBegin, 'days', false) <= 0) {
+                            return false;
+                        }
+                        return true;
+                    }
+                } 
+            })
+        })
     },
 /*
 +------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
