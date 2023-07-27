@@ -38,7 +38,6 @@
 +--------------------------------------------------------------------------------------------------------------------------+
 */
 fd.rendered(function () {
-    
     //Functions that run initially
     executeOnce();
 });
@@ -275,7 +274,8 @@ let eventListener = {
     //Setting up the arrays of fields that require event listeners
     generalInfoEvents: ['sc.GI.isMailingAddrDiff',
                         'd.GI.projectedStartDate',
-                        'd.GI.projectedCompletionDate'
+                        'd.GI.projectedCompletionDate',
+                        'num.GI.percentOfTotalContractPrice'
     ],
 
     isFormRequired: ['sc.SQS.3.corpOrCoPartner', 
@@ -366,6 +366,9 @@ let eventListener = {
         //This is actually an event listener as well, I jsut couldn't figure out how to get this to fit the same format as the others, since it 
         //requires an input value from the event itself. I coudln't figure out how to do this repeating (Although, technically this isn't repeating)
         dataTableFunctions.calculateOCIPBValues();
+
+        //this field should also get disabled, since the user should not interact with it (It should be filled automatically)
+        this.individualFieldVisibilityAndRequired('num.GI.percentOfTotalContractPrice', false);
     },
 
 
@@ -408,6 +411,7 @@ let eventListener = {
     */
     //This function will hide or show the "Mailing address" section, if mailing is different from street address.
     //This function will also check to see that the proposes Project End Date is later than the Project start date
+    //Additionally, function will calcualte the percentage of the contract based on the subcontractor's value
     generalInfoCallback: function() {
         $.getScript('https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js')
         .then(function() {
@@ -428,6 +432,7 @@ let eventListener = {
         })
 
         this.showHideInClass('sc.GI.isMailingAddrDiff', 'Yes', 'GeneralInfoMailingAddr');
+        fd.field('num.GI.percentOfTotalContractPrice').value = fd.field('num.GI.contractValue').value/fd.field('num.GI.totalAmtOfProposedSubcontract').value;
     }, 
     reqForms: function() {
         /*
