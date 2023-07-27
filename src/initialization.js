@@ -4,8 +4,15 @@ preconfigured = {
 
 fd.rendered(function () {
     autoPopulateGenInfo();
+    validation.init();
     $('.autoInfo').hide();
 });
+
+fd.beforeSave(function() {
+    sendData.init();
+    throw new Error("Preventing you from submitting");
+});
+
 
 /*
 async function externalFile() {
@@ -14,7 +21,6 @@ async function externalFile() {
     const data = $.get(urlOfJSON);
     return data;
 }
-
 */
 function autoPopulateGenInfo() {
     Object.entries(preconfigured).forEach(el => {
@@ -115,7 +121,76 @@ let sendData = {
     }
 };
 
-fd.beforeSave(function() {
-    sendData.init();
-    throw new Error("Preventing you from submitting");
-});
+let validation = {
+    namesOfDataTables: [],
+
+    getDataTables: function () {
+        return Object.keys(fd.data()).filter((name) => /dt./.test(name));
+    },
+    init: (function() {
+        var executed = false;
+        return function() {
+            if (!executed) {
+                executed = true;
+                this.namesOfDataTables = this.getDataTables();
+                this.completeTableValidator.add(this.namesOfDataTables);
+                this.columnValidators();
+            }
+        };
+    })(),
+    completeTableValidator: {
+        //Checks that the table has 
+        add: function (dtArray) {
+            dtArray.forEach(el => {
+                fd.control(el).addValidator({
+                    name: 'DataTable' + el,
+                    error: 'Please fill out the data table completely',
+                    validate: (value) => {
+                        return this.isDTFilled(el);
+                    } 
+                })
+            })
+        },
+        isDTFilled: function (dtName) {
+            let returnValue = true;
+            fd.control(dtName).value.forEach(row => {
+                row.forEach(el => {
+                    //Here we have the actual values of the items themselves. If the value is "", null, or undefined, the user has left it blank
+                    //Thus, we should throw an error
+                    if (el === "" || el === null || el === undefined || el == []) {
+                        //return false to indicate an error
+                        returnValue = false;
+                    }
+                })
+            })
+            //If we loop through everything and it hasn't triggered the false condition, then the whole table is true
+            return returnValue;
+        },
+    },
+    columnValidators: function() {
+        //For each data table, search through all columns
+        this.namesOfDataTables.forEach(el => {
+            let dtColumns = [];
+            let emailFormat = [];
+            //Obtain all the internal column names of the given data table
+            fd.control(el).columns.forEach(column => {
+                if(column.field !== undefined) {
+                    dtColumns.push(column.field);
+                }
+            })
+            //Isolate all the columns within the data table that may require proper formatting.
+            emailFormat = dtColumns.filter((item) => /email/i.test(item));
+
+            //Phone Formatting
+            emailFormat.forEach(column => {
+                fd.control(el).addColumnValidator(column, {
+                    error: 'Please correct the formatting.',
+                    validate: (value) => {
+                        return /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(value);
+                    } 
+                })
+            })
+        })
+    }
+
+};
