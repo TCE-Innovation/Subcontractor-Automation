@@ -275,7 +275,7 @@ let eventListener = {
     generalInfoEvents: ['sc.GI.isMailingAddrDiff',
                         'd.GI.projectedStartDate',
                         'd.GI.projectedCompletionDate',
-                        'num.GI.percentOfTotalContractPrice'
+                        'num.GI.totalAmtOfProposedSubcontract'
     ],
 
     isFormRequired: ['sc.SQS.3.corpOrCoPartner', 
