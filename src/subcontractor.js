@@ -551,8 +551,7 @@ let eventListener = {
         this.individualFieldVisibilityAndRequired('n.SB.P3.explanation', anyYes);
         //Technically this is not a data table, but it still gets treated the same way
         this.individualFieldVisibilityAndRequired('html.SBP3.explain', anyYes, 'dataTable');
-        //Technically this is not a data table, but it still gets treated the same way
-        this.individualFieldVisibilityAndRequired('a.SB.P3.attachments', fd.field('sc.SB.P3.attachments').value === "Yes", 'dataTable');
+        this.individualFieldVisibilityAndRequired('a.SB.P3.attachments', fd.field('sc.SB.P3.attachments').value === "Yes");
     },
 
     toggleSBP4: function() {
