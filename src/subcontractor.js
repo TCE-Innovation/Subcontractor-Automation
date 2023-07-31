@@ -281,7 +281,7 @@ let eventListener = {
     isFormRequired: ['sc.SQS.3.corpOrCoPartner', 
                     'sc.SB1.isSB1Required',
                     'sc.SF.FF3.3.reportType',
-                    'sc.SB.isSBRequired',
+                    'sc.SB.',
                     'sc.SF.FF3.FF3Applicable',
                     'sc.RMSA.isRequired',
                     'sc.SQS.12.non-UnionOrUnion',
@@ -551,7 +551,8 @@ let eventListener = {
         this.individualFieldVisibilityAndRequired('n.SB.P3.explanation', anyYes);
         //Technically this is not a data table, but it still gets treated the same way
         this.individualFieldVisibilityAndRequired('html.SBP3.explain', anyYes, 'dataTable');
-        this.showHideInClass('sc.SB.P3.attachments', 'Yes', 'SBP3attachment', false);
+        //Technically this is not a data table, but it still gets treated the same way
+        this.individualFieldVisibilityAndRequired('a.SB.P3.attachments', fd.field('sc.SB.P3.attachments').value === "Yes", 'dataTable');
     },
 
     toggleSBP4: function() {
