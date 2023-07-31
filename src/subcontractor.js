@@ -281,7 +281,7 @@ let eventListener = {
     isFormRequired: ['sc.SQS.3.corpOrCoPartner', 
                     'sc.SB1.isSB1Required',
                     'sc.SF.FF3.3.reportType',
-                    'sc.SB.',
+                    'sc.SB.isSBRequired',
                     'sc.SF.FF3.FF3Applicable',
                     'sc.RMSA.isRequired',
                     'sc.SQS.12.non-UnionOrUnion',
