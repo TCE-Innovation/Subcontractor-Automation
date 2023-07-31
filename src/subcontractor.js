@@ -541,14 +541,17 @@ let eventListener = {
         //If any of the questions on the page has been answered yes, require the text box.
         anyYes = false;
         this.scheduleBPart3YesOrNo.forEach(field => {
-            if (fd.field(field).value === "Yes") {
-                anyYes = true;
+            //Attachments don't count in the yes/no triggers
+            if (field !== "sc.SB.P3.attachments") {
+                if (fd.field(field).value === "Yes") {
+                    anyYes = true;
+                }
             }
         });
         this.individualFieldVisibilityAndRequired('n.SB.P3.explanation', anyYes);
         this.individualFieldVisibilityAndRequired('a.SB.P3.attachments', anyYes);
 
-        this.showHideInClass('sc.SB.P3.attachments', 'yes', 'SBP3attachment', false);
+        this.showHideInClass('sc.SB.P3.attachments', 'es', 'SBP3attachment', false);
     },
 
     toggleSBP4: function() {
@@ -770,6 +773,8 @@ let dataTableFunctions = {
             let phoneFormat = [];
             let emailFormat = [];
             let contractNumFormat = [];
+            //Should extract all SSN/TIN numbers
+            let SSN = [];
             //Obtain all the internal column names of the given data table
             fd.control(el).columns.forEach(column => {
                 if(column.field !== undefined) {
@@ -780,13 +785,14 @@ let dataTableFunctions = {
             phoneFormat = dtColumns.filter((item) => /phone/i.test(item));
             emailFormat = dtColumns.filter((item) => /email/i.test(item));
             contractNumFormat = dtColumns.filter((item) => /contractnumber/i.test(item));
+            SSN = dtColumns.filter((item) => /SSN/i.test(item));
             
             //Phone Formatting
             phoneFormat.forEach(column => {
                 fd.control(el).addColumnValidator(column, {
-                    error: 'Please correct the formatting.',
+                    error: 'Phone formatting is not correct. (123) 123-1233',
                     validate: (value) => {
-                        return /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}(?: *x(\d+))?$|^\d{10}(?: *x(\d+))?$/.test(value);
+                        return /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}(?: *x(\d+))?$|^\d{10}(?: *x(\d+))?$|^n\/a$/i.test(value);
                     } 
                 })
             })
@@ -794,9 +800,9 @@ let dataTableFunctions = {
             //Phone Formatting
             emailFormat.forEach(column => {
                 fd.control(el).addColumnValidator(column, {
-                    error: 'Please correct the formatting.',
+                    error: 'Email formatting is not correct. example@example.com',
                     validate: (value) => {
-                        return /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(value);
+                        return /^[^@\s]+@[^@\s]+\.[^@\s]+$|^n\/a$/i.test(value);
                     } 
                 })
             })
@@ -804,9 +810,19 @@ let dataTableFunctions = {
             //Phone Formatting
             contractNumFormat.forEach(column => {
                 fd.control(el).addColumnValidator(column, {
-                    error: 'Please correct the formatting.',
+                    error: 'Contract formatting is not correct. A-12345',
                     validate: (value) => {
-                        return /^[A-Za-z]-\d{5}$/.test(value);
+                        return /^[A-Za-z]-\d{5}$|^n\/a$/i.test(value);
+                    } 
+                })
+            })
+
+            //EIN/TIN/SSN formatting
+            SSN.forEach(column => {
+                fd.control(el).addColumnValidator(column, {
+                    error: 'EIN/TIN/SSN formatting is not correct. 123-45-6789 or 12-3456789',
+                    validate: (value) => {
+                        return /^\d{3}-\d{2}-\d{4}$|^\d{2}-\d{7}$|^n\/a$/i.test(value);
                     } 
                 })
             })
