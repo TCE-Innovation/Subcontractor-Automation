@@ -788,7 +788,7 @@ let dataTableFunctions = {
             phoneFormat = dtColumns.filter((item) => /phone/i.test(item));
             emailFormat = dtColumns.filter((item) => /email/i.test(item));
             contractNumFormat = dtColumns.filter((item) => /contractnumber/i.test(item));
-            SSN = dtColumns.filter((item) => /SSN/i.test(item));
+            SSN = dtColumns.filter((item) => /EIN/i.test(item));
             
             //Phone Formatting
             phoneFormat.forEach(column => {
