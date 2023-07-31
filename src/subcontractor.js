@@ -549,9 +549,9 @@ let eventListener = {
             }
         });
         this.individualFieldVisibilityAndRequired('n.SB.P3.explanation', anyYes);
-        this.individualFieldVisibilityAndRequired('a.SB.P3.attachments', anyYes);
-
-        this.showHideInClass('sc.SB.P3.attachments', 'es', 'SBP3attachment', false);
+        //Technically this is not a data table, but it still gets treated the same way
+        this.individualFieldVisibilityAndRequired('html.SBP3.explain', anyYes, 'dataTable');
+        this.showHideInClass('sc.SB.P3.attachments', 'Yes', 'SBP3attachment', false);
     },
 
     toggleSBP4: function() {
@@ -563,16 +563,20 @@ let eventListener = {
                 anyYes = true;
             }
         });
-        this.individualFieldVisibilityAndRequired('n.SB.P4.explanation', anyYes)
+        this.individualFieldVisibilityAndRequired('n.SB.P4.explanation', anyYes);
+        //Technically this is not a data table, but it still gets treated the same way
+        this.individualFieldVisibilityAndRequired('html.SBP4.explain', anyYes, 'dataTable');
     },
 
     toggleSBP5: function() {
         //Schedule B Part 5: Additional Questions
         this.individualFieldVisibilityAndRequired('dt.SB.P5.C.pastThreeYrs', fd.field('sc.SB.P5.C.subcontractor').value === "Yes", "DataTable");
+        this.individualFieldVisibilityAndRequired('html.SBP5.C', fd.field('sc.SB.P5.C.subcontractor').value === "Yes", "DataTable");
         this.individualFieldVisibilityAndRequired('n.SB.P5.H.officeSpaceDetails', fd.field('sc.SB.P5.H.officeSpace').value === "Yes");
         this.individualFieldVisibilityAndRequired('dt.SB.P5.K.2.last3YrsPenalities', fd.field('sc.SB.P5.K.2.none').value === "Yes", "DataTable");
         this.individualFieldVisibilityAndRequired('dt.SB.P5.K.3.MTAContractsWorkNotCompleted', fd.field('sc.SB.P5.K.3.none').value === "Yes", "DataTable");
         this.individualFieldVisibilityAndRequired('dt.SB.P5.K.4.activeGovtEntityContracts', fd.field('sc.SB.P5.K.4.none').value === "Yes", "DataTable");
+        this.individualFieldVisibilityAndRequired('html.SBP4.K4', fd.field('sc.SB.P5.K.4.none').value === "Yes", "DataTable");
         this.individualFieldVisibilityAndRequired('dt.SB.P5.K.5.contractsNotCompleted', fd.field('sc.SB.P5.K.5.none').value === "Yes", "DataTable");
         this.individualFieldVisibilityAndRequired('dt.SB.P5.L.contractSituations', fd.field('sc.SB.P5.L.none').value === "Yes", "DataTable");
         this.individualFieldVisibilityAndRequired('dt.SB.P5.M.employeesOfMTA', fd.field('sc.SB.P5.M.none').value === "Yes", "DataTable");
@@ -693,13 +697,12 @@ let eventListener = {
     //Be sure to note: Hiding/Showing a class will not affect the visibility of a field hidden like this
     //If parameter is true, will show and require
     individualFieldVisibilityAndRequired: function(fieldName, trueOrFalse, dataTableOrField = "Field") {
+        dataTableOrField = dataTableOrField.toLowerCase();
         switch (dataTableOrField) {
-            case "Field": 
             case "field":
                 fd.field(fieldName).hidden = !trueOrFalse;
                 fd.field(fieldName).required = trueOrFalse;
                 break;
-            case "DataTable":
             case "datatable":
                 fd.control(fieldName).required = trueOrFalse;
                 if (trueOrFalse) {
