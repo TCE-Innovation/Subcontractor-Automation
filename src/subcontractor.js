@@ -264,7 +264,7 @@ function autopopulate() {
         });
 
         //Once we have recieved all the data and have finished autofilling, then set up the event listeners
-        eventListener.setUpEventListeners();
+        eventListener.init();
     })
 
     
@@ -347,7 +347,7 @@ let eventListener = {
     OCIPA: ['d.OCIP.FA.S2.workersCompEffective','d.OCIP.FA.S2.workersCompExpiration'],
 
     //Methods
-    setUpEventListeners: function() {
+    init: function() {
         //Items are added here, where they will be called to add onto the arrays
         this.pdfControls = Object.keys(fd.data()).filter((name) => /hidePDF/.test(name));
         this.pdfControls = this.pdfControls.concat(Object.keys(fd.data()).filter((name) => /readAndUnderstood/.test(name)));
@@ -362,8 +362,21 @@ let eventListener = {
         this.eventListenerHelper(this.scheduleBPart4YesOrNo, this.toggleSBP4);
         this.eventListenerHelper(this.scheduleBPart5, this.toggleSBP5);
         this.eventListenerHelper(this.scheduleB1, this.toggleSB1);
+
+        //Set up validators: this only happens one time.
         this.OCIPAValidator();
         this.genInfoValidator();
+
+        //Then, we call the functions once such that all the values update to their default configuration
+        this.generalInfoCallback();
+        this.reqForms();
+        this.togglePDF();
+        this.toggleSF();
+        this.toggleSBP1();
+        this.toggleSBP3();
+        this.toggleSBP4();
+        this.toggleSBP5();
+        this.toggleSB1();
         //This is actually an event listener as well, I jsut couldn't figure out how to get this to fit the same format as the others, since it 
         //requires an input value from the event itself. I coudln't figure out how to do this repeating (Although, technically this isn't repeating)
         dataTableFunctions.calculateOCIPBValues();
