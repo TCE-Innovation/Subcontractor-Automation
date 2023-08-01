@@ -363,6 +363,7 @@ let eventListener = {
         this.eventListenerHelper(this.scheduleBPart5, this.toggleSBP5);
         this.eventListenerHelper(this.scheduleB1, this.toggleSB1);
         this.OCIPAValidator();
+        this.genInfoValidator();
         //This is actually an event listener as well, I jsut couldn't figure out how to get this to fit the same format as the others, since it 
         //requires an input value from the event itself. I coudln't figure out how to do this repeating (Although, technically this isn't repeating)
         dataTableFunctions.calculateOCIPBValues();
@@ -413,24 +414,6 @@ let eventListener = {
     //This function will also check to see that the proposes Project End Date is later than the Project start date
     //Additionally, function will calcualte the percentage of the contract based on the subcontractor's value
     generalInfoCallback: function() {
-        $.getScript('https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js')
-        .then(function() {
-            fd.field('d.GI.projectedCompletionDate').addValidator({
-                name: 'Check Date',
-                error: 'Completion Date must be after start date',
-                validate: function(value) {
-                    var projectEnd = moment(fd.field('d.GI.projectedCompletionDate').value);
-                    var projectBegin = moment(fd.field('d.GI.projectedStartDate').value);
-                    if (projectEnd.isValid() && projectBegin.isValid()) {
-                        if(projectEnd.diff(projectBegin, 'days', false) <= 0) {
-                            return false;
-                        }
-                        return true;
-                    }
-                } 
-            })
-        })
-
         this.showHideInClass('sc.GI.isMailingAddrDiff', 'Yes', 'GeneralInfoMailingAddr');
         fd.field('num.GI.percentOfTotalContractPrice').value = fd.field('num.GI.contractValue').value/fd.field('num.GI.totalAmtOfProposedSubcontract').value;
     }, 
@@ -616,6 +599,28 @@ let eventListener = {
                 } 
             })
         })
+    },
+    genInfoValidator: function () {
+        $.getScript('https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js')
+        .then(function() {
+            fd.field('d.GI.projectedCompletionDate').addValidator({
+                name: 'Check Date',
+                error: 'Completion Date must be after start date',
+                validate: function(value) {
+                    var projectEnd = moment(fd.field('d.GI.projectedCompletionDate').value);
+                    var projectBegin = moment(fd.field('d.GI.projectedStartDate').value);
+                    if (projectEnd.isValid() && projectBegin.isValid()) {
+                        if(projectEnd.diff(projectBegin, 'days', false) <= 0) {
+                            return false;
+                        }
+                        return true;
+                    }
+                } 
+            })
+        });
+
+        
+
     },
 /*
 +------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
