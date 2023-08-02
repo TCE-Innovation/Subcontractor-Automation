@@ -451,7 +451,7 @@ let eventListener = {
         //Toggles Schedule B1
         this.showHideInClass('sc.SB1.isSB1Required', 'Yes', 'ScheduleB1Class', false);
         this.showHideInClass('sc.SB1.isSB1Required', 'Yes', 'SB1AttachPDF');
-        this.individualFieldVisibilityAndRequired('dt.SB1.2.licenses', fd.field('sc.SB1.isSB1Required').value === "Yes", 'datatable');
+        this.showHideInClass('sc.SB1.isSB1Required', 'Yes', 'SB1Required');
 
         //Toggles the visibiliy and requirement of the RMSA form
         this.showHideInClass('sc.RMSA.isRequired', 'SQS', 'SQSQuestions', true, ['t.SQS.2a.streetAddr', 't.SQS.2a.city', 'dd.SQS.2a.state', 't.SQS.2a.zipCode']);
@@ -748,7 +748,7 @@ let dataTableFunctions = {
             row.forEach(el => {
                 //Here we have the actual values of the items themselves. If the value is "", null, or undefined, the user has left it blank
                 //Thus, we should throw an error
-                if (el === "" || el === null || el === undefined || el == []) {
+                if ((el === "" || el === null || el === undefined || el == []) && el !== 0) {
                     //return false to indicate an error
                     returnValue = false;
                 }
