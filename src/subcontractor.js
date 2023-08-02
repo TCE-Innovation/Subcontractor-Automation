@@ -446,7 +446,7 @@ let eventListener = {
                                                                                     't.SF.FF3.7.CFDANumber', 't.SF.FF3.8.federalActionNumber', 'num.SF.FF3.9.awardAmount', 'n.SF.FF3.10.b.addr']);    
 
         //Toggles Schedule B
-        this.showHideInClass('sc.SB.isSBRequired', 'Yes', "ScheduleBClass", true, ['n.SB.P1.D.changedAddress', 't.SB.P1.H.country', 'n.SB.P1.I.DBA', 't.SB.P1.G.typeOfLegalEntity', 'dt.SB.P1.G.partnersAndParties']);
+        this.showHideInClass('sc.SB.isSBRequired', 'Yes', "ScheduleBClass", true, ['n.SB.P1.D.changedAddress', 't.SB.P1.H.country', 'n.SB.P1.I.DBA', 't.SB.P1.G.typeOfLegalEntity', 'dt.SB.P1.G.partnersAndParties', 'dt.SB.P5.M.employeesOfMTA']);
 
         //Toggles Schedule B1
         this.showHideInClass('sc.SB1.isSB1Required', 'Yes', 'ScheduleB1Class', false);
