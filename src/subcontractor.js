@@ -433,7 +433,7 @@ let eventListener = {
     generalInfoCallback: function() {
         this.showHideInClass('sc.GI.isMailingAddrDiff', 'Yes', 'GeneralInfoMailingAddr');
         fd.field('num.GI.percentOfTotalContractPrice').value = fd.field('num.GI.contractValue').value/fd.field('num.GI.totalAmtOfProposedSubcontract').value;
-        this.fieldVisAndReq('a.GI.descOfWorkAttachment', fd.field('sc.GI.descOfWorkAddAttachment').value === "Yes", "DataTable");
+        this.fieldVisAndReq('a.GI.descOfWorkAttachment', fd.field('sc.GI.descOfWorkAddAttachment').value === "Yes");
     }, 
     reqForms: function() {
         /*

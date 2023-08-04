@@ -72,25 +72,25 @@ MTAForms = {
 }
 
 for item in resultArray:
-    if 'GI' in item[0]:
+    if '.GI.' in item[0]:
         GI[item[1]] = item[0]
-    if 'SQS' in item[0]:
+    if '.SQS.' in item[0]:
         SQS[item[1]] = item[0]
-    if 'SF' in item[0]:
+    if '.SF.' in item[0]:
         SF[item[1]] = item[0]
-    if 'SF1' in item[0]:
+    if '.SF1.' in item[0]:
         SF1[item[1]] = item[0]
-    if 'RMSA' in item[0]:
+    if '.RMSA.' in item[0]:
         RMSA[item[1]] = item[0]
-    if 'SB' in item[0]:
+    if '.SB.' in item[0]:
         SB[item[1]] = item[0]
-    if 'SB1' in item[0]:
+    if '.SB1.' in item[0]:
         SB1[item[1]] = item[0]
-    if 'OCIPA' in item[0]:
+    if '.OCIPA.' in item[0]:
         OCIPA[item[1]] = item[0]
-    if 'OCIPB' in item[0]:
+    if '.OCIPB.' in item[0]:
         OCIPB[item[1]] = item[0]
-    if 'OCIPCOI' in item[0]:
+    if '.OCIPCOI.' in item[0]:
         OCIPCOI[item[1]] = item[0]
     
 # Combine dictionaries into a single dictionary
