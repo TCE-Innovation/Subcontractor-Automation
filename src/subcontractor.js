@@ -446,7 +446,14 @@ let eventListener = {
                                                                                     't.SF.FF3.7.CFDANumber', 't.SF.FF3.8.federalActionNumber', 'num.SF.FF3.9.awardAmount', 'n.SF.FF3.10.b.addr']);    
 
         //Toggles Schedule B
-        this.showHideInClass('sc.SB.isSBRequired', 'Yes', "ScheduleBClass", true, ['n.SB.P1.D.changedAddress', 't.SB.P1.H.country', 'n.SB.P1.I.DBA', 't.SB.P1.G.typeOfLegalEntity', 'dt.SB.P1.G.partnersAndParties', 'dt.SB.P5.K.5.contractsNotCompleted']);
+        this.showHideInClass('sc.SB.isSBRequired', 'Yes', "ScheduleBClass", true, ['n.SB.P1.D.changedAddress', 't.SB.P1.H.country', 'n.SB.P1.I.DBA', 't.SB.P1.G.typeOfLegalEntity', 'dt.SB.P1.G.partnersAndParties', 'dt.SB.P5.K.5.contractsNotCompleted',
+                                                                                    'n.SB.P3.explanation',]);
+        //Call these afterwards to ensure correct values are required
+        this.toggleSBP1();
+        this.toggleSBP2();
+        this.toggleSBP3();
+        this.toggleSBP4();
+        this.toggleSBP5();
 
         //Toggles Schedule B1
         this.showHideInClass('sc.SB1.isSB1Required', 'Yes', 'ScheduleB1Class', false);
