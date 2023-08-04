@@ -467,12 +467,11 @@ let eventListener = {
         //Toggles the visibiliy and requirement of the RMSA form
         this.showHideInClass('sc.RMSA.isRequired', 'SQS', 'SQSQuestions', true, ['t.SQS.2a.streetAddr', 't.SQS.2a.city', 'dd.SQS.2a.state', 't.SQS.2a.zipCode']);
         //'d.SQS.3.dateOfOrg', 't.SQS.3.county', 'dt.SQS.3.namesAndAddrsOfPartners'
-        this.showHideInClass('sc.SQS.12.non-UnionOrUnion', 'Union', 'SQSLabor');
         this.showHideInClass('sc.RMSA.isRequired', 'RMSA', 'RMSAQuestions', true, ['t.RMSA.localManufacturingFacility.streetAddr', 't.RMSA.localManufacturingFacility.city', 'dd.RMSA.localManufacturingFacility.state', 't.RMSA.localManufacturingFacility.zipCode',
                                                                                     //These fields are in SQS, which should be made not required if the user switches over to RMSA. Otherwise, it will softlock them.
                                                                                     'd.SQS.3.incorporationDate', "t.SQS.3.president'sName", "t.SQS.3.vicePresident'sName", "t.SQS.3.treasurer'sName", "t.SQS.3.secretary'sName", "d.SQS.3.dateOfOrg", "t.SQS.3.county", "dt.SQS.3.namesAndAddrsOfPartners",
                                                                                     't.SQS.12.unionName', 't.SQS.12.addr', 't.SQS.12.localNo', 't.SQS.12.telephone']);
-
+        this.showHideInClass('sc.SQS.12.non-UnionOrUnion', 'Union', 'SQSLabor');
             /*
             The following are optional fields inside forms.
             These forms include: 
@@ -667,7 +666,7 @@ let eventListener = {
 |                                                                                                                                                                              |
 +------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 */
-    showHideInClass: function(fieldName, showValue, className, changeIfRequired = true, dontChangeRequired = []) {
+      function(fieldName, showValue, className, changeIfRequired = true, dontChangeRequired = []) {
         var arrayOfValues = [];
         try{
             if(Array.isArray(showValue)) {
