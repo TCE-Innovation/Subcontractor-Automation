@@ -453,7 +453,6 @@ let eventListener = {
                                                                                     'n.SB.P3.explanation',]);
         //Call these afterwards to ensure correct values are required
         this.toggleSBP1();
-        this.toggleSBP2();
         this.toggleSBP3();
         this.toggleSBP4();
         this.toggleSBP5();
