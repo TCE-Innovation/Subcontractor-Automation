@@ -302,7 +302,10 @@ column1MTAForms = {"General Information": GI,
 */
 fd.rendered(function() {
     disableLastColumn();
-    data = externalFile();
+    data = {}
+    externalFile().then(function (jsonData) {
+        data = jsonData;
+    })
     //Everytime the datatable is edited, it will update the drop downs with the correct infomration
     fd.control('DataTable1').$on('edit', function(e) {
         //console.log(e);
@@ -379,10 +382,20 @@ fd.beforeSave(function() {
 });
 
 
-function externalFile() {
+async function externalFile() {
     urlOfJSON = "https://tce-innovation.github.io/Subcontractor-Automation/data/correctionData.json";
-    const data = $.get(urlOfJSON);
-    return data;
+    fetch(urlOfJSON).then (response => {
+        if (!response.ok) {
+            throw new Error (`Network response was not ok: ${response.status}`);
+        }
+        return response.json();
+    }).then(jsonData => {
+        // Work with the jsonData object
+        return jsonData
+      })
+      .catch(error => {
+        console.error("Error fetching the JSON data:", error);
+    });
 }
 
 
