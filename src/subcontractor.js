@@ -790,7 +790,8 @@ let dataTableFunctions = {
                 } 
             })
         })
-//This validator should make sure this doesn't exceed 3 entries
+
+        //This validator should make sure this doesn't exceed 3 entries
         fd.control("dt.SB.P5.K.1.contractsCompletedLast3Yrs").addValidator({
             name: 'SBP5K1Validator',
             error: 'Do not add more than 3 entries',
@@ -801,8 +802,20 @@ let dataTableFunctions = {
                 return true;
             } 
         })
+
+        //This validator should make sure this has at least 2 entries
+        fd.control("dt.SQS.11.refs").addValidator({
+            name: 'SQS11Validator',
+            error: 'You must have at least 2 engineers',
+            validate: (value) => {
+                if(value.length < 2) {
+                    return false;
+                }
+                return true;
+            } 
+        })
     },
-    columnValidators: function() {
+    validateFormattingDT: function() {
         
         //For each data table, search through all columns
         this.namesOfDataTables.forEach(el => {
@@ -868,7 +881,7 @@ let dataTableFunctions = {
     //Will loop through all the values in the array to add a validator to all of them
     addValidators: function () {
         this.rowValidators();
-        this.columnValidators();
+        this.validateFormattingDT();
     },
     getDataTables: function () {
         this.namesOfDataTables = Object.keys(fd.data()).filter((name) => /dt./.test(name));
