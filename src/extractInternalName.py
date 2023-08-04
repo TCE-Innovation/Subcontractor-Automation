@@ -58,7 +58,18 @@ SB1 = {}
 OCIPA = {}
 OCIPB = {}
 OCIPCOI = {}
-
+MTAForms = {
+    "General Information": GI,
+    "SQS": SQS,
+    "Schedule F": SF,
+    "Schedule F1": SF1,
+    "Request for Material Supplier Approval": RMSA,
+    "Schedule B": SB,
+    "Schedule B1": SB1,
+    "OCIP Form A": OCIPA,
+    "OCIP Form B": OCIPB,
+    "OCIP COI": OCIPCOI
+}
 
 for item in resultArray:
     if 'GI' in item[0]:
@@ -84,16 +95,7 @@ for item in resultArray:
     
 # Combine dictionaries into a single dictionary
 data = {
-    "GI": GI,
-    "SQS": SQS,
-    "SF": SF,
-    "SF1": SF1,
-    "RMSA": RMSA,
-    "SB": SB,
-    "SB1": SB1,
-    "OCIPA": OCIPA,
-    "OCIPB": OCIPB,
-    "OCIPCOI": OCIPCOI
+    "MTAForms": MTAForms 
 }
 
 # Write data to a JSON file
