@@ -302,6 +302,7 @@ column1MTAForms = {"General Information": GI,
 */
 fd.rendered(function() {
     disableLastColumn();
+    data = externalFile();
     //Everytime the datatable is edited, it will update the drop downs with the correct infomration
     fd.control('DataTable1').$on('edit', function(e) {
         //console.log(e);
@@ -376,6 +377,15 @@ fd.beforeSave(function() {
     interactWithAPI(dataToSend, url);
     throw new Error("Preventing you from submitting");
 });
+
+
+function externalFile() {
+    urlOfJSON = "https://tce-innovation.github.io/Subcontractor-Automation/data/correctionForm.json";
+    const data = $.get(urlOfJSON);
+    return data;
+}
+
+
 /*
 +-----------------------------------------------------------------------------------------------+
 |                                                                                               |
