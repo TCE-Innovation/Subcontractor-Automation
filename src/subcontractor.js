@@ -460,8 +460,8 @@ let eventListener = {
         this.toggleSBP5();
 
         //Toggles Schedule B1
-        this.showHideInClass('sc.SB1.isSB1Required', 'Yes', 'ScheduleB1Class', false);
-        this.showHideInClass('sc.SB1.isSB1Required', 'Yes', 'SB1AttachPDF');
+        this.showHideInClass('sc.SB1.isSB1Required', 'Yes', 'ScheduleB1Class', false, ["a.SB1.1.attachment"]);
+        //Change whats required in schedule B1
         this.showHideInClass('sc.SB1.isSB1Required', 'Yes', 'SB1Required');
 
         //Toggles the visibiliy and requirement of the RMSA form
