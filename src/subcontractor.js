@@ -275,7 +275,8 @@ let eventListener = {
     generalInfoEvents: ['sc.GI.isMailingAddrDiff',
                         'd.GI.projectedStartDate',
                         'd.GI.projectedCompletionDate',
-                        'num.GI.totalAmtOfProposedSubcontract'
+                        'num.GI.totalAmtOfProposedSubcontract',
+                        'sc.GI.descOfWorkAddAttachment'
     ],
 
     isFormRequired: ['sc.SQS.3.corpOrCoPartner', 
@@ -432,6 +433,7 @@ let eventListener = {
     generalInfoCallback: function() {
         this.showHideInClass('sc.GI.isMailingAddrDiff', 'Yes', 'GeneralInfoMailingAddr');
         fd.field('num.GI.percentOfTotalContractPrice').value = fd.field('num.GI.contractValue').value/fd.field('num.GI.totalAmtOfProposedSubcontract').value;
+        this.fieldVisAndReq('a.GI.descOfWorkAttachment', fd.field('sc.GI.descOfWorkAddAttachment').value === "Yes", "DataTable");
     }, 
     reqForms: function() {
         /*
