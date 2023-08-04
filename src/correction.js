@@ -380,7 +380,7 @@ fd.beforeSave(function() {
 
 
 function externalFile() {
-    urlOfJSON = "https://tce-innovation.github.io/Subcontractor-Automation/data/correctionForm.json";
+    urlOfJSON = "https://tce-innovation.github.io/Subcontractor-Automation/data/correctionData.json";
     const data = $.get(urlOfJSON);
     return data;
 }
