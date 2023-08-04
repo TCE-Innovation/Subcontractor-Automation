@@ -342,6 +342,7 @@ let eventListener = {
                     'sc.SB.P5.L.none',
                     'sc.SB.P5.M.none'
     ],
+    SQS: ['sc.SQS.8.applicable', 'sc.SQS.9.applicable', 'sc.SQS.10.applicable'],
     scheduleB1: ['sc.SB1.1.attachment'],
     pdfControls: [],
     OCIPA: ['d.OCIP.FA.S2.workersCompEffective','d.OCIP.FA.S2.workersCompExpiration'],
@@ -362,6 +363,7 @@ let eventListener = {
         this.eventListenerHelper(this.scheduleBPart4YesOrNo, this.toggleSBP4);
         this.eventListenerHelper(this.scheduleBPart5, this.toggleSBP5);
         this.eventListenerHelper(this.scheduleB1, this.toggleSB1);
+        this.eventListenerHelper(this.SQS, this.toggleSQS);
 
         //Set up validators: this only happens one time.
         this.OCIPAValidator();
@@ -377,6 +379,7 @@ let eventListener = {
         this.toggleSBP4();
         this.toggleSBP5();
         this.toggleSB1();
+        this.toggleSQS();
         //This is actually an event listener as well, I jsut couldn't figure out how to get this to fit the same format as the others, since it 
         //requires an input value from the event itself. I coudln't figure out how to do this repeating (Although, technically this isn't repeating)
         dataTableFunctions.calculateOCIPBValues();
@@ -450,6 +453,7 @@ let eventListener = {
                                                                                     'n.SB.P3.explanation',]);
         //Call these afterwards to ensure correct values are required
         this.toggleSBP1();
+        this.toggleSBP2();
         this.toggleSBP3();
         this.toggleSBP4();
         this.toggleSBP5();
@@ -458,7 +462,6 @@ let eventListener = {
         this.showHideInClass('sc.SB1.isSB1Required', 'Yes', 'ScheduleB1Class', false);
         this.showHideInClass('sc.SB1.isSB1Required', 'Yes', 'SB1AttachPDF');
         this.showHideInClass('sc.SB1.isSB1Required', 'Yes', 'SB1Required');
-        this.toggleSB1();
 
         //Toggles the visibiliy and requirement of the RMSA form
         this.showHideInClass('sc.RMSA.isRequired', 'SQS', 'SQSQuestions', true, ['t.SQS.2a.streetAddr', 't.SQS.2a.city', 'dd.SQS.2a.state', 't.SQS.2a.zipCode']);
@@ -486,7 +489,11 @@ let eventListener = {
         //Toggles the Schedule G requirement
         this.showHideInClass('sc.SG.isFormBApplicable', 'Yes', 'SGInfo');
     },
-
+    toggleSQS: function() {
+        this.fieldVisAndReq('dt.SQS.8.prevExp', fd.field('sc.SQS.8.applicable').value === "Yes", "DataTable");
+        this.fieldVisAndReq('dt.SQS.9.principalContracts', fd.field('sc.SQS.9.applicable').value === "Yes", "DataTable");
+        this.fieldVisAndReq('dt.SQS.10.contractsOnHand', fd.field('sc.SQS.10.applicable').value === "Yes", "DataTable");
+    },
     togglePDF: function() {
         /*
             The following toggles the PDFs and ensures that the reader has viewed the PDF before moving onto the questions.
