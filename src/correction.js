@@ -302,33 +302,48 @@ column1MTAForms = {"General Information": GI,
 */
 fd.rendered(function() {
     disableLastColumn();
+
+    async function externalFile() {
+        urlOfJSON = "https://tce-innovation.github.io/Subcontractor-Automation/data/correctionData.json";
+        fetch(urlOfJSON).then (response => {
+            if (!response.ok) {
+                throw new Error (`Network response was not ok: ${response.status}`);
+            }
+            return response.json();
+        }).then(jsonData => {
+            //Everytime the datatable is edited, it will update the drop downs with the correct infomration
+            fd.control('DataTable1').$on('edit', function(e) {
+                //console.log(e);
+                if (e.column.field === 'Column1') {
+                    populateColumn(e.widget, e.model.Column1, column1MTAForms);
+                }
+                if (e.column.field === 'Column2') {
+                    populateColumn(e.widget, e.model.Column2, column1MTAForms[e.model.Column1]);
+                }
+            });
+            
+            //Everytime the datatable is edited, it will update the third dropdwon 
+            fd.control('DataTable1').$on('change', function(value) {
+                for (var i = 0; i < value.length; i++) {
+                    //console.log(value);
+                    try{
+                    value[i].set('Column3', column1MTAForms[value[i].Column1][value[i].Column2]); 
+                    } catch {
+                        console.log(column1MTAForms[value[i].Column1]);
+                    }
+                }
+                console.log(checkColumn3Filled());
+            });
+        })
+        .catch(error => {
+            console.error("Error fetching the JSON data:", error);
+        });
+    }
     data = {}
     externalFile().then(function (jsonData) {
         data = jsonData;
     })
-    //Everytime the datatable is edited, it will update the drop downs with the correct infomration
-    fd.control('DataTable1').$on('edit', function(e) {
-        //console.log(e);
-        if (e.column.field === 'Column1') {
-            populateColumn(e.widget, e.model.Column1, column1MTAForms);
-        }
-        if (e.column.field === 'Column2') {
-            populateColumn(e.widget, e.model.Column2, column1MTAForms[e.model.Column1]);
-        }
-    });
     
-    //Everytime the datatable is edited, it will update the third dropdwon 
-    fd.control('DataTable1').$on('change', function(value) {
-        for (var i = 0; i < value.length; i++) {
-            //console.log(value);
-            try{
-            value[i].set('Column3', column1MTAForms[value[i].Column1][value[i].Column2]); 
-            } catch {
-                console.log(column1MTAForms[value[i].Column1]);
-            }
-        }
-        console.log(checkColumn3Filled());
-    });
 });
 /*
 +-------------------------------------------------------------------------------------------------------------------------+
@@ -380,23 +395,6 @@ fd.beforeSave(function() {
     interactWithAPI(dataToSend, url);
     throw new Error("Preventing you from submitting");
 });
-
-
-async function externalFile() {
-    urlOfJSON = "https://tce-innovation.github.io/Subcontractor-Automation/data/correctionData.json";
-    fetch(urlOfJSON).then (response => {
-        if (!response.ok) {
-            throw new Error (`Network response was not ok: ${response.status}`);
-        }
-        return response.json();
-    }).then(jsonData => {
-        // Work with the jsonData object
-        return jsonData
-      })
-      .catch(error => {
-        console.error("Error fetching the JSON data:", error);
-    });
-}
 
 
 /*
