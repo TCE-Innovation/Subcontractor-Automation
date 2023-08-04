@@ -608,7 +608,7 @@ let eventListener = {
         this.showHideInClass('sc.SB.P5.J.sharedOffice', 'Yes', 'SBP5Jexplanation');
     },
     toggleSB1: function() {
-        this.showHideInClass('sc.SB1.1.attachment', 'Yes', 'SB1Q1attachment', true);
+        this.fieldVisAndReq('a.SB1.1.attachment', fd.field('sc.SB1.1.attachment').value === "Yes");
     },
     OCIPAValidator: function () {
         $.getScript('https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js')
