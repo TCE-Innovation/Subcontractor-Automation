@@ -482,32 +482,15 @@ let eventListener = {
                     'd.SQS.3.incorporationDate', "t.SQS.3.president'sName", "t.SQS.3.vicePresident'sName", "t.SQS.3.treasurer'sName", "t.SQS.3.secretary'sName", "d.SQS.3.dateOfOrg", "t.SQS.3.county", "dt.SQS.3.namesAndAddrsOfPartners",
                     't.SQS.12.unionName', 't.SQS.12.addr', 't.SQS.12.localNo', 't.SQS.12.telephone', 'dt.SQS.8.prevExp', 'dt.SQS.9.principalContracts', 'dt.SQS.10.contractsOnHand']);
 
-
-/*
-        //If RMSA is required, then we need to remove the "At least 2 engineers" requirement for SQS11. If SQS is required, we need to restore it.
-        if (fd.field("sc.RMSA.isRequired" === "RMSA")) {
-        let SQS11Validator = fd.control("dt.SQS.11.refs").validators;
-        let indexToDelete = -1;
-        //Find the index of the object
-        for (let i = 0; i < SQS11Validator.length; i++) {
-            console.log(SQS11Validator[i]);
-            if (SQS11Validator[i].name === "SQS11Validator") {
-                indexToDelete = i;
-                break;
-            }
-        }
-        //If the object was found, remove it from the array
-        if (indexToDelete !== -1) {
-            SQS11Validator.splice(indexToDelete, 1);
-        }
-        fd.control("dt.SQS.11.refs").validators = SQS11Validator;
-        }
-        */
         
 
-
         this.showHideInClass('sc.SQS.3.corpOrCoPartner', 'Corporation', "SQSCorporation");
-        this.showHideInClass('sc.SQS.3.corpOrCoPartner', 'Co-partnership', "SQSCoPartnership");  
+        this.showHideInClass('sc.SQS.3.corpOrCoPartner', 'Co-partnership', "SQSCoPartnership"); 
+        
+        if (fd.field("sc.RMSA.isRequired").value === "RMSA") {
+            this.setRequiredInClass(true, 'SQSCorporation');
+            this.setRequiredInClass(true, 'SQSCoPartnership');
+        }
               
         this.showHideInClass('sc.SQS.12.non-UnionOrUnion', 'Union', 'SQSLabor');
 
