@@ -353,7 +353,7 @@ let eventListener = {
 
         //Sets up the event listeners for each of the fields.
         this.eventListenerHelper(this.generalInfoEvents, this.generalInfoCallback);
-        this.eventListenerHelper(this.isFormRequired, this.reqForms);
+        this.eventListenerHelper(this.isFormRequired, this.toggleMisc);
         this.eventListenerHelper(this.pdfControls, this.togglePDF);
         this.eventListenerHelper(this.scheduleF, this.toggleSF);
         this.eventListenerHelper(this.scheduleBPart1, this.toggleSBP1);
@@ -369,7 +369,7 @@ let eventListener = {
 
         //Then, we call the functions once such that all the values update to their default configuration
         this.generalInfoCallback();
-        this.reqForms();
+        this.toggleMisc();
         this.togglePDF();
         this.toggleSF();
         this.toggleSBP1();
@@ -432,7 +432,9 @@ let eventListener = {
         fd.field('num.GI.percentOfTotalContractPrice').value = fd.field('num.GI.contractValue').value/fd.field('num.GI.totalAmtOfProposedSubcontract').value;
         this.fieldVisAndReq('a.GI.descOfWorkAttachment', fd.field('sc.GI.descOfWorkAddAttachment').value === "Yes");
     }, 
-    reqForms: function() {
+    toggleMisc: function() {
+        //Toggle Scheduel F1
+        this.fieldVisAndReq('dt.SF1.6.activeContracts', fd.field('sc.SF1.6.activeContracts'.value === "Yes"), "DataTable");
         /*
         The following are optional forms: Forms that may or may not be filled out by the subcontractor.
         This includes:
