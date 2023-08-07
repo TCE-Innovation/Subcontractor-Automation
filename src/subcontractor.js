@@ -279,13 +279,10 @@ let eventListener = {
                         'sc.GI.descOfWorkAddAttachment'
     ],
 
-    isFormRequired: ['sc.SQS.3.corpOrCoPartner', 
-                    'sc.SB1.isSB1Required',
+    isFormRequired: [ 'sc.SB1.isSB1Required',
                     'sc.SF.FF3.3.reportType',
                     'sc.SB.isSBRequired',
                     'sc.SF.FF3.FF3Applicable',
-                    'sc.RMSA.isRequired',
-                    'sc.SQS.12.non-UnionOrUnion',
                     'sc.SG.isFormBApplicable'
     ],
     scheduleF: ['sc.SF.FF3.4.primeOrSubawardee'
@@ -343,7 +340,7 @@ let eventListener = {
                     'sc.SB.P5.L.none',
                     'sc.SB.P5.M.none'
     ],
-    SQS: ['sc.SQS.8.applicable', 'sc.SQS.9.applicable', 'sc.SQS.10.applicable'],
+    SQS: ['sc.SQS.3.corpOrCoPartner', 'sc.SQS.8.applicable', 'sc.SQS.9.applicable', 'sc.SQS.10.applicable', 'sc.SQS.12.non-UnionOrUnion','sc.RMSA.isRequired'],
     scheduleB1: ['sc.SB1.1.attachment'],
     pdfControls: [],
     OCIPA: ['d.OCIP.FA.S2.workersCompEffective','d.OCIP.FA.S2.workersCompExpiration'],
@@ -441,7 +438,6 @@ let eventListener = {
         This includes:
             Schedule B1
             Schedule B
-            RMSA/SQS
             Schedule F, F3 (Technically, this is a subform, but on the wizard, we've condensed it into its own form)
             Schedule G
         */
@@ -463,25 +459,12 @@ let eventListener = {
         this.showHideInClass('sc.SB1.isSB1Required', 'Yes', 'ScheduleB1Class', false, ["a.SB1.1.attachment"]);
         //Change whats required in schedule B1
         this.showHideInClass('sc.SB1.isSB1Required', 'Yes', 'SB1Required');
-
-        //Toggles the visibiliy and requirement of the RMSA form
-        this.showHideInClass('sc.RMSA.isRequired', 'SQS', 'SQSQuestions', true, ['t.SQS.2a.streetAddr', 't.SQS.2a.city', 'dd.SQS.2a.state', 't.SQS.2a.zipCode']);
-        //'d.SQS.3.dateOfOrg', 't.SQS.3.county', 'dt.SQS.3.namesAndAddrsOfPartners'
-        this.showHideInClass('sc.RMSA.isRequired', 'RMSA', 'RMSAQuestions', true, ['t.RMSA.localManufacturingFacility.streetAddr', 't.RMSA.localManufacturingFacility.city', 'dd.RMSA.localManufacturingFacility.state', 't.RMSA.localManufacturingFacility.zipCode',
-                                                                                    //These fields are in SQS, which should be made not required if the user switches over to RMSA. Otherwise, it will softlock them.
-                                                                                    'd.SQS.3.incorporationDate', "t.SQS.3.president'sName", "t.SQS.3.vicePresident'sName", "t.SQS.3.treasurer'sName", "t.SQS.3.secretary'sName", "d.SQS.3.dateOfOrg", "t.SQS.3.county", "dt.SQS.3.namesAndAddrsOfPartners",
-                                                                                    't.SQS.12.unionName', 't.SQS.12.addr', 't.SQS.12.localNo', 't.SQS.12.telephone']);
-        this.showHideInClass('sc.SQS.12.non-UnionOrUnion', 'Union', 'SQSLabor');
             /*
             The following are optional fields inside forms.
             These forms include: 
                 Schedule F, F3
-                SQS
                 Schedule B
         */
-        //Toggles the SQS Form
-        this.showHideInClass('sc.SQS.3.corpOrCoPartner', 'Corporation', "SQSCorporation");
-        this.showHideInClass('sc.SQS.3.corpOrCoPartner', 'Co-partnership', "SQSCoPartnership");
 
         //Toggles F3 Materials List
         this.showHideInClass('sc.SF.FF3.3.reportType', 'b. Material Change', 'ScheduleF3MaterialChange');
@@ -490,6 +473,44 @@ let eventListener = {
         this.showHideInClass('sc.SG.isFormBApplicable', 'Yes', 'SGInfo');
     },
     toggleSQS: function() {
+        //Toggles the visibiliy and requirement of the RMSA form
+        this.showHideInClass('sc.RMSA.isRequired', 'SQS', 'SQSQuestions', true, ['t.SQS.2a.streetAddr', 't.SQS.2a.city', 'dd.SQS.2a.state', 't.SQS.2a.zipCode', 'dt.SQS.8.prevExp', 
+        'dt.SQS.9.principalContracts', 'dt.SQS.10.contractsOnHand']);
+        //'d.SQS.3.dateOfOrg', 't.SQS.3.county', 'dt.SQS.3.namesAndAddrsOfPartners'
+        this.showHideInClass('sc.RMSA.isRequired', 'RMSA', 'RMSAQuestions', true, ['t.RMSA.localManufacturingFacility.streetAddr', 't.RMSA.localManufacturingFacility.city', 'dd.RMSA.localManufacturingFacility.state', 't.RMSA.localManufacturingFacility.zipCode',
+        //These fields are in SQS, which should be made not required if the user switches over to RMSA. Otherwise, it will softlock them.
+                    'd.SQS.3.incorporationDate', "t.SQS.3.president'sName", "t.SQS.3.vicePresident'sName", "t.SQS.3.treasurer'sName", "t.SQS.3.secretary'sName", "d.SQS.3.dateOfOrg", "t.SQS.3.county", "dt.SQS.3.namesAndAddrsOfPartners",
+                    't.SQS.12.unionName', 't.SQS.12.addr', 't.SQS.12.localNo', 't.SQS.12.telephone', 'dt.SQS.8.prevExp', 'dt.SQS.9.principalContracts', 'dt.SQS.10.contractsOnHand']);
+
+
+/*
+        //If RMSA is required, then we need to remove the "At least 2 engineers" requirement for SQS11. If SQS is required, we need to restore it.
+        if (fd.field("sc.RMSA.isRequired" === "RMSA")) {
+        let SQS11Validator = fd.control("dt.SQS.11.refs").validators;
+        let indexToDelete = -1;
+        //Find the index of the object
+        for (let i = 0; i < SQS11Validator.length; i++) {
+            console.log(SQS11Validator[i]);
+            if (SQS11Validator[i].name === "SQS11Validator") {
+                indexToDelete = i;
+                break;
+            }
+        }
+        //If the object was found, remove it from the array
+        if (indexToDelete !== -1) {
+            SQS11Validator.splice(indexToDelete, 1);
+        }
+        fd.control("dt.SQS.11.refs").validators = SQS11Validator;
+        }
+        */
+        
+
+
+        this.showHideInClass('sc.SQS.3.corpOrCoPartner', 'Corporation', "SQSCorporation");
+        this.showHideInClass('sc.SQS.3.corpOrCoPartner', 'Co-partnership', "SQSCoPartnership");  
+              
+        this.showHideInClass('sc.SQS.12.non-UnionOrUnion', 'Union', 'SQSLabor');
+
         this.fieldVisAndReq('dt.SQS.8.prevExp', fd.field('sc.SQS.8.applicable').value === "Yes", "DataTable");
         this.fieldVisAndReq('dt.SQS.9.principalContracts', fd.field('sc.SQS.9.applicable').value === "Yes", "DataTable");
         this.fieldVisAndReq('dt.SQS.10.contractsOnHand', fd.field('sc.SQS.10.applicable').value === "Yes", "DataTable");
@@ -610,6 +631,7 @@ let eventListener = {
         this.fieldVisAndReq('a.SB1.1.attachment', fd.field('sc.SB1.1.attachment').value === "Yes");
     },
     OCIPAValidator: function () {
+        //This validor ensures that the expiration date is after the insurance start date
         $.getScript('https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js')
         .then(function() {
             fd.field('d.OCIP.FA.S2.workersCompExpiration').addValidator({
@@ -629,6 +651,7 @@ let eventListener = {
         })
     },
     genInfoValidator: function () {
+        //This validor ensures that the completion date is after the project start date
         $.getScript('https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js')
         .then(function() {
             fd.field('d.GI.projectedCompletionDate').addValidator({
@@ -647,6 +670,19 @@ let eventListener = {
             })
         });
 
+        //This validor ensures that amount of proposed subcontract is less than the contract value
+        fd.field("num.GI.totalAmtOfProposedSubcontract").addValidator({
+            name: "Amount of Subcontract",
+            error: "Amount of subcontract must be less than the total contract value",
+            validate: function(value) {
+                contractVal = fd.field("num.GI.contractValue").value;
+                subcontractVal = fd.field("num.GI.totalAmtOfProposedSubcontract").value;
+                if (contractVal < subcontractVal) {
+                    return false;
+                }
+                return true;
+            }
+        })
         
 
     },
@@ -807,10 +843,14 @@ let dataTableFunctions = {
             name: 'SQS11Validator',
             error: 'You must have at least 2 engineers',
             validate: (value) => {
-                if(value.length < 2) {
-                    return false;
+                if (fd.field("sc.RMSA.isRequired").value === "RMSA") {
+                    return true;
+                } else {
+                    if(value.length < 2) {
+                        return false;
+                    }
+                    return true;
                 }
-                return true;
             } 
         })
     },
@@ -833,7 +873,7 @@ let dataTableFunctions = {
             //Isolate all the columns within the data table that may require proper formatting.
             phoneFormat = dtColumns.filter((item) => /phone/i.test(item));
             emailFormat = dtColumns.filter((item) => /email/i.test(item));
-            contractNumFormat = dtColumns.filter((item) => /contractnumber/i.test(item));
+            contractNumFormat = dtColumns.filter((item) => /contractnumber|contractno/i.test(item));
             SSN = dtColumns.filter((item) => /EIN/i.test(item));
             
             //Phone Formatting
