@@ -104,8 +104,9 @@ let dataHandling = {
             "getContractNum": "true",
             "getSubcontractors": ""
         }
-        responseObject = this.interactWithAPI(dataToSend, this.getURL);
-        console.log(responseObject);
+        this.interactWithAPI(dataToSend, this.getURL).then(data => {
+            console.log(data);
+        })
     },
 
     getSubcontractors: function() {
