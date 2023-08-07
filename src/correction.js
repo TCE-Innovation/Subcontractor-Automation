@@ -114,8 +114,10 @@ let dataHandling = {
                     contractNumbers.push(el.Title);
                 }
             })
-            console.log(contractNumbers);
-            return contractNumbers;
+            .then(data =>{
+                console.log(contractNumbers);
+                return contractNumbers;
+            })
         })
     },
 
