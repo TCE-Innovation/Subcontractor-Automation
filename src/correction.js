@@ -92,7 +92,7 @@ fd.beforeSave(function() {
         throw new Error("Your form is not completed - there are still missing components");
     }
     
-    
+    dataHandling.submitData();
 });
 
 let dataHandling = {
@@ -104,7 +104,7 @@ let dataHandling = {
             "getContractNum": "true",
             "getSubcontractors": ""
         }
-        responseObject = this.interactWithAPI(dataToSend, getURL);
+        responseObject = this.interactWithAPI(dataToSend, this.getURL);
         console.log(responseObject);
     },
 
@@ -113,7 +113,7 @@ let dataHandling = {
             "getContractNum": "false",
             "getSubcontractors": "R-33333"
         }
-        responseObject = this.interactWithAPI(dataToSend, getURL);
+        responseObject = this.interactWithAPI(dataToSend, this.getURL);
         console.log(responseObject);
 
     },
@@ -140,7 +140,7 @@ let dataHandling = {
         dataToSend.email = dataTableFunctions.extractData("dt.email", "Email");
         console.log(dataToSend);
         
-        this.interactWithAPI(dataToSend, submitURL);
+        this.interactWithAPI(dataToSend, this.submitURL);
         throw new Error("Preventing you from submitting");
     },
     /*
