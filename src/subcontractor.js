@@ -608,6 +608,7 @@ let eventListener = {
         this.fieldVisAndReq('a.SB1.1.attachment', fd.field('sc.SB1.1.attachment').value === "Yes");
     },
     OCIPAValidator: function () {
+        //This validor ensures that the expiration date is after the insurance start date
         $.getScript('https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js')
         .then(function() {
             fd.field('d.OCIP.FA.S2.workersCompExpiration').addValidator({
@@ -651,7 +652,7 @@ let eventListener = {
             name: "Amount of Subcontract",
             error: "Amount of subcontract must be less than the total contract value",
             validate: function(value) {
-                contractVal = fd.field("num.GI.percentOfTotalContractPrice").value;
+                contractVal = fd.field("num.GI.contractValue").value;
                 subcontractVal = fd.field("num.GI.totalAmtOfProposedSubcontract").value;
                 if (contractVal < subcontractVal) {
                     return false;
