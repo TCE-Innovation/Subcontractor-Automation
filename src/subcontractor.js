@@ -483,7 +483,27 @@ let eventListener = {
                     't.SQS.12.unionName', 't.SQS.12.addr', 't.SQS.12.localNo', 't.SQS.12.telephone', 'dt.SQS.8.prevExp', 'dt.SQS.9.principalContracts', 'dt.SQS.10.contractsOnHand']);
 
 
-        dataTableFunctions.SQS11();
+/*
+        //If RMSA is required, then we need to remove the "At least 2 engineers" requirement for SQS11. If SQS is required, we need to restore it.
+        if (fd.field("sc.RMSA.isRequired" === "RMSA")) {
+        let SQS11Validator = fd.control("dt.SQS.11.refs").validators;
+        let indexToDelete = -1;
+        //Find the index of the object
+        for (let i = 0; i < SQS11Validator.length; i++) {
+            console.log(SQS11Validator[i]);
+            if (SQS11Validator[i].name === "SQS11Validator") {
+                indexToDelete = i;
+                break;
+            }
+        }
+        //If the object was found, remove it from the array
+        if (indexToDelete !== -1) {
+            SQS11Validator.splice(indexToDelete, 1);
+        }
+        fd.control("dt.SQS.11.refs").validators = SQS11Validator;
+        }
+        */
+        
 
 
         this.showHideInClass('sc.SQS.3.corpOrCoPartner', 'Corporation', "SQSCorporation");
@@ -817,45 +837,19 @@ let dataTableFunctions = {
                 return true;
             } 
         })
-    },
-    SQS11: function (enabled = true) {
-        if (enabled) {
-            //This validator should make sure this has at least 2 entries
-            fd.control("dt.SQS.11.refs").addValidator({
-                name: 'SQS11Validator',
-                error: 'You must have at least 2 engineers',
-                validate: (value) => {
-                    if(value.length < 2 && fd.field("sc.RMSA.isRequired" === "SQS")) {
-                        return false;
-                    }
-                    return true;
-                } 
-            })
-        } 
-        /*else {
-            //If RMSA is required, then we need to remove the "At least 2 engineers" requirement for SQS11. If SQS is required, we need to restore it.
-            if (fd.field("sc.RMSA.isRequired" === "RMSA")) {
-                let SQS11Validator = fd.control("dt.SQS.11.refs").validators;
-                let indexToDelete = -1;
-                //Find the index of the object
-                for (let i = 0; i < SQS11Validator.length; i++) {
-                    console.log(SQS11Validator[i]);
-                    if (SQS11Validator[i].name === "SQS11Validator") {
-                        indexToDelete = i;
-                        break;
-                    }
+
+        //This validator should make sure this has at least 2 entries
+        fd.control("dt.SQS.11.refs").addValidator({
+            name: 'SQS11Validator',
+            error: 'You must have at least 2 engineers',
+            validate: (value) => {
+                if(value.length < 2) {
+                    return false;
                 }
-                //If the object was found, remove it from the array
-                if (indexToDelete !== -1) {
-                    SQS11Validator.splice(indexToDelete, 1);
-                }
-                fd.control("dt.SQS.11.refs").validators = SQS11Validator;
-            }
-        }
-        */
-        
+                return true;
+            } 
+        })
     },
-    
     validateFormattingDT: function() {
         
         //For each data table, search through all columns
@@ -1012,7 +1006,6 @@ let dataTableFunctions = {
     initialize: function() {
         this.disableFields();
         this.addValidators();
-        this.SQS11();
     }
 
 
