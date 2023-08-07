@@ -61,7 +61,9 @@ fd.rendered(function() {
 
     //At the same time, set up the event listeners for the dropdown values to change its values whenever the user clicks it.
     fd.field('dd.GI.contractNo').widget.dataSource.data(dataHandling.getContracts());
-    console.log(dataHandling.getContracts());
+    dataHandling.getContracts(function (value) {
+        console.log(value);
+    });
 
     fd.field('dd.GI.contractNo').$on('change', function(value) {
         fd.field('dd.GI.subcontractorName').widget.dataSource.data(dataHandling.getSubcontractors());
@@ -108,7 +110,9 @@ let dataHandling = {
         }
         this.interactWithAPI(dataToSend, this.getURL).then(data => {
             data.forEach(el => {
-                contractNumbers.push(el.Title);
+                if (el.Title !== undefined) {
+                    contractNumbers.push(el.Title);
+                }
             })
 
             return contractNumbers;
