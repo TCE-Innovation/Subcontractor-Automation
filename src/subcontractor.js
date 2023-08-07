@@ -627,6 +627,7 @@ let eventListener = {
         })
     },
     genInfoValidator: function () {
+        //This validor ensures that the completion date is after the project start date
         $.getScript('https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js')
         .then(function() {
             fd.field('d.GI.projectedCompletionDate').addValidator({
@@ -645,6 +646,19 @@ let eventListener = {
             })
         });
 
+        //This validor ensures that amount of proposed subcontract is less than the contract value
+        fd.field("num.GI.totalAmtOfProposedSubcontract").addValidator({
+            name: "Amount of Subcontract",
+            error: "Amount of subcontract must be less than the total contract value",
+            validate: function(value) {
+                contractVal = fd.field("num.GI.percentOfTotalContractPrice").value;
+                subcontractVal = fd.field("num.GI.totalAmtOfProposedSubcontract").value;
+                if (contractVal < subcontractVal) {
+                    return false;
+                }
+                return true;
+            }
+        })
         
 
     },
