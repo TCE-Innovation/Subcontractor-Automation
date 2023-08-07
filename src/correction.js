@@ -60,9 +60,9 @@ fd.rendered(function() {
     */
 
     //At the same time, set up the event listeners for the dropdown values to change its values whenever the user clicks it.
-    fd.field('dd.GI.contractNo').widget.dataSource.data(dataHandling.getContracts());
     dataHandling.getContracts(function (value) {
         console.log(value);
+        fd.field('dd.GI.contractNo').widget.dataSource.data(value);
     });
 
     fd.field('dd.GI.contractNo').$on('change', function(value) {
@@ -114,7 +114,7 @@ let dataHandling = {
                     contractNumbers.push(el.Title);
                 }
             })
-
+            console.log(contractNumbers);
             return contractNumbers;
         })
     },
