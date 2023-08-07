@@ -133,12 +133,13 @@ let dataHandling = {
             "getContractNum": "false",
             "getSubcontractors": "R-33333"
         }
+        dataToSend.getSubcontractors = fd.field("dd.GI.contractNo").value;
         return this.interactWithAPI(dataToSend, this.getURL).then(data => {
             console.log(data);
             data.forEach(el => {
                 if (el[{Name}] !== undefined) {
-                    subcontractorNames.push(el[{Name}]);
-                    console.log(el[{Name}]);
+                    subcontractorNames.push(el["{Name}"]);
+                    //console.log(el["{Name}"]);
                 }
             });
             return subcontractorNames;
