@@ -279,13 +279,10 @@ let eventListener = {
                         'sc.GI.descOfWorkAddAttachment'
     ],
 
-    isFormRequired: ['sc.SQS.3.corpOrCoPartner', 
-                    'sc.SB1.isSB1Required',
+    isFormRequired: [ 'sc.SB1.isSB1Required',
                     'sc.SF.FF3.3.reportType',
                     'sc.SB.isSBRequired',
                     'sc.SF.FF3.FF3Applicable',
-                    'sc.RMSA.isRequired',
-                    'sc.SQS.12.non-UnionOrUnion',
                     'sc.SG.isFormBApplicable'
     ],
     scheduleF: ['sc.SF.FF3.4.primeOrSubawardee'
@@ -343,7 +340,7 @@ let eventListener = {
                     'sc.SB.P5.L.none',
                     'sc.SB.P5.M.none'
     ],
-    SQS: ['sc.SQS.8.applicable', 'sc.SQS.9.applicable', 'sc.SQS.10.applicable'],
+    SQS: ['sc.SQS.3.corpOrCoPartner', 'sc.SQS.8.applicable', 'sc.SQS.9.applicable', 'sc.SQS.10.applicable', 'sc.SQS.12.non-UnionOrUnion','sc.RMSA.isRequired'],
     scheduleB1: ['sc.SB1.1.attachment'],
     pdfControls: [],
     OCIPA: ['d.OCIP.FA.S2.workersCompEffective','d.OCIP.FA.S2.workersCompExpiration'],
@@ -441,7 +438,6 @@ let eventListener = {
         This includes:
             Schedule B1
             Schedule B
-            RMSA/SQS
             Schedule F, F3 (Technically, this is a subform, but on the wizard, we've condensed it into its own form)
             Schedule G
         */
@@ -463,25 +459,12 @@ let eventListener = {
         this.showHideInClass('sc.SB1.isSB1Required', 'Yes', 'ScheduleB1Class', false, ["a.SB1.1.attachment"]);
         //Change whats required in schedule B1
         this.showHideInClass('sc.SB1.isSB1Required', 'Yes', 'SB1Required');
-
-        //Toggles the visibiliy and requirement of the RMSA form
-        this.showHideInClass('sc.RMSA.isRequired', 'SQS', 'SQSQuestions', true, ['t.SQS.2a.streetAddr', 't.SQS.2a.city', 'dd.SQS.2a.state', 't.SQS.2a.zipCode']);
-        //'d.SQS.3.dateOfOrg', 't.SQS.3.county', 'dt.SQS.3.namesAndAddrsOfPartners'
-        this.showHideInClass('sc.RMSA.isRequired', 'RMSA', 'RMSAQuestions', true, ['t.RMSA.localManufacturingFacility.streetAddr', 't.RMSA.localManufacturingFacility.city', 'dd.RMSA.localManufacturingFacility.state', 't.RMSA.localManufacturingFacility.zipCode',
-                                                                                    //These fields are in SQS, which should be made not required if the user switches over to RMSA. Otherwise, it will softlock them.
-                                                                                    'd.SQS.3.incorporationDate', "t.SQS.3.president'sName", "t.SQS.3.vicePresident'sName", "t.SQS.3.treasurer'sName", "t.SQS.3.secretary'sName", "d.SQS.3.dateOfOrg", "t.SQS.3.county", "dt.SQS.3.namesAndAddrsOfPartners",
-                                                                                    't.SQS.12.unionName', 't.SQS.12.addr', 't.SQS.12.localNo', 't.SQS.12.telephone']);
-        this.showHideInClass('sc.SQS.12.non-UnionOrUnion', 'Union', 'SQSLabor');
             /*
             The following are optional fields inside forms.
             These forms include: 
                 Schedule F, F3
-                SQS
                 Schedule B
         */
-        //Toggles the SQS Form
-        this.showHideInClass('sc.SQS.3.corpOrCoPartner', 'Corporation', "SQSCorporation");
-        this.showHideInClass('sc.SQS.3.corpOrCoPartner', 'Co-partnership', "SQSCoPartnership");
 
         //Toggles F3 Materials List
         this.showHideInClass('sc.SF.FF3.3.reportType', 'b. Material Change', 'ScheduleF3MaterialChange');
@@ -490,6 +473,21 @@ let eventListener = {
         this.showHideInClass('sc.SG.isFormBApplicable', 'Yes', 'SGInfo');
     },
     toggleSQS: function() {
+        //Toggles the visibiliy and requirement of the RMSA form
+        this.showHideInClass('sc.RMSA.isRequired', 'SQS', 'SQSQuestions', true, ['t.SQS.2a.streetAddr', 't.SQS.2a.city', 'dd.SQS.2a.state', 't.SQS.2a.zipCode', 'dt.SQS.8.prevExp', 
+        'dt.SQS.9.principalContracts', 'dt.SQS.10.contractsOnHand']);
+        //'d.SQS.3.dateOfOrg', 't.SQS.3.county', 'dt.SQS.3.namesAndAddrsOfPartners'
+        this.showHideInClass('sc.RMSA.isRequired', 'RMSA', 'RMSAQuestions', true, ['t.RMSA.localManufacturingFacility.streetAddr', 't.RMSA.localManufacturingFacility.city', 'dd.RMSA.localManufacturingFacility.state', 't.RMSA.localManufacturingFacility.zipCode',
+            //These fields are in SQS, which should be made not required if the user switches over to RMSA. Otherwise, it will softlock them.
+            'd.SQS.3.incorporationDate', "t.SQS.3.president'sName", "t.SQS.3.vicePresident'sName", "t.SQS.3.treasurer'sName", "t.SQS.3.secretary'sName", "d.SQS.3.dateOfOrg", "t.SQS.3.county", "dt.SQS.3.namesAndAddrsOfPartners",
+            't.SQS.12.unionName', 't.SQS.12.addr', 't.SQS.12.localNo', 't.SQS.12.telephone']);
+
+
+        this.showHideInClass('sc.SQS.3.corpOrCoPartner', 'Corporation', "SQSCorporation");
+        this.showHideInClass('sc.SQS.3.corpOrCoPartner', 'Co-partnership', "SQSCoPartnership");  
+              
+        this.showHideInClass('sc.SQS.12.non-UnionOrUnion', 'Union', 'SQSLabor');
+
         this.fieldVisAndReq('dt.SQS.8.prevExp', fd.field('sc.SQS.8.applicable').value === "Yes", "DataTable");
         this.fieldVisAndReq('dt.SQS.9.principalContracts', fd.field('sc.SQS.9.applicable').value === "Yes", "DataTable");
         this.fieldVisAndReq('dt.SQS.10.contractsOnHand', fd.field('sc.SQS.10.applicable').value === "Yes", "DataTable");
