@@ -135,13 +135,12 @@ let dataHandling = {
         }
         return this.interactWithAPI(dataToSend, this.getURL).then(data => {
             console.log(data);
-            /*
             data.forEach(el => {
                 if (el[{Name}] !== undefined) {
                     subcontractorNames.push(el[{Name}]);
+                    console.log(el[{Name}]);
                 }
             });
-            */
             return subcontractorNames;
         })
         .catch(error => {
