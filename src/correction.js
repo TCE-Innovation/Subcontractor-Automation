@@ -137,7 +137,7 @@ let dataHandling = {
         return this.interactWithAPI(dataToSend, this.getURL).then(data => {
             console.log(data);
             data.forEach(el => {
-                if (el["{Name}"] !== undefined) {
+                if (el["{Name}"] !== undefined && el["{Name}"] !== fd.field("dd.GI.contractNo").value) {
                     subcontractorNames.push(el["{Name}"]);
                     //console.log(el["{Name}"]);
                 }
