@@ -666,7 +666,7 @@ let eventListener = {
 |                                                                                                                                                                              |
 +------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 */
-      function(fieldName, showValue, className, changeIfRequired = true, dontChangeRequired = []) {
+    showHideInClass: function(fieldName, showValue, className, changeIfRequired = true, dontChangeRequired = []) {
         var arrayOfValues = [];
         try{
             if(Array.isArray(showValue)) {
