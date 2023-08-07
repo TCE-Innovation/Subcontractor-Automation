@@ -843,7 +843,7 @@ let dataTableFunctions = {
             name: 'SQS11Validator',
             error: 'You must have at least 2 engineers',
             validate: (value) => {
-                if (fd.field("sc.RMSA.isRequired") === "RMSA") {
+                if (fd.field("sc.RMSA.isRequired").value === "RMSA") {
                     return true;
                 } else {
                     if(value.length < 2) {
