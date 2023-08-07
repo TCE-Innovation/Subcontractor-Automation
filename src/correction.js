@@ -61,6 +61,7 @@ fd.rendered(function() {
 
     //At the same time, set up the event listeners for the dropdown values to change its values whenever the user clicks it.
     fd.field('dd.GI.contractNo').widget.dataSource.data(dataHandling.getContracts());
+    console.log(dataHandling.getContracts());
 
     fd.field('dd.GI.contractNo').$on('change', function(value) {
         fd.field('dd.GI.subcontractorName').widget.dataSource.data(dataHandling.getSubcontractors());
@@ -100,12 +101,17 @@ let dataHandling = {
     submitURL: "https://prod-76.westus.logic.azure.com:443/workflows/34545c436ff04f18a535e11258c53ad7/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=QaY6UKMxwRLFyre2HKECVA9N8c_3k2WYfX5ZuYYngrg",
     //getContracts returns an array of the "titles" of all the folders given via a power automate HTTPS flow
     getContracts: function() {
+        contractNumbers = [];
         dataToSend = {
             "getContractNum": "true",
             "getSubcontractors": ""
         }
         this.interactWithAPI(dataToSend, this.getURL).then(data => {
-            console.log(data);
+            data.forEach(el => {
+                contractNumbers.push(el.Title);
+            })
+
+            return contractNumbers;
         })
     },
 
