@@ -488,8 +488,8 @@ let eventListener = {
         this.showHideInClass('sc.SQS.3.corpOrCoPartner', 'Co-partnership', "SQSCoPartnership"); 
         
         if (fd.field("sc.RMSA.isRequired").value === "RMSA") {
-            this.setRequiredInClass(true, 'SQSCorporation');
-            this.setRequiredInClass(true, 'SQSCoPartnership');
+            this.setRequiredInClass(false, 'SQSCorporation');
+            this.setRequiredInClass(false, 'SQSCoPartnership');
         }
               
         this.showHideInClass('sc.SQS.12.non-UnionOrUnion', 'Union', 'SQSLabor');
