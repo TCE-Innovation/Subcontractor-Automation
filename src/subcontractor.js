@@ -283,7 +283,8 @@ let eventListener = {
                     'sc.SF.FF3.3.reportType',
                     'sc.SB.isSBRequired',
                     'sc.SF.FF3.FF3Applicable',
-                    'sc.SG.isFormBApplicable'
+                    'sc.SG.isFormBApplicable',
+                    'sc.SF1.6.activeContracts'
     ],
     scheduleF: ['sc.SF.FF3.4.primeOrSubawardee'
     ],
