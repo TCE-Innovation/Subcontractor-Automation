@@ -108,16 +108,17 @@ let dataHandling = {
             "getContractNum": "true",
             "getSubcontractors": ""
         }
-        this.interactWithAPI(dataToSend, this.getURL).then(data => {
+        return this.interactWithAPI(dataToSend, this.getURL).then(data => {
             data.forEach(el => {
                 if (el.Title !== undefined) {
                     contractNumbers.push(el.Title);
                 }
-            })
-            .then(data =>{
-                console.log(contractNumbers);
-                return contractNumbers;
-            })
+            });
+            return contractNumbers;
+        })
+        .catch(error => {
+            console.error(error);
+            return [];
         })
     },
 
