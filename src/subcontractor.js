@@ -825,6 +825,18 @@ let dataTableFunctions = {
             } 
         })
 
+        //This validator should make sure this doesn't exceed 3 entries
+        fd.control("dt.SB.P5.K.4.activeGovtEntityContracts").addValidator({
+            name: 'SBP5K4Validator',
+            error: 'Do not add more than 3 entries',
+            validate: (value) => {
+                if(value.length > 3) {
+                    return false;
+                }
+                return true;
+            } 
+        })
+
         //This validator should make sure this has at least 2 entries
         fd.control("dt.SQS.11.refs").addValidator({
             name: 'SQS11Validator',
