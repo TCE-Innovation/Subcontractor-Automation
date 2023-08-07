@@ -833,7 +833,7 @@ let dataTableFunctions = {
             //Isolate all the columns within the data table that may require proper formatting.
             phoneFormat = dtColumns.filter((item) => /phone/i.test(item));
             emailFormat = dtColumns.filter((item) => /email/i.test(item));
-            contractNumFormat = dtColumns.filter((item) => /contractnumber/i.test(item));
+            contractNumFormat = dtColumns.filter((item) => /contractnumber|contractno/i.test(item));
             SSN = dtColumns.filter((item) => /EIN/i.test(item));
             
             //Phone Formatting
