@@ -279,7 +279,7 @@ let eventListener = {
                         'sc.GI.descOfWorkAddAttachment'
     ],
 
-    isFormRequired: [ 'sc.SB1.isSB1Required',
+    miscActions: [ 'sc.SB1.isSB1Required',
                     'sc.SF.FF3.3.reportType',
                     'sc.SB.isSBRequired',
                     'sc.SF.FF3.FF3Applicable',
@@ -354,7 +354,7 @@ let eventListener = {
 
         //Sets up the event listeners for each of the fields.
         this.eventListenerHelper(this.generalInfoEvents, this.generalInfoCallback);
-        this.eventListenerHelper(this.isFormRequired, this.toggleMisc);
+        this.eventListenerHelper(this.miscActions, this.toggleMisc);
         this.eventListenerHelper(this.pdfControls, this.togglePDF);
         this.eventListenerHelper(this.scheduleF, this.toggleSF);
         this.eventListenerHelper(this.scheduleBPart1, this.toggleSBP1);
@@ -382,6 +382,7 @@ let eventListener = {
         //This is actually an event listener as well, I jsut couldn't figure out how to get this to fit the same format as the others, since it 
         //requires an input value from the event itself. I coudln't figure out how to do this repeating (Although, technically this isn't repeating)
         dataTableFunctions.calculateOCIPBValues();
+        dataTableFunctions.rmsaRefNum();
 
         //this field should also get disabled, since the user should not interact with it (It should be filled automatically)
         this.fieldVisAndReq('num.GI.percentOfTotalContractPrice', false);
@@ -967,6 +968,16 @@ let dataTableFunctions = {
         fd.field("num.OCIP.FB.S2.premiumTotal").value = premium;
     });
     },
+
+    //Calcualte 
+    rmsaRefNum: function () {
+        fd.control("dt.RMSA.refs").$on('change', function(value){
+            var data = fd.control('dt.RMSA.refs').value;
+            for (var i = 0; i < data.length; i++) {
+                value[i].set('colnumRMSARefsRefNum', i+1);
+            }
+        });
+    },
     /*
     +------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
     |                                                                                                                                                                        |
@@ -992,10 +1003,17 @@ let dataTableFunctions = {
         fd.field("num.OCIP.FB.S2.workHoursTotal").disabled = true;
         fd.field("num.OCIP.FB.S2.limitedPayrollTotal").disabled = true;
         fd.field("num.OCIP.FB.S2.premiumTotal").disabled = true;
+
+
+        //This affects RMSA
+        //Makes Ref# Column read only
+        const refColumn = fd.control("dt.RMSA.refs").columns.find(c => c.field === 'colnumRMSARefsRefNum');
+        refColumn.editable = () => false;
     },
     initialize: function() {
         this.disableFields();
         this.addValidators();
+        this.rmsaRefNum();
     }
 
 
