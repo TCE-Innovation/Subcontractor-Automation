@@ -134,11 +134,14 @@ let dataHandling = {
             "getSubcontractors": "R-33333"
         }
         return this.interactWithAPI(dataToSend, this.getURL).then(data => {
+            console.log(data);
+            /*
             data.forEach(el => {
                 if (el[{Name}] !== undefined) {
                     subcontractorNames.push(el[{Name}]);
                 }
             });
+            */
             return subcontractorNames;
         })
         .catch(error => {
