@@ -478,9 +478,12 @@ let eventListener = {
         'dt.SQS.9.principalContracts', 'dt.SQS.10.contractsOnHand']);
         //'d.SQS.3.dateOfOrg', 't.SQS.3.county', 'dt.SQS.3.namesAndAddrsOfPartners'
         this.showHideInClass('sc.RMSA.isRequired', 'RMSA', 'RMSAQuestions', true, ['t.RMSA.localManufacturingFacility.streetAddr', 't.RMSA.localManufacturingFacility.city', 'dd.RMSA.localManufacturingFacility.state', 't.RMSA.localManufacturingFacility.zipCode',
-            //These fields are in SQS, which should be made not required if the user switches over to RMSA. Otherwise, it will softlock them.
-            'd.SQS.3.incorporationDate', "t.SQS.3.president'sName", "t.SQS.3.vicePresident'sName", "t.SQS.3.treasurer'sName", "t.SQS.3.secretary'sName", "d.SQS.3.dateOfOrg", "t.SQS.3.county", "dt.SQS.3.namesAndAddrsOfPartners",
-            't.SQS.12.unionName', 't.SQS.12.addr', 't.SQS.12.localNo', 't.SQS.12.telephone']);
+        //These fields are in SQS, which should be made not required if the user switches over to RMSA. Otherwise, it will softlock them.
+                    'd.SQS.3.incorporationDate', "t.SQS.3.president'sName", "t.SQS.3.vicePresident'sName", "t.SQS.3.treasurer'sName", "t.SQS.3.secretary'sName", "d.SQS.3.dateOfOrg", "t.SQS.3.county", "dt.SQS.3.namesAndAddrsOfPartners",
+                    't.SQS.12.unionName', 't.SQS.12.addr', 't.SQS.12.localNo', 't.SQS.12.telephone', 'dt.SQS.8.prevExp', 'dt.SQS.9.principalContracts', 'dt.SQS.10.contractsOnHand']);
+
+
+        dataTableFunctions.SQS11();
 
 
         this.showHideInClass('sc.SQS.3.corpOrCoPartner', 'Corporation', "SQSCorporation");
@@ -814,19 +817,45 @@ let dataTableFunctions = {
                 return true;
             } 
         })
-
-        //This validator should make sure this has at least 2 entries
-        fd.control("dt.SQS.11.refs").addValidator({
-            name: 'SQS11Validator',
-            error: 'You must have at least 2 engineers',
-            validate: (value) => {
-                if(value.length < 2) {
-                    return false;
-                }
-                return true;
-            } 
-        })
     },
+    SQS11: function (enabled = true) {
+        if (enabled) {
+            //This validator should make sure this has at least 2 entries
+            fd.control("dt.SQS.11.refs").addValidator({
+                name: 'SQS11Validator',
+                error: 'You must have at least 2 engineers',
+                validate: (value) => {
+                    if(value.length < 2 && fd.field("sc.RMSA.isRequired" === "SQS")) {
+                        return false;
+                    }
+                    return true;
+                } 
+            })
+        } 
+        /*else {
+            //If RMSA is required, then we need to remove the "At least 2 engineers" requirement for SQS11. If SQS is required, we need to restore it.
+            if (fd.field("sc.RMSA.isRequired" === "RMSA")) {
+                let SQS11Validator = fd.control("dt.SQS.11.refs").validators;
+                let indexToDelete = -1;
+                //Find the index of the object
+                for (let i = 0; i < SQS11Validator.length; i++) {
+                    console.log(SQS11Validator[i]);
+                    if (SQS11Validator[i].name === "SQS11Validator") {
+                        indexToDelete = i;
+                        break;
+                    }
+                }
+                //If the object was found, remove it from the array
+                if (indexToDelete !== -1) {
+                    SQS11Validator.splice(indexToDelete, 1);
+                }
+                fd.control("dt.SQS.11.refs").validators = SQS11Validator;
+            }
+        }
+        */
+        
+    },
+    
     validateFormattingDT: function() {
         
         //For each data table, search through all columns
@@ -983,6 +1012,7 @@ let dataTableFunctions = {
     initialize: function() {
         this.disableFields();
         this.addValidators();
+        this.SQS11();
     }
 
 
