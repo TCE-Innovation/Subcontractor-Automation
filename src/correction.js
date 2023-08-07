@@ -60,12 +60,18 @@ fd.rendered(function() {
     */
 
     //At the same time, set up the event listeners for the dropdown values to change its values whenever the user clicks it.
-    fd.field('dd.GI.contractNo').$on('edit', function(value) {
-        fd.field('dd.GI.contractNo').widget.dataSource.data(dataHandling.getContracts());
-    })
+    (async () => {
+        const value = await dataHandling.getContracts();
+        //console.log(value);
+        fd.field('dd.GI.contractNo').widget.dataSource.data(value);
+    })();
 
-    fd.field('dd.GI.subcontractorName').$on('edit', function(value) {
-        fd.field('dd.GI.subcontractorName').widget.dataSource.data(dataHandling.getSubcontractors());
+    fd.field('dd.GI.contractNo').$on('change', function(value) {
+        (async () => {
+            const value = await dataHandling.getSubcontractors();
+            //console.log(value);
+            fd.field('dd.GI.subcontractorName').widget.dataSource.data(value);
+        })();
     })
 
 });
@@ -94,7 +100,7 @@ fd.beforeSave(function() {
         throw new Error("Your form is not completed - there are still missing components");
     }
     
-    
+    dataHandling.submitData();
 });
 
 let dataHandling = {
@@ -102,21 +108,46 @@ let dataHandling = {
     submitURL: "https://prod-76.westus.logic.azure.com:443/workflows/34545c436ff04f18a535e11258c53ad7/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=QaY6UKMxwRLFyre2HKECVA9N8c_3k2WYfX5ZuYYngrg",
     //getContracts returns an array of the "titles" of all the folders given via a power automate HTTPS flow
     getContracts: function() {
+        contractNumbers = [];
         dataToSend = {
             "getContractNum": "true",
             "getSubcontractors": ""
         }
-        responseObject = this.interactWithAPI(dataToSend, getURL);
-        console.log(responseObject);
+        return this.interactWithAPI(dataToSend, this.getURL).then(data => {
+            data.forEach(el => {
+                if (el.Title !== undefined) {
+                    contractNumbers.push(el.Title);
+                }
+            });
+            return contractNumbers;
+        })
+        .catch(error => {
+            console.error(error);
+            return [];
+        })
     },
 
     getSubcontractors: function() {
+        subcontractorNames = [];
         dataToSend = {
             "getContractNum": "false",
             "getSubcontractors": "R-33333"
         }
-        responseObject = this.interactWithAPI(dataToSend, getURL);
-        console.log(responseObject);
+        dataToSend.getSubcontractors = fd.field("dd.GI.contractNo").value;
+        return this.interactWithAPI(dataToSend, this.getURL).then(data => {
+            console.log(data);
+            data.forEach(el => {
+                if (el["{Name}"] !== undefined && el["{Name}"] !== fd.field("dd.GI.contractNo").value) {
+                    subcontractorNames.push(el["{Name}"]);
+                    //console.log(el["{Name}"]);
+                }
+            });
+            return subcontractorNames;
+        })
+        .catch(error => {
+            console.error(error);
+            return [];
+        })
 
     },
     submitData: function() {
@@ -142,7 +173,7 @@ let dataHandling = {
         dataToSend.email = dataTableFunctions.extractData("dt.email", "Email");
         console.log(dataToSend);
         
-        this.interactWithAPI(dataToSend, submitURL);
+        this.interactWithAPI(dataToSend, this.submitURL);
         throw new Error("Preventing you from submitting");
     },
     /*
