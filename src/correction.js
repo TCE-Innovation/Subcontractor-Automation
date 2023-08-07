@@ -128,12 +128,23 @@ let dataHandling = {
     },
 
     getSubcontractors: function() {
+        subcontractorNames = [];
         dataToSend = {
             "getContractNum": "false",
             "getSubcontractors": "R-33333"
         }
-        responseObject = this.interactWithAPI(dataToSend, this.getURL);
-        console.log(responseObject);
+        return this.interactWithAPI(dataToSend, this.getURL).then(data => {
+            data.forEach(el => {
+                if (el[{Name}] !== undefined) {
+                    subcontractorNames.push(el[{Name}]);
+                }
+            });
+            return subcontractorNames;
+        })
+        .catch(error => {
+            console.error(error);
+            return [];
+        })
 
     },
     submitData: function() {
