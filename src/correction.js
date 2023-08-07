@@ -61,9 +61,10 @@ fd.rendered(function() {
 
     //At the same time, set up the event listeners for the dropdown values to change its values whenever the user clicks it.
     //fd.field('dd.GI.contractNo').widget.dataSource.data(value);
-    dataHandling.getContracts(value => {
+    (async () => {
+        const value = await dataHandling.getContracts();
         console.log(value);
-    });
+    })();
 
     fd.field('dd.GI.contractNo').$on('change', function(value) {
         fd.field('dd.GI.subcontractorName').widget.dataSource.data(dataHandling.getSubcontractors());
