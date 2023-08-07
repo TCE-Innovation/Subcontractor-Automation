@@ -434,7 +434,7 @@ let eventListener = {
     }, 
     toggleMisc: function() {
         //Toggle Scheduel F1
-        this.fieldVisAndReq('dt.SF1.6.activeContracts', fd.field('sc.SF1.6.activeContracts'.value) === "Yes", "DataTable");
+        this.fieldVisAndReq('dt.SF1.6.activeContracts', fd.field('sc.SF1.6.activeContracts').value === "Yes", "DataTable");
         /*
         The following are optional forms: Forms that may or may not be filled out by the subcontractor.
         This includes:
