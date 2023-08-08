@@ -956,7 +956,7 @@ let dataTableFunctions = {
             calculateOCIPBWCPremium(value);
         });
         //If the experience modifier was changed, so would the modieief premium. Therefore, this should also trigger the table.
-        fd.control("num.OCIP.FB.S2.modifiedPremium").$on('change', function (value) {
+        fd.field("num.OCIP.FB.S2.modifiedPremium").$on('change', function (value) {
             calculateOCIPBWCPremium(value);
         });
     },
