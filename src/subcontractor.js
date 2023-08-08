@@ -279,7 +279,7 @@ let eventListener = {
                         'sc.GI.descOfWorkAddAttachment'
     ],
 
-    miscActions: [ 'sc.SB1.isSB1Required',
+    miscActions: [
                     'sc.SF.FF3.3.reportType',
                     'sc.SB.isSBRequired',
                     'sc.SF.FF3.FF3Applicable',
@@ -342,7 +342,7 @@ let eventListener = {
                     'sc.SB.P5.M.none'
     ],
     SQS: ['sc.SQS.3.corpOrCoPartner', 'sc.SQS.8.applicable', 'sc.SQS.9.applicable', 'sc.SQS.10.applicable', 'sc.SQS.12.non-UnionOrUnion','sc.RMSA.isRequired'],
-    scheduleB1: ['sc.SB1.1.attachment'],
+    scheduleB1: [ 'sc.SB1.isSB1Required', 'sc.SB1.1.attachment'],
     pdfControls: [],
     OCIPA: ['d.OCIP.FA.S2.workersCompEffective','d.OCIP.FA.S2.workersCompExpiration'],
 
@@ -458,11 +458,6 @@ let eventListener = {
         this.toggleSBP3();
         this.toggleSBP4();
         this.toggleSBP5();
-
-        //Toggles Schedule B1
-        this.showHideInClass('sc.SB1.isSB1Required', 'Yes', 'ScheduleB1Class', false, ["a.SB1.1.attachment"]);
-        //Change whats required in schedule B1
-        this.showHideInClass('sc.SB1.isSB1Required', 'Yes', 'SB1Required');
             /*
             The following are optional fields inside forms.
             These forms include: 
@@ -615,7 +610,12 @@ let eventListener = {
         this.showHideInClass('sc.SB.P5.J.sharedOffice', 'Yes', 'SBP5Jexplanation');
     },
     toggleSB1: function() {
-        this.fieldVisAndReq('a.SB1.1.attachment', fd.field('sc.SB1.1.attachment').value === "Yes");
+        //Toggles Schedule B1
+        this.showHideInClass('sc.SB1.isSB1Required', 'Yes', 'ScheduleB1Class', false, ["a.SB1.1.attachment"]);
+        //Change whats required in schedule B1
+        this.showHideInClass('sc.SB1.isSB1Required', 'Yes', 'SB1Required');
+
+        this.fieldVisAndReq('a.SB1.1.attachment', (fd.field('sc.SB1.1.attachment').value === "Yes" && fd.field('sc.SB1.isSB1Required').value === "Yes"));
     },
     OCIPAValidator: function () {
         //This validor ensures that the expiration date is after the insurance start date
