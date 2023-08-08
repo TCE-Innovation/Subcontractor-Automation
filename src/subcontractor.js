@@ -279,11 +279,12 @@ let eventListener = {
                         'sc.GI.descOfWorkAddAttachment'
     ],
 
-    isFormRequired: [ 'sc.SB1.isSB1Required',
+    miscActions: [ 'sc.SB1.isSB1Required',
                     'sc.SF.FF3.3.reportType',
                     'sc.SB.isSBRequired',
                     'sc.SF.FF3.FF3Applicable',
-                    'sc.SG.isFormBApplicable'
+                    'sc.SG.isFormBApplicable',
+                    'sc.SF1.6.activeContracts'
     ],
     scheduleF: ['sc.SF.FF3.4.primeOrSubawardee'
     ],
@@ -353,7 +354,7 @@ let eventListener = {
 
         //Sets up the event listeners for each of the fields.
         this.eventListenerHelper(this.generalInfoEvents, this.generalInfoCallback);
-        this.eventListenerHelper(this.isFormRequired, this.reqForms);
+        this.eventListenerHelper(this.miscActions, this.toggleMisc);
         this.eventListenerHelper(this.pdfControls, this.togglePDF);
         this.eventListenerHelper(this.scheduleF, this.toggleSF);
         this.eventListenerHelper(this.scheduleBPart1, this.toggleSBP1);
@@ -369,7 +370,7 @@ let eventListener = {
 
         //Then, we call the functions once such that all the values update to their default configuration
         this.generalInfoCallback();
-        this.reqForms();
+        this.toggleMisc();
         this.togglePDF();
         this.toggleSF();
         this.toggleSBP1();
@@ -381,6 +382,7 @@ let eventListener = {
         //This is actually an event listener as well, I jsut couldn't figure out how to get this to fit the same format as the others, since it 
         //requires an input value from the event itself. I coudln't figure out how to do this repeating (Although, technically this isn't repeating)
         dataTableFunctions.calculateOCIPBValues();
+        dataTableFunctions.rmsaRefNum();
 
         //this field should also get disabled, since the user should not interact with it (It should be filled automatically)
         this.fieldVisAndReq('num.GI.percentOfTotalContractPrice', false);
@@ -432,7 +434,9 @@ let eventListener = {
         fd.field('num.GI.percentOfTotalContractPrice').value = fd.field('num.GI.contractValue').value/fd.field('num.GI.totalAmtOfProposedSubcontract').value;
         this.fieldVisAndReq('a.GI.descOfWorkAttachment', fd.field('sc.GI.descOfWorkAddAttachment').value === "Yes");
     }, 
-    reqForms: function() {
+    toggleMisc: function() {
+        //Toggle Scheduel F1
+        this.fieldVisAndReq('dt.SF1.6.activeContracts', fd.field('sc.SF1.6.activeContracts').value === "Yes", "DataTable");
         /*
         The following are optional forms: Forms that may or may not be filled out by the subcontractor.
         This includes:
@@ -482,32 +486,15 @@ let eventListener = {
                     'd.SQS.3.incorporationDate', "t.SQS.3.president'sName", "t.SQS.3.vicePresident'sName", "t.SQS.3.treasurer'sName", "t.SQS.3.secretary'sName", "d.SQS.3.dateOfOrg", "t.SQS.3.county", "dt.SQS.3.namesAndAddrsOfPartners",
                     't.SQS.12.unionName', 't.SQS.12.addr', 't.SQS.12.localNo', 't.SQS.12.telephone', 'dt.SQS.8.prevExp', 'dt.SQS.9.principalContracts', 'dt.SQS.10.contractsOnHand']);
 
-
-/*
-        //If RMSA is required, then we need to remove the "At least 2 engineers" requirement for SQS11. If SQS is required, we need to restore it.
-        if (fd.field("sc.RMSA.isRequired" === "RMSA")) {
-        let SQS11Validator = fd.control("dt.SQS.11.refs").validators;
-        let indexToDelete = -1;
-        //Find the index of the object
-        for (let i = 0; i < SQS11Validator.length; i++) {
-            console.log(SQS11Validator[i]);
-            if (SQS11Validator[i].name === "SQS11Validator") {
-                indexToDelete = i;
-                break;
-            }
-        }
-        //If the object was found, remove it from the array
-        if (indexToDelete !== -1) {
-            SQS11Validator.splice(indexToDelete, 1);
-        }
-        fd.control("dt.SQS.11.refs").validators = SQS11Validator;
-        }
-        */
         
 
-
         this.showHideInClass('sc.SQS.3.corpOrCoPartner', 'Corporation', "SQSCorporation");
-        this.showHideInClass('sc.SQS.3.corpOrCoPartner', 'Co-partnership', "SQSCoPartnership");  
+        this.showHideInClass('sc.SQS.3.corpOrCoPartner', 'Co-partnership', "SQSCoPartnership"); 
+        
+        if (fd.field("sc.RMSA.isRequired").value === "RMSA") {
+            this.setRequiredInClass(false, 'SQSCorporation');
+            this.setRequiredInClass(false, 'SQSCoPartnership');
+        }
               
         this.showHideInClass('sc.SQS.12.non-UnionOrUnion', 'Union', 'SQSLabor');
 
@@ -798,7 +785,7 @@ let dataTableFunctions = {
             row.forEach(el => {
                 //Here we have the actual values of the items themselves. If the value is "", null, or undefined, the user has left it blank
                 //Thus, we should throw an error
-                if ((el === "" || el === null || el === undefined || el == []) && el !== 0) {
+                if ((el === "" || el === null || el === undefined || el === []) && el !== 0) {
                     //return false to indicate an error
                     returnValue = false;
                 }
@@ -806,13 +793,6 @@ let dataTableFunctions = {
         })
         //If we loop through everything and it hasn't triggered the false condition, then the whole table is true
         return returnValue;
-    },
-    checkTele: function (dtName) {
-        
-
-        fd.control(dtName).value.forEach(row => {
-
-        })
     },
     rowValidators: function () {
         this.getDataTables();
@@ -829,6 +809,18 @@ let dataTableFunctions = {
         //This validator should make sure this doesn't exceed 3 entries
         fd.control("dt.SB.P5.K.1.contractsCompletedLast3Yrs").addValidator({
             name: 'SBP5K1Validator',
+            error: 'Do not add more than 3 entries',
+            validate: (value) => {
+                if(value.length > 3) {
+                    return false;
+                }
+                return true;
+            } 
+        })
+
+        //This validator should make sure this doesn't exceed 3 entries
+        fd.control("dt.SB.P5.K.4.activeGovtEntityContracts").addValidator({
+            name: 'SBP5K4Validator',
             error: 'Do not add more than 3 entries',
             validate: (value) => {
                 if(value.length > 3) {
@@ -917,15 +909,7 @@ let dataTableFunctions = {
             })
         })
     },
-    //Will loop through all the values in the array to add a validator to all of them
-    addValidators: function () {
-        this.rowValidators();
-        this.validateFormattingDT();
-    },
-    getDataTables: function () {
-        this.namesOfDataTables = Object.keys(fd.data()).filter((name) => /dt./.test(name));
-    },
-
+    
     /*
     +--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
     |                                                                                                                                                                    |
@@ -981,6 +965,16 @@ let dataTableFunctions = {
         fd.field("num.OCIP.FB.S2.premiumTotal").value = premium;
     });
     },
+
+    //Calculate the Ref Number in the RMSA data table upon change
+    rmsaRefNum: function () {
+        fd.control("dt.RMSA.refs").$on('change', function(value){
+            var data = fd.control('dt.RMSA.refs').value;
+            for (var i = 0; i < data.length; i++) {
+                value[i].set('colnumRMSARefsRefNum', i+1);
+            }
+        });
+    },
     /*
     +------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
     |                                                                                                                                                                        |
@@ -1006,10 +1000,25 @@ let dataTableFunctions = {
         fd.field("num.OCIP.FB.S2.workHoursTotal").disabled = true;
         fd.field("num.OCIP.FB.S2.limitedPayrollTotal").disabled = true;
         fd.field("num.OCIP.FB.S2.premiumTotal").disabled = true;
+
+
+        //This affects RMSA
+        //Makes Ref# Column read only
+        const refColumn = fd.control("dt.RMSA.refs").columns.find(c => c.field === 'colnumRMSARefsRefNum');
+        refColumn.editable = () => false;
+    },
+    getDataTables: function () {
+        this.namesOfDataTables = Object.keys(fd.data()).filter((name) => /dt./.test(name));
+    },
+    //Will loop through all the values in the array to add a validator to all of them
+    addValidators: function () {
+        this.rowValidators();
+        this.validateFormattingDT();
     },
     initialize: function() {
         this.disableFields();
         this.addValidators();
+        this.rmsaRefNum();
     }
 
 
