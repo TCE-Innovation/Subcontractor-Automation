@@ -998,6 +998,7 @@ let dataTableFunctions = {
                 value[i].set('colnumOCIPFBS2WCPremiumRunningTotal', newTotal);
                 initial = newTotal;
             }
+            fd.field("num.OCIP.FB.S2.totalWCPremium") = newTotal;
         }
     },
 
@@ -1040,6 +1041,8 @@ let dataTableFunctions = {
         const runningTotal = fd.control("dt.OCIP.FB.S2.WCPremium").columns.find(c => c.field === 'colnumOCIPFBS2WCPremiumRunningTotal');
         runningTotal.editable = () => false;
         fd.field("num.OCIP.FB.S2.modifiedPremium").disabled = true;
+
+        fd.field("num.OCIP.FB.S2.totalWCPremium").disabled = true;
 
         //This affects RMSA
         //Makes Ref# Column read only
