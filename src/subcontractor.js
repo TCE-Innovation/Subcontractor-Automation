@@ -1028,7 +1028,8 @@ let dataTableFunctions = {
 
         //OCIP B WC Premium
         const runningTotal = fd.control("dt.OCIP.FB.S2.WCPremium").columns.find(c => c.field === 'colnumOCIPFBS2WCPremiumRunningTotal');
-        refColumn.editable = () => false;
+        runningTotal.editable = () => false;
+        fd.field("num.OCIP.FB.S2.modifiedPremium").disabled = true;
 
         //This affects RMSA
         //Makes Ref# Column read only
