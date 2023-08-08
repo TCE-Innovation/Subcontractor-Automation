@@ -84,6 +84,7 @@ var executeOnce = (function() {
             autopopulate();
             dataTableFunctions.initialize();
             attachmentFunctions.initialize();
+            console.log("If you experience any problems with these forms... Blame the MTA. Not Us.");
         }
     };
 })();
