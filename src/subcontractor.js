@@ -955,7 +955,7 @@ let dataTableFunctions = {
         });
 
         //For WC Premiums
-        fd.control("dt.OCIP.FB.S2.WCPremium").$on('change', function() {
+        fd.control("dt.OCIP.FB.S2.WCPremium").$on('change', function(value) {
             self.calculateOCIPBWCPremium(value);
         });
     },
