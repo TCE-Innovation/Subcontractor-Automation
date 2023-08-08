@@ -945,19 +945,20 @@ let dataTableFunctions = {
     +--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
     */
     calculateOCIPBValues: function() {
+        var self = this;
         //For Insurance Premiums
         fd.control("dt.OCIP.FB.S2.insurancePremium").$on('change', function(value){
-            this.calculateOCIPBInsurance(value);
+            self.calculateOCIPBInsurance(value);
         });
 
 
         //For WC Premiums
         fd.control("dt.OCIP.FB.S2.WCPremium").$on('change', function (value) {
-            this.calculateOCIPBWCPremium(value);
+            self.calculateOCIPBWCPremium(value);
         });
         //If the experience modifier was changed, so would the modieief premium. Therefore, this should also trigger the table.
         fd.field("num.OCIP.FB.S2.modifiedPremium").$on('change', function (value) {
-            this.calculateOCIPBWCPremium(value);
+            self.calculateOCIPBWCPremium(value);
         });
     },
     calculateOCIPBInsurance: function(value) {
