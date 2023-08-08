@@ -785,7 +785,7 @@ let dataTableFunctions = {
             row.forEach(el => {
                 //Here we have the actual values of the items themselves. If the value is "", null, or undefined, the user has left it blank
                 //Thus, we should throw an error
-                if ((el === "" || el === null || el === undefined || el == []) && el !== 0) {
+                if ((el === "" || el === null || el === undefined || el === []) && el !== 0) {
                     //return false to indicate an error
                     returnValue = false;
                 }
@@ -793,13 +793,6 @@ let dataTableFunctions = {
         })
         //If we loop through everything and it hasn't triggered the false condition, then the whole table is true
         return returnValue;
-    },
-    checkTele: function (dtName) {
-        
-
-        fd.control(dtName).value.forEach(row => {
-
-        })
     },
     rowValidators: function () {
         this.getDataTables();
@@ -916,15 +909,7 @@ let dataTableFunctions = {
             })
         })
     },
-    //Will loop through all the values in the array to add a validator to all of them
-    addValidators: function () {
-        this.rowValidators();
-        this.validateFormattingDT();
-    },
-    getDataTables: function () {
-        this.namesOfDataTables = Object.keys(fd.data()).filter((name) => /dt./.test(name));
-    },
-
+    
     /*
     +--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
     |                                                                                                                                                                    |
@@ -981,7 +966,7 @@ let dataTableFunctions = {
     });
     },
 
-    //Calcualte 
+    //Calculate the Ref Number in the RMSA data table upon change
     rmsaRefNum: function () {
         fd.control("dt.RMSA.refs").$on('change', function(value){
             var data = fd.control('dt.RMSA.refs').value;
@@ -1021,6 +1006,14 @@ let dataTableFunctions = {
         //Makes Ref# Column read only
         const refColumn = fd.control("dt.RMSA.refs").columns.find(c => c.field === 'colnumRMSARefsRefNum');
         refColumn.editable = () => false;
+    },
+    getDataTables: function () {
+        this.namesOfDataTables = Object.keys(fd.data()).filter((name) => /dt./.test(name));
+    },
+    //Will loop through all the values in the array to add a validator to all of them
+    addValidators: function () {
+        this.rowValidators();
+        this.validateFormattingDT();
     },
     initialize: function() {
         this.disableFields();
