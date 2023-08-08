@@ -998,7 +998,7 @@ let dataTableFunctions = {
                 value[i].set('colnumOCIPFBS2WCPremiumRunningTotal', newTotal);
                 initial = newTotal;
             }
-            fd.field("num.OCIP.FB.S2.totalWCPremium") = newTotal;
+            fd.field("num.OCIP.FB.S2.totalWCPremium").value = newTotal;
         }
     },
 
