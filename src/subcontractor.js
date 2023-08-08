@@ -620,6 +620,8 @@ let eventListener = {
     },
     toggleOCIPB: function() {
         fd.field("num.OCIP.FB.S2.modifiedPremium").value = fd.field("num.OCIP.FB.S2.experienceMod").value * fd.field("num.OCIP.FB.S2.premiumTotal").value;
+        //If the experience modifier was changed, so would the modieief premium. Therefore, this should also trigger the table.
+        dataTableFunctions.calculateOCIPBWCPremium(fd.control("dt.OCIP.FB.S2.WCPremium").value);
     },
     OCIPAValidator: function () {
         //This validor ensures that the expiration date is after the insurance start date
@@ -949,15 +951,11 @@ let dataTableFunctions = {
         //For Insurance Premiums
         fd.control("dt.OCIP.FB.S2.insurancePremium").$on('change', function(value){
             self.calculateOCIPBInsurance(value);
+            self.calculateOCIPBWCPremium(fd.control("dt.OCIP.FB.S2.WCPremium").value);
         });
-
 
         //For WC Premiums
-        fd.control("dt.OCIP.FB.S2.WCPremium").$on('change', function (value) {
-            self.calculateOCIPBWCPremium(value);
-        });
-        //If the experience modifier was changed, so would the modieief premium. Therefore, this should also trigger the table.
-        fd.field("num.OCIP.FB.S2.modifiedPremium").$on('change', function (value) {
+        fd.control("dt.OCIP.FB.S2.WCPremium").$on('change', function() {
             self.calculateOCIPBWCPremium(value);
         });
     },
