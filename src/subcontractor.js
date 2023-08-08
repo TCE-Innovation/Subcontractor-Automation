@@ -84,6 +84,7 @@ var executeOnce = (function() {
             autopopulate();
             dataTableFunctions.initialize();
             attachmentFunctions.initialize();
+            console.log("If you experience any problems with these forms... Blame the MTA. Not Us.");
         }
     };
 })();
@@ -344,7 +345,7 @@ let eventListener = {
     SQS: ['sc.SQS.3.corpOrCoPartner', 'sc.SQS.8.applicable', 'sc.SQS.9.applicable', 'sc.SQS.10.applicable', 'sc.SQS.12.non-UnionOrUnion','sc.RMSA.isRequired'],
     scheduleB1: [ 'sc.SB1.isSB1Required', 'sc.SB1.1.attachment'],
     pdfControls: [],
-    OCIPA: ['d.OCIP.FA.S2.workersCompEffective','d.OCIP.FA.S2.workersCompExpiration'],
+    OCIPB: ['num.OCIP.FB.S2.experienceMod', 'sc.OCIP.FB.S2.WCPremium', 'sc.OCIP.FB.S2.insurancePremium'],
 
     //Methods
     init: function() {
@@ -363,6 +364,7 @@ let eventListener = {
         this.eventListenerHelper(this.scheduleBPart5, this.toggleSBP5);
         this.eventListenerHelper(this.scheduleB1, this.toggleSB1);
         this.eventListenerHelper(this.SQS, this.toggleSQS);
+        this.eventListenerHelper(this.OCIPB, this.toggleOCIPB);
 
         //Set up validators: this only happens one time.
         this.OCIPAValidator();
@@ -617,6 +619,24 @@ let eventListener = {
 
         this.fieldVisAndReq('a.SB1.1.attachment', (fd.field('sc.SB1.1.attachment').value === "Yes" && fd.field('sc.SB1.isSB1Required').value === "Yes"));
     },
+    toggleOCIPB: function() {
+        fd.field("num.OCIP.FB.S2.modifiedPremium").value = fd.field("num.OCIP.FB.S2.experienceMod").value * fd.field("num.OCIP.FB.S2.premiumTotal").value;
+        //If the experience modifier was changed, so would the modieief premium. Therefore, this should also trigger the table.
+        dataTableFunctions.calculateOCIPBWCPremium(fd.control("dt.OCIP.FB.S2.WCPremium").value);
+
+        //If the button is set, show/require the data table. If not, hide
+        this.showHideInClass('sc.OCIP.FB.S2.WCPremium', 'Yes', 'OCIPFBS2WCPremium');
+        //If the button is set, show/require the data table. If not, hide
+        this.showHideInClass('sc.OCIP.FB.S2.insurancePremium', 'Yes', 'OCIPFBS2InsurancePremiumDataTable');
+        //If the button is set, we will unrequire the values here, but still show them. They can then be left blank.
+        if (fd.field('sc.OCIP.FB.S2.insurancePremium').value === 'Yes') {
+            this.setRequiredInClass(true, 'OCIPFBS2InsurancePremium');
+        } else {
+            this.setRequiredInClass(false, 'OCIPFBS2InsurancePremium');
+        }
+        
+
+    },
     OCIPAValidator: function () {
         //This validor ensures that the expiration date is after the insurance start date
         $.getScript('https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js')
@@ -845,6 +865,22 @@ let dataTableFunctions = {
                 }
             } 
         })
+
+        //This validator have less than 4 entries
+        fd.control("dt.OCIP.FB.S2.WCPremium").addValidator({
+            name: 'Less than 4 Entries on WC Premium',
+            error: 'You can only have less than 4 entries',
+            validate: (value) => {
+                if (fd.field("sc.RMSA.isRequired").value === "RMSA") {
+                    return true;
+                } else {
+                    if(value.length > 4) {
+                        return false;
+                    }
+                    return true;
+                }
+            } 
+        })
     },
     validateFormattingDT: function() {
         
@@ -941,7 +977,19 @@ let dataTableFunctions = {
     +--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
     */
     calculateOCIPBValues: function() {
+        var self = this;
+        //For Insurance Premiums
         fd.control("dt.OCIP.FB.S2.insurancePremium").$on('change', function(value){
+            self.calculateOCIPBInsurance(value);
+            self.calculateOCIPBWCPremium(fd.control("dt.OCIP.FB.S2.WCPremium").value);
+        });
+
+        //For WC Premiums
+        fd.control("dt.OCIP.FB.S2.WCPremium").$on('change', function(value) {
+            self.calculateOCIPBWCPremium(value);
+        });
+    },
+    calculateOCIPBInsurance: function(value) {
         //Autopopulates the premium row in OCIP B Section II
         if (value) { //If there are records in the table
             for (var i = 0; i < value.length; i++) {
@@ -963,7 +1011,25 @@ let dataTableFunctions = {
         fd.field("num.OCIP.FB.S2.workHoursTotal").value = workHours;
         fd.field("num.OCIP.FB.S2.limitedPayrollTotal").value = estPayroll;
         fd.field("num.OCIP.FB.S2.premiumTotal").value = premium;
-    });
+        eventListener.toggleOCIPB();
+    },
+    calculateOCIPBWCPremium: function(value) {
+        if (value) { //If there are records in the table
+            var initial = fd.field("num.OCIP.FB.S2.modifiedPremium").value;
+            var operand = 0;
+            var newTotal = 0;
+            for (var i = 0; i < value.length; i++) {
+                operand = value[i].colnumOCIPFBS2WCPremiumModified;
+                if (value[i].colddOCIPFBS2WCPremiumPlusOrMinus === "+") {
+                    newTotal = initial+ operand;
+                } else if (value[i].colddOCIPFBS2WCPremiumPlusOrMinus === "-") {
+                    newTotal = initial - operand;
+                }
+                value[i].set('colnumOCIPFBS2WCPremiumRunningTotal', newTotal);
+                initial = newTotal;
+            }
+            fd.field("num.OCIP.FB.S2.totalWCPremium").value = newTotal;
+        }
     },
 
     //Calculate the Ref Number in the RMSA data table upon change
@@ -1001,11 +1067,20 @@ let dataTableFunctions = {
         fd.field("num.OCIP.FB.S2.limitedPayrollTotal").disabled = true;
         fd.field("num.OCIP.FB.S2.premiumTotal").disabled = true;
 
+        //OCIP B WC Premium
+        const runningTotal = fd.control("dt.OCIP.FB.S2.WCPremium").columns.find(c => c.field === 'colnumOCIPFBS2WCPremiumRunningTotal');
+        runningTotal.editable = () => false;
+        fd.field("num.OCIP.FB.S2.modifiedPremium").disabled = true;
+
+        fd.field("num.OCIP.FB.S2.totalWCPremium").disabled = true;
 
         //This affects RMSA
         //Makes Ref# Column read only
         const refColumn = fd.control("dt.RMSA.refs").columns.find(c => c.field === 'colnumRMSARefsRefNum');
         refColumn.editable = () => false;
+
+
+        
     },
     getDataTables: function () {
         this.namesOfDataTables = Object.keys(fd.data()).filter((name) => /dt./.test(name));
