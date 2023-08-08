@@ -947,6 +947,20 @@ let dataTableFunctions = {
     calculateOCIPBValues: function() {
         //For Insurance Premiums
         fd.control("dt.OCIP.FB.S2.insurancePremium").$on('change', function(value){
+            this.calculateOCIPBInsurance(value);
+        });
+
+
+        //For WC Premiums
+        fd.control("dt.OCIP.FB.S2.WCPremium").$on('change', function (value) {
+            calculateOCIPBWCPremium(value);
+        });
+        //If the experience modifier was changed, so would the modieief premium. Therefore, this should also trigger the table.
+        fd.control("num.OCIP.FB.S2.modifiedPremium").$on('change', function (value) {
+            calculateOCIPBWCPremium(value);
+        });
+    },
+    calculateOCIPBInsurance: function(value) {
         //Autopopulates the premium row in OCIP B Section II
         if (value) { //If there are records in the table
             for (var i = 0; i < value.length; i++) {
@@ -968,27 +982,24 @@ let dataTableFunctions = {
         fd.field("num.OCIP.FB.S2.workHoursTotal").value = workHours;
         fd.field("num.OCIP.FB.S2.limitedPayrollTotal").value = estPayroll;
         fd.field("num.OCIP.FB.S2.premiumTotal").value = premium;
-        });
-
-
-        //For WC Premiums
-        fd.control("dt.OCIP.FB.S2.WCPremium").$on('change', function (value) {
-            if (value) { //If there are records in the table
-                var initial = fd.field("num.OCIP.FB.S2.modifiedPremium").value;
-                var operand = 0;
-                var newTotal = 0;
-                for (var i = 0; i < value.length; i++) {
-                    operand = value[i].colnumOCIPFBS2WCPremiumModified;
-                    if (value[i].colddOCIPFBS2WCPremiumPlusOrMinus === "+") {
-                        newTotal = initial+ operand;
-                    } else if (value[i].colddOCIPFBS2WCPremiumPlusOrMinus === "-") {
-                        newTotal = initial - operand;
-                    }
-                    value[i].set('colnumOCIPFBS2WCPremiumRunningTotal', newTotal);
-                    initial = newTotal;
+        eventListener.toggleOCIPB();
+    },
+    calculateOCIPBWCPremium: function(value) {
+        if (value) { //If there are records in the table
+            var initial = fd.field("num.OCIP.FB.S2.modifiedPremium").value;
+            var operand = 0;
+            var newTotal = 0;
+            for (var i = 0; i < value.length; i++) {
+                operand = value[i].colnumOCIPFBS2WCPremiumModified;
+                if (value[i].colddOCIPFBS2WCPremiumPlusOrMinus === "+") {
+                    newTotal = initial+ operand;
+                } else if (value[i].colddOCIPFBS2WCPremiumPlusOrMinus === "-") {
+                    newTotal = initial - operand;
                 }
+                value[i].set('colnumOCIPFBS2WCPremiumRunningTotal', newTotal);
+                initial = newTotal;
             }
-        });
+        }
     },
 
     //Calculate the Ref Number in the RMSA data table upon change
