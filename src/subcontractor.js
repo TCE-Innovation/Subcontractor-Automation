@@ -291,8 +291,7 @@ let eventListener = {
                     'sc.SG.isFormBApplicable',
                     'sc.SF1.6.activeContracts'
     ],
-    scheduleF: ['sc.SF.FF3.4.primeOrSubawardee'
-    ],
+    scheduleF: ['sc.SF.readAndUnderstood', 'tog.SF.hidePDF', 'sc.SF.FF3.4.primeOrSubawardee'],
     scheduleBPart1: [
         'dd.SB.P1.G.typeOfLegalEntity',
         'sc.SB.P1.organizedUnderForeignCountry'
@@ -346,10 +345,10 @@ let eventListener = {
                     'sc.SB.P5.L.none',
                     'sc.SB.P5.M.none'
     ],
-    SQS: ['sc.SQS.3.corpOrCoPartner', 'sc.SQS.8.applicable', 'sc.SQS.9.applicable', 'sc.SQS.10.applicable', 'sc.SQS.12.non-UnionOrUnion','sc.RMSA.isRequired'],
-    scheduleB1: [ 'sc.SB1.isSB1Required', 'sc.SB1.1.attachment'],
+    SQS: ['sc.SQS.readAndUnderstood', 'tog.SQS.hidePDF', 'tog.RMSA.hidePDF', 'sc.SQS.3.corpOrCoPartner', 'sc.SQS.8.applicable', 'sc.SQS.9.applicable', 'sc.SQS.10.applicable', 'sc.SQS.12.non-UnionOrUnion','sc.RMSA.isRequired'],
+    scheduleB1: ['sc.SB1.readAndUnderstood', 'tog.SB1.hidePDF', 'sc.SB1.isSB1Required', 'sc.SB1.1.attachment'],
     pdfControls: [],
-    OCIPB: ['num.OCIP.FB.S2.experienceMod', 'sc.OCIP.FB.S2.WCPremium', 'sc.OCIP.FB.S2.insurancePremium'],
+    OCIPB: ['sc.OCIPB.readAndUnderstood', 'tog.OCIPB.hidePDF', 'num.OCIP.FB.S2.experienceMod', 'sc.OCIP.FB.S2.WCPremium', 'sc.OCIP.FB.S2.insurancePremium'],
 
     //Methods
     init: function() {
@@ -480,6 +479,13 @@ let eventListener = {
         this.showHideInClass('sc.SG.isFormBApplicable', 'Yes', 'SGInfo');
     },
     toggleSQS: function() {
+        //SQS
+        this.showHideInClass('sc.SQS.readAndUnderstood', 'Yes', 'SQSorRMSA', false);
+        this.showHideInClass('tog.SQS.hidePDF', false, 'SQSPDF', false);
+
+        //RMSA
+        this.showHideInClass('tog.RMSA.hidePDF', false, 'RMSAPDF', false);
+
         //Toggles the visibiliy and requirement of the RMSA form
         this.showHideInClass('sc.RMSA.isRequired', 'SQS', 'SQSQuestions', true, ['t.SQS.2a.streetAddr', 't.SQS.2a.city', 'dd.SQS.2a.state', 't.SQS.2a.zipCode', 'dt.SQS.8.prevExp', 
         'dt.SQS.9.principalContracts', 'dt.SQS.10.contractsOnHand']);
@@ -510,16 +516,6 @@ let eventListener = {
             The following toggles the PDFs and ensures that the reader has viewed the PDF before moving onto the questions.
             Every form except OCIP COI, Sunnary, and General Information applies here.
         */
-        //SQS
-        this.showHideInClass('sc.SQS.readAndUnderstood', 'Yes', 'SQSorRMSA', false);
-        this.showHideInClass('tog.SQS.hidePDF', false, 'SQSPDF', false);
-
-        //RMSA
-        this.showHideInClass('tog.RMSA.hidePDF', false, 'RMSAPDF', false);
-
-        //Schedule F
-        this.showHideInClass('sc.SF.readAndUnderstood', 'Yes', 'SFQuestions', false);
-        this.showHideInClass('tog.SF.hidePDF', false, 'SFPDF', false);
 
         //Schedule F1
         this.showHideInClass('sc.SF1.readAndUnderstood', 'Yes', 'SF1Questions', false);
@@ -532,10 +528,6 @@ let eventListener = {
         this.showHideInClass('sc.SB.readAndUnderstood', 'Yes', 'SBQuestions', false);
         this.showHideInClass('tog.SB.hidePDF', false, 'SBPDF', false);
 
-        //Schedule B1
-        this.showHideInClass('sc.SB1.readAndUnderstood', 'Yes', 'SB1Questions', false);
-        this.showHideInClass('tog.SB1.hidePDF', false, 'SB1PDF', false);
-
         //Schedule G
         this.showHideInClass('sc.SG.readAndUnderstood', 'Yes', 'SGQuestions', false);
         this.showHideInClass('tog.SG.hidePDF', false, 'SGPDF', false);
@@ -543,14 +535,12 @@ let eventListener = {
         //OCIP A
         this.showHideInClass('sc.OCIPA.readAndUnderstood', 'Yes', 'OCIPAQuestions', false);
         this.showHideInClass('tog.OCIPA.hidePDF', false, 'OCIPAPDF', false);
-
-        //OCIP B
-        this.showHideInClass('sc.OCIPB.readAndUnderstood', 'Yes', 'OCIPBQuestions', false);
-        this.showHideInClass('tog.OCIPB.hidePDF', false, 'OCIPBPDF', false);
-
-
     },
     toggleSF: function() {
+        //Schedule F
+        this.showHideInClass('sc.SF.readAndUnderstood', 'Yes', 'SFQuestions', false);
+        this.showHideInClass('tog.SF.hidePDF', false, 'SFPDF', false);
+
         this.showHideInClass('sc.SF.FF3.4.primeOrSubawardee', 'Subawardee', 'SFF3Q5', true, ['t.SF.FF3.5.congressionalDistrict']);
     },
     toggleSBP1: function() {
@@ -618,6 +608,11 @@ let eventListener = {
         this.showHideInClass('sc.SB.P5.J.sharedOffice', 'Yes', 'SBP5Jexplanation');
     },
     toggleSB1: function() {
+
+        //Schedule B1
+        this.showHideInClass('sc.SB1.readAndUnderstood', 'Yes', 'SB1Questions', false);
+        this.showHideInClass('tog.SB1.hidePDF', false, 'SB1PDF', false);
+        
         //Toggles Schedule B1
         this.showHideInClass('sc.SB1.isSB1Required', 'Yes', 'ScheduleB1Class', false, ["a.SB1.1.attachment"]);
         //Change whats required in schedule B1
@@ -626,6 +621,11 @@ let eventListener = {
         this.fieldVisAndReq('a.SB1.1.attachment', (fd.field('sc.SB1.1.attachment').value === "Yes" && fd.field('sc.SB1.isSB1Required').value === "Yes"));
     },
     toggleOCIPB: function() {
+        //OCIP B
+        this.showHideInClass('sc.OCIPB.readAndUnderstood', 'Yes', 'OCIPBQuestions', false);
+        this.showHideInClass('tog.OCIPB.hidePDF', false, 'OCIPBPDF', false);
+
+
         fd.field("num.OCIP.FB.S2.modifiedPremium").value = fd.field("num.OCIP.FB.S2.experienceMod").value * fd.field("num.OCIP.FB.S2.premiumTotal").value;
         //If the experience modifier was changed, so would the modieief premium. Therefore, this should also trigger the table.
         dataTableFunctions.calculateOCIPBWCPremium(fd.control("dt.OCIP.FB.S2.WCPremium").value);
