@@ -12,6 +12,7 @@
 +-------------------------------------------------------------------------------------------------------------+
 */
 fd.rendered(function() {
+    fd.clear();
     dataTableFunctions.disableLastColumn();
     dataHandling.externalFile();
     
