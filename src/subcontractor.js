@@ -183,7 +183,7 @@ function autopopulate() {
         fd.data(data);
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
-        fd.field("t.GI.primeContractorRepresentativeEmail") = urlParams.get('primeContact');
+        fd.field("t.GI.primeContractorRepresentativeEmail").value = urlParams.get('primeContact');
         
 
         let editable = [];
