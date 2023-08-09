@@ -1,0 +1,10 @@
+title: TCIG Subcontractor Automation Documentation
+description: A starter template for a Jeykll site using the Just the Docs theme!
+author: Kyle Han
+theme: just-the-docs
+
+url: https://just-the-docs.github.io
+
+aux_links:
+  Initialization Form: https://tce-innovation.github.io/Subcontractor-Automation/initialization.html
+  Correction Form: https://tce-innovation.github.io/Subcontractor-Automation/correction.html
