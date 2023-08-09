@@ -184,7 +184,7 @@ let dataHandling = {
             fd.control('DataTable1').$on('edit', function(e) {
                 //console.log(e);
                 if (e.column.field === 'Column1') {
-                    dataTableFunctions.dataTableFunctions.populateColumn(e.widget, e.model.Column1, jsonData.MTAForms);
+                    dataTableFunctions.populateColumn(e.widget, e.model.Column1, jsonData.MTAForms);
                 }
                 if (e.column.field === 'Column2') {
                     dataTableFunctions.populateColumn(e.widget, e.model.Column2, jsonData.MTAForms[e.model.Column1]);
