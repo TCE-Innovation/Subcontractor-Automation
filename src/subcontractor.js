@@ -390,6 +390,8 @@ let eventListener = {
         dataTableFunctions.calculateOCIPBValues();
         dataTableFunctions.rmsaRefNum();
 
+        dataTableFunctions.calculateOCIPBInsurance(fd.control("dt.OCIP.FB.S2.insurancePremium").value);
+
         //this field should also get disabled, since the user should not interact with it (It should be filled automatically)
         this.fieldVisAndReq('num.GI.percentOfTotalContractPrice', false);
     },
@@ -453,7 +455,7 @@ let eventListener = {
         */
 
         //Toggles Schedule F, Form F3
-        this.showHideInClass('sc.SF.FF3.FF3Applicable', 'Yes', "ScheduleFFormF3", true, ['t.SF.FF3.4.tier', 't.SF.FF3.4.congressionalDistrict', 't.SF.FF3.5.congressionalDistrict',
+        this.showHideInClass('sc.SF.FF3.FF3Applicable', 'Yes', "ScheduleFFormF3", true, ['t.SF.FF3.4.tier', 't.SF.FF3.4.congressionalDistrict', "t.SF.FF3.5.nameOfPrime", "n.SF.FF3.5.addrOfPrime", 't.SF.FF3.5.congressionalDistrict',
                                                                                     't.SF.FF3.7.CFDANumber', 't.SF.FF3.8.federalActionNumber', 'num.SF.FF3.9.awardAmount', 'n.SF.FF3.10.b.addr']);    
 
         //Toggles Schedule B
