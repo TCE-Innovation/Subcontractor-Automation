@@ -478,10 +478,10 @@ let eventListener = {
         this.showHideInClass('sc.RMSA.isRequired', 'SQS', 'SQSQuestions', true, ['t.SQS.2a.streetAddr', 't.SQS.2a.city', 'dd.SQS.2a.state', 't.SQS.2a.zipCode', 'dt.SQS.8.prevExp', 
         'dt.SQS.9.principalContracts', 'dt.SQS.10.contractsOnHand']);
         //'d.SQS.3.dateOfOrg', 't.SQS.3.county', 'dt.SQS.3.namesAndAddrsOfPartners'
-        this.showHideInClass('sc.RMSA.isRequired', 'RMSA', 'RMSAQuestions', true, ['t.RMSA.localManufacturingFacility.streetAddr', 't.RMSA.localManufacturingFacility.city', 'dd.RMSA.localManufacturingFacility.state', 't.RMSA.localManufacturingFacility.zipCode',
+        this.showHideInClass('sc.RMSA.isRequired', 'RMSA', 'RMSAQuestions', true, ['d.SQS.3.incorporationDate', "t.SQS.3.president'sName", "t.SQS.3.vicePresident'sName", "t.SQS.3.treasurer'sName", "t.SQS.3.secretary'sName", "d.SQS.3.dateOfOrg", "t.SQS.3.county", "dt.SQS.3.namesAndAddrsOfPartners",
+        't.SQS.12.unionName', 't.SQS.12.addr', 't.SQS.12.localNo', 't.SQS.12.telephone', 'dt.SQS.8.prevExp', 'dt.SQS.9.principalContracts', 'dt.SQS.10.contractsOnHand']);
         //These fields are in SQS, which should be made not required if the user switches over to RMSA. Otherwise, it will softlock them.
-                    'd.SQS.3.incorporationDate', "t.SQS.3.president'sName", "t.SQS.3.vicePresident'sName", "t.SQS.3.treasurer'sName", "t.SQS.3.secretary'sName", "d.SQS.3.dateOfOrg", "t.SQS.3.county", "dt.SQS.3.namesAndAddrsOfPartners",
-                    't.SQS.12.unionName', 't.SQS.12.addr', 't.SQS.12.localNo', 't.SQS.12.telephone', 'dt.SQS.8.prevExp', 'dt.SQS.9.principalContracts', 'dt.SQS.10.contractsOnHand']);
+                    
 
         
 
@@ -615,7 +615,7 @@ let eventListener = {
         //Toggles Schedule B1
         this.showHideInClass('sc.SB1.isSB1Required', 'Yes', 'ScheduleB1Class', false, ["a.SB1.1.attachment"]);
         //Change whats required in schedule B1
-        this.showHideInClass('sc.SB1.isSB1Required', 'Yes', 'SB1Required');
+        this.showHideInClass('sc.SB1.isSB1Required', 'Yes', 'SB1Required', true, ['dt.SB1.4.performanceBondInfo', 'dt.SB1.5.subcontracts']);
 
         this.fieldVisAndReq('a.SB1.1.attachment', (fd.field('sc.SB1.1.attachment').value === "Yes" && fd.field('sc.SB1.isSB1Required').value === "Yes"));
     },
