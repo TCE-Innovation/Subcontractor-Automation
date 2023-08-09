@@ -181,6 +181,10 @@ function autopopulate() {
     //Extract the items that should be editable
     getKnownInfo().then(function(data){
         fd.data(data);
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        fd.field("t.GI.primeContractorRepresentativeEmail") = urlParams.get('primeContact');
+        
 
         let editable = [];
         try{const {editableItems: editableItems} = data;
