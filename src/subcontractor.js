@@ -85,6 +85,7 @@ var executeOnce = (function() {
             dataTableFunctions.initialize();
             attachmentFunctions.initialize();
             console.log("If you experience any problems with these forms... Blame the MTA. Not Us.");
+            document.getElementById("docTitle").innerHTML = "New text!";
         }
     };
 })();
@@ -268,8 +269,13 @@ function autopopulate() {
 
         });
 
+        //Correct the heading, if it exists
+
+        document.getElementById("docTitle").innerHTML = fd.field("t.GI.generalContractorName").value + " Subcontractor Forms";
+
         //Once we have recieved all the data and have finished autofilling, then set up the event listeners
         eventListener.init();
+        
     })
 
     
