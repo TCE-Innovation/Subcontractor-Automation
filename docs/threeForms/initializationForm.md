@@ -25,8 +25,8 @@ Upon submitting, an email will be generated and sent to the subcontractors liste
 
 ----
 
-[Subcontractor Initialization Forms]: forms/initialization.html
+[Subcontractor Initialization Forms]: https://tce-innovation.github.io/Subcontractor-Automation/forms/initialization.html
 
-[Subcontractor Forms]: forms/subForm.html
+[Subcontractor Forms]: https://tce-innovation.github.io/Subcontractor-Automation/forms/subForm.html
 
-[Correction Forms]: forms/correction.html
+[Correction Forms]: https://tce-innovation.github.io/Subcontractor-Automation/forms/correction.html
