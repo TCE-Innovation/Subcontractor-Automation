@@ -15,8 +15,8 @@ nav_external_links:
     hide_icon: false
 
 aux_links:
-  Initialization Form: https://tce-innovation.github.io/Subcontractor-Automation/initialization.html
-  Correction Form: https://tce-innovation.github.io/Subcontractor-Automation/correction.html
+  Initialization Form: https://tce-innovation.github.io/Subcontractor-Automation/forms/initialization.html
+  Correction Form: https://tce-innovation.github.io/Subcontractor-Automation/forms/correction.html
 
 
 # Google Analytics Tracking (optional)
