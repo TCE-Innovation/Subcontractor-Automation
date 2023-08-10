@@ -17,14 +17,14 @@ permalink: /
 
 # Quick Links
 
-[Subcontractor Initialization Forms](https://tce-innovation.github.io/Subcontractor-Automation/initialization.html){: .btn .btn-purple }
-[Correction Forms](https://tce-innovation.github.io/Subcontractor-Automation/correction.html){: .btn .btn-blue }
-[Subcontractor Forms](https://tce-innovation.github.io/Subcontractor-Automation/){: .btn .btn-green }
+[Subcontractor Initialization Form](https://tce-innovation.github.io/Subcontractor-Automation/initialization.html){: .btn .btn-purple }
+[Correction Form](https://tce-innovation.github.io/Subcontractor-Automation/correction.html){: .btn .btn-blue }
+[Subcontractor Form](https://tce-innovation.github.io/Subcontractor-Automation/){: .btn .btn-green }
 
->{: .warning}
+{: .warning}
 > You should never have to click the subcontractor forms. An automatic email is generated upon initialization using the following format, replacing ```ContractNum``` and ```SubcontractorName``` with their respective information:
 > ```
-> https://tce-innovation.github.io/Subcontractor-Automation/?contract=[ContractNum]&subName=[SubcontractorName]
+> https://tce-innovation.github.io/Subcontractor-Automation/forms/subcontractor.html?contract=[ContractNum]&subName=[SubcontractorName]
 > ```
 > Entering this page without the data will cause the form to improperly display.
 
@@ -111,17 +111,7 @@ In the second table, add the emails of the representative that needs to correct 
 ![](/assets/images//correctionFormsProcess.png)
 *In this case, I am instructing Rory O'Neill to correct questions 10 and 11 on the SQS form. *
 
-## Error Checking
 
-The forms employ format checking for the following items:
-- Contract Numbers
-- Phone Numbers
-- Email Addresses
-- EIN/SSN/TIN
-- Date Formatting
-- Date expiration vs date start
-
-Additionally, the forms will force subcontractors to fill out mandatory items in full, if necessary. Take for example, Schedule B: Contractor Responsibility form. It is an optional form, albeit a very complex form. Thus, the item is only mandatory when the subcontractor indicates that they need to fill it out.
 
 
 
@@ -133,9 +123,3 @@ Additionally, the forms will force subcontractors to fill out mandatory items in
 [Subcontractor Form]: forms/subcontractorForm.html
 
 [Correction Form]: forms/correction.html
-
-[Initialization Form Documentation]: initializationForm.md
-
-[Subcontractor Form Documentation]: subcontractorForm.md
-
-[Correction Form Documentation]: correctionForm.md

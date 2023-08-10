@@ -5,6 +5,24 @@ nav_order: 3
 has_toc: false
 ---
 
+# Table of Contents
+{: .no_toc}
+
+1. TOC
+{:toc}
+
+# Error Checking
+
+The forms employ format checking for the following items:
+- Contract Numbers
+- Phone Numbers
+- Email Addresses
+- EIN/SSN/TIN
+- Date Formatting
+- Date expiration vs date start
+
+Additionally, the forms will force subcontractors to fill out mandatory items in full, if necessary. Take for example, Schedule B: Contractor Responsibility form. It is an optional form, albeit a very complex form. Thus, the item is only mandatory when the subcontractor indicates that they need to fill it out.
+
 # Formatting
 
 Some values have strict formatting. Items that are strictly formatted must adhere to the standards laid out below.
