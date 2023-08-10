@@ -1,0 +1,38 @@
+title: TCIG Subcontractor Automation Documentation
+baseurl: ""
+url: https://tce-innovation.github.io/
+description: Techncial and non-technical documentation for the Subcontractor Automation Project, a 2023 Summer Intern Project.
+
+# Build settings
+search_enabled: true
+footer_content: "Copyright © 2022 TCIG."
+permalink: pretty
+
+# External navigation links
+nav_external_links:
+  - title: GitHub Repository
+    url: https://github.com/orsonjiang/orsonjiang.github.io
+    hide_icon: false
+
+aux_links:
+  Initialization Form: https://tce-innovation.github.io/Subcontractor-Automation/initialization.html
+  Correction Form: https://tce-innovation.github.io/Subcontractor-Automation/correction.html
+
+
+# Google Analytics Tracking (optional)
+# e.g, UA-1234567-89a
+#ga_tracking: G-DXM302GVGM
+#ga_tracking_anonymize_ip: true # Use GDPR compliant Google Analytics settings (true/nil by default)
+
+plugins:
+  - jekyll-seo-tag
+
+compress_html:
+  clippings: all
+  comments: all
+  endings: all
+  startings: []
+  blanklines: false
+  profile: false
+  # ignore:
+  #   envs: all
