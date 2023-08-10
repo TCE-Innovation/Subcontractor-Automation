@@ -827,7 +827,7 @@ let dataTableFunctions = {
         return returnValue;
     },
     rowValidators: function () {
-        this.getDataTables();
+        this.setNamesOfDT();
         this.namesOfDataTables.forEach(el => {
             fd.control(el).addValidator({
                 name: 'DataTable' + el,
@@ -1094,7 +1094,7 @@ let dataTableFunctions = {
 
         
     },
-    getDataTables: function () {
+    setNamesOfDT: function () {
         this.namesOfDataTables = Object.keys(fd.data()).filter((name) => /dt./.test(name));
     },
     //Will loop through all the values in the array to add a validator to all of them
