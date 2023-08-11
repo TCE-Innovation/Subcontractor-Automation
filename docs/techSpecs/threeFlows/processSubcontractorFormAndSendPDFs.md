@@ -6,23 +6,19 @@ parent: The Three Flows
 grand_parent: Technical Specifications
 ---
 
-#Process Subcontractor Form and Send PDFs
+# Process Subcontractor Form and Send PDFs
+{: .no_toc}
 
-<h2>Table of Contents</h2>
+## Table of Contents
 {:toc}
 
-<h2>Quick Links</h2>
-[Purpose]
-[Overview]
-[How to Edit]
-
-<h2>Purpose</h2>
+## Purpose 
 
 This flow is an automated process that runs after a submission to the Subcontractor Form is received. It processes the data provided in the submission, generates individual Word Documents and PDFs, creates PDF packets, and sends the packets in individual emails to the subcontractor and TCE representative as indicated in the Initialization Form and Subcontractor Form.
 
 [Back to top](#top)
 
-<h2>Overview</h2>
+## Overview
 
 The Process Subcontractor Form and Send PDFs Power Automate flow is automatically triggered to run when the Subcontractor Form is submitted. After being triggered, it does the following:
 1. Read data from the submitted Subcontractor Form
@@ -36,11 +32,11 @@ The above steps are described further in detail in their respective sections.
 
 The image below shows a high-level overview of the flow.
 
-![](assets/images/processSubcontractorFormAndSendPDFs/annotatedWorkflow.png)
+![Annotated Power Automate Workflow](../../../assets/images/processSubcontractorFormAndSendPDFs/annotatedWorkflow.png)
 
 [Back to top](#top)
 
-<h2>Connections, Triggers, and Actions Used</h2>
+## Connections, Triggers, and Actions Used 
 
 Only one trigger is used: [Plumsail Forms](https://learn.microsoft.com/en-us/connectors/plumsailforms/) - Form is submitted
 
@@ -75,7 +71,7 @@ Several connectors and actions are used in the creation of this flow:
 *Premium connectors require a Premium Power Automate license which costs $15/user/month as of Aug. 2023
 **Every occurrence of Merge PDFs counts as one Document Transaction. There are two Document Transactions occur each time this flow is run - once for each packet that gets merged since the Merge PDFs action is used. See [Pricing and Limitation Considerations](/doc/pricingAndLimitationConsiderations.md) for more information.
 
-<h2>How to Edit</h2>
+## How to Edit
 
 The flow is organized roughly into the four sections seen in the [Overview](#Overview) section.
 

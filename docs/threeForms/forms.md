@@ -7,7 +7,13 @@ permalink: /theForms
 ---
 
 # The Three Forms
-THere are 3 forms that make up this process: The initialization Form, the subcontractor form, and the correction form. All forms employ the same formatting restrictions, the rules for which can be found on the sidebar.
+This process involves 3 Plumsail Forms:
+
+1. Initialization Form
+2. Subcontractor Form
+3. Correction Form 
+
+All forms employ the same formatting restrictions, the rules for which can be found in [Formatting](/docs/formatting.md).
 
 The initialization form kickstarts the process with a little bit of known good information from the general contractor.
 

@@ -6,7 +6,7 @@ parent: The Three Forms
 ---
 
 # Table of Contents
-{: .no_toc}
+{:.no_toc}
 
 1. TOC
 {:toc}
@@ -28,7 +28,9 @@ To start a new form, click [Subcontractor Initialization Forms], and enter in yo
 Ensure that the inputted contract number and general contractor fields are correct, otherwise you could lose the file.
 
 Upon submitting, an email will be generated and sent to the subcontractors listed. 
-![](assets/images/initForm.png)
+
+![Initialization Form](/assets/images/initForm.png)
+
 *In this image, we will send an email to Matthew, Rory, Chris, Rachel and Kyle, all the representatives of subcontractors being used by Stop Bug Incorporated.*
 
 
