@@ -21,10 +21,10 @@ permalink: /
 [Correction Form](https://tce-innovation.github.io/Subcontractor-Automation/correction.html){: .btn .btn-blue }
 [Subcontractor Form](https://tce-innovation.github.io/Subcontractor-Automation/){: .btn .btn-green }
 
-{: .warning}
+{: .warning }
 > You should never have to click the subcontractor forms. An automatic email is generated upon initialization using the following format, replacing ```ContractNum``` and ```SubcontractorName``` with their respective information:
 > ```
-> https://tce-innovation.github.io/Subcontractor-Automation/forms/subcontractor.html?contract=[ContractNum]&subName=[SubcontractorName]
+> https://tce-innovation.github.io/Subcontractor-Automation/forms/subcontractor.html?contract=[ContractNum]&subName=[SubcontractorName]&primeContact=[emailHere]
 > ```
 > Entering this page without the data will cause the form to improperly display.
 
@@ -49,14 +49,14 @@ TCE has had problems with these forms in the past - mainly subcontractors leavin
 
 ## Step 1: Initialization
 
-Click [Subcontractor Initialization Forms]. Fill out the requested information. The table at the very bottom will indicate the recipients of the subcontractor forms: these are the subcontractors who need to fill out these forms.
+Click [Subcontractor Initialization Form]. Fill out the requested information. The table at the very bottom will indicate the recipients of the subcontractor forms: these are the subcontractors who need to fill out these forms.
 
 ![](/assets/images//initForm.png)
-*In this image, we will send an email to Matthew, Rory, Chris, Rachel and Kyle, all the representatives of subcontractors being used by Stop Bug Incorporated.*
+*In this image, we will send an email to Matthew, Rory, Chris, Rachel and Kyle, all the representatives of subcontractors being used by Stop Bug Incorporated under contract R-33333.*
 
 ## Step 2: Receipt
 
-Subcontractors will recieve an email, with the subject line "[Prime Contractor] requests you fill out the following form" from the email TCIG@tcelect.net. This is the Innovation Group's email. The email will contain a link. Either click the link or copy paste into the browser, but the link **must** be copied in full. Not copying completely/following the link directly will result in a failed autofill, as this information is embedded in the URL.
+Subcontractors will recieve an email, with the subject line "[Prime Contractor] requests you fill out the following form" from the email <u>TCIG@tcelect.net</u>. This is the Innovation Group's email. The email will contain a link. Either click the link or copy paste into the browser, but the link **must** be copied in full. Not copying completely/following the link directly will result in a failed autofill, as this information is embedded in the URL.
 
 ## Step 3: Completion
 
@@ -68,7 +68,7 @@ For problems with formatting, see ___________
 
 ![](/assets/images/subcontractorForm.png)
 
-*Here, we see the wizard guiding the subcontractor through the 12 steps necessary to complete their SQS/OCIP forms. Grayed out information, as shown, is known good information, provided to us by the initialization form.*
+*Here, we see the wizard guiding the subcontractor through the 12 steps necessary to complete their SQS/OCIP forms. Grayed out information, as shown, is known good information, provided to us by the initialization form. Thus, the user will not be able to edit it.*
 
 ## Step 4: Submission
 
@@ -92,7 +92,7 @@ This email will contain the completed PDFs that the subcontractor has filled out
 
 We have tried our best to implement as many error checking features as possible. However, we cannot check for content. Imagine if someone mispells their president's name "Jennifer" as "jenifer". Small change, but not something that we can catch, since there may be someone named "Jenifer".
 
-In this case, we would utilize the [Correction Forms]. Open the completed PDF and the correction form side by side. 
+In this case, we would utilize the [Correction Form]. Open the completed PDF and the correction form side by side. 
 
 ### Step 6a: Contract Number and Subcontractor Name
 
@@ -111,7 +111,7 @@ In the second table, add the emails of the representative that needs to correct 
 ![](/assets/images//correctionFormsProcess.png)
 *In this case, I am instructing Rory O'Neill to correct questions 10 and 11 on the SQS form. *
 
-
+## Step 7: 
 
 
 
