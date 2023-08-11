@@ -85,7 +85,6 @@ var executeOnce = (function() {
             dataTableFunctions.initialize();
             attachmentFunctions.initialize();
             console.log("If you experience any problems with these forms... Blame the MTA. Not Us.");
-            document.getElementById("docTitle").innerHTML = "Subcontractor Forms";
         }
     };
 })();
@@ -794,16 +793,16 @@ let eventListener = {
     //Important to note: The way this is hidden is fundamentally different from the way classes are hidden.
     //Be sure to note: Hiding/Showing a class will not affect the visibility of a field hidden like this
     //If parameter is true, will show and require
-    fieldVisAndReq: function(fieldName, trueOrFalse, dataTableOrField = "Field") {
+    fieldVisAndReq: function(fieldName, requiredOrNot, dataTableOrField = "Field") {
         dataTableOrField = dataTableOrField.toLowerCase();
         switch (dataTableOrField) {
             case "field":
-                fd.field(fieldName).hidden = !trueOrFalse;
-                fd.field(fieldName).required = trueOrFalse;
+                fd.field(fieldName).hidden = !requiredOrNot;
+                fd.field(fieldName).required = requiredOrNot;
                 break;
             case "datatable":
-                fd.control(fieldName).required = trueOrFalse;
-                if (trueOrFalse) {
+                fd.control(fieldName).required = requiredOrNot;
+                if (requiredOrNot) {
                     $(fd.control(fieldName).$el).show();
                     } else {
                         $(fd.control(fieldName).$el).hide();

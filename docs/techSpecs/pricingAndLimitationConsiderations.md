@@ -57,6 +57,7 @@ As of Aug 2023, Adobe PDF Services API offers a [free tier](https://developer.ad
 
 ![Adobe PDF Services API Pricing](/assets/images/adobeAcrobat/adobePDFServicesAPIPricing.png)
 
+
 It is possible to check the current amount of Document Transactions used by logging to the account being used to access the Adobe PDF Services Connector and generating a report.
 
 1. Login and navigate to the site: https://acrobatservices.adobe.com/dc-integration-creation-app-cdn/main.html?api=pdf-services-api
