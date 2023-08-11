@@ -22,6 +22,10 @@ Next, check the Developer box in the right column and click "OK". You may have t
 
 ![Check the Developer Box](../../../assets/images/microsoftWordTemplate/CheckDeveloperBox.png)
 
+![Check the Developer Box]({{ site.baseurl }}/assets/images/microsoftWordTemplate/CheckDeveloperBox.png)
+![Check the Developer Box]({{ site.baseurl }}{{post.url}})
+![Check the Developer Box]({{ site.baseurl }}../../../assets/images/microsoftWordTemplate/CheckDeveloperBox.png)
+
 [Back to top](#top)
 
 ## Adding/Editing Content Controls
