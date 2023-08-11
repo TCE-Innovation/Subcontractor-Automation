@@ -20,11 +20,11 @@ If it does not appear, go to Word Options in one of two ways:
 
 Next, check the Developer box in the right column and click "OK". You may have to scroll down to find it.
 
-![Check the Developer Box](../../../assets/images/microsoftWordTemplate/CheckDeveloperBox.png)
+![Check the Developer Box1](../../../assets/images/microsoftWordTemplate/CheckDeveloperBox.png)
 
-![Check the Developer Box]({{ site.baseurl }}/assets/images/microsoftWordTemplate/CheckDeveloperBox.png)
-![Check the Developer Box]({{ site.baseurl }}{{post.url}})
-![Check the Developer Box]({{ site.baseurl }}../../../assets/images/microsoftWordTemplate/CheckDeveloperBox.png)
+![Check the Developer Box2]({{ site.baseurl }}/assets/images/microsoftWordTemplate/CheckDeveloperBox.png)
+![Check the Developer Box3]({{ site.baseurl }}{{post.url}})
+![Check the Developer Box4]({{ site.baseurl }}../../../assets/images/microsoftWordTemplate/CheckDeveloperBox.png)
 
 [Back to top](#top)
 
