@@ -85,7 +85,7 @@ var executeOnce = (function() {
             dataTableFunctions.initialize();
             attachmentFunctions.initialize();
             console.log("If you experience any problems with these forms... Blame the MTA. Not Us.");
-            document.getElementById("docTitle").innerHTML = "New text!";
+            document.getElementById("docTitle").innerHTML = "Subcontractor Forms";
         }
     };
 })();
@@ -353,14 +353,24 @@ let eventListener = {
     ],
     SQS: ['sc.SQS.readAndUnderstood', 'tog.SQS.hidePDF', 'tog.RMSA.hidePDF', 'sc.SQS.3.corpOrCoPartner', 'sc.SQS.8.applicable', 'sc.SQS.9.applicable', 'sc.SQS.10.applicable', 'sc.SQS.12.non-UnionOrUnion','sc.RMSA.isRequired'],
     scheduleB1: ['sc.SB1.readAndUnderstood', 'tog.SB1.hidePDF', 'sc.SB1.isSB1Required', 'sc.SB1.1.attachment'],
-    pdfControls: [],
+    pdfControls: ['sc.SF1.readAndUnderstood', 
+    'tog.SF1.hidePDF',
+    'tog.SA.hidePDF',
+    'sc.SB.readAndUnderstood',
+    'tog.SB.hidePDF',
+    'sc.SG.readAndUnderstood',
+    'tog.SG.hidePDF',
+    'sc.OCIPA.readAndUnderstood',
+    'tog.OCIPA.hidePDF'],
     OCIPB: ['sc.OCIPB.readAndUnderstood', 'tog.OCIPB.hidePDF', 'num.OCIP.FB.S2.experienceMod', 'sc.OCIP.FB.S2.WCPremium', 'sc.OCIP.FB.S2.insurancePremium'],
 
     //Methods
     init: function() {
         //Items are added here, where they will be called to add onto the arrays
-        this.pdfControls = Object.keys(fd.data()).filter((name) => /hidePDF/.test(name));
-        this.pdfControls = this.pdfControls.concat(Object.keys(fd.data()).filter((name) => /readAndUnderstood/.test(name)));
+        //For some reason this sorting algorithm didn't end up working that well. So we scrap it.
+        //I think it might have been better to use fd.fields instead of fd.data, but I already hard coded it, so whats the point lol
+        //this.pdfControls = Object.keys(fd.data()).filter((name) => /hidePDF/.test(name));
+        //this.pdfControls = this.pdfControls.concat(Object.keys(fd.data()).filter((name) => /readAndUnderstood/.test(name)));
 
         //Sets up the event listeners for each of the fields.
         this.eventListenerHelper(this.generalInfoEvents, this.generalInfoCallback);
