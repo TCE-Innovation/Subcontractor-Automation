@@ -64,7 +64,7 @@ When subcontractors click the link recieved, the following page will open up. It
 
 This form utilizes a wizard to error-check and validate the inputted information. Each step in the wizard represents a new form to be filled out. Extremely long forms, such as Schedule B, OCIP A, and OCIP B were broken down into parts, which each of those parts getting its own wizard. This ensure the subcontractor fills out all the required items.
 
-For problems with formatting, see ___________
+For problems with formatting, see [Accepted Formatting](https://tce-innovation.github.io/Subcontractor-Automation/docs/formatting/)
 
 ![](/assets/images/subcontractorForm.png)
 
@@ -94,6 +94,8 @@ We have tried our best to implement as many error checking features as possible.
 
 In this case, we would utilize the [Correction Form]. Open the completed PDF and the correction form side by side. 
 
+If everything on the forms appear correct, simply jump to [Step 7]{##Step-7}
+
 ### Step 6a: Contract Number and Subcontractor Name
 
 Click the dropdown menu for ```Contract Number``` and select the corresponding contract number. Then, do the same with ```subcontractor name```.
@@ -111,8 +113,11 @@ In the second table, add the emails of the representative that needs to correct 
 ![](/assets/images//correctionFormsProcess.png)
 *In this case, I am instructing Rory O'Neill to correct questions 10 and 11 on the SQS form. *
 
+THe subcontractor will get another email indicating to correct their mistakes. Jump back to [Step 3]{##Step-3}
+
 ## Step 7: 
 
+You are all done! Both the subcontractor and the general contractor (That's you!) have recieved copies of the submission.
 
 
 
