@@ -36,7 +36,7 @@ The above steps are described further in detail in their respective sections.
 
 The image below shows a high-level overview of the flow.
 
-![](/assets/images/processSubcontractorFormAndSendPDFs/annotatedWorkflow.png)
+![](assets/images/processSubcontractorFormAndSendPDFs/annotatedWorkflow.png)
 
 [Back to top](#top)
 

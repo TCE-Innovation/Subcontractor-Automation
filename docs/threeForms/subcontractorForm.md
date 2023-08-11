@@ -25,7 +25,7 @@ The MTA Subcontractor Form is to be filled out by the subcontractors asked to co
 
 Subcontractors will receive an invitation to fill out this form via email after the prime contractor (ex: TCE) completes the Initialization Form. Upon opening the form from the email, the subcontractor will be brought to the Subcontractor Form with prepopulated data about known information such as the prime contractor name and be asked to complete the form. The subcontractor must complete each form in sequential order and fill in all of the required fields before being able to proceed to the next step. The form ensures that proper formatting and all required fields are complete before submission.
 
-![](/assets/images/subcontractorForm/wizard.png)
+![](assets/images/subcontractorForm/wizard.png)
 
 Submitting the form will trigger the [Process Subcontractor Form and Send PDFs Power Automate flow](/flows/processSubcontractorFormAndSendPDFs.html) which will generate the PDFs to be reviewed and submitted to the MTA.
 

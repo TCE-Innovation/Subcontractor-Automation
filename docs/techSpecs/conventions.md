@@ -168,10 +168,10 @@ A drop down field was used for the state field in RMSA to ensure only accepted s
 Word Template Title and Tag: `dd.RMSA.supplier.state`
 
 Word Template Default Text: `Supplier State`
-![RMSA Example Default Text](/assets/images/microsoftWordTemplate/RMSAExampleDefaultText.png)
+![RMSA Example Default Text](assets/images/microsoftWordTemplate/RMSAExampleDefaultText.png)
 
 Plumsail Forms Name: `dd.RMSA.supplier.state`
-![RMSA Example Plumsail Forms Name](/assets//images/plumsail/RMSAExampleName.png)
+![RMSA Example Plumsail Forms Name](assets//images/plumsail/RMSAExampleName.png)
 
 Plumsail Forms Class: no class was provided.
 
@@ -181,11 +181,11 @@ In RMSA, there are single choice or radio "buttons" for the question of whether 
 
 Word Template `Title` and `Tag` of the two controls:  `sc.RMSA.isProposedSupplierDMWBE.yes` and `sc.RMSA.isProposedSupplierDMWBE.no`
 
-![RMSA Example Single Choice](/assets/images/microsoftWordTemplate/RMSATitleAndTagExampleSingleChoice.png)
+![RMSA Example Single Choice](assets/images/microsoftWordTemplate/RMSATitleAndTagExampleSingleChoice.png)
 
 Plumsail Forms Name: `sc.RMSA.isProposedSupplierDMWBE`
 
-![RMSA Example Single Choice Plumsail Forms Name](/assets/images/plumsail/RMSAExampleSingleChoice.png)
+![RMSA Example Single Choice Plumsail Forms Name](assets/images/plumsail/RMSAExampleSingleChoice.png)
 
 #### Fields Common Across Several Forms
 
@@ -193,11 +193,11 @@ The name of the person completing the form is listed on several forms including 
 
 Word Template `Title` and `Tag` in Schedule A: `t.SA.nameOfPersonExecutingCertification`
 Word Template Default Text in Schedule A: `Name of Person Executing Certification`
-![Schedule A Example Title and Tag for Name of Signer](/assets/images/microsoftWordTemplate/SAExampleNameOfSignerDefaultText.png)
+![Schedule A Example Title and Tag for Name of Signer](assets/images/microsoftWordTemplate/SAExampleNameOfSignerDefaultText.png)
 
 Word Template `Title` and `Tag` in Schedule F: `t.SF.FF1.nameOfAuthorizedOfficial`
 Word Template Default Test in Schedule F: `Name of Authorized Official`
-![Schedule F Example Title and Tag for Name of Signer](/assets/images/microsoftWordTemplate/SFExampleNameOfSignerDefaultText.png)
+![Schedule F Example Title and Tag for Name of Signer](assets/images/microsoftWordTemplate/SFExampleNameOfSignerDefaultText.png)
 
 Plumsail Forms Name: `t.GI.nameOfPersonCompletingForm`
 Plumsail Forms Class: no class was provided
@@ -209,7 +209,7 @@ For every individual MTA-required form except for the COI, there is a correspond
 Plumsail Forms Name: `tog.SB1.hidePDF`
 Plumsail Forms Class: no class was provided
 
-![Example of Schedule B1 Toggle](/assets/images/plumsail/SB1ExampleToggle.png)
+![Example of Schedule B1 Toggle](assets/images/plumsail/SB1ExampleToggle.png)
 
 #### Plumsail Fields with Classes and Conditional Attachments
 
@@ -218,6 +218,6 @@ In Schedule B1, an attachment may be required, but not all the time. Thus, `SB1R
 Plumsail Forms Name: `sc.SB1.1.attachment`
 Plumsail Forms Class: `SB1Required`
 
-![Example of Schedule B1 Conditional Attachment](/assets/images/plumsail/SB1ExampleConditionalAttachment.png)
+![Example of Schedule B1 Conditional Attachment](assets/images/plumsail/SB1ExampleConditionalAttachment.png)
 
 [Back to Top](#top)

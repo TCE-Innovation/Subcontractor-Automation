@@ -7,7 +7,7 @@ nav_order: 2
 ---
 
 # UML Diagram
-![](/assets/images/umlDiagrams/subcontractorjs.png)
+![](assets/images/umlDiagrams/subcontractorjs.png)
 
 # data
 
@@ -16,6 +16,14 @@ nav_order: 2
 >
 > Data is one such class that never got made. All the functinons that should be inside data are hanging around loosey goosey as pure javascript functions(). For all intents and purposes, imagine them as a class.
 
+## executeOnce
+
+
+## getKnownInfo
+
+## apiInteraction
+
+## autoPopulate
 # Event Listener
 
 # dataTableFunctions
