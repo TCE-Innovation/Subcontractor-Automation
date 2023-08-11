@@ -20,7 +20,11 @@ Plumsail comes with a JavaScript editor built in. However, this isn't ideal in t
 
 # Plumsail's JavaScript
 
-For all three forms, the internal JavaScript editor has the exact same code. Once the page is rendered and JQuery (A necessary compoennt to interacting with values on the submission forms) is loaded, then it calles the external file located in this github repo.
+All Plumsail JavaScript features can be found here: [Plumsail Documentation], but listed are the highlights: what was useful or what can be used/referenced in the future. 
+
+## Internal Editor
+
+For all three forms, the internal JavaScript editor has the exact same code. Once the page is rendered and JQuery (A necessary component to interacting with values on the submission forms) is loaded, then it calles the external file located in this github repo.
 
 ```js
 fd.beforeRender(function(vue){
@@ -38,13 +42,56 @@ fd.beforeRender(function(vue){
 
 All Plumsail JavaScript features can be found here: [Plumsail Documentation], but listed are the highlights: what was useful or what can be used/referenced in the future. 
 
-## Fields
+## Form Manager
 
-Fields are basic inputs for the user to enter information. They are referenced by `fd.field("<internalName>")`
+Form manager of public web forms provides access to all the elements of the form. It is called through `fd`.
 
-## Controls
+Below are some important properties and methods using the fd object.
+|Properties|Function|Methods|Function|
+|:-:|:-:|:-:|:-:|
+|`fd.save();`|Saves and submits the form|`fd.beforeCreate();`||
+|`fd.clear();`|Clears the entire form of any information|`fd.created();`|
+|`fd.data();`|Returns the entire form's data in an object|`fd.beforeRender();`|
+|`fd.fields()`|Returns all the fields in the form|`fd.rendered();`|This is where the main code is run out of|
+|`fd.controls()`|Returns all the controls in the form|`fd.beforeSave();`|This is how I handle data manipulation to send to the API|
+|||`fd.saved();`|Run after the form has been completely submitted|
+```js
+fd.save();
+fd.clear();
+fd.data();
+fd.fields();
+fd.controls();
 
-Controls are text and dynamic elements, such as the submit button, captcha, and ink sketch. They are referenced by `fd.control("<internalName>")`
+```
+More information can be found in the [Plumsail Docs Form Manager]
+
+### Fields
+
+Fields are basic inputs for the user to enter information. They are referenced by `fd.field("<internalName>")`. 
+
+Fields include
+- Text and notes
+- Numbers
+- Toggle
+- Drop Down
+- Single and Multiple Choice
+- Date/Date and Time
+- Masked Input
+- Attachments.
+
+Additional documentation on fields can be found on the [Plumsail Forms Field Docs]
+
+### Controls
+
+Controls are text and dynamic elements. The most useful ones in this form are listed below. They are referenced by `fd.control("<internalName>")`
+
+Fields include
+- Data Table
+- Text 
+- HTML
+- Ink Sketch
+
+Additional documentation on fields can be found on the [Plumsail Forms Control Docs]
 
 ## Populating Fields
 
@@ -114,6 +161,7 @@ Validators can be added to check for input errors. Validators can be added to pr
 ```js
 //This adds a validator to the date field 'd.OCIP.FA.S2.workersCompExpiration'
 //If it returns true, then the input is valid. False means there is an error.
+//If the expiration date is before the start date, then throw an error.
 fd.field('d.OCIP.FA.S2.workersCompExpiration').addValidator({
     name: 'Check Date',
     error: 'Expiration date must be after start date.',
@@ -132,15 +180,91 @@ fd.field('d.OCIP.FA.S2.workersCompExpiration').addValidator({
 
 # General Useful JavaScript Features
 
-## Asynch/Await
+## Return Promises
+
+The internet is slow - when we request information, the data cannot be recieved right away. Take for example, the subcontractor form: when it requests autofill information, it must wait to recieve that information. Promises represent the eventual completion of an asynchronous operation. It frees up the CPU to complete other tasks while the data is still in transit.
+
+Here is an example of a promise use case in the `subcontractor.js` file.
+
+```js
+//returns a promise (fetch)
+return fetch(url, options)
+//When the promise is fulfilled, the .then action is run, which will return the .json response of the server
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('Error: ' + response.status);
+        }
+      })
+//If there is any sort of error, check the error
+      .catch(error => {
+        console.error('Error:', error);
+      });
+
+```
+
+More information can be found on the [Mozilla Docs for Promises]
+
+## Async/Await
+
+As before, data handling across the internet is asynchronous and can happen at any time. Async/Await is another way to handle this. 
+
+Here is an example of a async/await use case in the `correction.js` file.
+
+```js
+    (async () => {
+        //dataHandling.getContracts is called: it returns a promise, that when fulfilled will satisfy the await condition. Once the await condition is satisfied, the code will proceed.
+        const value = await dataHandling.getContracts();
+        //console.log(value);
+        fd.field('dd.GI.contractNo').widget.dataSource.data(value);
+    })();
+```
+
+More information can be found on the [Mozilla Docs for Async/Await]
 
 ## Try/Catch
 
-## Return Promises
+Try/Catch can be used when interacting with user input. User input isn't its only use, but because it can be unpredictable, try/catch is a way to try to execute something, but handle any errors that might come about with the user input. We've seen evidence of this above in #async/Await.
+
+```js
+try {
+                let internalName = el.internalName;
+                if (!editable.includes(el.internalName)) {
+                    switch(internalName.substr(0, 2)) {
+                        ...
+                        //The code here autofills the form with information.
+                        //Maybe that information might not match anything and the computer throws an error saying its location can't be found.
+                        //Maybe somehow a user breaks the insertion using a character that was never accounted for.
+                        ...
+                }
+            } catch (err) {
+                //Whatever the error is, we can simply print it to the console and move on to finishe verything else.
+                console.log(err);
+            }
+```
 
 ## forEach
 
+Given a list or an array, forEach will loop through each of the values. Its basically a traditional for loop without dealing with the indexing.
+
+```js
+//This function helps to set up the event listeners foe each of the values in the array <arrayOfEvents>. It is located in subcontractor.js.
+eventListenerHelper: function(arrayOfEvents, callbackFcn) {
+        arrayOfEvents.forEach(field => fd.field(field).$on('change', (value) => callbackFcn.call(this, value)));
+    },
+```
+
 ## Callback Functions
+
+Callback functions are passed as an argument to another function. In the case here, the callback function is called when a something changes.
+
 ----
 
-[Plumsail Documentation]: https://plumsail.com/docs/forms-sp/index.html
+[Plumsail Documentation]: https://plumsail.com/docs/forms-web/index.html
+[Plumsail Docs Form Manager]: https://plumsail.com/docs/forms-web/designer/javascript/form-manager.html#
+[Plumsail Forms Field Docs]: https://plumsail.com/docs/forms-web/designer/fields/index.html
+[Plumsail Forms Control Docs]: https://plumsail.com/docs/forms-web/designer/controls/index.html
+[Mozilla Docs for Promises]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
+[Mozilla Docs for Async/Await]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function
+[Forms for Sharepoint]: https://plumsail.com/docs/forms-sp/index.html
