@@ -116,12 +116,12 @@ let dataHandling = {
         })
 
     },
+    //Because I wanted to process the majority of this in JS and not PA, we have this mess
     submitData: function() {
         formData = fd.data();
         dataToSend = {};
-        dataToSend["t.GI.subcontractorName"] = formData["t.GI.subcontractorName"];
-        dataToSend["mt.GI.contractNo"] = formData["mt.GI.contractNo"];
         console.log(dataToSend);
+        dataToSend = formData;
         
         formToCorrect = dataTableFunctions.extractData("DataTable1", "Column1");
         questionsToCorrect = dataTableFunctions.extractData("DataTable1", "Column2");
