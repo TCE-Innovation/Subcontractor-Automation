@@ -1,6 +1,6 @@
 title: TCIG Subcontractor Automation Documentation
 baseurl: ""
-url: https://tce-innovation.github.io/
+url: https://tce-innovation.github.io/Subcontractor-Automation/
 description: Techncial and non-technical documentation for the Subcontractor Automation Project, a 2023 Summer Intern Project.
 
 # Build settings
@@ -11,7 +11,7 @@ permalink: pretty
 # External navigation links
 nav_external_links:
   - title: GitHub Repository
-    url: https://github.com/TCE-Innovation/Subcontractor-Automation
+    url: https://github.com/TCE-Innovation/Subcontractor-Automation/
     hide_icon: false
 
 aux_links:
