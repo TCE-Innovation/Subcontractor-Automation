@@ -42,7 +42,7 @@ Add elements by clicking and dragging them in from the side. There are a few cat
 
 Properties of elements are listed on the right side of the window, which can be edited for your needs. For example, if you want a field for an email, click and drag a new “Text” field to where you need it to go. On the right, you can then specify the format to be an email. 
 
-![](assets/images/plumsail.png)
+![]({{ site.baseurl }}/assets/images/plumsail.png)
 
 Aside: You will notice that the pattern will update accordingly when you specify a particular format for a “Text” field. That strange expression is called Regex and is a way to represent a series of characters, also known as a string. It allows you to specify the exact format of strings. You can learn more at Regular expressions - JavaScript | MDN (mozilla.org) and play around with it using this link: https://regex101.com/ 
 

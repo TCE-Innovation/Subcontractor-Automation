@@ -27,7 +27,7 @@ A premium [Power Automate license](https://powerautomate.microsoft.com/en-us/pri
 
 As of Aug. 2023, a premium [Power Automate license](https://powerautomate.microsoft.com/en-us/pricing/) costs $15/user/month is required for the Process Subcontractor Form and Send PDFs Power Automate flow to use the Word Business (Online) and Adobe PDF Services API connectors. 
 
-![Power Automate Pricing](/assets/images/powerAutomate/powerAutomatePricing.png)
+![Power Automate Pricing]({{ site.baseurl }}/assets/images/powerAutomate/powerAutomatePricing.png)
 
 Only one account with the Power Automate Premium is required. Currently, the TCIG@tcelect.net email has Power Automate Premium and is being used to maintain the Power Automate Flows used in this system.
 
@@ -35,11 +35,11 @@ Flows must be turned on to work, but they automatically turn off after 60 days o
 
 1. Navigate to "My Flows" and click on the flow to turn on.
 
-![Turn on a flow step 1](/assets/images/powerAutomate/turnOnAFlowStep1.png)
+![Turn on a flow step 1]({{ site.baseurl }}/assets/images/powerAutomate/turnOnAFlowStep1.png)
 
 2. Click the "Turn On/Off" Button.
 
-![Turn on a flow step 2](/assets/images/powerAutomate/turnOnAFlowStep2.png)
+![Turn on a flow step 2]({{ site.baseurl }}/assets/images/powerAutomate/turnOnAFlowStep2.png)
 
 Alternatively, click the three dots from Step 1 and then the Turn On/Off button.
 
@@ -47,7 +47,7 @@ Alternatively, click the three dots from Step 1 and then the Turn On/Off button.
 
 As of Aug. 2023, Plumsail Public Forms offers [several tiers](https://plumsail.com/forms/store/public-forms/) to use its services as shown in the picture below:
 
-![Plumsail Public Forms Pricing](/assets/images/plumsail/plumsailFormsPricing.png)
+![Plumsail Public Forms Pricing]({{ site.baseurl }}/assets/images/plumsail/plumsailFormsPricing.png)
 
 The free tier allows 100 submissions/month and 100 Mb of file storage. The next tier is $12/month which allows for 1000 submissions/month and 1Gb of storage. Each submission takes up very little storage, so this will not be a worry, however the 100 submissions/month effectively limits this form to be used up to a maximum of 100 times per month to stay within the free tier. 
 
@@ -55,7 +55,7 @@ The free tier allows 100 submissions/month and 100 Mb of file storage. The next 
 
 As of Aug 2023, Adobe PDF Services API offers a [free tier](https://developer.adobe.com/document-services/pricing/main/) to use their Adobe PDF Services actions for 500 Document Transactions per month. The only other option is Enterprise Pricing, for which pricing details must be ascertained by contacting sales.
 
-![Adobe PDF Services API Pricing](/assets/images/adobeAcrobat/adobePDFServicesAPIPricing.png)
+![Adobe PDF Services API Pricing]({{ site.baseurl }}/assets/images/adobeAcrobat/adobePDFServicesAPIPricing.png)
 
 
 It is possible to check the current amount of Document Transactions used by logging to the account being used to access the Adobe PDF Services Connector and generating a report.
@@ -64,10 +64,10 @@ It is possible to check the current amount of Document Transactions used by logg
 
 2. Click on the "Check usage" button in the top right.
 
-![Check Usage Step 1](/assets/images/adobeAcrobat/checkUsageStep1.png)
+![Check Usage Step 1]({{ site.baseurl }}/assets/images/adobeAcrobat/checkUsageStep1.png)
 
 3. Select the period and client ID to check usage for and click on the "Generate Report" button.
 
-![Check Usage Step 2](/assets/images/adobeAcrobat/checkUsageStep2.png)
+![Check Usage Step 2]({{ site.baseurl }}/assets/images/adobeAcrobat/checkUsageStep2.png)
 
 Staying on the free tier for Adobe PDF Services API requires that ths flow only be used up to a maximum of 250 times using one free connection. 

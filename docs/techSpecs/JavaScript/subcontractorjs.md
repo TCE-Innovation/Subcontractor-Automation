@@ -7,7 +7,7 @@ nav_order: 2
 ---
 
 # UML Diagram
-![](/assets/images/umlDiagrams/subcontractorjs.png)
+![]({{ site.baseurl }}/assets/images/umlDiagrams/subcontractorjs.png)
 
 # data
 
