@@ -21,7 +21,7 @@ permalink: /
 [Correction Form](https://tce-innovation.github.io/Subcontractor-Automation/correction.html){: .btn .btn-blue }
 [Subcontractor Form](https://tce-innovation.github.io/Subcontractor-Automation/){: .btn .btn-green }
 
-{: .warning}
+{: .warning }
 > You should never have to click the subcontractor forms. An automatic email is generated upon initialization using the following format, replacing ```ContractNum``` and ```SubcontractorName``` with their respective information:
 > ```
 > https://tce-innovation.github.io/Subcontractor-Automation/forms/subcontractor.html?contract=[ContractNum]&subName=[SubcontractorName]

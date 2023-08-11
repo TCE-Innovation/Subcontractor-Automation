@@ -24,7 +24,7 @@ To start a new form, click [Subcontractor Initialization Forms], and enter in yo
 - Total Contract Value
 - Name, email, and company name of the representatives who will fill out this form.
 
-{: .warning}
+{: .warning }
 Ensure that the inputted contract number and general contractor fields are correct, otherwise you could lose the file.
 
 Upon submitting, an email will be generated and sent to the subcontractors listed. 
