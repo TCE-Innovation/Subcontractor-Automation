@@ -1,9 +1,9 @@
 ---
-title: Plumsail Forms JavaScript Control
+title: JavaScript Control
 layout: default
 nav_order: 3
 parent: Technical Specifications
-#has_children: true
+has_children: true
 permalink: /docs/techSpecs/js
 ---
 

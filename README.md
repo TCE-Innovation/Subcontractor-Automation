@@ -22,6 +22,11 @@ Website publishing is done using Jekyll and the pages.yml document in .github/wo
 - Gemfile.lock: required file for Jekyll
 - index.md: main landing page for the documentation site
 
+## Documentation
+
+[Documentation](https://tce-innovation.github.io)
+
+Documentation is provided by Just-TheDocs, and is linked in the ##Tech-Stack below. All the documents relating to that can be found in the ./docs folder
 
 ## Authors
 
@@ -40,35 +45,4 @@ Website publishing is done using Jekyll and the pages.yml document in .github/wo
 
 Consider a custom implementation, such as through a native web application, as opposed to building off existing "productivity" apps. These productivity apps were not designed with such a scale in mind, and therefore is unsuitable for a project like this.
 
-
-## API Reference
-
-#### Get all items
-
-```http
-  GET /api/items
-```
-
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `api_key` | `string` | **Required**. Your API key |
-
-#### Get item
-
-```http
-  GET /api/items/${id}
-```
-
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `id`      | `string` | **Required**. Id of item to fetch |
-
-#### add(num1, num2)
-
-Takes two numbers and returns the sum.
-
-
-## Documentation
-
-[Documentation](https://linktodocumentation)
 
