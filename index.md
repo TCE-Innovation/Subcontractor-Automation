@@ -51,7 +51,7 @@ TCE has had problems with these forms in the past - mainly subcontractors leavin
 
 Click [Subcontractor Initialization Form]. Fill out the requested information. The table at the very bottom will indicate the recipients of the subcontractor forms: these are the subcontractors who need to fill out these forms.
 
-![](/assets/images//initForm.png)
+![](../assets/images//initForm.png)
 *In this image, we will send an email to Matthew, Rory, Chris, Rachel and Kyle, all the representatives of subcontractors being used by Stop Bug Incorporated under contract R-33333.*
 
 ## Step 2: Receipt
@@ -66,7 +66,7 @@ This form utilizes a wizard to error-check and validate the inputted information
 
 For problems with formatting, see [Accepted Formatting](https://tce-innovation.github.io/Subcontractor-Automation/docs/formatting/)
 
-![](/assets/images/subcontractorForm.png)
+![](../assets/images/subcontractorForm.png)
 
 *Here, we see the wizard guiding the subcontractor through the 12 steps necessary to complete their SQS/OCIP forms. Grayed out information, as shown, is known good information, provided to us by the initialization form. Thus, the user will not be able to edit it.*
 
@@ -110,7 +110,7 @@ As you navigate the form and find an error, you will be able to find the corresp
 
 In the second table, add the emails of the representative that needs to correct their form. They will recieve an email indicating the items they need to correct, and which form to find it on.
 
-![](/assets/images//correctionFormsProcess.png)
+![](../assets/images//correctionFormsProcess.png)
 *In this case, I am instructing Rory O'Neill to correct questions 10 and 11 on the SQS form. *
 
 THe subcontractor will get another email indicating to correct their mistakes. Jump back to [Step 3]{##Step-3}
