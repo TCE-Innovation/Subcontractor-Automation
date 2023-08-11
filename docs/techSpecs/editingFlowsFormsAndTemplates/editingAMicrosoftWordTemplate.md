@@ -1,7 +1,7 @@
 ---
 title: Editing a Microsoft Word Template
 layout: default
-parent:
+parent: Editing Flows, Forms, and Templates
 grand_parent: Technical Specifications
 nav_order: 5
 ---
@@ -12,7 +12,7 @@ nav_order: 5
 
 To edit a Microsoft Word Template, you will need the Developer Tab in the ribbon. This is only available on the desktop version of Microsoft Word. If this is already enabled, you will see the Developer Tab as shown below and can move onto [Adding/Editing Content Controls](#addingediting-content-controls):
 
-![Developer Tab Picture](/assets/images/microsoftWordTemplate/DeveloperTab.png)
+![Developer Tab Picture](../../../assets/images/microsoftWordTemplate/DeveloperTab.png)
 
 If it does not appear, go to Word Options in one of two ways:
 1. Right click on the ribbon and click on "Customize Ribbon" or...
@@ -20,13 +20,19 @@ If it does not appear, go to Word Options in one of two ways:
 
 Next, check the Developer box in the right column and click "OK". You may have to scroll down to find it.
 
-![Check the Developer Box](/assets/images/microsoftWordTemplate/CheckDeveloperBox.png)
+![Check the Developer Box](../../../assets/images/microsoftWordTemplate/CheckDeveloperBox.png)
 
 [Back to top](#top)
 
 ## Adding/Editing Content Controls
 
-All content controls have the properties:
+Word Template Content Controls include the following properties:
+
+* `Title`: text used to describe the content control it belongs to
+* `Tag`: a unique identifier for the content control it belongs to
+* Default Value: the value to be populated in the template if no value is provided. 
+* Plain Text Properties - Allow carriage returns (multiple paragraphs): allows newline characters to be entered in the content control
+
 
 
 ### 

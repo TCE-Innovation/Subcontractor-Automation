@@ -50,8 +50,8 @@ SG.T-00001.Case3RMSA
 
 When creating form templates, it is essential that the names of Word Template content controls are unique so that the document can be populated with the correct and corresponding data. Plumsail fields must also be unique to differentiate between different data. Word Template content controls include the following properties:
 
-* `Title`: text used to describe the control it belongs to
-* `Tag`: a unique identifier for the control it belongs to
+* `Title`: text used to describe the content control it belongs to
+* `Tag`: a unique identifier for the content control it belongs to
 * Default Value: the value to be populated in the template if no value is provided. This is also shown in the "Populate a Microsoft Word template" action when the field is empty and can thus be used as a helpful hint for matching fields when editing the Power Automate Flow.
 
 Plumsail Fields have the properties:
