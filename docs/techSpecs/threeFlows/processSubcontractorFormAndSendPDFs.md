@@ -10,6 +10,8 @@ grand_parent: Technical Specifications
 {: .no_toc}
 
 ## Table of Contents
+
+1. Table of Contents
 {:toc}
 
 ## Purpose 

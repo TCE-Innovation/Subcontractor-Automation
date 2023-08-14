@@ -7,18 +7,19 @@ has_children: true
 permalink: /docs/techSpecs/js
 ---
 
+# JavaScript in Plumsail
 
-# Table of Contents
+## Table of Contents
 {: .no_toc}
 
 1. TOC
 {:toc}
 
-# About
+## About
 
 Plumsail comes with a JavaScript editor built in. However, this isn't ideal in terms of debugging, organizing, and controlling the whole process. Thus, we've segmented the code into several parts.
 
-# Plumsail's JavaScript
+## Plumsail's JavaScript
 
 All Plumsail JavaScript features can be found here: [Plumsail Documentation], but listed are the highlights: what was useful or what can be used/referenced in the future. 
 
@@ -55,13 +56,13 @@ Below are some important properties and methods using the fd object.
 |`fd.fields()`|Returns all the fields in the form|`fd.rendered();`|This is where the main code is run out of|
 |`fd.controls()`|Returns all the controls in the form|`fd.beforeSave();`|This is how I handle data manipulation to send to the API|
 |||`fd.saved();`|Run after the form has been completely submitted|
+
 ```js
 fd.save();
 fd.clear();
 fd.data();
 fd.fields();
 fd.controls();
-
 ```
 More information can be found in the [Plumsail Docs Form Manager]
 
@@ -107,6 +108,7 @@ You can access the value of either a field or a control using the `value` method
 |Data Table|Array of Objects, Objects Key/Value pair contains the column internal name|
 
 Thus, we can run the following code to change the value of a field.
+
 ```js
 //This sets the field called <internalName> as "Never Gonna Give You Up"
 fd.field("<internalName>").value = "Never Gonna Give You Up";
@@ -115,6 +117,7 @@ fd.field("<internalName>").value = "Never Gonna Give You Up";
 ## Disabling Fields
 
 You may access the attribute `disabled` for both a control and a field. This disallows user input while keeping the old value. Item can still be set using JavaScript. The use case would be:
+
 ```js
 //Disable a field named <internalName>
 fd.field("<internalName>").disabled = true;
