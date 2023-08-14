@@ -29,7 +29,7 @@ Ensure that the inputted contract number and general contractor fields are corre
 
 Upon submitting, an email will be generated and sent to the subcontractors listed. 
 
-![Initialization Form](/assets/images/initForm.png)
+![Initialization Form]({{ site.baseurl }}/assets/images/initForm.png)
 
 *In this image, we will send an email to Matthew, Rory, Chris, Rachel and Kyle, all the representatives of subcontractors being used by Stop Bug Incorporated.*
 

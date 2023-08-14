@@ -20,7 +20,7 @@ Content fixing is what this correction form is used for.
 # How to Use
 
 The correction form is for TCE internal use only. It is shown below: 
-![](assets/images/correctionForms.png)
+![]({{ site.baseurl }}/assets/images/correctionForms.png)
 
 Subcontractor name and contract number are drop downs to indicate which submission needs to be corrected. Populate this with the information regarding the subcontractor and contract number of your choice.
 
@@ -49,5 +49,5 @@ As you navigate the form and find an error, you will be able to find the corresp
 
 In the second table, add the emails of the representative that needs to correct their form. They will recieve an email indicating the items they need to correct, and which form to find it on.
 
-![](assets/images//correctionFormsProcess.png)
+![]({{ site.baseurl }}/assets/images//correctionFormsProcess.png)
 *In this case, I am instructing Rory O'Neill to correct questions 10 and 11 on the SQS form. *
