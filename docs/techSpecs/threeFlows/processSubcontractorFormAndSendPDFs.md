@@ -75,7 +75,7 @@ Several connectors and actions are used in the creation of this flow:
 
 [Back to Top](#top)
 
-## How to Edit
+## Structure
 
 > This section describes the structure specific to the subcontractor flow in greater detail to inform the maintainer how approach making changes. If you need help with how to actually edit a template, see Edit Word Template. If you need help with editing actions and Power Automate Workflows in general, see Edit Power Automate Flow. 
 
@@ -150,9 +150,9 @@ This is where the arrays for SQS and OCIP forms are used to only get the forms n
 * Email with PDF packet attachments is sent to the specified TCE representative as specified on the Initialization Form 
 * Email confirming whether emails were able to be sent to all of the email addresses specified by the subcontrator in the Subcontractor Form is sent to TCIG
 
-Emails are sent individually to each specified recipient. Receipt emails contain 2-3 attachments depending on whether Schedule G was applicable and should or should not be attached. The subcontractor is required to add at least one email address to send the email with attachments to. There will also be one representative from TCE whose email was specified in the Initialization form to be notified when the subcontractor submitted a form. If for some reason an email is unable to be sent to one of the emails specified by the subcontractor, the TCE representative will be notified which emails failed to send and to whom. Otherwise, there will be a confirmation email saying that all emails were successful that lists all of the emails specified by the subcontractor. 
-
 ![Block 4: Email Receipts to Subcontractor and TCE Representatives]({{ site.baseurl }}/assets/images/powerAutomate/block4.png)
+
+Emails are sent individually to each specified recipient. Receipt emails contain 2-3 attachments depending on whether Schedule G was applicable and should or should not be attached. The subcontractor is required to add at least one email address to send the email with attachments to. There will also be one representative from TCE whose email was specified in the Initialization form to be notified when the subcontractor submitted a form. If for some reason an email is unable to be sent to one of the emails specified by the subcontractor, the TCE representative will be notified which emails failed to send and to whom. Otherwise, there will be a confirmation email saying that all emails were successful that lists all of the emails specified by the subcontractor. 
 
 [Back to Top](#top)
 
