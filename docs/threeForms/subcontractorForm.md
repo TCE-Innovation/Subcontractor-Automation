@@ -6,9 +6,12 @@ parent: The Three Forms
 ---
 
 # Subcontractor Form
-{:.no_toc}
+{: .no_toc}
 
-## Table of Contents 
+# Table of Contents 
+{: .no_toc}
+
+1. TOC
 {:toc}
 
 ## Purpose 
@@ -23,12 +26,12 @@ Subcontractors will receive an invitation to fill out this form via email after 
 
 ![Subcontractor Form Wizard]({{ site.baseurl }}/assets/images/subcontractorForm/wizard.png)
 
-Submitting the form will trigger the [Process Subcontractor Form and Send PDFs Power Automate flow](/flows/processSubcontractorFormAndSendPDFs.html) which will generate the PDFs to be reviewed and submitted to the MTA.
+Submitting the form will trigger the [Process Subcontractor Form and Send PDFs Power Automate flow]({{ site.baseurl }}/flows/processSubcontractorFormAndSendPDFs.html) which will generate the PDFs to be reviewed and submitted to the MTA.
 
 [Back to top](#top)
 
 ## How to Edit 
 
-Like the Initialization Form and Correction Form, the Subcontractor Form was created using Plumsail Forms and JavaScript. Please see the [Editing with Plumsail](/docs/techSpecs/editingFlowsFormsAndTemplates.md) and [Editing with JavaScript](/docs/techSpecs/editingFlowsFormsAndTemplates.md) pages for information on how to edit forms with Plumsail and JavaScript.
+Like the Initialization Form and Correction Form, the Subcontractor Form was created using Plumsail Forms and JavaScript. Please see the [Editing with Plumsail]({{ site.baseurl }}/docs/techSpecs/editingFlowsFormsAndTemplates.md) and [Editing with JavaScript]({{ site.baseurl }}/docs/techSpecs/editingFlowsFormsAndTemplates.md) pages for information on how to edit forms with Plumsail and JavaScript.
 
 [Back to top](#top)

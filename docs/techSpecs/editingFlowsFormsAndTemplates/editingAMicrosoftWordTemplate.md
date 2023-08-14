@@ -7,6 +7,13 @@ nav_order: 5
 ---
 
 # Editing a Microsoft Word Template
+{: .no_toc}
+
+# Table of Contents
+{: .no_toc}
+
+1. TOC
+{:toc}
 
 ## Setup: Enable the Developer Tab
 
