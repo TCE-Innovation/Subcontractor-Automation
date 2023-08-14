@@ -5,7 +5,13 @@ nav_order: 1
 parent: Technical Specifications
 ---
 
+# Conventions
+{: .no_toc}
+
 # Table of Contents
+{: .no_toc}
+
+1. TOC
 {:toc}
 
 # Conventions
@@ -131,6 +137,8 @@ It is crucial to name the `Tag` of the Word Template control and `Name` of the P
 [Back to Top](#top)
 
 ### Notes
+
+There may be minor typos and deviations from these conventions in the Plumsail Forms and Word Templates that were not corrected to match the updated conventions. As long as the `Tag` and `Name` that match the data to the correct field or control are consistent with each other, this will not affect the operation of the flow. 
 
 #### Fields and Controls Only Present in the Plumsail Form
 
