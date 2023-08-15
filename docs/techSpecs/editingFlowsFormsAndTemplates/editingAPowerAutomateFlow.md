@@ -252,7 +252,8 @@ If you are creating a new form, create a parallel branch to the other branches t
 
 ![Append RMSA to list of forms to merge]({{ site.baseurl }}/assets/images/powerAutomate/addRMSAToListOfFormsToMerge.png)
 
-6. You're done! Below is an example 
+6. You're done! Below is an example of a completed "Populate a Word Template and Create PDF" sequence. 
+
 ![Complete Populate a Word Template and Create PDF Sequence]({{ site.baseurl }}/assets/images/powerAutomate/overviewOfPopulatingRMSAAndMakingPDF.png)
 
 [Back to Top](#top)
