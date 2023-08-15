@@ -57,17 +57,20 @@ Functions used in expressions in the Power Automate Flows of this project are li
 ### `coalesce`
 {: .no_toc }
 Takes as many arguments as you provide it and returns the first non-null value. This is useful for defaulting values if a null value is provided.
+
 Example: `coalesce(triggerBody()?['n.SB.P1.D.changedAddress'], 'N/A')`
 
 ### `contains`
 {: .no_toc }
 Returns whether a string contains another string.
+
 Example: `contains(item()['colddmcSBP5MemployedBy'], 'MTAC&D'`
 
 ### `equals`
 {: .no_toc }
 
-Takes two arguments and returns whether they are equal
+Takes two arguments and returns whether they are equal.
+
 Example: `equals(triggerBody()?['sc.SB.P3.H.compensationRating'], 'Yes')`
 
 ### `if`
@@ -77,6 +80,7 @@ Takes three arguments:
 1. Condition that returns a boolean value
 2. Value to return if condition is true
 3. Value to return if condition is false
+
 Example: `if(equals(triggerBody()?['sc.SB.P5.L.none'], 'None'), 'None', '')`
 
 ### `or`
@@ -94,15 +98,19 @@ equals(triggerBody()?['sc.SB.P3.H.compensationRating'], 'Yes'))`
 {: .no_toc }
 
 Add numbers and returns the sum.
+
 Example: `add(2, 4.9)`
 
 ### `div`
 {: .no_toc }
 Takes two arguments and divides the first argument by the second.
 
+Example: `div(9, 3.0)`
+
 ### `sub`
 {: .no_toc}
 Subtracts the second number from the first number.
+
 Example: `sub(10, 3.1)`
 
 [Back to Top](#top)
@@ -113,12 +121,15 @@ Example: `sub(10, 3.1)`
 {: .no_toc }
 
 Concatenate arguments into one string.
+
 Example: `concat('Happy ', 'birthday ', '2 ', 'u!')`
 
 ### `float`
 {: .no_toc }
 
 Takes a number argument and convers it to a float.
+
+Example: `float(8)`
 
 ### `formatDateTime`
 {: .no_toc }
@@ -137,6 +148,7 @@ Used mostly to format currencies and percentages. See these links for more infor
 * [https://learn.microsoft.com/en-us/power-automate/format-data-by-examples#format-numbers-by-examples](https://learn.microsoft.com/en-us/power-automate/format-data-by-examples#format-numbers-by-examples)
 
 Currency example: `formatNumber(item()['colnumOCIPFB2insurancePremiumPayroll'], 'C', 'en-US')`
+
 Percentage example: `formatNumber(div(float(item()['colnumSF1Q6activeContractsPercentCompleted']), 100), 'P')`
 
 ### `replace`
@@ -146,6 +158,7 @@ Takes three arguments and replaces specific characters from a source string with
 1. Source string to replace characters in
 2. String to replace
 3. String to replace with
+
 Example: `replace(variables('Sanitized sub name'), item(), '')`
 
 ### `split`
@@ -154,6 +167,7 @@ Example: `replace(variables('Sanitized sub name'), item(), '')`
 Takes a string to split into an array based on a character or sequence of characters. See these links for more information: 
 * [https://zeitgeistcode.com/power-automate-split-function/](https://zeitgeistcode.com/power-automate-split-function/)
 * [https://learn.microsoft.com/en-us/power-platform/power-fx/reference/function-split](https://learn.microsoft.com/en-us/power-platform/power-fx/reference/function-split)
+
 Example: `split( "Apples, Oranges, Bananas", "," )`
 
 [Back to Top](#top)
@@ -163,12 +177,14 @@ Example: `split( "Apples, Oranges, Bananas", "," )`
 ### `addProperty`
 {: .no_toc }
 Add a property to a JSON object given object to add to, the name of the property, and the value of the property.
+
 Example: `addProperty(items('Add_checkbox_fields_to_each_object_in_SB_P5_M1_Data_Table_Array'), items('Iterate_through_the_list_of_checkbox_fields_SB_P5_M1_Data_Table_Array'), '')`
 
 ### `createArray`
 {: .no_toc }
 
 Creates an array containing the elements specified in the arguments.
+
 Example: `createArray('.','@','ß','²','³','µ','´','°','^','=','(',')','&','$','§', '~','#','%','*',':','<','>','?','/','|',' ', ',')`
 
 [Back to Top](#top)
@@ -179,9 +195,71 @@ For help on specific Power Automate Actions, see [Additional Notes on Actions](#
 
 [Back to Top](#top)
 
-### Populating a Word Template and Generating a PDF
+### Populating a Word Document and Generating a PDF
 
-TO DO
+If you are creating a new form, create a parallel branch to the other branches that populate a Word Document from a template and generate a PDF. 
+
+1. Add a "Populate a Word template" action.
+    * Location: website where template file is located
+    * Document Library: document library where template file is located
+    * File: the relative path of the template. 
+    {: .note}
+    > It's recommended that you use the folder icon to navigate to the template yourself first, then cut the text from the box and re-paste it. This will ensure that you have the correct directory and avoid errors from Power Automate being unable to find the file if you update the template and reupload with the same name.
+
+    * Fill in the fields as needed by formatting and matching the appropriate fields. 
+    * Rename the action to be a descriptive and unique name.
+![Populate a Word template]({{ site.baseurl }}/assets/images/powerAutomate/populateScheduleAWordTemplate.png)
+2. Add a "Create file" action. This action will create the Word Document from the template filled with the data specified in Step 1 and place it in a SharePoint folder. 
+    * Site Address: base URL to place the populated Word Document in.
+    * Folder Path: the relative path of the Word Document to be created. Using the conventions, the folder path for an individual Word Document is:
+    `.../<contractNumber>/<subcontractorName>/<timestamp>/Individual Word Documents`
+    In the image, the above expression has already been formatted into a variable called `Word Docs File path` located in [Block 1]({{ site.baseurl }}/docs/threeForms/subcontractorForm.md) which you can access through "Dynamic values"
+
+    {: .note}
+    > It's recommended that you use the folder icon to navigate to the template yourself first, then cut the text from the box and re-paste it. This will ensure that you have the correct base directory. 
+
+    * File Name: the file name of the Word Document. 
+    The file name prefix has already been defined in a variable called `Form Order and Filenames` - a JSON object which is parsed with a "Parse JSON" action called `Parse subcontractor form filenames JSON` in [Block 1](/docs/threeForms/subcontractorForm.md). Each property's key is the abbreviated version of the corresponding form and the value is the file name prefix. If you are adding a new form, you will need to add the file name prefix to `Form Order and Filenames` and update the schema in the `Parse subcontractor form filenames JSON` action. Then, in this field use the "Dynamic values" and find the appropriate output from the `Parse subcontractor form filenames JSON` action and append it with `docx`.
+    * File Content: in "Dynamic values," select the Microsoft Word Document output from the "Populate a Word template" action from before.
+
+![Create a Word Document]({{ site.baseurl }}/assets/images/powerAutomate/createScheduleAWordDocument.png)
+3. Add a "Convert Word Document to PDF" action.
+
+* Location: website where the Word Document to convert is located
+* Document Library: document library where the Word Document to convert is located
+* File: the relative file path of the Word Document to convert
+
+{: .note}
+> It's recommended that you use the folder icon to navigate to the template yourself first, then cut the text from the box and re-paste it. This will ensure that you have the correct directory. There are also path properties from the "Create file" action that can be used here to access the file, but because at the time of writing this, we have not received a final official folder/directory to place these files and the path attained using the folder icon is different from using a similar method in the "Create file" action, we simply appended on the `Word Docs File path` variable and a `/` followed by the file name from the "Create file" action in "Dynamic values." In the future, this can be adjusted for easier maintenance.
+
+![Convert Word Document to PDF]({{ site.baseurl }}/assets/images/powerAutomate/convertScheduleAWordToPDF.png)
+
+4. Add another "Create file" action. This will create the PDF file that resulted from the conversion. The fields are filled out in a similar fashion to Step 2:
+    * Site Address: same as Step 2
+    * Folder Path: same as Step 2 except instead of `Individual Word Documents` it is `Individual PDF Documents`:
+    `.../<contractNumber>/<subcontractorName>/<timestamp>/Individual PDF Documents`
+    In the image, the above expression has already been formatted into a variable called `Individual PDFs File path` located in [Block 1]({{ site.baseurl }}/docs/threeForms/subcontractorForm.md) which you can access through "Dynamic values"
+
+    {: .note}
+    > It's recommended that you use the folder icon to navigate to the template yourself first, then cut the text from the box and re-paste it. This will ensure that you have the correct base directory. 
+
+    * File Name: the file name of the Word Document. Same as Step 2 but instead of appending with `docx`, you append with `pdf`.
+    * File Content: in "Dynamic values," select the PDF Document output from the "Convert Word Document to PDF" action from before.
+
+![Create PDF Document After Conversion]({{ site.baseurl }}/assets/images/powerAutomate/createScheduleAPDF.png)
+
+5. If this form is not always required and the form needs to be merged into a packet, you will also have to add an "Append to array variable" action. It doesn't matter the order you put this action, as long as it is in the same branch. Right now, this action is above the "Populate a Word template" action. The arguments should be filled out such that the array to append to is the array of forms for the particular packet that the form belongs to and the value is the file name for the form from the `Parse subcontractor form filenames JSON` action. 
+
+![Append RMSA to list of forms to merge]({{ site.baseurl }}/assets/images/powerAutomate/addRMSAToListOfFormsToMerge.png)
+
+6. You're done! Below is an example 
+![Complete Populate a Word Template and Create PDF Sequence]({{ site.baseurl }}/assets/images/powerAutomate/overviewOfPopulatingRMSAAndMakingPDF.png)
+
+[Back to Top](#top)
+
+### Handling Data Tables
+
+TO DO 
 
 [Back to Top](#top)
 
