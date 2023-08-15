@@ -7,13 +7,13 @@ nav_order: 4
 ---
 
 # Editing a Power Automate Flow
-{ .no_toc }
+{: .no_toc }
 
 ## Table of Contents
-{ .no_toc }
+{: .no_toc }
 
 1. TOC
-{.toc}
+{:toc}
 
 ## Functions
 
