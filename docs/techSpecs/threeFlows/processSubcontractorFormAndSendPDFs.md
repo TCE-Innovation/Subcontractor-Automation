@@ -43,32 +43,16 @@ The image below shows a high-level overview of the flow.
 Only one trigger is used: [Plumsail Forms](https://learn.microsoft.com/en-us/connectors/plumsailforms/) - Form is submitted
 
 Several connectors and actions are used in the creation of this flow:
-* [Plumsail Forms](https://learn.microsoft.com/en-us/connectors/plumsailforms/)
-    * Form is submitted
-    * Download attachment
-* [Variable](https://learn.microsoft.com/en-us/power-automate/desktop-flows/actions-reference/variables)
-    * Append to array variable
-    * Initialize variable
-    * Set variable
-* [Control](https://learn.microsoft.com/en-us/power-automate/desktop-flows/actions-reference)
-    * [Apply to each](https://learn.microsoft.com/en-us/power-automate/apply-to-each) 
-    * [Condition](https://learn.microsoft.com/en-us/power-automate/use-expressions-in-conditions)
-    * [Do until](https://www.acuitytraining.co.uk/news-tips/power-automate-do-until/#:~:text=Do%20Until%20in%20Power%20Automate%20executes%20an%20action%20or%20series,time%20the%20loop%20is%20executed.)
-    * [Scope](https://www.bloomsoftwareco.com/blog/keep-your-flows-organized-using-scopes-in-power-automate)
-* [Data Operation](https://learn.microsoft.com/en-us/power-automate/data-operations)
-    * Compose
-    * Parse JSON
-    * Select
-* [Word Online (Business)](https://learn.microsoft.com/en-us/connectors/wordonlinebusiness/)* 
-    * Convert Word Document to PDF
-    * Populate a Microsoft Word template
-* [SharePoint](https://learn.microsoft.com/en-us/connectors/sharepointonline/)
-    * Create file
-    * Get file content by path
-* [Adobe PDF Services](https://learn.microsoft.com/en-us/connectors/adobepdftools/)*
-    * Merge PDFs**
-* [Office 365 Outlook](https://learn.microsoft.com/en-us/connectors/office365/)
-    * Send an email (V2)
+| Connector | Action/Trigger |
+| ---       | --- |
+| [Plumsail Forms](https://learn.microsoft.com/en-us/connectors/plumsailforms/) | Form is submitted (Trigger) <br> Download attachment |
+| [Variable](https://learn.microsoft.com/en-us/power-automate/desktop-flows/actions-reference/variables) | Append to array variable <br> Initialize variable <br> Set variable |
+| [Control](https://learn.microsoft.com/en-us/power-automate/desktop-flows/actions-reference) | [Apply to each](https://learn.microsoft.com/en-us/power-automate/apply-to-each) <br> [Condition](https://learn.microsoft.com/en-us/power-automate/use-expressions-in-conditions) <br> [Do until](https://www.acuitytraining.co.uk/news-tips/power-automate-do-until/#:~:text=Do%20Until%20in%20Power%20Automate%20executes%20an%20action%20or%20series,time%20the%20loop%20is%20executed.) <br> [Scope](https://www.bloomsoftwareco.com/blog/keep-your-flows-organized-using-scopes-in-power-automate) |
+| [Data Operation](https://learn.microsoft.com/en-us/power-automate/data-operations) | Compose <br> Parse JSON <br> Select |
+| [Word Online (Business)](https://learn.microsoft.com/en-us/connectors/wordonlinebusiness/)* | Convert Word Document to PDF <br> Populate a Microsoft Word template |
+| [SharePoint](https://learn.microsoft.com/en-us/connectors/sharepointonline/) | Create file <br> Get file content by path
+| [Adobe PDF Services](https://learn.microsoft.com/en-us/connectors/adobepdftools/)* | Merge PDFs** |
+| [Office 365 Outlook](https://learn.microsoft.com/en-us/connectors/office365/) | Send an email (V2) |
 
 >*Premium connectors require a Premium Power Automate license which costs $15/user/month as of Aug. 2023
 >**Every occurrence of Merge PDFs counts as one Document Transaction. There are two Document Transactions occur each time this flow is run - once for each packet that gets merged since the Merge PDFs action is used. See [Pricing and Limitation Considerations](/doc/pricingAndLimitationConsiderations.md) for more information.
