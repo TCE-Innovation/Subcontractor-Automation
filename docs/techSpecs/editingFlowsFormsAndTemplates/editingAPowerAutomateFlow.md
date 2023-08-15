@@ -54,31 +54,34 @@ Functions used in expressions in the Power Automate Flows of this project are li
 
 ### Logic and Compare
 
-#### `coalesce`
-{: .no_toc}
+### `coalesce`
+{: .no_toc }
 Takes as many arguments as you provide it and returns the first non-null value. This is useful for defaulting values if a null value is provided.
 Example: `coalesce(triggerBody()?['n.SB.P1.D.changedAddress'], 'N/A')`
 
-#### `contains`
-{: .no_toc}
+### `contains`
+{: .no_toc }
 Returns whether a string contains another string.
 Example: `contains(item()['colddmcSBP5MemployedBy'], 'MTAC&D'`
 
 ### `equals`
-{: .no_toc}
+{: .no_toc }
+
 Takes two arguments and returns whether they are equal
 Example: `equals(triggerBody()?['sc.SB.P3.H.compensationRating'], 'Yes')`
 
 ### `if`
-{: .no_toc}
+{: .no_toc }
+
 Takes three arguments:
 1. Condition that returns a boolean value
 2. Value to return if condition is true
 3. Value to return if condition is false
 Example: `if(equals(triggerBody()?['sc.SB.P5.L.none'], 'None'), 'None', '')`
 
-#### `or`
-{: .no_toc}
+### `or`
+{: .no_toc }
+
 Takes two arguments and returns true if either argument is true.
 Example: `or(equals(triggerBody()?['sc.SB.P3.G.safety'], 'Yes'),  
 equals(triggerBody()?['sc.SB.P3.H.compensationRating'], 'Yes'))`
@@ -87,16 +90,17 @@ equals(triggerBody()?['sc.SB.P3.H.compensationRating'], 'Yes'))`
 
 ### Arithmetic 
 
-#### `add`
-{: .no_toc}
+### `add`
+{: .no_toc }
+
 Add numbers and returns the sum.
 Example: `add(2, 4.9)`
 
-#### `div`
-{: .no_toc}
+### `div`
+{: .no_toc }
 Takes two arguments and divides the first argument by the second.
 
-#### `sub`
+### `sub`
 {: .no_toc}
 Subtracts the second number from the first number.
 Example: `sub(10, 3.1)`
@@ -105,25 +109,29 @@ Example: `sub(10, 3.1)`
 
 ### String Formatting
 
-#### `concat`
-{: .no_toc}
+### `concat`
+{: .no_toc }
+
 Concatenate arguments into one string.
 Example: `concat('Happy ', 'birthday ', '2 ', 'u!')`
 
-#### `float`
-{: .no_toc}
+### `float`
+{: .no_toc }
+
 Takes a number argument and convers it to a float.
 
-#### `formatDateTime`
-{: .no_toc}
+### `formatDateTime`
+{: .no_toc }
+
 Format dates and times using macros. See the below links for more information:
 * [https://learn.microsoft.com/en-us/troubleshoot/power-platform/power-automate/how-to-customize-or-format-date-and-time-values-in-flow](https://learn.microsoft.com/en-us/troubleshoot/power-platform/power-automate/how-to-customize-or-format-date-and-time-values-in-flow)
 * [https://learn.microsoft.com/en-us/power-automate/format-data-by-examples#format-dates-by-examples](https://learn.microsoft.com/en-us/power-automate/format-data-by-examples#format-dates-by-examples)
 
 Example: `formatDateTime(triggerBody()?['d.GI.dateSigned'], 'MM/dd/yyyy')`
 
-#### `formatNumber`
-{: .no_toc}
+### `formatNumber`
+{: .no_toc }
+
 Used mostly to format currencies and percentages. See these links for more information: 
 * [https://tomriha.com/how-to-format-numbers-currency-percentage-in-power-automate/#:~:text=How%20to%20format%20numbers%20%28currency%2C%20percentage%2C%E2%80%A6%29%20in%20Power,format%20them%20within%20the%20Power%20Automate%20flow.%20](https://tomriha.com/how-to-format-numbers-currency-percentage-in-power-automate/#:~:text=How%20to%20format%20numbers%20%28currency%2C%20percentage%2C%E2%80%A6%29%20in%20Power,format%20them%20within%20the%20Power%20Automate%20flow.%20)
 * [https://learn.microsoft.com/en-us/power-automate/format-data-by-examples#format-numbers-by-examples](https://learn.microsoft.com/en-us/power-automate/format-data-by-examples#format-numbers-by-examples)
@@ -131,16 +139,18 @@ Used mostly to format currencies and percentages. See these links for more infor
 Currency example: `formatNumber(item()['colnumOCIPFB2insurancePremiumPayroll'], 'C', 'en-US')`
 Percentage example: `formatNumber(div(float(item()['colnumSF1Q6activeContractsPercentCompleted']), 100), 'P')`
 
-#### `replace`
-{: .no_toc}
+### `replace`
+{: .no_toc }
+
 Takes three arguments and replaces specific characters from a source string with specified characters.
 1. Source string to replace characters in
 2. String to replace
 3. String to replace with
 Example: `replace(variables('Sanitized sub name'), item(), '')`
 
-#### `split`
-{: .no_toc}
+### `split`
+{: .no_toc }
+
 Takes a string to split into an array based on a character or sequence of characters. See these links for more information: 
 * [https://zeitgeistcode.com/power-automate-split-function/](https://zeitgeistcode.com/power-automate-split-function/)
 * [https://learn.microsoft.com/en-us/power-platform/power-fx/reference/function-split](https://learn.microsoft.com/en-us/power-platform/power-fx/reference/function-split)
@@ -150,13 +160,14 @@ Example: `split( "Apples, Oranges, Bananas", "," )`
 
 ### Array and JSON Object Operations
 
-#### `addProperty`
-{: .no_toc}
+### `addProperty`
+{: .no_toc }
 Add a property to a JSON object given object to add to, the name of the property, and the value of the property.
 Example: `addProperty(items('Add_checkbox_fields_to_each_object_in_SB_P5_M1_Data_Table_Array'), items('Iterate_through_the_list_of_checkbox_fields_SB_P5_M1_Data_Table_Array'), '')`
 
-#### `createArray`
-{: .no_toc}
+### `createArray`
+{: .no_toc }
+
 Creates an array containing the elements specified in the arguments.
 Example: `createArray('.','@','ß','²','³','µ','´','°','^','=','(',')','&','$','§', '~','#','%','*',':','<','>','?','/','|',' ', ',')`
 
