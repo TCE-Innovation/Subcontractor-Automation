@@ -78,17 +78,19 @@ In addition to the `Title` and `Tag`, Plain Text Content Controls have a few oth
 
 ### Picture Content Control
 
-1. Click on the location that you would like to add the control. If you are having trouble selecting the location you need to add the control, see [Manipulating the Location of a Conent Control](#manipulating-the-location-of-a-content-control).
+1. Click on the location that you would like to add the control. If you are having trouble selecting the location you need to add the control, see [Manipulating the Location of a Content Control](#manipulating-the-location-of-a-content-control).
 
 2. If you only want to edit a control, skip to Step 3. Otherwise, go to the Developer Tab and click on the Plain Text Content Control button. 
 
 ![Plain Text Content Control]({{ site.baseurl }}/assets/images/microsoftWordTemplate/plainTextContentControlBtn.png)
 
-2. With your cursor inside the Plain Text Content Control of choice, click on "Properties" to edit the `Title` and `Tag`. 
+3. With your cursor inside the Plain Text Content Control of choice, click on "Properties" to edit the `Title` and `Tag`. Follow the [naming conventions]({{ site.baseurl }}/docs/techSpecs/conventions.md).
 
 ![Properties Button]({{ site.baseurl }}/assets/images/microsoftWordTemplate/propertiesBtn.png)
 
-3. Fill in any of the other properties as necessary.
+4. Fill in any of the other properties as necessary.
+
+5. Resize the Picture Content Control as needed. If you have added this in a text box, the size of the Picture Content Control will be constrained to the size of the text box. You should resize the text box such that you have ample space to play around with the size of your Picture Control, otherwise you risk the image being populated with the bottom being cropped out.
 
 ### Repeating Content Control
 
@@ -101,20 +103,34 @@ Sometimes you will encounter a situation where you want to place a content contr
 * Placing a control inline with the text will cause content afterwards to shift, ruining the format of the document
 * You want the content to overlap other content such as if the form is an image and you cannot select a line
 
-A simple way to get around these problems is to use textboxes and position them exactly where you need your content control to go. 
+A simple way to get around these problems is to use text boxes and position them exactly where you need your content control to go. 
 
 1. Click Draw Text box.
 
-2. Click and hold until you have the size of textbox that you need. Alternatively, you can just click and resize later. 
+2. Click and hold until you have the size of text box that you need. Alternatively, you can just click and resize later. If you need to resize your text box, move your cursor to the edge of the text box over any of the corner or center dots. At this point, click and drag to resize the box to whatever you need. 
 
-3. Click within the textbox and add your content control as indicated in [Adding/Editing Content Controls](#addingediting-content-controls).
+3. Go to "Shape Format" in the Word ribbon to change the shape fill and shape border. If you want the text box to have a transparent background, select the "No color" under Shape Fill If you want the text box to have no outline, select the "No outline" option under Shape Outline. 
 
-4. Go to "Shape Format" in the Word ribbon to change the shape fill and shape border. If you want no border and no fill, select the "No color" options for each. 
+![No fill and no outline buttons]({{ site.baseurl }}/assets/images/microsoftWordTemplate/noFillNoOutlineBtns.png)
 
-5. If you need to adjust the position of your text box again, move your cursor to the edge of the textbox until it changes into the move symbol. At this point, click and drag the box to wherever you need to. 
+4. Click within the text box and add your content control as indicated in [Adding/Editing Content Controls](#addingediting-content-controls).
 
-6. If you need to resize your text box, move your cursor to the edge of the textbox over any of the corner or center dots. At this point, click and drag to resize the box to whatever you need. 
+5. If you need to adjust the position of your text box again, move your cursor to the edge of the text box until it changes into the move symbol (a crosshair with arrows). At this point, click and drag the text box to wherever you need to. 
+
+{: .note}
+> Text wrapping is important when positioning the text box. If you drew a text box, then it will have the "In Front of Text" option. Otherwise it will be the "In Line with Text" option. You can toggle between the "Move with Text" and "Fix Position on Page" options as well depending on whether you want the box to move with the text.
+
+![Text Wrapping Options]({{ site.baseurl }}/assets/images/microsoftWordTemplate/wrapTextTextBox.png)
 
 #### Adding Radio Buttons and Checkboxes
 
-As of 8/14/23, the ["Populate a Word template" action in Power Flow Automate and Word do not support automatic population of checkboxes, radio buttons, or date pickers](https://learn.microsoft.com/en-us/connectors/wordonlinebusiness/#createfileitem). Due to this limitation, we will have to add a Plain Text Content Control for every radio button or checkbox separately. Follow the same steps to add a Plain Text Content Control and follow the conventions for naming [radio buttons]({{ site.baseurl }}/docs/techSpecs/conventions.md) or [checkboxes](/docs/techSpecs/conventions.md). You may have to also follow the steps in [Manipulating the Location of a Content Control](#manipulating-the-location-of-a-control) if you want to overlay the contents of the content control over a box for example. 
+As of 8/14/23, the ["Populate a Word template" action in Power Flow Automate and Word do not support automatic population of checkboxes, radio buttons, or date pickers](https://learn.microsoft.com/en-us/connectors/wordonlinebusiness/#createfileitem). Due to this limitation, we will have to add a Plain Text Content Control for every radio button or checkbox separately. Generally, you will follow the same steps to add a Plain Text Content Control and follow the conventions for naming [radio buttons]({{ site.baseurl }}/docs/techSpecs/conventions.md) or [checkboxes]({{ site.baseurl }}/docs/techSpecs/conventions.md). You may have to also follow the steps in [Manipulating the Location of a Content Control](#manipulating-the-location-of-a-control) if you want to overlay the contents of the content control over a box for example. 
+
+Example Checkbox:
+![Example Checkbox]({{ site.baseurl }}/assets/images/microsoftWordTemplate/exampleCheckbox.png)
+
+Example Radio Button:
+{: .note}
+> Although this does not have the circular button shape associated with a radio button, the nature of this question is such that only one choice should be made.
+
+![Example Radio Button]({{ site.baseurl }}/assets/images/microsoftWordTemplate/exampleRadioBtn.png)
