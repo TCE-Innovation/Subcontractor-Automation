@@ -125,7 +125,7 @@ It is crucial to name the `Tag` of the Word Template control and `Name` of the P
     * If the Word Template control is NOT within a repeating content control, or in other words not a column of a cooresponding Plumsail data table
         * The `Tag` is then named in the following way: 
         ```
-        <fieldOrControlType>.<form>[.<subsection1>.<subsection2>.<subsection3> ...].<descriptionOfField>[.<numberOfRepeatedOccurrence>]
+        <fieldOrControlType>.<form>[.<subsection1>.<subsection2>.<subsection3> ...].<descriptionOfField>[.<numberOfRepeatedOccurrence>][.<choiceName>]
         ```
         where each of the above items are formatted in camelCase: the first word is lowercase and any subsequent words to be capitalized and appended on without a space. If any of the above items are abbreviations then all of the letters are fully capitalized for that item.
         * Otherwise it is named:
@@ -148,6 +148,8 @@ While there should always be a corresponding Plumsail Field to match to every fi
 #### Fields and Controls Shared Across Forms
 
 Common fields such as the name of the subcontractor and title of the person completing the form are consolidated into General Information or Summary. When naming the `Title` and `Tag` of the Word Template controls will still be specific to the form that they are in, but the `Name` of the Plumsail field/control will use `GI` as the form they belong to.
+
+[Back to Top](#top)
 
 ### Examples
 
@@ -184,6 +186,8 @@ Plumsail Forms Name: `dd.RMSA.supplier.state`
 
 Plumsail Forms Class: no class was provided.
 
+[Back to Top](#top)
+
 #### Radio Buttons and Checkbox Groups
 
 In RMSA, there are single choice or radio "buttons" for the question of whether the proposed supplier is D/M/WBE. There are two choices: `Yes` and `No`. There is one Word Template control for each choice and only one Plumsail Field that corresponds to this group of controls.
@@ -195,6 +199,8 @@ Word Template `Title` and `Tag` of the two controls:  `sc.RMSA.isProposedSupplie
 Plumsail Forms Name: `sc.RMSA.isProposedSupplierDMWBE`
 
 ![RMSA Example Single Choice Plumsail Forms Name]({{ site.baseurl }}/assets/images/plumsail/RMSAExampleSingleChoice.png)
+
+[Back to Top](#top)
 
 #### Fields Common Across Several Forms
 
@@ -211,6 +217,8 @@ Word Template Default Test in Schedule F: `Name of Authorized Official`
 Plumsail Forms Name: `t.GI.nameOfPersonCompletingForm`
 Plumsail Forms Class: no class was provided
 
+[Back to Top](#top)
+
 #### Fields Present Only in the Plumsail Form
 
 For every individual MTA-required form except for the COI, there is a corresponding toggle field that allows the subcontractor to hide or show the PDF of the blank form. There is also a corresponding "Have you read and understood..." question. The values of these fields do not have to be shown in Word Templates so there is no corresponding Word Template control, only a Plumsail field. Below is an example of this:
@@ -219,6 +227,8 @@ Plumsail Forms Name: `tog.SB1.hidePDF`
 Plumsail Forms Class: no class was provided
 
 ![Example of Schedule B1 Toggle]({{ site.baseurl }}/assets/images/plumsail/SB1ExampleToggle.png)
+
+[Back to Top](#top)
 
 #### Plumsail Fields with Classes and Conditional Attachments
 
