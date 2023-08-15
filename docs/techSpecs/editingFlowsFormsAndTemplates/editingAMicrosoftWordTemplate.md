@@ -15,7 +15,63 @@ nav_order: 5
 1. TOC
 {:toc}
 
-## Setup: Enable the Developer Tab
+## Setup
+
+### Prepare the Word Document
+
+To make a Microsoft Word Template, you first need to have a Word Document to make a template from. Your initial file may not always be a .docx file. In this project, there were Excel (.xlsx) files and PDF files. You must convert them into a .docx file first. 
+
+#### .xlsx File
+
+If your starting file is an .xlsx, there unfortunately isn't a way to directly convert the file into a Word Document and you have to convert to a PDF first. 
+
+**Method 1**
+1. Navigate to the directory where the Excel spreadsheet is located.
+2. Right click the file you want to change into a PDF.
+3. Select the "Convert to Adobe PDF" option and choose the file name and directory of the resulting PDF. This will then open in Adobe Acrobat Pro.
+
+![Convert Excel to PDF Method 1]({{ site.baseurl }}/assets/images/adobeAcrobat/excelToPDFMethod1.png)
+
+**Method 2**
+1. Open Adobe Acrobat Pro.
+
+![Open Adobe Acrobat Pro]({{ site.baseurl }}/assets/images/adobeAcrobat/excelToPDFMethod2Step1.png)
+
+2. Select the tool "Create PDF" from the Tools Menu. You can find this on the right side. If it does not appear, you can add this tol by clicking "Add" under "Create PDF" in the Tools Menu. 
+
+![Create PDF tool]({{ site.baseurl }}/assets/images/adobeAcrobat/excelToPDFMethod2Step2.png)
+
+3. Select the file to be converted from your computer. You can do either a single or or multiple files. 
+
+![Select file to convert]({{ site.baseurl }}/assets/images/adobeAcrobat/excelToPDFMethod2Step3.png)
+
+4. If you selected the wrong file, click "Change File" and otherwise click "Create".
+
+If your starting file is a PDF, open the file in Adobe Acrobat Pro and convert the PDF to Word.
+
+![Create PDF file from Excel]({{ site.baseurl }}/assets/images/adobeAcrobat/excelToPDFMethod2Step4.png)
+
+5. Select the directory and file name for your PDF file by either clicking the "Save" button or the "Print" button.
+
+#### .pdf Files
+
+1. Open Adobe Acrobat Pro.
+
+![Open Adobe Acrobat Pro]({{ site.baseurl }}/assets/images/adobeAcrobat/excelToPDFMethod2Step1.png)
+
+2. Select the tool "Export PDF" from either the Tools menu or the menu on the right. If the tool is not on the right side, you can select "Add" under the "Export PDF" tool to add it to the menu.
+
+![Export PDF Tool]( {{ site.baseurl }}/assets/images/adobeAcrobat/exportPDFTool.png)
+
+3. Select the file to be converted from your computer and Microsoft Word --> Word Document.
+
+![Export PDF as Word Document]( {{ site.baseurl }}/assets/images/adobeAcrobat/pdfToWordStep3.png)
+
+4. Click "Export" and choose the directory to save the Word Document. Also add a file name. The templates were named in CamelCase, like `ScheduleATemplate.docx`.
+
+[Back to Top](#top)
+
+### Enable the Developer Tab
 
 To edit a Microsoft Word Template, you will need the Developer Tab in the ribbon. This is only available on the desktop version of Microsoft Word. If this is already enabled, you will see the Developer Tab as shown below and can move onto [Adding/Editing Content Controls](#addingediting-content-controls):
 
@@ -44,8 +100,6 @@ There are several types of Content Controls, but not all of them are supported f
 * [Plain Text Content Control](#plain-text-content-control)
 * [Picture Content Control](#picture-content-control) 
 * [Repeating Section Content Control](#repeating-section-content-control)
-
-[Back to Top](#top)
 
 ### Plain Text Content Control
 
@@ -79,6 +133,7 @@ In addition to the `Title` and `Tag`, Plain Text Content Controls have a few oth
 ![Plain Text Content Control Properties]({{ site.baseurl }}/assets/images/microsoftWordTemplate/plainTextContentControlProperties.png)
 
 [Back to Top](#top)
+
 ### Picture Content Control
 
 1. Click on the location that you would like to add the control. If you are having trouble selecting the location you need to add the control, see [Manipulating the Location of a Content Control](#manipulating-the-location-of-a-content-control).
@@ -96,6 +151,7 @@ In addition to the `Title` and `Tag`, Plain Text Content Controls have a few oth
 5. Resize the Picture Content Control as needed. If you have added this in a text box, the size of the Picture Content Control will be constrained to the size of the text box. You should resize the text box such that you have ample space to play around with the size of your Picture Control, otherwise you risk the image being populated with the bottom being cropped out.
 
 [Back to Top](#top)
+
 ### Repeating Section Content Control
 
 The Repeating Section Content Control is used for cases where you want to repeat a specific section for a known or unknown number of times, determined by the length of the array of contents to be placed into it. Anything enclosed by the Repeating Section Content Control will be repeated in every instance.You can add other content controls within the Repeating Section Content control as well. This is useful for anything that requires a Data Table in Plumsail. 
