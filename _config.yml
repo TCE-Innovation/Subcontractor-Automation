@@ -18,7 +18,7 @@ aux_links:
   Initialization Form: https://tce-innovation.github.io/Subcontractor-Automation/forms/initialization.html
   Correction Form: https://tce-innovation.github.io/Subcontractor-Automation/forms/correction.html
 
-favicon_ico: "{{ site.baseurl }}/assets/images/favicon-512x512.png"
+favicon_ico: "{{ site.baseurl }}/assets/images/favicon.ico"
 
 # Google Analytics Tracking (optional)
 # e.g, UA-1234567-89a
