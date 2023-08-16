@@ -6,6 +6,12 @@ grand_parent: Technical Specifications
 nav_order: 2
 ---
 
+## Table of Contents 
+{: .no_toc}
+
+1. TOC
+{:toc}
+
 # UML Diagram
 ![]({{ site.baseurl }}/assets/images/umlDiagrams/subcontractorjs.png)
 
@@ -14,7 +20,7 @@ nav_order: 2
 {: .note }    
 > When first starting to build this program, I spaghetti coded most of it. While functional, understanding it became a nightmare. Thus, in an attempt to beautify the code a little, I created classes that would house the most important information. 
 >
-> Data is one such class that never got made. All the functinons that should be inside data are hanging around loosey goosey as pure javascript functions(). For all intents and purposes, imagine them as a class.
+> The class [data] is one such class that never got made. All the functinons that should be inside data are hanging around loosey goosey as pure javascript functions(). For all intents and purposes, imagine them as a class.
 
 ## executeOnce()
 
@@ -131,6 +137,22 @@ Also sets up the validators and hides the percentage field on the general inform
 
 **Returns:**
 - @returns {void}: This function does not return any value.
+
+## genInfoValidator()/OCIPAValidator()
+
+**Description:** Adds an event listener that compares two dates to verify expiration after start.
+
+**Parameters:** null
+
+**Returns:**
+- @returns {void}: THis funciton does not return any value.
+
+## toggleSQS()/togglePDF()/toggle...()
+
+**Description:** toggle...() applies to all methods prepended with "toggle", including the generalInfoCallback() function. These functions are the hardcoded representations of the forms. THey utilize the helper functions also in event listener to show, hide, require and check responses on thei own individual forms. 
+
+**Returns:**
+- @returns {void}: THis funciton does not return any value.
 
 # dataTableFunctions
 

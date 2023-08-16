@@ -17,9 +17,9 @@ permalink: /
 
 # Quick Links
 
-[Subcontractor Initialization Form](https://tce-innovation.github.io/Subcontractor-Automation/initialization.html){: .btn .btn-purple }
-[Correction Form](https://tce-innovation.github.io/Subcontractor-Automation/correction.html){: .btn .btn-blue }
-[Subcontractor Form](https://tce-innovation.github.io/Subcontractor-Automation/){: .btn .btn-green }
+[Subcontractor Initialization Form](https://tce-innovation.github.io/Subcontractor-Automation/forms/initialization.html){: .btn .btn-purple }
+[Correction Form](https://tce-innovation.github.io/Subcontractor-Automation/forms/correction.html){: .btn .btn-blue }
+[Subcontractor Form](https://tce-innovation.github.io/Subcontractor-Automation/forms/subcontractor.html){: .btn .btn-green }
 
 {: .warning }
 > You should never have to click the subcontractor forms. An automatic email is generated upon initialization using the following format, replacing ```ContractNum``` and ```SubcontractorName``` with their respective information:

@@ -81,6 +81,7 @@ let dataHandling = {
         }
         return this.interactWithAPI(dataToSend, this.getURL).then(data => {
             data.forEach(el => {
+                //If the title is defined, note it down to return as an array.
                 if (el.Title !== undefined) {
                     contractNumbers.push(el.Title);
                 }
@@ -122,7 +123,8 @@ let dataHandling = {
         dataToSend = {};
         console.log(dataToSend);
         dataToSend = formData;
-        
+
+        //I forgot to rename the first datatable, so it is now known as "DataTable1"
         formToCorrect = dataTableFunctions.extractData("DataTable1", "Column1");
         questionsToCorrect = dataTableFunctions.extractData("DataTable1", "Column2");
     
@@ -140,7 +142,7 @@ let dataHandling = {
         console.log(dataToSend);
         
         this.interactWithAPI(dataToSend, this.submitURL);
-        throw new Error("Preventing you from submitting");
+        //throw new Error("Preventing you from submitting");
     },
     /*
     +-------------------------------------------------------------------------------------------+
