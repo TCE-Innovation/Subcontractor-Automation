@@ -43,6 +43,7 @@ The image below shows a high-level overview of the flow.
 Only one trigger is used: [Plumsail Forms](https://learn.microsoft.com/en-us/connectors/plumsailforms/) - Form is submitted
 
 Several connectors and actions are used in the creation of this flow:
+
 | Connector | Action/Trigger |
 | ---       | --- |
 | [Plumsail Forms](https://learn.microsoft.com/en-us/connectors/plumsailforms/) | Form is submitted (Trigger) <br> Download attachment |
