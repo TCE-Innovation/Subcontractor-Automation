@@ -230,6 +230,7 @@ If you are creating a new form, create a parallel branch to the other branches t
 
 {: .note}
 > It's recommended that you use the folder icon to navigate to the template yourself first, then cut the text from the box and re-paste it. This will ensure that you have the correct directory. There are also path properties from the "Create file" action that can be used here to access the file, but because at the time of writing this, we have not received a final official folder/directory to place these files and the path attained using the folder icon is different from using a similar method in the "Create file" action, we simply appended on the `Word Docs File path` variable and a `/` followed by the file name from the "Create file" action in "Dynamic values." In the future, this can be adjusted for easier maintenance.
+
 ![Convert Word Document to PDF]({{ site.baseurl }}/assets/images/powerAutomate/convertScheduleAWordToPDF.png)
 4. Add another "Create file" action. This will create the PDF file that resulted from the conversion. The fields are filled out in a similar fashion to Step 2:
     * Site Address: same as Step 2
@@ -270,9 +271,9 @@ The output of an Ink Sketch Control on Plumsail is a PNG. However, this must be 
 
 [Back to Top](#top)
 
-### Getting Attachments from Plumsail
+### Download Attachments from Plumsail Forms
 
-All attachments from Plumsail are PDFs.
+All attachments from Plumsail Forms are PDFs in this workflow. This is ensured by the JavaScript code prior to the submission of the Subcontractor Form.
 
 1. Create a "Download attachment" action from Plumsail Forms. This should be in the same branch as the form the attachment belongs to. See the section on [Download attachment](#plumsail-forms---download-attachment) for additional information on this action. 
 
@@ -284,7 +285,7 @@ All attachments from Plumsail are PDFs.
 
 ![Apply to each attachment]({{ site.baseurl }}/assets/images/powerAutomate/applyToEachAttachment.png)
 4. Add the appropriate parameters for the "Create file action". Rename your actions to be more descriptive to the attachment that you are downloading. 
-* Site Address: base URL to place the attachment in.
+    * Site Address: base URL to place the attachment in.
     * Folder Path: the relative path of the attachment to be created. Using the conventions, the folder path for an individual Word Document is:
     `.../<contractNumber>/<subcontractorName>/<timestamp>/Individual PDF Documents`
     In the image, the above expression has already been formatted into a variable called `Individual PDFs File path` located in [Block 1]({{ site.baseurl }}/docs/threeForms/subcontractorForm.md) which you can access through "Dynamic values"
@@ -292,20 +293,71 @@ All attachments from Plumsail are PDFs.
     The file name prefix has already been defined in a variable called `Form Order and Filenames` - a JSON object which is parsed with a "Parse JSON" action called `Parse subcontractor form filenames JSON` in [Block 1]({{ site.baseurl }}/docs/threeForms/subcontractorForm.md). Each property's key is the abbreviated version of the corresponding form and the value is the file name prefix. If you are adding a new form, you will need to add the file name prefix to `Form Order and Filenames` and update the schema in the `Parse subcontractor form filenames JSON` action. Then, in this field use the "Dynamic values" and find the appropriate output from the `Parse subcontractor form filenames JSON` action and append it with `pdf`.
     * File Content: in "Dynamic values," select the "Result file" output from the "Download attachment" action from before.
     
-    ![Create Schedule B P4 Attachment]({{ site.baseurl }}/assets/images/powerAutomate/createSBP4Attachment.png)
+![Create Schedule B P4 Attachment]({{ site.baseurl }}/assets/images/powerAutomate/createSBP4Attachment.png)
 5. If this form is not always required and the form needs to be merged into a packet, you will also have to add an "Append to array variable" action. It doesn't matter the order you put this action, as long as it is in the same branch. Right now, this action is above the "Populate a Word template" action. The arguments should be filled out such that the array to append to is the array of forms for the particular packet that the form belongs to and the value is the file name for the form from the `Parse subcontractor form filenames JSON` action. 
 
 ![Append Schedule B P4 Attachment to list of forms to merge]({{ site.baseurl }}/assets/images/powerAutomate/addSBP4AttachmentToListOfFormsToMerge.png)
-6. You're done! Below is an example of a completed "Populate a Word Template and Create PDF" sequence. 
+6. You're done! Below is an example of a completed "Download attachments from Plumsail Forms" sequence. 
 
-![Complete Populate a Word Template and Create PDF Sequence]({{ site.baseurl }}/assets/images/powerAutomate/overviewOfDownloadingSBP4Attachment.png)
-
-### Merging PDFs
-
-TO DO
+![Complete Schedule B P4 Download Attachment Sequence]({{ site.baseurl }}/assets/images/powerAutomate/overviewOfDownloadingSBP4Attachment.png)
 
 [Back to Top](#top)
 
+### Merging PDFs
+
+1. Initialize an array variable using the "Initialize variable" action. This will store the file contents of the PDFs to be merged and will be appended with content. No initial value was provided so it starts as an empty array. Name the action and variable so that they are descriptive.
+
+![Initialize array variable]({{ site.baseurl }}/assets/images/powerAutomate/mergePDFsStep1.png)
+
+2. Add an "Apply to each" action. Iterate over the array of file name prefixes for files to be merged. In this example, that variable is `Subcontractor Files to Merge`. 
+
+![Apply to each action]({{ site.baseurl }}/assets/images/powerAutomate/mergePDFsStep2.png)
+3. Add a "Get file content using path" action. Rename the action to be specific and descriptive to ts purpose. Supply the following parameters:
+    * Site Address: base URL to find the files to be merged
+    * File Path: the relative path of the attachment to be created. Using the conventions, the folder path for an individual Word Document is:
+    `.../<contractNumber>/<subcontractorName>/<timestamp>/Individual PDF Documents`
+    In the image, the above expression has already been formatted into a variable called `Individual PDFs File path` located in [Block 1]({{ site.baseurl }}/docs/threeForms/subcontractorForm.md) which you can access through "Dynamic values".  This should then also be appended with `/`, the "Current item" output from the "Apply to each action" that you created before which is the file name prefix, and finally `pdf`.
+
+![Get file content using path]({{ site.baseurl }}/assets/images/powerAutomate/mergePDFsStep3.png)
+
+4. Add an "Append to array variable" action after the "Get file contents using path" action. Append to the array variable created to hold the file contents the following value `trim(base64(body(<name of "Get file contents using path" action>)))` and replace `<name of "Get file contents using path" action>` with the appropriate value.
+
+![Append subcontractor file contents to subcontractor files array]({{ site.baseurl }}/assets/images/powerAutomate/mergePDFsStep4.png)
+
+5. [OPTIONAL] If you are sure that there will be at least 1 file to merge, you do not have to chack the length of the array and can skip to the next step. Otherwise, add a condition action and check if the length of the array is greater than 0.
+
+![Check length of array with files to merge is greater than 0]({{ site.baseurl }}/assets/images/powerAutomate/mergePDFsStep5.png)
+
+6. In the "If yes" box, add a "Merge PDFs" action from the Adobe PDF Services connector. Rename this action to be more descriptive. If a connection has not already been added, you will be prompted with the below image:
+![Request to add Adobe PDF Services]({{ site.baseurl }}/assets/images/powerAutomate/requestToAddAdobePDFServicesConnection.png)
+You will have to go to the Adobe Website to create free credentials for the [Adobe PDF Services API here](https://developer.adobe.com/document-services/apis/pdf-services/). Follow the instructions on the website. After creating a connection, you can provide the corresponding values. Otherwise, you can also add a new connection by first saving your flow and then going Data --> Connections in the left menu. Click on "+ New Connection" and scroll down to find the Adobe PDF Services where it will ask you for the same parameters. 
+![Add a new connection]({{ site.baseurl }}/assets/images/powerAutomate/addNewConnection.png)
+Once you add the connection, you will not have to repeat this for other instances of Adobe PDF Services actions. 
+Supply the following arguments to the "Merge PDFs" action:
+    * Merged PDF File Name: provide a descriptive name for the PDF packet to be created after merging and append it with the contract number and subcontractor name. This is provided in a variable called `Filename contract no. and sub name` which can be accessed through "Dynamic values".
+    * Files: change the type of input into an array instead of individual files and their names by clicking on the top right blue icon. Then add the array variable you initialized in Step 1.
+
+![Change input type of Merge PDFs]({{ site.baseurl }}/assets/images/powerAutomate/mergePDFsChangeInputType.png)
+![Merge PDFs action]({{ site.baseurl }}/assets/images/powerAutomate/mergePDFsStep6.png) 
+
+7. Add a "Create file" action below the "Merge PDFs" action. Add the appropriate parameters for the "Create file action". 
+    * Site Address: base URL to place the merged PDF packet in.
+    * Folder Path: the relative path of the attachment to be created. The folder path for PDF packets is:
+    `.../<contractNumber>/<subcontractorName>/<timestamp>`
+    In the image, the above expression has already been formatted into a variable called `Merged PDF Packets File path` located in [Block 1]({{ site.baseurl }}/docs/threeForms/subcontractorForm.md) which you can access through "Dynamic values" and append to the rest of the path.
+
+    {: .note}
+    > To ensure that you have the correct path initially, use the blue folder icon in the corner to navigate to the base folder, then append the variable `Merged PDF Packets File path`. This path is also subject to change, and if it needs to be updated, update the variable in Block 1.
+
+    * File Name: the file name of the Word Document. Select the `PDF File Name` output from the "Merge PDFs" action. 
+    * File Content: The content of the merged PDF packet. Select the `PDF File Content` output from the "Merge PDFs" action. 
+    
+![Create Schedule B P4 Attachment]({{ site.baseurl }}/assets/images/powerAutomate/mergePDFsStep7.png)
+8. You're done! Below is an example of a completed "Merge PDFs" sequence. 
+
+![Complete merge subcontractor forms sequence]({{ site.baseurl }}/assets/images/powerAutomate/overviewOfMergingSubcontractorFormPDFs.png)
+
+[Back to Top](#top)
 
 ### Emailing a Variable Number of Attachments from SharePoint
 
