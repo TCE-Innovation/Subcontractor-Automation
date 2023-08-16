@@ -18,7 +18,7 @@ grand_parent: Technical Specifications
 
 ## Purpose
 
-This flow is an automated process that runs after an HTTP POST request is recieved. When the [subcontractor initialization form] is submitted, it contacts this API to submit the data. It process the data recieved and creates the folder structure inside the `submissions` folder. This flow also sends an email to everyone in the email list **and will send a reminder email to everyone in 2 days. (THIS NEEDS TO BE IMPLEMENTED)**
+This flow is an automated process that runs after an HTTP POST request is recieved. When the [subcontractor inititalization form] is submitted, it contacts this API to submit the data. It process the data recieved and creates the folder structure inside the `submissions` folder. This flow also sends an email to everyone in the email list **and will send a reminder email to everyone in 2 days. (THIS NEEDS TO BE IMPLEMENTED)**
 
 ## Overview
 
@@ -39,8 +39,6 @@ After being triggered, it runs the following:
 |   |   |   |-- ContractNum.json (R-33333)
 ```
 
-![Power Automate Flow for Initialization API]({{ site.baseurl }}/assets/images/powerAutomate/apiInit.png)
-
 ## Connections, Triggers, and Actions Used
 
 **Trigger:** [When HTTP Request is recieved](https://learn.microsoft.com/en-us/azure/connectors/connectors-native-reqres)
@@ -54,7 +52,9 @@ After being triggered, it runs the following:
 |[HTTPS call](https://learn.microsoft.com/en-us/azure/connectors/connectors-native-reqres)|When a HTTP request is recieved <br> Response|
 |[Outlook](https://learn.microsoft.com/en-us/power-automate/email-overview)|Send an Email (V2)|
 
-## Structure
+## Flow Diagram
+
+![Power Automate Flow for Initialization API]({{ site.baseurl }}/assets/images/powerAutomate/apiInit.png)
 
 ----
 [subcontractor inititalization form]: https://tce-innovation.github.io/Subcontractor-Automation/forms/initialization.html

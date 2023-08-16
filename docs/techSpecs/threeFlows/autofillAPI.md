@@ -17,7 +17,7 @@ grand_parent: Technical Specifications
 
 ## Purpose
 
-This flow is an automated process that runs after an HTTP POST request is recieved. This flow is primarily called when the subcontractor opens the link. The URL parameters `contractNum` and `subName` are required to be submitted to this API. Using that information, the correct folder/file pair is sourced from the `submissions` folder, and all the data within that is sent back via the response. 
+This flow is an automated process that runs after an HTTP POST request is recieved. This flow is primarily called when the subcontractor opens the link to the [subcontractor form]. The URL parameters `contractNum` and `subName` are required to be submitted to this API. Using that information, the correct folder/file pair is sourced from the `submissions` folder, and all the data within that is sent back via the response. 
 
 The file contains all the form data with previously submitted data. It is also used to extract known good information from JSON files with the contract number. 
 
@@ -42,6 +42,8 @@ subName: Kangaroo
 |   |   |   |-- Subcontractor1.json
 ```
 
+## Flow Diagram
+
 ![Power Automate Flow for Subcontractor Autofill API]({{ site.baseurl }}/assets/images/powerAutomate/apiAutofill.png)
 
 ## Connections, Triggers, and Actions Used
@@ -54,3 +56,6 @@ subName: Kangaroo
 |[Data Operation](https://learn.microsoft.com/en-us/power-automate/data-operations) | Parse JSON|
 |[SharePoint](https://learn.microsoft.com/en-us/connectors/sharepointonline/)| Get File Content Using PATH|
 |[HTTPS call](https://learn.microsoft.com/en-us/azure/connectors/connectors-native-reqres)|When a HTTP request is recieved <br> Response|
+
+----
+[subcontractor form]: https://tce-innovation.github.io/Subcontractor-Automation/forms/subcontractor.html

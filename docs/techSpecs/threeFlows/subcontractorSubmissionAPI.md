@@ -37,8 +37,11 @@ subName: Kangaroo
 |   |   |   |-- R-33333.json
 |   |   |   |-- **Kangaroo.json**
 |   |   |   |-- Subcontractor1.json
+```
 
-![Subcontractor Form Wizard]({{ site.baseurl }}/assets/images/powerAutomate/apiSubSubmission.png)
+## Flow Diagram
+
+![Power Automate Flow for Subcontractor Submission API]({{ site.baseurl }}/assets/images/powerAutomate/apiSubSubmission.png)
 
 ## Connections, Triggers, and Actions Used
 
