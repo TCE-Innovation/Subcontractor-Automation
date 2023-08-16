@@ -1,7 +1,7 @@
 ---
 title: The Power Automate Flows
 layout: default
-nav_order: 2
+nav_order: 3
 parent: Technical Specifications
 has_children: true
 permalink: /docs/techSpecs/threeFlows
