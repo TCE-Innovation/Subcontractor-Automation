@@ -40,7 +40,7 @@ This action takes one argument - a `url` from the Plumsail Form for the correspo
 
 ![Attachment URLs]({{ site.baseurl }}/assets/images/powerAutomate/attachmentURLs.png)
 
-Presumably, the `url`s are displayed in the order that they appear in the Plumsail Form. When you add `url`, it will automatically be nested in an "Apply to each" action because the dynamic value of `url` is an array of attachments and they are to be saved one at a time. The only way to check that you have the correct `url` is to check what dynamic value populated automatically as the argument in the "Apply to each" action. 
+Presumably, the `url`s are displayed in the order that they appear in the Plumsail Form. When you add a `url` in the argument, the "Download attachment" actionwill automatically be nested in an "Apply to each" action because the dynamic value of `url` is an array of attachments and they are to be saved one at a time. The only way to check that you have the correct `url` is to check what dynamic value populated automatically as the argument in the "Apply to each" action. 
 
 ![Attachment Apply to Each]({{ site.baseurl }}/assets/images/powerAutomate/applyToEachAttachment.png)
 
@@ -155,9 +155,9 @@ Percentage example: `formatNumber(div(float(item()['colnumSF1Q6activeContractsPe
 {: .no_toc }
 
 Takes three arguments and replaces specific characters from a source string with specified characters.
-1. Source string to replace characters in
-2. String to replace
-3. String to replace with
+* Source string to replace characters in
+*  String to replace
+*  String to replace with
 
 Example: `replace(variables('Sanitized sub name'), item(), '')`
 
@@ -221,7 +221,6 @@ If you are creating a new form, create a parallel branch to the other branches t
     * File Name: the file name of the Word Document. 
     The file name prefix has already been defined in a variable called `Form Order and Filenames` - a JSON object which is parsed with a "Parse JSON" action called `Parse subcontractor form filenames JSON` in [Block 1](/docs/threeForms/subcontractorForm.md). Each property's key is the abbreviated version of the corresponding form and the value is the file name prefix. If you are adding a new form, you will need to add the file name prefix to `Form Order and Filenames` and update the schema in the `Parse subcontractor form filenames JSON` action. Then, in this field use the "Dynamic values" and find the appropriate output from the `Parse subcontractor form filenames JSON` action and append it with `docx`.
     * File Content: in "Dynamic values," select the Microsoft Word Document output from the "Populate a Word template" action from before.
-
 ![Create a Word Document]({{ site.baseurl }}/assets/images/powerAutomate/createScheduleAWordDocument.png)
 3. Add a "Convert Word Document to PDF" action.
 
@@ -231,9 +230,7 @@ If you are creating a new form, create a parallel branch to the other branches t
 
 {: .note}
 > It's recommended that you use the folder icon to navigate to the template yourself first, then cut the text from the box and re-paste it. This will ensure that you have the correct directory. There are also path properties from the "Create file" action that can be used here to access the file, but because at the time of writing this, we have not received a final official folder/directory to place these files and the path attained using the folder icon is different from using a similar method in the "Create file" action, we simply appended on the `Word Docs File path` variable and a `/` followed by the file name from the "Create file" action in "Dynamic values." In the future, this can be adjusted for easier maintenance.
-
 ![Convert Word Document to PDF]({{ site.baseurl }}/assets/images/powerAutomate/convertScheduleAWordToPDF.png)
-
 4. Add another "Create file" action. This will create the PDF file that resulted from the conversion. The fields are filled out in a similar fashion to Step 2:
     * Site Address: same as Step 2
     * Folder Path: same as Step 2 except instead of `Individual Word Documents` it is `Individual PDF Documents`:
@@ -247,11 +244,9 @@ If you are creating a new form, create a parallel branch to the other branches t
     * File Content: in "Dynamic values," select the PDF Document output from the "Convert Word Document to PDF" action from before.
 
 ![Create PDF Document After Conversion]({{ site.baseurl }}/assets/images/powerAutomate/createScheduleAPDF.png)
-
 5. If this form is not always required and the form needs to be merged into a packet, you will also have to add an "Append to array variable" action. It doesn't matter the order you put this action, as long as it is in the same branch. Right now, this action is above the "Populate a Word template" action. The arguments should be filled out such that the array to append to is the array of forms for the particular packet that the form belongs to and the value is the file name for the form from the `Parse subcontractor form filenames JSON` action. 
 
 ![Append RMSA to list of forms to merge]({{ site.baseurl }}/assets/images/powerAutomate/addRMSAToListOfFormsToMerge.png)
-
 6. You're done! Below is an example of a completed "Populate a Word Template and Create PDF" sequence. 
 
 ![Complete Populate a Word Template and Create PDF Sequence]({{ site.baseurl }}/assets/images/powerAutomate/overviewOfPopulatingRMSAAndMakingPDF.png)
@@ -277,12 +272,33 @@ The output of an Ink Sketch Control on Plumsail is a PNG. However, this must be 
 
 ### Getting Attachments from Plumsail
 
-1. Create a "Download attachment" action from Plumsail. See the section on [Download attachment](#plumsail-forms---download-attachment) for additional assistance. 
-2. Select the `url` from "Dynamic values" for the argument.
-3. Open the "Apply to each" action that autogenerates and add a "Create file" action after the "Download attachment" action.
-4. Add the appropriate parameters for the "Create file action".
+All attachments from Plumsail are PDFs.
 
-TO DO: Add pictures
+1. Create a "Download attachment" action from Plumsail Forms. This should be in the same branch as the form the attachment belongs to. See the section on [Download attachment](#plumsail-forms---download-attachment) for additional information on this action. 
+
+![Download attachment action](/assets/images/powerAutomate/downloadAttachment.png)
+2. Select the `url` from "Dynamic values" for the argument.
+
+![Add url](/assets/images/powerAutomate/attachmentURLs.png)
+3. Open the "Apply to each" action that autogenerates and add a "Create file" action after the "Download attachment" action. If the autogenerated attachment field for the `url` that you selected does not match the branch you initially placed it in, you can drag it to the correct branch later or delete it. Either way, you will have to go back to Step 1 and repeat until you have found the correct `url`.
+
+![Apply to each attachment](/assets/images/powerAutomate/applyToEachAttachment.png)
+4. Add the appropriate parameters for the "Create file action". Rename your actions to be more descriptive to the attachment that you are downloading. 
+* Site Address: base URL to place the attachment in.
+    * Folder Path: the relative path of the attachment to be created. Using the conventions, the folder path for an individual Word Document is:
+    `.../<contractNumber>/<subcontractorName>/<timestamp>/Individual PDF Documents`
+    In the image, the above expression has already been formatted into a variable called `Individual PDFs File path` located in [Block 1]({{ site.baseurl }}/docs/threeForms/subcontractorForm.md) which you can access through "Dynamic values"
+    * File Name: the file name of the Word Document. 
+    The file name prefix has already been defined in a variable called `Form Order and Filenames` - a JSON object which is parsed with a "Parse JSON" action called `Parse subcontractor form filenames JSON` in [Block 1](/docs/threeForms/subcontractorForm.md). Each property's key is the abbreviated version of the corresponding form and the value is the file name prefix. If you are adding a new form, you will need to add the file name prefix to `Form Order and Filenames` and update the schema in the `Parse subcontractor form filenames JSON` action. Then, in this field use the "Dynamic values" and find the appropriate output from the `Parse subcontractor form filenames JSON` action and append it with `pdf`.
+    * File Content: in "Dynamic values," select the "Result file" output from the "Download attachment" action from before.
+    
+    ![Create Schedule B P4 Attachment]({{ site.baseurl }}/assets/images/powerAutomate/createSBP4Attachment.png)
+5. If this form is not always required and the form needs to be merged into a packet, you will also have to add an "Append to array variable" action. It doesn't matter the order you put this action, as long as it is in the same branch. Right now, this action is above the "Populate a Word template" action. The arguments should be filled out such that the array to append to is the array of forms for the particular packet that the form belongs to and the value is the file name for the form from the `Parse subcontractor form filenames JSON` action. 
+
+![Append Schedule B P4 Attachment to list of forms to merge]({{ site.baseurl }}/assets/images/powerAutomate/addSBP4AttachmentToListOfFormsToMerge.png)
+6. You're done! Below is an example of a completed "Populate a Word Template and Create PDF" sequence. 
+
+![Complete Populate a Word Template and Create PDF Sequence]({{ site.baseurl }}/assets/images/powerAutomate/overviewOfDownloadingSBP4Attachment.png)
 
 ### Merging PDFs
 
