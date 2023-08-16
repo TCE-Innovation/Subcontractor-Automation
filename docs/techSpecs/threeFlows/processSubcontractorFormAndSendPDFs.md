@@ -2,7 +2,7 @@
 title: Process Subcontractor Form and Send PDFs
 layout: page
 nav_order: 1
-parent: The Three Flows
+parent: The Power Automate Flows
 grand_parent: Technical Specifications
 ---
 

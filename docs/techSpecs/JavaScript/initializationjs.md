@@ -11,10 +11,12 @@ nav_order: 1
 
 1. TOC
 {:toc}
-# data
+
 
 # UML Diagram
 ![]({{ site.baseurl }}/assets/images/umlDiagrams/initializationjs.png)
+
+# Functions
 
 ## autopopulateGenInfo()
 

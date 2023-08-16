@@ -11,7 +11,6 @@ nav_order: 3
 
 1. TOC
 {:toc}
-# data
 
 # UML Diagram
 ![]({{ site.baseurl }}/assets/images/umlDiagrams/correctionjs.png)
