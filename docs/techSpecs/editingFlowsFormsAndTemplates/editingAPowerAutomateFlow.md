@@ -32,7 +32,28 @@ nav_order: 4
 > *Premium connectors
 
 [Back to Top](#top)
-## Additional Notes on Actions
+
+## Additional Notes and Tips
+
+### Alternative View on Power Automate
+
+If you want a view for Power Automate that has more space to enter functions (helpful for populating fields) and a different interface for getting dynamic data from Plumsail Forms, click on the gear icon in the top right corner.
+
+![Gear Button in Power Automate](/assets/images/powerAutomate/alternateViewStep1.png)
+
+Click on "View all Power Automate Settings."
+
+![View all Power Automate Settings](/assets/images/powerAutomate/alternateViewStep2.png)
+
+Enable "Experimental Features." 
+
+![Enable Experimental Features](/assets/images/powerAutomate/alternateViewStep3.png)
+
+Now you should have more space to write and view expressions and "Dynamic values" as opposed to the classic interface below:
+
+![Old Power Automate View](/assets/images/powerAutomate/oldView.png)
+
+[Back to Top](#top)
 
 ### Plumsail Forms - Download Attachment
 
@@ -45,6 +66,120 @@ Presumably, the `url`s are displayed in the order that they appear in the Plumsa
 ![Attachment Apply to Each]({{ site.baseurl }}/assets/images/powerAutomate/applyToEachAttachment.png)
 
 We can see from the name that this `url` actually corresponds to Schedule B Part 4, not RMSA. If we have not already downloaded this attachment in the branch for Schedule B, we can click and drag this "Apply to each" action to the Schedule B branch and try again for the right attachment. If the dragging action does not work, you may have to save the flow and refresh the page first.
+
+[Back to Top](#top)
+
+### Data Operation - Parse JSON
+
+This action takes two arguments:
+* Content: the data table as an array of JSON objects
+* Schema: the JSON schema that outlines how the array is structured
+
+Content can be matched directly with the data table from the Plumsail Forms trigger. 
+
+Schema can be either typed or generated from a sample. Generating from a sample is easier if you already have a submission from which you can source an example of a filled out data table. To do so, you would have to click the "Generate from sample" button and paste in the JSON payload. 
+
+![Generate from sample](/assets/images/powerAutomate/generateJSONSchemaStep1.png)
+![Paste JSON sample](/assets/images/powerAutomate/generateJSONSchemaStep2.png)
+
+To find the JSON, navigate to the Submissions --> Any Contract Number --> JSON and select any of the JSON files except for the contract number.
+
+![JSON files folder](/assets/images/powerAutomate/JSONfolder.png)
+
+Inside, you can search for the data table using Ctrl + F. 
+
+![Ctrl + F data table](/assets/images/powerAutomate/findJSONObjectArray.png)
+
+Below are some example JSON arrays and their corresponding schema:
+Schema with a number - Schedule B Part 6 Data Table:
+```
+{
+    "type": "array",
+    "items": {
+        "type": "object",
+        "properties": {
+            "__id": {
+                "type": "string"
+            },
+            "coltSBP6nameOfPartnerOwner": {
+                "type": "string"
+            },
+            "colnumSBP6percentageOwned": {
+                "type": "number"
+            }
+        },
+        "required": [
+            "__id",
+            "coltSBP6nameOfPartnerOwner",
+            "colnumSBP6percentageOwned"
+        ]
+    }
+}
+```
+
+Example of a completed Schedule B Part 6 Data Table:
+
+```
+[
+    {"__id":"e2c06c9d-4edb-4e68-b5dc-df66867e9b0a","coltSBP6nameOfPartnerOwner":"jfjlsf ","colnumSBP6percentageOwned":10.23},
+    {"__id":"ca32ee82-82d6-4470-a4e4-239103ad8b34","coltSBP6nameOfPartnerOwner":"dwc","colnumSBP6percentageOwned":0.29},
+    {"__id":"c9237750-94ec-413c-9b00-a23f0028e935","coltSBP6nameOfPartnerOwner":"DA","colnumSBP6percentageOwned":12},
+    {"__id":"a6c1c491-2618-4f17-85ee-697c72db1265","coltSBP6nameOfPartnerOwner":"bleh","colnumSBP6percentageOwned":12.32}
+
+]
+```
+
+Schema with a dropdown (multiple choice) - Schedule B P5 Data Table M:
+```
+{
+    "type": "array",
+    "items": {
+        "type": "object",
+        "properties": {
+            "__id": {
+                "type": "string"
+            },
+            "coltSBP5MnameOfEmployee": {
+                "type": "string"
+            },
+            "colddmcSBP5MemployedBy": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                }
+            }
+        },
+        "required": [
+            "__id",
+            "coltSBP5MnameOfEmployee",
+            "colddmcSBP5MemployedBy"
+        ]
+    }
+}
+```
+
+Sample completed Schedule B P5 Data Table M:
+```
+[
+    {"__id":"e2193d4c-bb2a-4a13-85cb-f4df6174276e","coltSBP5MnameOfEmployee":"q1","colddmcSBP5MemployedBy":["MTA"]},{"__id":"ed176240-0759-441a-bfeb-acc3939795ab","coltSBP5MnameOfEmployee":"q2","colddmcSBP5MemployedBy":["NYCT"]},
+    {"__id":"a4f1ae6a-d017-498b-9105-bcf141e78bae","coltSBP5MnameOfEmployee":"q3","colddmcSBP5MemployedBy":["MaBSTOA"]},{"__id":"e59487d2-a3bc-4256-81c8-70acf60018eb","coltSBP5MnameOfEmployee":"q4","colddmcSBP5MemployedBy":["SIRTOA"]},
+    {"__id":"b9d77a11-85a6-46dc-a13b-95c5d033318c","coltSBP5MnameOfEmployee":"q5","colddmcSBP5MemployedBy":["MNR"]},{"__id":"c30863e4-4e91-4a85-8a01-4c7898885d2a","coltSBP5MnameOfEmployee":"q6","colddmcSBP5MemployedBy":["LIRR"]},
+    {"__id":"c2a52608-a0cc-4c9c-a109-6b560ac6ba97","coltSBP5MnameOfEmployee":"q7","colddmcSBP5MemployedBy":["TBTA"]},{"__id":"e38029b6-c8e1-4296-8972-d7860ab7f8ec","coltSBP5MnameOfEmployee":"q8","colddmcSBP5MemployedBy":["MTAC&D"]},
+    {"__id":"ada708e1-9e4d-432e-8c2a-9162525542ca","coltSBP5MnameOfEmployee":"q9","colddmcSBP5MemployedBy":["MTA BC"]},{"__id":"bd67cb81-3e2b-4efc-a78e-f6e65159b36b","coltSBP5MnameOfEmployee":"q10","colddmcSBP5MemployedBy":["NYCT","MaBSTOA","SIRTOA","LIRR","TBTA","MTAC&D","MTA BC","MTA","MNR"]}
+]
+```
+
+If you want to type it out, use the examples above and the table below to infer.
+
+| Type of Plumsail Field/Control            | JSON type         | 
+| ---                                       | ---               |
+| Text                                      | string            |
+| Note                                      | string            |
+| Number (no decimals)                      | integer           |
+| Number (with at least 1 decimal place)    | number            | 
+| Single Choice                             | string            | 
+| Multiple Choice                           | array of string   |
+| Date                                      | string            | 
 
 [Back to Top](#top)
 
@@ -256,7 +391,56 @@ If you are creating a new form, create a parallel branch to the other branches t
 
 ### Handling Data Tables
 
+Many forms have data tables in them, and depending on the contents, further processing may be needed. When populating Repeating Section Content Controls, there will be a corresponding Plumsail Data Table. Data tables are arrays of JSON objects and examples of schemas are provided. Passing an empty array to a Repeating Section Content Control when populating a Word Template will result in zero instances of that Repeating Section Content Control. Outlined below are some cases that occurred in the flows. Schedule B's branch has the most data tables and will be most helpful if you need  examples. 
+
+#### Case 1: No extra formatting needed
+
+{: .no_toc}
+
+Change the input of the data table field in Power Automate so that it takes an array by clicking the blue icon in the top-right corner. Then find the corresponding data table in "Dynamic values" and add that as the input. 
+
+![Case 1: Simple matching]({{ site.baseurl }}/assets/images/powerAutomate/handlingDataTablesSimpleMatch.png)
+
+#### Case 2: Dates, currencies and/or percentages
+
+{: .no_toc}
+
+1. Initialize an array variable for your data table. Give the name of the action and the name of the variable descriptive names. 
+
+![Initialize array variable for data table]({{ site.baseurl }}/assets/images/powerAutomate/handlingDataTablesInitializeArray.png)
+
+2. Add a "Parse JSON" action and rename it to be descriptive. Provide the following arguments:
+    * Content: the data table you need to parse
+    * Schema: the JSON schema. This is how the JSON code that you are passing in is structured. The easiest way to add this is to use the "Generate from sample" button and pasting in an example JSON array from a prior form submission. You can also type it out yourself. See the section on [Data Operation - Parse JSON](#data-operation---parse-json) for more information.
+
+![Parse JSON action]({{ site.baseurl }}/assets/images/powerAutomate/handlingDataTablesParseJSONExample.png)
+
+3. Add a "Select" action. Provide the following arguments:
+    * From: the body of the previous "Parse JSON" object
+    * Map: the left column will be the key and the right column will be the value. Copy and paste in the names of all the columns that you want to include in your data table on the left (usually all of them except for `__id`). On the right, format the outputs from the "Parse JSON" action using `formatDateTime` and `formatNumber` if needed. Otherwise, you can simply map the corresponding output for text fields.
+
+![Map Text, Dates, and Number Key Values]({{ site.baseurl }}/assets/images/powerAutomate/parseJSONMapDatesAndNumbers.png)
+
+4. Set the data table variable equal to the output of the "Select" action.
+
+![Set data table variable]({{ site.baseurl }}/assets/images/powerAutomate/setDataTableVarToSelectOutput.png)
+
+5. Map the variable to the corresponding Content Control.
+
+![Map data table variable to Content Control]({{ site.baseurl }}/assets/images/powerAutomate/mapDataTableVariableToContentControl.png)
+
+#### Case 3: Nested multiple choice
+
+{: .no_toc}
+
+
 TO DO 
+
+#### Case 4: Default values 
+
+{: .no_toc}
+
+TO DO
 
 [Back to Top](#top)
 
