@@ -11,7 +11,6 @@ nav_order: 3
 
 1. TOC
 {:toc}
-# data
 
 # UML Diagram
 ![]({{ site.baseurl }}/assets/images/umlDiagrams/correctionjs.png)
@@ -82,7 +81,7 @@ The two-step change/edit is used to ensure that the selection is valid. If the s
 **Parameters:** null
 
 **Returns:** 
-- @returns {void} This function does not return any value.
+- @returns {int} Returns the number of unfilled cells. If totally full, returns 0;
 
 ## populateColumn()
 
