@@ -366,29 +366,29 @@ If there are any attachments that will always be included in the email, you can 
     * `"Name"`: the name of the attachment. If you have a previous "Merge PDFs" action, you can supply the "PDF File Name" output. You can also provide a different name if you'd like (see images below)
     * `"ContentBytes"`: the content of the attachment. If you have a previous "Merge PDFs" action, you can supply the "PDF File Content" output. 
 
-![Initialize array variable for email attachments using outputs of Merge PDFs action](/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep1.png)
-![Initialize array variable for email attachments using outputs of Merge PDFs action alternate naming](/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep1AlternateNaming.png)
+![Initialize array variable for email attachments using outputs of Merge PDFs action]({{ site.baseurl }}/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep1.png)
+![Initialize array variable for email attachments using outputs of Merge PDFs action alternate naming]({{ site.baseurl }}/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep1AlternateNaming.png)
 
 2. For any attachments that are not always included in the email, add a "Condition" action to check when it should be included. Depending on your condition, you will then add a "Get file content using path" action in either the "If yes" or "If no" block.
 Rename the action to be specific and descriptive to ts purpose. Supply the following parameters:
     * Site Address: base URL to find the files to be merged
     * File Path: the relative path of the attachment to be created. You can go into "Dynamic values" and find the corresponding "Create file" action with a "Path" output.
 
-![Get file content using path](/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep2.png)
+![Get file content using path]({{ site.baseurl }}/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep2.png)
 
 3. Add an "Append to array variable" after the "Get file content using path" action. Append a JSON object with the following properties to the variable you created in Step 1:
     * "Name": "Name" from the "Get file content using path" action"
     * "ContentBytes": `body(<nameOfGetFileContentUsingPatchAction>)?[$content]`
 
-![Append file contents to email attachments](/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep3.png)
+![Append file contents to email attachments]({{ site.baseurl }}/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep3.png)
 
 4. Initialize strings for email addresses that successfully were sent the emails and unsuccessfully were sent the emails. Provide no initial value. You can also initialize a string to format the time of the receipt. 
 
-![Initialize strings for failed and successful receipts and time](/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep4.png)
+![Initialize strings for failed and successful receipts and time]({{ site.baseurl }}/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep4.png)
 
 5. Create an "Apply to each" action. Rename it to be descriptive for its purpose. Iterate over the list of emails provided by the subcontractor to send receipts to. This will come from the Plumsail Forms and is called `dt.GI.receipts`.
 
-![Apply to each email](/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep5.png)
+![Apply to each email]({{ site.baseurl }}/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep5.png)
 
 6. Within the "Apply to each" action, create a new "Send an email (V2)" action. Provide the following arguments:
 * To: `coltGIreceiptsEmail` (the current item from the enclosing "Apply to each" action)
@@ -400,35 +400,35 @@ Rename the action to be specific and descriptive to ts purpose. Supply the follo
 * Attachments: the array of attachments that you made earlier. You will have to click "Show advanced options" to see this field. Remember to change the input type so that you can attach an array instead of individual attachments and their names.
 There are several other arguments as well that you can fill in as needed.
 
-![Apply to each email](/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep6.png)
+![Apply to each email]({{ site.baseurl }}/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep6.png)
 
 7. Create two "Append to string variable" actions in parallel with each other. One will add the emails of successful receipts to the array of successful emails, and the other will add the emails of failed receipts to the array of failed receipts. Configure the run after for the "Append to string variable" action for failed receipts such that it will run after the "Send email (v2)' action has failed, is skipped, or has timed out.
 
-![Config run after step 1](/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep7ConfigRunAfter1.png)
-![Config run after step 2](/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep7ConfigRunAfter2.png)
+![Config run after step 1]({{ site.baseurl }}/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep7ConfigRunAfter1.png)
+![Config run after step 2]({{ site.baseurl }}/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep7ConfigRunAfter2.png)
 
 The value to be appended in both is: 
 `concat(items('Send_emails_with_attachment_to_every_recipient')?['coltGIreceiptsName'], ': ', items('Send_emails_with_attachment_to_every_recipient')?['coltGIreceiptsEmail'], '<br>')`
 
-![Append to successful and failed emails strings](/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep7.png)
+![Append to successful and failed emails strings]({{ site.baseurl }}/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep7.png)
 
 8. Initialize an array of TCE-specified recipient emails. These emails will be sent a notification that the subcontractor has completed the forms and whether all emails were sent successfully. Also, append `t.GI.primeContractorRepresentativeEmail` from Plumsail Forms. 
 
-![Create array of TCE recipients](/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep8.png)
+![Create array of TCE recipients]({{ site.baseurl }}/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep8.png)
 
 9. Create a "Condition" action to check whether the length of the string of failed emails is greater than 0. 
 
-![Check if there were any failed receipts](/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep9.png)
+![Check if there were any failed receipts]({{ site.baseurl }}/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep9.png)
 10. In the "If no" block, create an "Apply to Each" and iterate over TCE Recipient Emails array. Create a "Send email (v2)" action similar to before in step 6, except that this email is not to the subcontractor, but TCE and should be written that way. Within the email body, add the string of successful receipts using the variable created before. 
 
-![Send confirmation emails to TCIG](/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep10.png)
+![Send confirmation emails to TCIG]({{ site.baseurl }}/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep10.png)
 11. Copy the "Apply to each" action from the "If no" block into the "If yes" block by clicking on the three dots and selecting "Copy to my clipboard (Preview)".
 
-![Copy confirmation email actions in Power Automate](/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep11.png)
+![Copy confirmation email actions in Power Automate]({{ site.baseurl }}/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep11.png)
 12. Add an action in the "If yes" block and go to the "Clipboard" tab to paste in the copied actions. Adjust the copied actions to reflect that in the "If yes" block, you will be sending an email notifying TCE that not all emails were successfully sent.
-!["If yes" block pasted and edited actions](/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep12.png)
+!["If yes" block pasted and edited actions]({{ site.baseurl }}/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep12.png)
 13. You're done! Below is an overview of what the complete sequence looks like:
 
-![Overview of Emailing Variable Number of Attachments from SharePoint to a Variable Number of Recipients](/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep13.png)
+![Overview of Emailing Variable Number of Attachments from SharePoint to a Variable Number of Recipients]({{ site.baseurl }}/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep13.png)
 
 [Back to Top](#top)
