@@ -79,16 +79,17 @@ Content can be matched directly with the data table from the Plumsail Forms trig
 
 Schema can be either typed or generated from a sample. Generating from a sample is easier if you already have a submission from which you can source an example of a filled out data table. To do so, you would have to click the "Generate from sample" button and paste in the JSON payload. 
 
-![Generate from sample](/assets/images/powerAutomate/generateJSONSchemaStep1.png)
-![Paste JSON sample](/assets/images/powerAutomate/generateJSONSchemaStep2.png)
+![Generate from sample]({{ site.baseurl }}/assets/images/powerAutomate/generateJSONSchemaStep1.png)
+
+![Paste JSON sample]({{ site.baseurl }}/assets/images/powerAutomate/generateJSONSchemaStep2.png)
 
 To find the JSON, navigate to the Submissions --> Any Contract Number --> JSON and select any of the JSON files except for the contract number.
 
-![JSON files folder](/assets/images/powerAutomate/JSONfolder.png)
+![JSON files folder]({{ site.baseurl }}/assets/images/powerAutomate/JSONfolder.png)
 
 Inside, you can search for the data table using Ctrl + F. 
 
-![Ctrl + F data table](/assets/images/powerAutomate/findJSONObjectArray.png)
+![Ctrl + F data table]({{ site.baseurl }}/assets/images/powerAutomate/findJSONObjectArray.png)
 
 Below are some example JSON arrays and their corresponding schema:
 Schema with a number - Schedule B Part 6 Data Table:
@@ -359,14 +360,14 @@ If you are creating a new form, create a parallel branch to the other branches t
 ![Create a Word Document]({{ site.baseurl }}/assets/images/powerAutomate/createScheduleAWordDocument.png)
 3. Add a "Convert Word Document to PDF" action.
 
-* Location: website where the Word Document to convert is located
-* Document Library: document library where the Word Document to convert is located
-* File: the relative file path of the Word Document to convert
+    * Location: website where the Word Document to convert is located
+    * Document Library: document library where the Word Document to convert is located
+    * File: the relative file path of the Word Document to convert
 
-{: .note}
-> It's recommended that you use the folder icon to navigate to the template yourself first, then cut the text from the box and re-paste it. This will ensure that you have the correct directory. There are also path properties from the "Create file" action that can be used here to access the file, but because at the time of writing this, we have not received a final official folder/directory to place these files and the path attained using the folder icon is different from using a similar method in the "Create file" action, we simply appended on the `Word Docs File path` variable and a `/` followed by the file name from the "Create file" action in "Dynamic values." In the future, this can be adjusted for easier maintenance.
+    {: .note}
+    > It's recommended that you use the folder icon to navigate to the template yourself first, then cut the text from the box and re-paste it. This will ensure that you have the correct directory. There are also path properties from the "Create file" action that can be used here to access the file, but because at the time of writing this, we have not received a final official folder/directory to place these files and the path attained using the folder icon is different from using a similar method in the "Create file" action, we simply appended on the `Word Docs File path` variable and a `/` followed by the file name from the "Create file" action in "Dynamic values." In the future, this can be adjusted for easier maintenance.
 
-![Convert Word Document to PDF]({{ site.baseurl }}/assets/images/powerAutomate/convertScheduleAWordToPDF.png)
+    ![Convert Word Document to PDF]({{ site.baseurl }}/assets/images/powerAutomate/convertScheduleAWordToPDF.png)
 4. Add another "Create file" action. This will create the PDF file that resulted from the conversion. The fields are filled out in a similar fashion to Step 2:
     * Site Address: same as Step 2
     * Folder Path: same as Step 2 except instead of `Individual Word Documents` it is `Individual PDF Documents`:
@@ -379,13 +380,15 @@ If you are creating a new form, create a parallel branch to the other branches t
     * File Name: the file name of the Word Document. Same as Step 2 but instead of appending with `docx`, you append with `pdf`.
     * File Content: in "Dynamic values," select the PDF Document output from the "Convert Word Document to PDF" action from before.
 
-![Create PDF Document After Conversion]({{ site.baseurl }}/assets/images/powerAutomate/createScheduleAPDF.png)
+    ![Create PDF Document After Conversion]({{ site.baseurl }}/assets/images/powerAutomate/createScheduleAPDF.png)
+
 5. If this form is not always required and the form needs to be merged into a packet, you will also have to add an "Append to array variable" action. It doesn't matter the order you put this action, as long as it is in the same branch. Right now, this action is above the "Populate a Word template" action. The arguments should be filled out such that the array to append to is the array of forms for the particular packet that the form belongs to and the value is the file name for the form from the `Parse subcontractor form filenames JSON` action. 
 
-![Append RMSA to list of forms to merge]({{ site.baseurl }}/assets/images/powerAutomate/addRMSAToListOfFormsToMerge.png)
+    ![Append RMSA to list of forms to merge]({{ site.baseurl }}/assets/images/powerAutomate/addRMSAToListOfFormsToMerge.png)
+
 6. You're done! Below is an example of a completed "Populate a Word Template and Create PDF" sequence. 
 
-![Complete Populate a Word Template and Create PDF Sequence]({{ site.baseurl }}/assets/images/powerAutomate/overviewOfPopulatingRMSAAndMakingPDF.png)
+    ![Complete Populate a Word Template and Create PDF Sequence]({{ site.baseurl }}/assets/images/powerAutomate/overviewOfPopulatingRMSAAndMakingPDF.png)
 
 [Back to Top](#top)
 
@@ -407,19 +410,19 @@ Change the input of the data table field in Power Automate so that it takes an a
 
 1. Initialize an array variable for your data table. Give the name of the action and the name of the variable descriptive names. 
 
-![Initialize array variable for data table]({{ site.baseurl }}/assets/images/powerAutomate/handlingDataTablesInitializeArray.png)
+    ![Initialize array variable for data table]({{ site.baseurl }}/assets/images/powerAutomate/handlingDataTablesInitializeArray.png)
 
 2. Add a "Parse JSON" action and rename it to be descriptive. Provide the following arguments:
     * Content: the data table you need to parse
     * Schema: the JSON schema. This is how the JSON code that you are passing in is structured. The easiest way to add this is to use the "Generate from sample" button and pasting in an example JSON array from a prior form submission. You can also type it out yourself. See the section on [Data Operation - Parse JSON](#data-operation---parse-json) for more information.
 
-![Parse JSON action]({{ site.baseurl }}/assets/images/powerAutomate/handlingDataTablesParseJSONExample.png)
+    ![Parse JSON action]({{ site.baseurl }}/assets/images/powerAutomate/handlingDataTablesParseJSONExample.png)
 
 3. Add a "Select" action. Provide the following arguments:
     * From: the body of the previous "Parse JSON" object
     * Map: the left column will be the key and the right column will be the value. Copy and paste in the names of all the columns that you want to include in your data table on the left (usually all of them except for `__id`). On the right, format the outputs from the "Parse JSON" action using `formatDateTime` and `formatNumber` if needed. Otherwise, you can simply map the corresponding output for text fields.
 
-![Map Text, Dates, and Number Key Values]({{ site.baseurl }}/assets/images/powerAutomate/parseJSONMapDatesAndNumbers.png)
+    ![Map Text, Dates, and Number Key Values]({{ site.baseurl }}/assets/images/powerAutomate/parseJSONMapDatesAndNumbers.png)
 
 4. Set the data table variable equal to the output of the "Select" action.
 
@@ -427,7 +430,9 @@ Change the input of the data table field in Power Automate so that it takes an a
 
 5. Map the variable to the corresponding Content Control.
 
-![Map data table variable to Content Control]({{ site.baseurl }}/assets/images/powerAutomate/mapDataTableVariableToContentControl.png)
+    ![Map data table variable to Content Control]({{ site.baseurl }}/assets/images/powerAutomate/mapDataTableVariableToContentControl.png)
+
+6. You're done!
 
 #### Case 3: Nested multiple choice
 
@@ -451,7 +456,7 @@ The output of an Ink Sketch Control on Plumsail is a PNG. However, this must be 
 2. Create another "Compose" action or an "Initialize variable" action immediately after the previous action and add the following expression: `dataUriToBinary(<outPutOfPreviousAction>)`
 3. The output of step 2 can now be used for population of Picture Content Controls. Note that the dimensions are warped to fit the dimensions of the Word Template Picture Content Control and do not maintain the original image's dimensions. Thus you will have to manually adjust the dimensions within the Word Template itself and reupload if you need to edit it. 
 
-![Format signature overview]({{ site.baseurl }}/assets/images/powerAutomate/formatSignatureOverview.png)
+    ![Format signature overview]({{ site.baseurl }}/assets/images/powerAutomate/formatSignatureOverview.png)
 
 [Back to Top](#top)
 
@@ -461,7 +466,8 @@ All attachments from Plumsail Forms are PDFs in this workflow. This is ensured b
 
 1. Create a "Download attachment" action from Plumsail Forms. This should be in the same branch as the form the attachment belongs to. See the section on [Download attachment](#plumsail-forms---download-attachment) for additional information on this action. 
 
-![Download attachment action]({{ site.baseurl }}/assets/images/powerAutomate/downloadAttachment.png)
+    ![Download attachment action]({{ site.baseurl }}/assets/images/powerAutomate/downloadAttachment.png)
+
 2. Select the `url` from "Dynamic values" for the argument.
 
 ![Add url]({{ site.baseurl }}/assets/images/powerAutomate/attachmentURLs.png)
@@ -477,13 +483,14 @@ All attachments from Plumsail Forms are PDFs in this workflow. This is ensured b
     The file name prefix has already been defined in a variable called `Form Order and Filenames` - a JSON object which is parsed with a "Parse JSON" action called `Parse subcontractor form filenames JSON` in [Block 1]({{ site.baseurl }}/docs/threeForms/subcontractorForm.md). Each property's key is the abbreviated version of the corresponding form and the value is the file name prefix. If you are adding a new form, you will need to add the file name prefix to `Form Order and Filenames` and update the schema in the `Parse subcontractor form filenames JSON` action. Then, in this field use the "Dynamic values" and find the appropriate output from the `Parse subcontractor form filenames JSON` action and append it with `pdf`.
     * File Content: in "Dynamic values," select the "Result file" output from the "Download attachment" action from before.
     
-![Create Schedule B P4 Attachment]({{ site.baseurl }}/assets/images/powerAutomate/createSBP4Attachment.png)
+    ![Create Schedule B P4 Attachment]({{ site.baseurl }}/assets/images/powerAutomate/createSBP4Attachment.png)
+
 5. If this form is not always required and the form needs to be merged into a packet, you will also have to add an "Append to array variable" action. It doesn't matter the order you put this action, as long as it is in the same branch. Right now, this action is above the "Populate a Word template" action. The arguments should be filled out such that the array to append to is the array of forms for the particular packet that the form belongs to and the value is the file name for the form from the `Parse subcontractor form filenames JSON` action. 
 
 ![Append Schedule B P4 Attachment to list of forms to merge]({{ site.baseurl }}/assets/images/powerAutomate/addSBP4AttachmentToListOfFormsToMerge.png)
 6. You're done! Below is an example of a completed "Download attachments from Plumsail Forms" sequence. 
 
-![Complete Schedule B P4 Download Attachment Sequence]({{ site.baseurl }}/assets/images/powerAutomate/overviewOfDownloadingSBP4Attachment.png)
+    ![Complete Schedule B P4 Download Attachment Sequence]({{ site.baseurl }}/assets/images/powerAutomate/overviewOfDownloadingSBP4Attachment.png)
 
 [Back to Top](#top)
 
@@ -491,38 +498,41 @@ All attachments from Plumsail Forms are PDFs in this workflow. This is ensured b
 
 1. Initialize an array variable using the "Initialize variable" action. This will store the file contents of the PDFs to be merged and will be appended with content. No initial value was provided so it starts as an empty array. Name the action and variable so that they are descriptive.
 
-![Initialize array variable]({{ site.baseurl }}/assets/images/powerAutomate/mergePDFsStep1.png)
+    ![Initialize array variable]({{ site.baseurl }}/assets/images/powerAutomate/mergePDFsStep1.png)
 
 2. Add an "Apply to each" action. Iterate over the array of file name prefixes for files to be merged. In this example, that variable is `Subcontractor Files to Merge`. 
 
-![Apply to each action]({{ site.baseurl }}/assets/images/powerAutomate/mergePDFsStep2.png)
+    ![Apply to each action]({{ site.baseurl }}/assets/images/powerAutomate/mergePDFsStep2.png)
+
 3. Add a "Get file content using path" action. Rename the action to be specific and descriptive to ts purpose. Supply the following parameters:
     * Site Address: base URL to find the files to be merged
     * File Path: the relative path of the attachment to be created. Using the conventions, the folder path for an individual Word Document is:
     `.../<contractNumber>/<subcontractorName>/<timestamp>/Individual PDF Documents`
     In the image, the above expression has already been formatted into a variable called `Individual PDFs File path` located in [Block 1]({{ site.baseurl }}/docs/threeForms/subcontractorForm.md) which you can access through "Dynamic values".  This should then also be appended with `/`, the "Current item" output from the "Apply to each action" that you created before which is the file name prefix, and finally `pdf`.
 
-![Get file content using path]({{ site.baseurl }}/assets/images/powerAutomate/mergePDFsStep3.png)
+    ![Get file content using path]({{ site.baseurl }}/assets/images/powerAutomate/mergePDFsStep3.png)
 
 4. Add an "Append to array variable" action after the "Get file contents using path" action. Append to the array variable created to hold the file contents the following value `trim(base64(body(<name of "Get file contents using path" action>)))` and replace `<name of "Get file contents using path" action>` with the appropriate value.
 
-![Append subcontractor file contents to subcontractor files array]({{ site.baseurl }}/assets/images/powerAutomate/mergePDFsStep4.png)
+    ![Append subcontractor file contents to subcontractor files array]({{ site.baseurl }}/assets/images/powerAutomate/mergePDFsStep4.png)
 
 5. [OPTIONAL] If you are sure that there will be at least 1 file to merge, you do not have to chack the length of the array and can skip to the next step. Otherwise, add a condition action and check if the length of the array is greater than 0.
 
-![Check length of array with files to merge is greater than 0]({{ site.baseurl }}/assets/images/powerAutomate/mergePDFsStep5.png)
+    ![Check length of array with files to merge is greater than 0]({{ site.baseurl }}/assets/images/powerAutomate/mergePDFsStep5.png)
 
 6. In the "If yes" box, add a "Merge PDFs" action from the Adobe PDF Services connector. Rename this action to be more descriptive. If a connection has not already been added, you will be prompted with the below image:
 ![Request to add Adobe PDF Services]({{ site.baseurl }}/assets/images/powerAutomate/requestToAddAdobePDFServicesConnection.png)
 You will have to go to the Adobe Website to create free credentials for the [Adobe PDF Services API here](https://developer.adobe.com/document-services/apis/pdf-services/). Follow the instructions on the website. After creating a connection, you can provide the corresponding values. Otherwise, you can also add a new connection by first saving your flow and then going Data --> Connections in the left menu. Click on "+ New Connection" and scroll down to find the Adobe PDF Services where it will ask you for the same parameters. 
-![Add a new connection]({{ site.baseurl }}/assets/images/powerAutomate/addNewConnection.png)
+
+    ![Add a new connection]({{ site.baseurl }}/assets/images/powerAutomate/addNewConnection.png)
+
 Once you add the connection, you will not have to repeat this for other instances of Adobe PDF Services actions. 
 Supply the following arguments to the "Merge PDFs" action:
     * Merged PDF File Name: provide a descriptive name for the PDF packet to be created after merging and append it with the contract number and subcontractor name. This is provided in a variable called `Filename contract no. and sub name` which can be accessed through "Dynamic values".
     * Files: change the type of input into an array instead of individual files and their names by clicking on the top right blue icon. Then add the array variable you initialized in Step 1.
 
-![Change input type of Merge PDFs]({{ site.baseurl }}/assets/images/powerAutomate/mergePDFsChangeInputType.png)
-![Merge PDFs action]({{ site.baseurl }}/assets/images/powerAutomate/mergePDFsStep6.png) 
+    ![Change input type of Merge PDFs]({{ site.baseurl }}/assets/images/powerAutomate/mergePDFsChangeInputType.png)
+    ![Merge PDFs action]({{ site.baseurl }}/assets/images/powerAutomate/mergePDFsStep6.png) 
 
 7. Add a "Create file" action below the "Merge PDFs" action. Add the appropriate parameters for the "Create file action". 
     * Site Address: base URL to place the merged PDF packet in.
@@ -536,10 +546,11 @@ Supply the following arguments to the "Merge PDFs" action:
     * File Name: the file name of the Word Document. Select the `PDF File Name` output from the "Merge PDFs" action. 
     * File Content: The content of the merged PDF packet. Select the `PDF File Content` output from the "Merge PDFs" action. 
     
-![Create Schedule B P4 Attachment]({{ site.baseurl }}/assets/images/powerAutomate/mergePDFsStep7.png)
+    ![Create Schedule B P4 Attachment]({{ site.baseurl }}/assets/images/powerAutomate/mergePDFsStep7.png)
+
 8. You're done! Below is an example of a completed "Merge PDFs" sequence. 
 
-![Complete merge subcontractor forms sequence]({{ site.baseurl }}/assets/images/powerAutomate/overviewOfMergingSubcontractorFormPDFs.png)
+    ![Complete merge subcontractor forms sequence]({{ site.baseurl }}/assets/images/powerAutomate/overviewOfMergingSubcontractorFormPDFs.png)
 
 [Back to Top](#top)
 
@@ -550,29 +561,29 @@ If there are any attachments that will always be included in the email, you can 
     * `"Name"`: the name of the attachment. If you have a previous "Merge PDFs" action, you can supply the "PDF File Name" output. You can also provide a different name if you'd like (see images below)
     * `"ContentBytes"`: the content of the attachment. If you have a previous "Merge PDFs" action, you can supply the "PDF File Content" output. 
 
-![Initialize array variable for email attachments using outputs of Merge PDFs action]({{ site.baseurl }}/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep1.png)
-![Initialize array variable for email attachments using outputs of Merge PDFs action alternate naming]({{ site.baseurl }}/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep1AlternateNaming.png)
+    ![Initialize array variable for email attachments using outputs of Merge PDFs action]({{ site.baseurl }}/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep1.png)
+    ![Initialize array variable for email attachments using outputs of Merge PDFs action alternate naming]({{ site.baseurl }}/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep1AlternateNaming.png)
 
 2. For any attachments that are not always included in the email, add a "Condition" action to check when it should be included. Depending on your condition, you will then add a "Get file content using path" action in either the "If yes" or "If no" block.
 Rename the action to be specific and descriptive to ts purpose. Supply the following parameters:
     * Site Address: base URL to find the files to be merged
     * File Path: the relative path of the attachment to be created. You can go into "Dynamic values" and find the corresponding "Create file" action with a "Path" output.
 
-![Get file content using path]({{ site.baseurl }}/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep2.png)
+    ![Get file content using path]({{ site.baseurl }}/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep2.png)
 
 3. Add an "Append to array variable" after the "Get file content using path" action. Append a JSON object with the following properties to the variable you created in Step 1:
     * "Name": "Name" from the "Get file content using path" action"
     * "ContentBytes": `body(<nameOfGetFileContentUsingPatchAction>)?[$content]`
 
-![Append file contents to email attachments]({{ site.baseurl }}/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep3.png)
+    ![Append file contents to email attachments]({{ site.baseurl }}/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep3.png)
 
 4. Initialize strings for email addresses that successfully were sent the emails and unsuccessfully were sent the emails. Provide no initial value. You can also initialize a string to format the time of the receipt. 
 
-![Initialize strings for failed and successful receipts and time]({{ site.baseurl }}/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep4.png)
+    ![Initialize strings for failed and successful receipts and time]({{ site.baseurl }}/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep4.png)
 
 5. Create an "Apply to each" action. Rename it to be descriptive for its purpose. Iterate over the list of emails provided by the subcontractor to send receipts to. This will come from the Plumsail Forms and is called `dt.GI.receipts`.
 
-![Apply to each email]({{ site.baseurl }}/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep5.png)
+    ![Apply to each email]({{ site.baseurl }}/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep5.png)
 
 6. Within the "Apply to each" action, create a new "Send an email (V2)" action. Provide the following arguments:
 * To: `coltGIreceiptsEmail` (the current item from the enclosing "Apply to each" action)
@@ -584,35 +595,40 @@ Rename the action to be specific and descriptive to ts purpose. Supply the follo
 * Attachments: the array of attachments that you made earlier. You will have to click "Show advanced options" to see this field. Remember to change the input type so that you can attach an array instead of individual attachments and their names.
 There are several other arguments as well that you can fill in as needed.
 
-![Apply to each email]({{ site.baseurl }}/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep6.png)
+    ![Apply to each email]({{ site.baseurl }}/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep6.png)
 
 7. Create two "Append to string variable" actions in parallel with each other. One will add the emails of successful receipts to the array of successful emails, and the other will add the emails of failed receipts to the array of failed receipts. Configure the run after for the "Append to string variable" action for failed receipts such that it will run after the "Send email (v2)' action has failed, is skipped, or has timed out.
 
-![Config run after step 1]({{ site.baseurl }}/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep7ConfigRunAfter1.png)
-![Config run after step 2]({{ site.baseurl }}/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep7ConfigRunAfter2.png)
+    ![Config run after step 1]({{ site.baseurl }}/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep7ConfigRunAfter1.png)
+    ![Config run after step 2]({{ site.baseurl }}/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep7ConfigRunAfter2.png)
 
 The value to be appended in both is: 
 `concat(items('Send_emails_with_attachment_to_every_recipient')?['coltGIreceiptsName'], ': ', items('Send_emails_with_attachment_to_every_recipient')?['coltGIreceiptsEmail'], '<br>')`
 
-![Append to successful and failed emails strings]({{ site.baseurl }}/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep7.png)
+    ![Append to successful and failed emails strings]({{ site.baseurl }}/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep7.png)
 
 8. Initialize an array of TCE-specified recipient emails. These emails will be sent a notification that the subcontractor has completed the forms and whether all emails were sent successfully. Also, append `t.GI.primeContractorRepresentativeEmail` from Plumsail Forms. 
 
-![Create array of TCE recipients]({{ site.baseurl }}/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep8.png)
+    ![Create array of TCE recipients]({{ site.baseurl }}/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep8.png)
 
 9. Create a "Condition" action to check whether the length of the string of failed emails is greater than 0. 
 
-![Check if there were any failed receipts]({{ site.baseurl }}/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep9.png)
+    ![Check if there were any failed receipts]({{ site.baseurl }}/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep9.png)
+
 10. In the "If no" block, create an "Apply to Each" and iterate over TCE Recipient Emails array. Create a "Send email (v2)" action similar to before in step 6, except that this email is not to the subcontractor, but TCE and should be written that way. Within the email body, add the string of successful receipts using the variable created before. 
 
-![Send confirmation emails to TCIG]({{ site.baseurl }}/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep10.png)
+    ![Send confirmation emails to TCIG]({{ site.baseurl }}/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep10.png)
+
 11. Copy the "Apply to each" action from the "If no" block into the "If yes" block by clicking on the three dots and selecting "Copy to my clipboard (Preview)".
 
-![Copy confirmation email actions in Power Automate]({{ site.baseurl }}/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep11.png)
+    ![Copy confirmation email actions in Power Automate]({{ site.baseurl }}/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep11.png)
+
 12. Add an action in the "If yes" block and go to the "Clipboard" tab to paste in the copied actions. Adjust the copied actions to reflect that in the "If yes" block, you will be sending an email notifying TCE that not all emails were successfully sent.
-!["If yes" block pasted and edited actions]({{ site.baseurl }}/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep12.png)
+
+    !["If yes" block pasted and edited actions]({{ site.baseurl }}/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep12.png)
+
 13. You're done! Below is an overview of what the complete sequence looks like:
 
-![Overview of Emailing Variable Number of Attachments from SharePoint to a Variable Number of Recipients]({{ site.baseurl }}/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep13.png)
+    ![Overview of Emailing Variable Number of Attachments from SharePoint to a Variable Number of Recipients]({{ site.baseurl }}/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep13.png)
 
 [Back to Top](#top)
