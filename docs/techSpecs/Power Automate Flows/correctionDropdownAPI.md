@@ -75,9 +75,12 @@ getSubcontractors: R-3333
 
 |Connector|Action|
 |:-:|:-:|
-|[Data Operation](https://learn.microsoft.com/en-us/power-automate/data-operations) | Parse JSON|
-|[SharePoint](https://learn.microsoft.com/en-us/connectors/sharepointonline/)| Get Files (Properties Only)|
+|[Variable](https://learn.microsoft.com/en-us/power-automate/desktop-flows/actions-reference/variables)|Initialize Variable <br> |
+|[Data Operation](https://learn.microsoft.com/en-us/power-automate/data-operations) | Parse JSON <br> Compose|
+|[SharePoint](https://learn.microsoft.com/en-us/connectors/sharepointonline/)| Get File Content Using Path <br> Create File|
+|[Control](https://learn.microsoft.com/en-us/power-automate/desktop-flows/actions-reference) |  [Apply to each](https://learn.microsoft.com/en-us/power-automate/apply-to-each) <br> [Condition](https://learn.microsoft.com/en-us/power-automate/use-expressions-in-conditions)|
 |[HTTPS call](https://learn.microsoft.com/en-us/azure/connectors/connectors-native-reqres)|When a HTTP request is recieved <br> Response|
+|[Outlook](https://learn.microsoft.com/en-us/power-automate/email-overview)|Send an Email (V2)|
 
 ----
 [correction form]: https://tce-innovation.github.io/Subcontractor-Automation/forms/correction.html
