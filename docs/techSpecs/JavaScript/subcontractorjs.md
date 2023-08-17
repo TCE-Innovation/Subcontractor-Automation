@@ -6,23 +6,25 @@ grand_parent: Technical Specifications
 nav_order: 2
 ---
 
-## Table of Contents 
+### Table of Contents 
 {: .no_toc}
 
 1. TOC
 {:toc}
 
-# UML Diagram
+## UML Diagram
 ![]({{ site.baseurl }}/assets/images/umlDiagrams/subcontractorjs.png)
 
-# data
+## Flow Diagram
+
+## data
 
 {: .note }    
 > When first starting to build this program, I spaghetti coded most of it. While functional, understanding it became a nightmare. Thus, in an attempt to beautify the code a little, I created classes that would house the most important information. 
 >
 > The class [data] is one such class that never got made. All the functinons that should be inside data are hanging around loosey goosey as pure javascript functions(). For all intents and purposes, imagine them as a class.
 
-## executeOnce()
+### executeOnce()
 
 **Description:** Call the functions to autopopulate and initalize the forms with all event listeners and validators.
 
@@ -32,7 +34,7 @@ nav_order: 2
 - @returns {void} This function does not return any value.
 
 
-## getKnownInfo()
+### getKnownInfo()
 
 **Description:** Get URL parameters and send them to the API to get the autofill data.
 
@@ -41,7 +43,7 @@ nav_order: 2
 **Returns:** 
 - @returns {Promise}: Resolves with the JSON data
 
-## apiInteraction()
+### apiInteraction()
 
 **Description:** 
 
@@ -52,7 +54,7 @@ nav_order: 2
 **Returns:** 
 - @returns {Promise}: Resolves with the JSON data fetched from the API
 
-## autoPopulate()
+### autoPopulate()
 
 **Description:** Autopopulate all elements of the form wih known information from `getKnownInfo()`. If the information is autopopulated, then disable the fields, except when included in the array `editableItems`, which is included in the recieved JSON file.
 
@@ -63,7 +65,7 @@ nav_order: 2
 
 # Event Listener
 
-## showHideInClass()
+### showHideInClass()
 
 **Description:** This function is the main bread and butter of this form. When called, it will check the value of the parameter `fieldName` against the string/array provided in `showValue`. If they match, then the field will be shown and required. If they don't match, its value will be hidden and unrequired. 
 
@@ -83,7 +85,7 @@ This function makes use of [setRequiredInClass]{#setRequiredInClass()}
 **Returns:**
 - @returns {void}: This function does not return any value.
 
-## eventListenerHelper()
+### eventListenerHelper()
 
 **Description:** eventListenerHelper() helps to set up the event listeners by applying the same callback function to an array of field names whose change should require an event to occur. 
 
@@ -94,7 +96,7 @@ This function makes use of [setRequiredInClass]{#setRequiredInClass()}
 **Returns:**
 - @returns {void}: This function does not return any value.
 
-## setRequiredInClass()
+### setRequiredInClass()
 
 **Description:** setRequiredInClass() changes the requirements of fields and controls inside a given css class. The parameter `requiredOrNot` dictates the requirement of the field/control after the function has run. The array parameter `arrDontChange` contains the internal names of the fields/controls which will never be required when this function is run.
 
@@ -115,7 +117,7 @@ This uses the **hide using class** technique in [Javascript Control]({% link doc
 **Returns:**
 - @returns {void}: This function does not return any value.
 
-## fieldVisAndReq()
+### fieldVisAndReq()
 
 **Description:** This is the sister function to [showHideInClass()]{#showHideInClass()}. Instead of using the class based method, we use the **Hide Using Method** technique discussed in [Javascript Control]({% link docs/techSpecs/javascript.md %}). It toggles/hides individual fields.
 
@@ -127,7 +129,7 @@ This uses the **hide using class** technique in [Javascript Control]({% link doc
 **Returns:**
 - @returns {void}: This function does not return any value.
 
-## init()
+### init()
 
 **Description:** Initialize all the event listeners for each of the different forms. Since each form gets its own callback function, this needs to be called for each individual function. Schedule B is long enough to have to be split into 5 parts.
 
@@ -138,7 +140,7 @@ Also sets up the validators and hides the percentage field on the general inform
 **Returns:**
 - @returns {void}: This function does not return any value.
 
-## genInfoValidator()/OCIPAValidator()
+### genInfoValidator()/OCIPAValidator()
 
 **Description:** Adds an event listener that compares two dates to verify expiration after start.
 
@@ -147,7 +149,7 @@ Also sets up the validators and hides the percentage field on the general inform
 **Returns:**
 - @returns {void}: THis funciton does not return any value.
 
-## toggleSQS()/togglePDF()/toggle...()
+### toggleSQS()/togglePDF()/toggle...()
 
 **Description:** toggle...() applies to all methods prepended with "toggle", including the generalInfoCallback() function. These functions are the hardcoded representations of the forms. They utilize the helper functions also in event listener to show, hide, require and check responses on thei own individual forms. 
 
@@ -156,7 +158,7 @@ Also sets up the validators and hides the percentage field on the general inform
 
 # dataTableFunctions
 
-## isDTFilled()
+### isDTFilled()
 
 **Description:** Will check to see if there is an empty cell in the data table given. If there is an empty cell, return a false. This is meant to be used in conjunction with a validator.
 
@@ -166,7 +168,7 @@ Also sets up the validators and hides the percentage field on the general inform
 **Returns:**
 - @returns {Bool}: True if the data table is filled, false if there is an empty cell.
 
-## rowValidators()
+### rowValidators()
 
 **Description:** Adds a validator to all data tables to completely fill out the data table without gaps. Also adds the validator limiting and mandating the number of entries for the following data tables.
 - "dt.SB.P5.K.1.contractsCompletedLast3Yrs"
@@ -179,7 +181,7 @@ Also sets up the validators and hides the percentage field on the general inform
 **Returns:**
 - @returns {void} This function does not return any value.
 
-## validateFormattingDT()
+### validateFormattingDT()
 
 **Description:** Adds a validator to ensure proper formatting of emails, phones, contract numbers, and EIN/TIN/SSN. This is applied to all columns with their respective internal names.
 
@@ -188,7 +190,7 @@ Also sets up the validators and hides the percentage field on the general inform
 **Returns:**
 - @returns {void} This function does not return any value.
 
-## calculateOCIPBValues()
+### calculateOCIPBValues()
 
 **Description:** Sets up the event listener to perform calculations and autopopulate specific fields in the form related to the OCIP B Section II data table. 
 
@@ -214,7 +216,7 @@ fd.control("dt.OCIP.FB.S2.insurancePremium").$on('change', function(value){
 **Returns:**
 - @returns {void} This function does not return any value.
 
-## calculateOCIPBInsurance()
+### calculateOCIPBInsurance()
 
 **Description:** The calculate OCIPB Insurance completes step 1 in [calcualteOCIPBValues]{#calculateOCIPBValues}. 
 
@@ -230,7 +232,7 @@ There are 3 parts:
 **Returns:**
 - @returns {void} This function does not return any value.
 
-## calculateOCIPBWCPremium()
+### calculateOCIPBWCPremium()
 
 **Description:** The calculate OCIPB Insurance completes step 2 in [calcualteOCIPBValues]{#calculateOCIPBValues}. 
 
@@ -246,7 +248,7 @@ There are 3 parts:
 **Returns:**
 - @returns {void} This function does not return any value.
 
-## rmsaRefNum()
+### rmsaRefNum()
 
 **Description:** Should be called upon whenever the datatable `dt.RMSA.refs` (That is, form RMSA, Question 11 on the form) is changed. Will autopopulate the first row with its respective index.
 
@@ -255,7 +257,7 @@ There are 3 parts:
 **Returns:**
 - @returns {void} This function does not return any value.
 
-## disableFields()
+### disableFields()
 
 **Description:**  This function, disableFields(), is designed to disable specific fields in the OCIP B section, which are automatically calculated and should not be editable by users. It affects the "dt.OCIP.FB.S2.insurancePremium" data table and disables the "colnumOCIPFB2insurancePremiumPremium" column, as well as three fields below the data table:
 - `num.OCIP.FB.S2.workHoursTotal`
@@ -268,7 +270,7 @@ By setting these fields to read-only (disabled), users won't be able to modify t
 **Returns:**
 - @returns {void} This function does not return any value.
 
-## setNamesOfDT()
+### setNamesOfDT()
 
 **Description:** This function will set the attribute namesOfDataTables with an array containing all the names of the data tables in the form.
 
@@ -277,7 +279,7 @@ By setting these fields to read-only (disabled), users won't be able to modify t
 **Returns:**
 - @returns {void} This function does not return any value.
 
-## addValidators()
+### addValidators()
 
 **Description:** This function adds calls upong [rowValidators]{#rowValidators} and [validateFormattingDT]{#validateFormattingDT} to add their respective validators to the form.
 
@@ -286,7 +288,7 @@ By setting these fields to read-only (disabled), users won't be able to modify t
 **Returns:**
 - @returns {void} This function does not return any value.
 
-## initialize()
+### initialize()
 
 **Description:** Call upon this to initialize all the functions of this class.
 
@@ -297,7 +299,7 @@ By setting these fields to read-only (disabled), users won't be able to modify t
 
 # attachmentFunctions
 
-## findFields()
+### findFields()
 
 **Description:** Searches the internal name for all fields that begin with an `a.`, our internal name signifier for an attachment
 
@@ -306,7 +308,7 @@ By setting these fields to read-only (disabled), users won't be able to modify t
 **Returns:**
 - @returns {void} This function does not return any value.
 
-## validator()
+### validator()
 
 **Description:** Adds the "Only one" attachment validator to all the attachments in "attachmentFields"
 
@@ -315,7 +317,7 @@ By setting these fields to read-only (disabled), users won't be able to modify t
 **Returns:**
 - @returns {void} This function does not return any value.
 
-## initialize()
+### initialize()
 
 **Description:** Initializes all the attachments to only have one attachment. To be called from the outside world.
 

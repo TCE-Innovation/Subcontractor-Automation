@@ -82,6 +82,7 @@ var executeOnce = (function() {
         if (!executed) {
             executed = true;
             autopopulate();
+            eventListener.init();
             dataTableFunctions.initialize();
             attachmentFunctions.initialize();
             console.log("If you experience any problems with these forms... Blame the MTA. Not Us.");
@@ -270,15 +271,12 @@ function autopopulate() {
         });
 
         //Correct the heading, if it exists
-
-        document.getElementById("docTitle").innerHTML = fd.field("t.GI.generalContractorName").value + " Subcontractor Forms";
-
-        //Once we have recieved all the data and have finished autofilling, then set up the event listeners
-        eventListener.init();
-        
+        if (fd.field("t.GI.generalContractorName").value === null) {
+            document.getElementById("docTitle").innerHTML = "Subcontractor Forms";
+        } else {
+            document.getElementById("docTitle").innerHTML = fd.field("t.GI.generalContractorName").value + " Subcontractor Forms";   
+        }
     })
-
-    
 }
 
 let eventListener = {

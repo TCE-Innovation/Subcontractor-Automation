@@ -18,19 +18,26 @@ permalink: /docs/techSpecs
 ## Applications Used
 
 This project utilizes four main pieces of software: 
-1. Plumsail Forms: Plumsail forms is the interface of this project: It is what subcontractors and TCE employees interact with.
-2. JavaScript: JavaScript controls the form to make it interactive and dynamically respond to user input.
-3. Power Automate: Power Automate runs the backend, from merging PDFs to processing submitted data.
-4. Jekyll/GitHub Pages: GitHub pages hosts the documentation through the repository and is processed using Jekyll and the just-the-docs theme.
+1. [Plumsail Forms]: Plumsail forms is the interface of this project: It is what subcontractors and TCE employees interact with.
+2. [JavaScript]: JavaScript controls the form to make it interactive and dynamically respond to user input.
+3. [Power Automate]: Power Automate runs the backend, from merging PDFs to processing submitted data.
+4. [Jekyll/GitHub Pages]: GitHub pages hosts the documentation through the repository and is processed using Jekyll and the [just-the-docs] theme.
+5. [Python]: Python is used to generate the JSON file that contains the correction items. It pulls that data from the /plumsail/ folder and inserts it into the /data/ folder.
 
 ## Getting Started
 
 Full documentation of Plumsail Forms can be found here: https://plumsail.com/docs/forms-sp/index.html
+
 Basic editing is covered in brief at this link by Plumsail: https://plumsail.com/docs/forms-web/design.html. 
 
 Plumsail Forms' free plan allows only 100 submissions per month, reset on the 1st of each month. We believe this should be plenty for the rate that TCE recieves these forms. However, more submissions can be brought.
 
 [Back to Top]{#top}
+
+## Process Flow
+
+![Process Flow Chart: from start to finish]({{ site.baseurl }}/assets/images/processFlowchart.png)
+*This is a flowchart that describes the subcontractor process from initialization to correction.*
 
 ## Register/Login
 
