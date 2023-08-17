@@ -26,12 +26,12 @@ Subcontractors will receive an invitation to fill out this form via email after 
 
 ![Subcontractor Form Wizard]({{ site.baseurl }}/assets/images/subcontractorForm/wizard.png)
 
-Submitting the form will trigger the [Process Subcontractor Form and Send PDFs Power Automate flow]({{ site.baseurl }}/flows/processSubcontractorFormAndSendPDFs.md) that will generate the PDFs to be reviewed and submitted to the MTA.
+Submitting the form will trigger the [Process Subcontractor Form and Send PDFs Power Automate flow]({{ site.baseurl }}/docs/techSpecs/Power%20Automate%20Flows/processSubcontractorFormAndSendPDFs.md) that will generate the PDFs to be reviewed and submitted to the MTA.
 
 [Back to top](#top)
 
 ## How to Edit 
 
-Like the Initialization Form and Correction Form, the Subcontractor Form was created using Plumsail Forms and JavaScript. If you are from TCE and need to edit the form, please see the [Editing with Plumsail]({{ site.baseurl }}/docs/techSpecs/editingFlowsFormsAndTemplates.md) and [Editing with JavaScript]({{ site.baseurl }}/docs/techSpecs/editingFlowsFormsAndTemplates.md) pages for information on how to edit forms with Plumsail and JavaScript.
+Like the Initialization Form and Correction Form, the Subcontractor Form was created using Plumsail Forms and JavaScript. If you are from TCE and need to edit the form, please see the [Editing with Plumsail]({{ site.baseurl }}/docs/techSpecs/plumsail.md) and [Editing with JavaScript]({{ site.baseurl }}/docs/techSpecs/javascript.md) pages for information on how to edit forms with Plumsail and JavaScript.
 
 [Back to top](#top)
