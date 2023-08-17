@@ -149,7 +149,7 @@ Also sets up the validators and hides the percentage field on the general inform
 
 ## toggleSQS()/togglePDF()/toggle...()
 
-**Description:** toggle...() applies to all methods prepended with "toggle", including the generalInfoCallback() function. These functions are the hardcoded representations of the forms. THey utilize the helper functions also in event listener to show, hide, require and check responses on thei own individual forms. 
+**Description:** toggle...() applies to all methods prepended with "toggle", including the generalInfoCallback() function. These functions are the hardcoded representations of the forms. They utilize the helper functions also in event listener to show, hide, require and check responses on thei own individual forms. 
 
 **Returns:**
 - @returns {void}: THis funciton does not return any value.

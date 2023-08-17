@@ -113,7 +113,7 @@ In the second table, add the emails of the representative that needs to correct 
 ![](assets/images/correctionFormsProcess.png)
 *In this case, I am instructing Rory O'Neill to correct questions 10 and 11 on the SQS form. *
 
-THe subcontractor will get another email indicating to correct their mistakes. Jump back to [Step 3]{##Step-3}
+The subcontractor will get another email indicating to correct their mistakes. Jump back to [Step 3]{##Step-3}
 
 ## Step 7: 
 

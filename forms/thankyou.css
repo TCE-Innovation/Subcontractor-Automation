@@ -1,0 +1,9 @@
+#footer {
+    position: absolute;
+    bottom: 0;
+    width: 100vh;
+    height: 2.5rem;            /* Footer height */
+    left: 50%;
+  /* bring your own prefixes */
+    transform: translate(-10%);
+  }

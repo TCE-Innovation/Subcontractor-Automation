@@ -10,7 +10,7 @@ fd.rendered(function () {
 
 fd.beforeSave(function() {
     sendData.init();
-    throw new Error("Preventing you from submitting");
+    //throw new Error("Preventing you from submitting");
 });
 
 
