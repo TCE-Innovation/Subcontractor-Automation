@@ -17,9 +17,9 @@ permalink: /
 
 # Quick Links
 
-[Subcontractor Initialization Form](https://tce-innovation.github.io/Subcontractor-Automation/forms/initialization.html){: .btn .btn-purple }
+[Subcontractor Initialization Form](https://tce-innovation.github.io/Subcontractor-Automation/forms/initialization.html){: .btn .btn-blue }
 [Correction Form](https://tce-innovation.github.io/Subcontractor-Automation/forms/correction.html){: .btn .btn-blue }
-[Subcontractor Form](https://tce-innovation.github.io/Subcontractor-Automation/forms/subcontractor.html){: .btn .btn-green }
+[Subcontractor Form](https://tce-innovation.github.io/Subcontractor-Automation/forms/subcontractor.html){: .btn .red-300 }
 
 {: .warning }
 > You should never have to click the subcontractor forms. An automatic email is generated upon initialization using the following format, replacing ```ContractNum``` and ```SubcontractorName``` with their respective information:
@@ -74,9 +74,7 @@ For problems with formatting, see [Accepted Formatting](https://tce-innovation.g
 
 The summary screen is the last screen the subcontractor will fill out. Here, they will fill out a table, indicating where who should recieve a copy of the completed documents. This is for subcontractor documentation.
 
-Upon submission, subcontractor will recieve an indication on the top of the page indicating "Thanks for submitting the form.
-
-![](assets/images/thanksForSubmitting.png)
+Upon submission, subcontractor will be redirected to the following [thank you page.]({{base.url}}/forms/thankyou.html)
 
 ## Step 5: Summary
 
@@ -94,7 +92,7 @@ We have tried our best to implement as many error checking features as possible.
 
 In this case, we would utilize the [Correction Form]. Open the completed PDF and the correction form side by side. 
 
-If everything on the forms appear correct, simply jump to [Step 7]{##Step-7}
+If everything on the forms appear correct, simply jump to [Step 7](##Step-7)
 
 ### Step 6a: Contract Number and Subcontractor Name
 
@@ -113,9 +111,9 @@ In the second table, add the emails of the representative that needs to correct 
 ![](assets/images/correctionFormsProcess.png)
 *In this case, I am instructing Rory O'Neill to correct questions 10 and 11 on the SQS form. *
 
-The subcontractor will get another email indicating to correct their mistakes. Jump back to [Step 3]{##Step-3}
+The subcontractor will get another email indicating to correct their mistakes. Jump back to [Step 3](##Step-3)
 
-## Step 7: 
+## Step 7: Finish!
 
 You are all done! Both the subcontractor and the general contractor (That's you!) have recieved copies of the submission.
 

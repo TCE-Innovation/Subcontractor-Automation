@@ -4,7 +4,7 @@ import re
 
 #Find the working directory of the script, then define the relative path from that script
 script_dir = os.path.dirname(__file__)
-rel_path = "..\Plumsail Forms\MTA Subcontractor Form.json"
+rel_path = r"..\back\Plumsail Forms\MTA Subcontractor Form.json"
 relPathOut = "..\data\correctionData.json"
 
 # #Combine the file paths, and read the file into f

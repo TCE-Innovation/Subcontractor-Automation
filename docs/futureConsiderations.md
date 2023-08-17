@@ -15,3 +15,7 @@ permalink: /docs/future
 * Consider changing 10b on Schedule F to a data table and match a variable that parses the arguments of the data table
 * Changing the order of "No"s and "Yes"s in Schedule B Parts 3, 4, and 5
 * In OCIP Form B, the running total is correct unless the user filters the responses, in which case the running total does not get recalculated with the different order
+
+# In the future
+
+1. If I were to do this again, I would build an application from the ground up with the key difference of using a relational database. That way, all data is under our control instead of being sent between Plumsail, Power Automate, and SharePoint. A relational database would allow for more control over the data and how it is manipulated.
