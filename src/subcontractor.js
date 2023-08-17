@@ -184,6 +184,7 @@ function autopopulate() {
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
         fd.field("t.GI.primeContractorRepresentativeEmail").value = urlParams.get('primeContact');
+        fd.field("t.GI.subcontractorName").value = urlParams.get('name');
         
 
         let editable = [];
