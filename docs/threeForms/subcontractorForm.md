@@ -32,6 +32,6 @@ Submitting the form will trigger the [Process Subcontractor Form and Send PDFs P
 
 ## How to Edit 
 
-Like the Initialization Form and Correction Form, the Subcontractor Form was created using Plumsail Forms and JavaScript. If you are from TCE and need to edit the form, please see the [Editing with Plumsail]({{ site.baseurl }}/docs/techSpecs/plumsail.md) and [Editing with JavaScript]({{ site.baseurl }}/docs/techSpecs/javascript.md) pages for information on how to edit forms with Plumsail and JavaScript.
+Like the Initialization Form and Correction Form, the Subcontractor Form was created using Plumsail Forms and JavaScript. If you are from TCE and need to edit the form, please see the [Editing with Plumsail]({{ site.baseurl }}/docs/techSpecs/plumsail) and [Editing with JavaScript]({{ site.baseurl }}/docs/techSpecs/js) pages for information on how to edit forms with Plumsail and JavaScript.
 
 [Back to top](#top)
