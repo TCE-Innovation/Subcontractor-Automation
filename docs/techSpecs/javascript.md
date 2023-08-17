@@ -8,6 +8,7 @@ permalink: /docs/techSpecs/js
 ---
 
 # JavaScript in Plumsail
+{: .no_toc}
 
 ## Table of Contents
 {: .no_toc}
@@ -21,7 +22,7 @@ Plumsail comes with a JavaScript editor built in. However, this isn't ideal in t
 
 ## Plumsail's JavaScript
 
-All Plumsail JavaScript features can be found here: [Plumsail Documentation], but listed are the highlights: what was useful or what can be used/referenced in the future. 
+All Plumsail JavaScript features can be found here: [Plumsail Documentation], but listed are the highlights - what was useful or what can be used/referenced in the future. 
 
 ## Internal Editor
 
@@ -48,6 +49,7 @@ All Plumsail JavaScript features can be found here: [Plumsail Documentation], bu
 Form manager of public web forms provides access to all the elements of the form. It is called through `fd`.
 
 Below are some important properties and methods using the fd object.
+
 |Properties|Function|Methods|Function|
 |:-:|:-:|:-:|:-:|
 |`fd.save();`|Saves and submits the form|`fd.beforeCreate();`||
@@ -97,7 +99,7 @@ Additional documentation on fields can be found on the [Plumsail Forms Control D
 ## Populating Fields
 
 {: .note }
-There is a difference between Controls and Fields. Make sure you reference them the right way, as both fields and containers can be set.
+There is a difference between Controls and Fields. Make sure you reference them the correct way, as both fields and containers can be set.
 
 You can access the value of either a field or a control using the `value` method. This will return what is shown on the Subcontractor form. Different types of fields/controls may yield a different data type. For example, running `fd.control("dataTable1").value` will return an array of objects. The key/value pair inside that object represents what is shown on the table.
 
