@@ -135,6 +135,7 @@ let validation = {
                 this.namesOfDataTables = this.getDataTables();
                 this.completeTableValidator.add(this.namesOfDataTables);
                 this.columnValidators();
+                this.validateMT();
             }
         };
     })(),
