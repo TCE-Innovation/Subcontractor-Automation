@@ -713,6 +713,31 @@ let eventListener = {
         
 
     },
+
+    //I'm shoehorning this in last minute, I didn't realize this was a problem
+    //This function will validate all masked text so that you cannot submit while there is an underscore
+    //An underscore is used to indicate an unfilled character in a masked text
+    validateMT: function() {
+
+        //Filter for all items containing masked text: return an array
+        var condition = new RegExp("^mt.");
+        var mtFields = [];
+        fd.fields().filter(function (el) {
+            if(condition.test(el.internalName)) {
+                mtFields.push(el.internalName);
+            }
+        });
+
+        mtFields.forEach(el => {
+            fd.field(el).addValidator({
+                name: fd.field(el).title,
+                error: "Please fill out this field",
+                validate: function(value) {
+                    return !/_/i.test(value);
+                }
+            })
+        })
+    },
 /*
 +------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                                                                                                                                                                              |
