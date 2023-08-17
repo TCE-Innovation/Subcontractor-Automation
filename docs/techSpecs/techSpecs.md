@@ -33,12 +33,13 @@ Basic editing is covered in brief at this link by Plumsail: https://plumsail.com
 
 Plumsail Forms' free plan allows only 100 submissions per month, reset on the 1st of each month. We believe this should be plenty for the rate that TCE recieves these forms. However, more submissions can be brought.
 
-[Back to Top]{#top}
+[Back to Top](#top)
 
 ## Process Flow
 
 ![Process Flow Chart: from start to finish]({{ site.baseurl }}/assets/images/processFlowchart/processFlowchart.png)
-*This is a flowchart that describes the subcontractor process from initialization to correction.*
+
+This is a flowchart that describes the subcontractor process from initialization to correction. It is broken down into the power automate flows and Plumsail/JavaScript sections. Between the sections, the interaction is described. 
 
 ### Initialization
 
@@ -47,6 +48,8 @@ Plumsail Forms' free plan allows only 100 submissions per month, reset on the 1s
 When the [initialization form] is filled out, the above process occurs. There is no preprocessing before TCE fills out this form, except for including the "federally funded" question. 
 
 ### Subcontractor Form 
+
+The large amount of preprocessing here results in the form being autofilled and changed based on user input. The flow boxes are not directly related to the functions they reference, rather the flow diagram outlines the general idea that the JavaScript acomplishes.
 
 ![Subcontractor Form Portion of the flowchart]({{ site.baseurl }}/assets/images/processFlowchart/subcontractorLoading.jpg)
 *This shows the internal javascript process that takes place when the subcontractor form is loaded*
@@ -95,6 +98,7 @@ Aside: You will notice that the pattern will update accordingly when you specify
 [Power Automate]: https://learn.microsoft.com/en-us/power-automate/
 [Jekyll/GitHub Pages]: https://pages.github.com/
 [just-the-docs]: https://just-the-docs.github.io/just-the-docs/
+[Python]: https://www.python.org/
 
 [initialization form]: https://tce-innovation.github.io/Subcontractor-Automation/forms/initialization.html
 

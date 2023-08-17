@@ -6,7 +6,10 @@ grand_parent: Technical Specifications
 nav_order: 2
 ---
 
-### Table of Contents 
+# Subcontractor JavaScript
+{: .no_toc}
+
+## Table of Contents 
 {: .no_toc}
 
 1. TOC
@@ -16,6 +19,12 @@ nav_order: 2
 ![]({{ site.baseurl }}/assets/images/umlDiagrams/subcontractorjs.png)
 
 ## Flow Diagram
+
+![Subcontractor Form Portion of the flowchart]({{ site.baseurl }}/assets/images/processFlowchart/subcontractorLoading.jpg)
+*This shows the internal javascript process that takes place when the subcontractor form is loaded*
+
+![Subcontractor submit portion of the flowchart]({{ site.baseurl }}/assets/images/processFlowchart/subcontractorSubmit.jpg)
+*This shows the internal javascript process that takes place when the subcontractor clicks "submit" on the form*
 
 ## data
 

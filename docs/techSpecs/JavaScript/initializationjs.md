@@ -6,6 +6,9 @@ grand_parent: Technical Specifications
 nav_order: 1
 ---
 
+# Initialization JavaScript
+{: .no_toc}
+
 ## Table of Contents 
 {: .no_toc}
 
@@ -13,12 +16,18 @@ nav_order: 1
 {:toc}
 
 
-# UML Diagram
+## UML Diagram
 ![]({{ site.baseurl }}/assets/images/umlDiagrams/initializationjs.png)
 
-# Functions
+## Initialization
 
-## autopopulateGenInfo()
+![Initialization portion of the flowchart]({{ site.baseurl }}/assets/images/processFlowchart/initialization.jpg)
+
+When the [initialization form] is filled out, the above process occurs. There is no preprocessing before TCE fills out this form, except for including the "federally funded" question. 
+
+## Functions
+
+### autopopulateGenInfo()
 
 **Description:** A replica of the same from the Subcontractor javascript file, this one prefills any information that is knonw to be true and correct. It autofills from the *prefilled* parameter, and only has one item (Which can be added onto later).
 
@@ -36,7 +45,7 @@ preconfigured = {
 
 # sendData
 
-## interactWithAPI()
+### interactWithAPI()
 
 **Description:** Calling this function will send the provided objects to the URL given and returns the response of the server.
 
@@ -47,7 +56,7 @@ preconfigured = {
 **Returns:** 
 - @returns {Promise}: Resolves with the JSON data
 
-## getFormData()
+### getFormData()
 
 **Description:** Returns form data as a plumsail native object. The only code run here is fd.data().
 
@@ -56,7 +65,7 @@ preconfigured = {
 **Returns:** 
 - @returns {Object} Returns the form data in a plumsail native object.
 
-## init()
+### init()
 
 **Description:** The public facing function. This simply calls interactWithAPI() to do work for them. Will send data to the api. 
 
@@ -65,7 +74,7 @@ preconfigured = {
 **Returns:** 
 - @returns {void} This function does not return any value.
 
-## extractData()
+### extractData()
 
 **Description:** Extract all the values in a column in a data table and return it as an array. Useful when extracting columns, such as email lists. 
 
@@ -78,7 +87,7 @@ preconfigured = {
 
 # validation
 
-## getDataTables()
+### getDataTables()
 
 **Description:** Gets a list of all the data tables in form. Will apply this validation to all data tables.
 
@@ -87,7 +96,7 @@ preconfigured = {
 **Returns:** 
 - @returns {Array} All internal names on the form that have `dt.`
 
-## init()
+### init()
 
 **Description:** Applies all the validation necessary to the data tables after first extracting all the data tables from the forms.
 
@@ -96,10 +105,10 @@ preconfigured = {
 **Returns:** 
 - @returns {void} This function does not return any value.
 
-## completeTableValidator
+### completeTableValidator
 **Description:** The two functions in here make up the validator: one sets up the validator while the other actually checks when if the data table is filled.
 
-### completeTableValidator.add()
+#### completeTableValidator.add()
 
 **Description:** Adds the "Fill out data table completely" validator. Uses *isDTFilled()* to check.
 
@@ -109,7 +118,7 @@ preconfigured = {
 **Returns:** 
 - @returns {Bool}: True if the condition is met, false if the user needs to correct somthing. Generated from *isDTFilled()*
 
-### completeTableValidator.isDTFilled()
+#### completeTableValidator.isDTFilled()
 
 **Description:** Loops through each and every one of the cells in a data table and checks for an empty slot. If none of the slots are empty, then we have a complete data table. Return true/false.
 
@@ -119,7 +128,7 @@ preconfigured = {
 **Returns:** 
 - @returns {Bool}: True if the condition is met, false if the user needs to correct somthing. Generated from *isDTFilled()*.
 
-## columnValidators()
+### columnValidators()
 
 **Description:** In this case, a validator is used for verifying that email addresses are in the valid format. Will apply formatting to any internal column name with `email`.
 
