@@ -46,6 +46,8 @@ Plumsail generally has an intuitive drag and drop interface. The left side conta
 
 ## Exporting Forms
 
+To export forms, click the setting on the ribbon. The following page will show up: select export. A `JSON` file will be downloaded containing all the information of the form in a garbled mess of a line. I recommend using a JSON Pretty Printer (I used this [JSON Pretty Printer]) to make the file more readable. These can be version controlled 
+
 ## Quirks
 
 1. If a CSS style is associated with the field/control that you are trying to move, the CSS will disappear upon movement. This includes CSS class, used to show/hide items. 
@@ -54,3 +56,6 @@ Plumsail generally has an intuitive drag and drop interface. The left side conta
 4. Data Tables, on occassion will render all splooshed together. They will expand and the contents readable when interacted with. The cause of this is unknown...
 5. Plumsail Forms sometimes saves without you realizing. Other times, it doesn't. When altering the form, changes you make without saving may be reflected upong reload. Make sure to have backups handy and export the form often to do manual version control.
 6. Ensure you save often. If the editor is left open for long periods of time, the current editing session expires, and local changes you make won't be pushed to the cloud. You must reload to refresh the session. 
+
+----
+[JSON Pretty Printer]: https://marketplace.visualstudio.com/items?itemName=euskadi31.json-pretty-printer
