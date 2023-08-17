@@ -13,7 +13,7 @@ parent: The Three Forms
 
 # About
 
-THe correction form is one which should theoretically never be used, but practically might end up necessary. The subcontractor form checks for strict formatting, removes redundancy, and provides an easy-to-use interface. However, what it does not do is check for content. Someone could misspell "Jennifer" as "jenifer", and the form would not be able to check for that. 
+The correction form is one which should theoretically never be used, but practically might end up necessary. The subcontractor form checks for strict formatting, removes redundancy, and provides an easy-to-use interface. However, what it does not do is check for content. Someone could misspell "Jennifer" as "jenifer", and the form would not be able to check for that. 
 
 Content fixing is what this correction form is used for. 
 

@@ -17,7 +17,11 @@ permalink: /docs/techSpecs
 
 ## Applications Used
 
-This project utilizes three main pieces of software: 
+This project utilizes four main pieces of software: 
+1. Plumsail Forms: Plumsail forms is the interface of this project: It is what subcontractors and TCE employees interact with.
+2. JavaScript: JavaScript controls the form to make it interactive and dynamically respond to user input.
+3. Power Automate: Power Automate runs the backend, from merging PDFs to processing submitted data.
+4. Jekyll/GitHub Pages: GitHub pages hosts the documentation through the repository and is processed using Jekyll and the just-the-docs theme.
 
 ## Getting Started
 
@@ -48,7 +52,7 @@ Add elements by clicking and dragging them in from the side. There are a few cat
 
 Properties of elements are listed on the right side of the window, which can be edited for your needs. For example, if you want a field for an email, click and drag a new “Text” field to where you need it to go. On the right, you can then specify the format to be an email. 
 
-![]({{ site.baseurl }}/assets/images/plumsail.png)
+![]({{ site.baseurl }}/assets/images/plumsail/plumsail.png)
 
 Aside: You will notice that the pattern will update accordingly when you specify a particular format for a “Text” field. That strange expression is called Regex and is a way to represent a series of characters, also known as a string. It allows you to specify the exact format of strings. You can learn more at Regular expressions - JavaScript | MDN (mozilla.org) and play around with it using this link: https://regex101.com/ 
 
@@ -57,5 +61,12 @@ Aside: You will notice that the pattern will update accordingly when you specify
 [Containers]: https://plumsail.com/docs/forms-web/designer/containers/index.html
 [Fields]: https://plumsail.com/docs/forms-web/designer/fields/index.html
 [Controls]: https://plumsail.com/docs/forms-web/designer/controls/index.html
+
+[Plumsail Forms]: https://plumsail.com/docs/forms-web/index.html
+[JavaScript]: https://developer.mozilla.org/en-US/docs/Web/javascript
+[Power Automate]: https://learn.microsoft.com/en-us/power-automate/
+[Jekyll/GitHub Pages]: https://pages.github.com/
+[just-the-docs]: https://just-the-docs.github.io/just-the-docs/
+
 
 [Back to Top](#top)

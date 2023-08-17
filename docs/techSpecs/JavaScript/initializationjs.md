@@ -41,7 +41,7 @@ preconfigured = {
 **Description:** Calling this function will send the provided objects to the URL given and returns the response of the server.
 
 **Parameters:** 
-- @param {Object} data: THe data to be sent to the API, given as a javscript option.
+- @param {Object} data: The data to be sent to the API, given as a javscript option.
 - @param {String} url: The string URL of the API that we are interfacing with.
 
 **Returns:** 
