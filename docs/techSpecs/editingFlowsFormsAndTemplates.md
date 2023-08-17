@@ -10,19 +10,14 @@ permalink: /docs/techSpecs/editingFlowsFormsAndTemplates
 # Editing Flows, Forms, and Templates
 
 This process involved editing through several platforms:
-* GitHub - JavaScript scripts for handling the conditional logic involved in completion of the form
-* Power Automate - all flows involved in this process
-* Plumsail Forms - the front-facing form that actually gets completed
 * Microsoft Word - creating Word Templates
+* Plumsail Forms - the front-facing form that actually gets completed
+* Power Automate - all flows involved in this process
+* JavaScript - scripts for handling the conditional logic involved in completion of the form stored on the GitHub repo [https://github.com/TCE-Innovation/Subcontractor-Automation](https://github.com/TCE-Innovation/Subcontractor-Automation)
 
 See the below links for help on the appropriate software.
 
-## Editing JavaScript
-
-## Editing the Power Automate Flows
-
-## Editing the Plumsail Forms
-
-## Creating a Microsoft Word Template
-
-## Editing a Microsoft Word Template
+* [Editing a Microsoft Word Template](/docs/techSpecs/editingFlowsFormsAndTemplates/editingAMicrosoftWordTemplate.md)
+* [Editing a Plumsail Form](/docs/techSpecs/plumsail.md)
+* [Editing a Power Automate Flow](/docs/techSpecs/editingFlowsFormsAndTemplates/editingAPowerAutomateFlow.md)
+* [Editing JavaScript](/docs/techSpecs/javascript.md)
