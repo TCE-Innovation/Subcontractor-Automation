@@ -33,7 +33,7 @@ nav_order: 4
 
 [Back to Top](#top)
 
-## Additional Notes and Tips
+## Notes and Tips
 
 ### Alternative View on Power Automate
 
@@ -49,9 +49,45 @@ Enable "Experimental Features."
 
 ![Enable Experimental Features]({{ site.baseurl }}/assets/images/powerAutomate/alternateViewStep3.png)
 
-Now you should have more space to write and view expressions and "Dynamic values" as opposed to the classic interface below:
+Now you should have more space to write and view expressions and "Dynamic Value" as opposed to the classic interface below:
 
 ![Old Power Automate View]({{ site.baseurl }}/assets/images/powerAutomate/oldView.png)
+
+[Back to Top](#top)
+
+### Finding Plumsail Fields/Control Names When Populating Fields in Power Automate
+
+Familiarizing yourself with the [naming conventions]({{ site.baseurl }}/docs/techSpecs/conventions.md) will be helpful. The first step is always to look in Dynamic Value. 
+
+![Add a Dynamic Value]({{ site.baseurl }}/assets/images/powerAutomate/addADynamicValue.png)
+
+Fields that are not shared should be easily found if you type the same name into the "Dynamic Value" search tab. You do not need to type the whole name, just enough to find the field or control you need. If it is not a Data Table column, search first by the data type, then the form that the field or control belongs to, and the sections that it belongs to, separated by periods. If it is a shared field such as the subcontractor EIN or address, you will know because there will not be corresponding dynamic content with the same name. Using the hint in gray text, you can search for the general name and searching with the term `<field_type>.GI.` to filter information from the "General Information" and "Summary" tabs.
+
+![General Information Dynamic Values]({{ site.baseurl }}/assets/images/powerAutomate/generalInformationDynamicValues.png)
+
+![Data Table column search]({{ site.baseurl }}/assets/images/powerAutomate/dataTableColumnSearch.png)
+
+[Back to Top](#top)
+
+### Organizing Using Branches and Scopes
+
+[Scopes](https://www.bloomsoftwareco.com/blog/keep-your-flows-organized-using-scopes-in-power-automate) are very helpful for grouping and hiding actions. They serve as a wrapper for actions and can be named such that you can show the Power Automate flow in a more high-level way. See the difference between the two pictures below:
+
+![Expanded scope]({{ site.baseurl }}/assets/images/powerAutomate/handlingDataTablesScopeExample.png)
+![Collapsed scope]({{ site.baseurl }}/assets/images/powerAutomate/collapsedScopeExample.png)
+
+Making parallel branches allows actions to run in parallel with each other. This can be helpful for increasing the speed of your flow so that not everything runs linearly, but also allows different branches of actions to complete even if another branch fails.  For example, [Block 2 in the Subcontractor Form]({{ site.baseurl }}/docs/threeForms/subcontractorForm.md) as a branch for every form and allows PDFs of the completed forms to be generated independently of the others. In the image below, although Schedule B1's branch fails to complete, the other branches finish with no errors. Also note how long Schedule B takes to complete and imagine how that can stall future actions had all of the forms been in one branch. 
+
+{: .note}
+> To move onto the next action after a group of parallel branches, all actions in every branch must be complete. You can consider the group as a much larger action in series with the overall flow. Block 1, Block 2, Block 3, and Block 4 are all in series and occur in that respective order. 
+
+![Schedule B1 failed but all other branches are successful]({{ site.baseurl }}/assets/images/powerAutomate/powerAutomateFlowRunSB1Fail.png)
+
+You can configure "Run after" for actions to handle when linearly organized actions fail. In Block 4, the email only gets appended to the "Failed Receipts" string if the corresponding "Send an email to every specified recipient" action failed. This is indicated by the red-dashed arrow. By default, "Run after" is set so that it runs after the previous action is run successfully. 
+
+![Overview of Configured Run After branches]({{ site.baseurl }}/assets/images/powerAutomate/configuredRunAfter.png)
+![Run after not successful]({{ site.baseurl }}/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep7ConfigRunAfter2.png)
+![Default Run After]({{ site.baseurl }}/assets/images/powerAutomate/defaultRunAfter.png)
 
 [Back to Top](#top)
 
@@ -351,14 +387,14 @@ If you are creating a new form, create a parallel branch to the other branches t
     * Site Address: base URL to place the populated Word Document in.
     * Folder Path: the relative path of the Word Document to be created. Using the conventions, the folder path for an individual Word Document is:
     `.../<contractNumber>/<subcontractorName>/<timestamp>/Individual Word Documents`
-    In the image, the above expression has already been formatted into a variable called `Word Docs File path` located in [Block 1]({{ site.baseurl }}/docs/threeForms/subcontractorForm.md) which you can access through "Dynamic values"
+    In the image, the above expression has already been formatted into a variable called `Word Docs File path` located in [Block 1]({{ site.baseurl }}/docs/threeForms/subcontractorForm.md) which you can access through "Dynamic Value"
 
     {: .note}
     > It's recommended that you use the folder icon to navigate to the template yourself first, then cut the text from the box and re-paste it. This will ensure that you have the correct base directory. 
 
     * File Name: the file name of the Word Document. 
-    The file name prefix has already been defined in a variable called `Form Order and Filenames` - a JSON object which is parsed with a "Parse JSON" action called `Parse subcontractor form filenames JSON` in [Block 1]({{ site.baseurl }}/docs/threeForms/subcontractorForm.md). Each property's key is the abbreviated version of the corresponding form and the value is the file name prefix. If you are adding a new form, you will need to add the file name prefix to `Form Order and Filenames` and update the schema in the `Parse subcontractor form filenames JSON` action. Then, in this field use the "Dynamic values" and find the appropriate output from the `Parse subcontractor form filenames JSON` action and append it with `docx`.
-    * File Content: in "Dynamic values," select the Microsoft Word Document output from the "Populate a Word template" action from before.
+    The file name prefix has already been defined in a variable called `Form Order and Filenames` - a JSON object which is parsed with a "Parse JSON" action called `Parse subcontractor form filenames JSON` in [Block 1]({{ site.baseurl }}/docs/threeForms/subcontractorForm.md). Each property's key is the abbreviated version of the corresponding form and the value is the file name prefix. If you are adding a new form, you will need to add the file name prefix to `Form Order and Filenames` and update the schema in the `Parse subcontractor form filenames JSON` action. Then, in this field use the "Dynamic Value" and find the appropriate output from the `Parse subcontractor form filenames JSON` action and append it with `docx`.
+    * File Content: in "Dynamic Value," select the Microsoft Word Document output from the "Populate a Word template" action from before.
 
     ![Create a Word Document]({{ site.baseurl }}/assets/images/powerAutomate/createScheduleAWordDocument.png)
 
@@ -369,7 +405,7 @@ If you are creating a new form, create a parallel branch to the other branches t
     * File: the relative file path of the Word Document to convert
 
     {: .note}
-    > It's recommended that you use the folder icon to navigate to the template yourself first, then cut the text from the box and re-paste it. This will ensure that you have the correct directory. There are also path properties from the "Create file" action that can be used here to access the file, but because at the time of writing this, we have not received a final official folder/directory to place these files and the path attained using the folder icon is different from using a similar method in the "Create file" action, we simply appended on the `Word Docs File path` variable and a `/` followed by the file name from the "Create file" action in "Dynamic values." In the future, this can be adjusted for easier maintenance.
+    > It's recommended that you use the folder icon to navigate to the template yourself first, then cut the text from the box and re-paste it. This will ensure that you have the correct directory. There are also path properties from the "Create file" action that can be used here to access the file, but because at the time of writing this, we have not received a final official folder/directory to place these files and the path attained using the folder icon is different from using a similar method in the "Create file" action, we simply appended on the `Word Docs File path` variable and a `/` followed by the file name from the "Create file" action in "Dynamic Value." In the future, this can be adjusted for easier maintenance.
 
     ![Convert Word Document to PDF]({{ site.baseurl }}/assets/images/powerAutomate/convertScheduleAWordToPDF.png)
 
@@ -377,13 +413,13 @@ If you are creating a new form, create a parallel branch to the other branches t
     * Site Address: same as Step 2
     * Folder Path: same as Step 2 except instead of `Individual Word Documents` it is `Individual PDF Documents`:
     `.../<contractNumber>/<subcontractorName>/<timestamp>/Individual PDF Documents`
-    In the image, the above expression has already been formatted into a variable called `Individual PDFs File path` located in [Block 1]({{ site.baseurl }}/docs/threeForms/subcontractorForm.md) which you can access through "Dynamic values"
+    In the image, the above expression has already been formatted into a variable called `Individual PDFs File path` located in [Block 1]({{ site.baseurl }}/docs/threeForms/subcontractorForm.md) which you can access through "Dynamic Value"
 
     {: .note}
     > It's recommended that you use the folder icon to navigate to the template yourself first, then cut the text from the box and re-paste it. This will ensure that you have the correct base directory. 
 
     * File Name: the file name of the Word Document. Same as Step 2 but instead of appending with `docx`, you append with `pdf`.
-    * File Content: in "Dynamic values," select the PDF Document output from the "Convert Word Document to PDF" action from before.
+    * File Content: in "Dynamic Value," select the PDF Document output from the "Convert Word Document to PDF" action from before.
 
     ![Create PDF Document After Conversion]({{ site.baseurl }}/assets/images/powerAutomate/createScheduleAPDF.png)
 
@@ -410,7 +446,7 @@ Many forms have data tables in them, and depending on the contents, further proc
 #### Case 1: No Extra Formatting Needed
 {: .no_toc}
 
-Change the input of the data table field in Power Automate so that it takes an array by clicking the blue icon in the top-right corner. Then find the corresponding data table in "Dynamic values" and add that as the input. 
+Change the input of the data table field in Power Automate so that it takes an array by clicking the blue icon in the top-right corner. Then find the corresponding data table in "Dynamic Value" and add that as the input. 
 
 ![Case 1: Simple matching]({{ site.baseurl }}/assets/images/powerAutomate/handlingDataTablesSimpleMatch.png)
 
@@ -444,10 +480,10 @@ Change the input of the data table field in Power Automate so that it takes an a
 
     ![Map data table variable to Content Control]({{ site.baseurl }}/assets/images/powerAutomate/mapDataTableVariableToContentControl.png)
 
-6. [OPTIONAL] You can place your "Parse JSON," "Select," and "Set variable" actions in a "Scope" to organize them into one block. This can be helpful especially if you have many data tables to handle. You cannot place "Initialize variable" actions in a Scope however, as Power Automate requires this to be on the top-level and it cannot be nested in any action. When placing actions in a Scope, order is important as these actions depend on the one before. 
+6. [OPTIONAL] You can place your "Parse JSON," "Select," and "Set variable" actions in a ["Scope"(https://www.bloomsoftwareco.com/blog/keep-your-flows-organized-using-scopes-in-power-automate)] to organize them into one block. This can be helpful especially if you have many data tables to handle. You cannot place "Initialize variable" actions in a ["Scope"](https://www.bloomsoftwareco.com/blog/keep-your-flows-organized-using-scopes-in-power-automate) however, as Power Automate requires this to be on the top-level and it cannot be nested in any action. When placing actions in a ["Scope"](https://www.bloomsoftwareco.com/blog/keep-your-flows-organized-using-scopes-in-power-automate), order is important as these actions depend on the one before. 
 
 [Back to Handling Data Table Cases](#handling-data-tables)
-[Back to top](#top)
+[Back to Top](#top)
 
 #### Case 3: Multiple Choice Drop Down
 {: .no_toc}
@@ -495,7 +531,7 @@ To accomplish this follow the below steps:
 
 9. Map the variable to the corresponding Content Control.
 
-10. [OPTIONAL] You can place your "Parse JSON," "Select," "Apply to each," and "Set variable" actions in a "Scope" to organize them into one block. This can be helpful especially if you have many data tables to handle. You cannot place "Initialize variable" actions in a Scope however, as Power Automate requires this to be on the top-level and it cannot be nested in any action. When placing actions in a Scope, order is important as these actions depend on the one before. 
+10. [OPTIONAL] You can place your "Parse JSON," "Select," and "Set variable" actions in a ["Scope"(https://www.bloomsoftwareco.com/blog/keep-your-flows-organized-using-scopes-in-power-automate)] to organize them into one block. This can be helpful especially if you have many data tables to handle. You cannot place "Initialize variable" actions in a ["Scope"](https://www.bloomsoftwareco.com/blog/keep-your-flows-organized-using-scopes-in-power-automate) however, as Power Automate requires this to be on the top-level and it cannot be nested in any action. When placing actions in a ["Scope"](https://www.bloomsoftwareco.com/blog/keep-your-flows-organized-using-scopes-in-power-automate), order is important as these actions depend on the one before. 
 
 11. You're done! Below is an overview of what a completed sequence looks like. The initialization of arrays occurs above these actions and is not shown. 
 
@@ -545,7 +581,7 @@ All attachments from Plumsail Forms are PDFs in this workflow. This is ensured b
 
     ![Download attachment action]({{ site.baseurl }}/assets/images/powerAutomate/downloadAttachment.png)
 
-2. Select the `url` from "Dynamic values" for the argument.
+2. Select the `url` from "Dynamic Value" for the argument.
 
     ![Add url]({{ site.baseurl }}/assets/images/powerAutomate/attachmentURLs.png)
 
@@ -557,10 +593,10 @@ All attachments from Plumsail Forms are PDFs in this workflow. This is ensured b
     * Site Address: base URL to place the attachment in.
     * Folder Path: the relative path of the attachment to be created. Using the conventions, the folder path for an individual Word Document is:
     `.../<contractNumber>/<subcontractorName>/<timestamp>/Individual PDF Documents`
-    In the image, the above expression has already been formatted into a variable called `Individual PDFs File path` located in [Block 1]({{ site.baseurl }}/docs/threeForms/subcontractorForm.md) which you can access through "Dynamic values"
+    In the image, the above expression has already been formatted into a variable called `Individual PDFs File path` located in [Block 1]({{ site.baseurl }}/docs/threeForms/subcontractorForm.md) which you can access through "Dynamic Value"
     * File Name: the file name of the Word Document. 
-    The file name prefix has already been defined in a variable called `Form Order and Filenames` - a JSON object which is parsed with a "Parse JSON" action called `Parse subcontractor form filenames JSON` in [Block 1]({{ site.baseurl }}/docs/threeForms/subcontractorForm.md). Each property's key is the abbreviated version of the corresponding form and the value is the file name prefix. If you are adding a new form, you will need to add the file name prefix to `Form Order and Filenames` and update the schema in the `Parse subcontractor form filenames JSON` action. Then, in this field use the "Dynamic values" and find the appropriate output from the `Parse subcontractor form filenames JSON` action and append it with `pdf`.
-    * File Content: in "Dynamic values," select the "Result file" output from the "Download attachment" action from before.
+    The file name prefix has already been defined in a variable called `Form Order and Filenames` - a JSON object which is parsed with a "Parse JSON" action called `Parse subcontractor form filenames JSON` in [Block 1]({{ site.baseurl }}/docs/threeForms/subcontractorForm.md). Each property's key is the abbreviated version of the corresponding form and the value is the file name prefix. If you are adding a new form, you will need to add the file name prefix to `Form Order and Filenames` and update the schema in the `Parse subcontractor form filenames JSON` action. Then, in this field use the "Dynamic Value" and find the appropriate output from the `Parse subcontractor form filenames JSON` action and append it with `pdf`.
+    * File Content: in "Dynamic Value," select the "Result file" output from the "Download attachment" action from before.
     
     ![Create Schedule B P4 Attachment]({{ site.baseurl }}/assets/images/powerAutomate/createSBP4Attachment.png)
 
@@ -588,7 +624,7 @@ All attachments from Plumsail Forms are PDFs in this workflow. This is ensured b
     * Site Address: base URL to find the files to be merged
     * File Path: the relative path of the attachment to be created. Using the conventions, the folder path for an individual Word Document is:
     `.../<contractNumber>/<subcontractorName>/<timestamp>/Individual PDF Documents`
-    In the image, the above expression has already been formatted into a variable called `Individual PDFs File path` located in [Block 1]({{ site.baseurl }}/docs/threeForms/subcontractorForm.md) which you can access through "Dynamic values".  This should then also be appended with `/`, the "Current item" output from the "Apply to each action" that you created before which is the file name prefix, and finally `pdf`.
+    In the image, the above expression has already been formatted into a variable called `Individual PDFs File path` located in [Block 1]({{ site.baseurl }}/docs/threeForms/subcontractorForm.md) which you can access through "Dynamic Value".  This should then also be appended with `/`, the "Current item" output from the "Apply to each action" that you created before which is the file name prefix, and finally `pdf`.
 
     ![Get file content using path]({{ site.baseurl }}/assets/images/powerAutomate/mergePDFsStep3.png)
 
@@ -611,7 +647,7 @@ All attachments from Plumsail Forms are PDFs in this workflow. This is ensured b
     Once you add the connection, you will not have to repeat this for other instances of Adobe PDF Services actions. 
 
     Supply the following arguments to the "Merge PDFs" action:
-    * Merged PDF File Name: provide a descriptive name for the PDF packet to be created after merging and append it with the contract number and subcontractor name. This is provided in a variable called `Filename contract no. and sub name` which can be accessed through "Dynamic values".
+    * Merged PDF File Name: provide a descriptive name for the PDF packet to be created after merging and append it with the contract number and subcontractor name. This is provided in a variable called `Filename contract no. and sub name` which can be accessed through "Dynamic Value".
     * Files: change the type of input into an array instead of individual files and their names by clicking on the top right blue icon. Then add the array variable you initialized in Step 1.
 
     ![Change input type of Merge PDFs]({{ site.baseurl }}/assets/images/powerAutomate/mergePDFsChangeInputType.png)
@@ -622,7 +658,7 @@ All attachments from Plumsail Forms are PDFs in this workflow. This is ensured b
     * Site Address: base URL to place the merged PDF packet in.
     * Folder Path: the relative path of the attachment to be created. The folder path for PDF packets is:
     `.../<contractNumber>/<subcontractorName>/<timestamp>`
-    In the image, the above expression has already been formatted into a variable called `Merged PDF Packets File path` located in [Block 1]({{ site.baseurl }}/docs/threeForms/subcontractorForm.md) which you can access through "Dynamic values" and append to the rest of the path.
+    In the image, the above expression has already been formatted into a variable called `Merged PDF Packets File path` located in [Block 1]({{ site.baseurl }}/docs/threeForms/subcontractorForm.md) which you can access through "Dynamic Value" and append to the rest of the path.
 
     {: .note}
     > To ensure that you have the correct path initially, use the blue folder icon in the corner to navigate to the base folder, then append the variable `Merged PDF Packets File path`. This path is also subject to change, and if it needs to be updated, update the variable in Block 1.
@@ -652,7 +688,7 @@ If there are any attachments that will always be included in the email, you can 
 2. For any attachments that are not always included in the email, add a "Condition" action to check when it should be included. Depending on your condition, you will then add a "Get file content using path" action in either the "If yes" or "If no" block.
 Rename the action to be specific and descriptive to ts purpose. Supply the following parameters:
     * Site Address: base URL to find the files to be merged
-    * File Path: the relative path of the attachment to be created. You can go into "Dynamic values" and find the corresponding "Create file" action with a "Path" output.
+    * File Path: the relative path of the attachment to be created. You can go into "Dynamic Value" and find the corresponding "Create file" action with a "Path" output.
 
     ![Get file content using path]({{ site.baseurl }}/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep2.png)
 
