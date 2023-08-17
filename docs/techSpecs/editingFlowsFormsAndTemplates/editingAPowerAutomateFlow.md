@@ -51,7 +51,7 @@ Enable "Experimental Features."
 
 Now you should have more space to write and view expressions and "Dynamic values" as opposed to the classic interface below:
 
-![Old Power Automate View](/assets/images/powerAutomate/oldView.png)
+![Old Power Automate View]({{ site.baseurl }}/assets/images/powerAutomate/oldView.png)
 
 [Back to Top](#top)
 
@@ -404,7 +404,9 @@ Change the input of the data table field in Power Automate so that it takes an a
 
 ![Case 1: Simple matching]({{ site.baseurl }}/assets/images/powerAutomate/handlingDataTablesSimpleMatch.png)
 
-#### Case 2: Dates, currencies and/or percentages
+[Back to Top](#top)
+
+#### Case 2: Dates, currencies, and/or percentages
 
 {: .no_toc}
 
@@ -432,20 +434,83 @@ Change the input of the data table field in Power Automate so that it takes an a
 
     ![Map data table variable to Content Control]({{ site.baseurl }}/assets/images/powerAutomate/mapDataTableVariableToContentControl.png)
 
-6. You're done!
+6. [OPTIONAL] You can place your "Parse JSON," "Select," and "Set variable" actions in a "Scope" to organize them into one block. This can be helpful especially if you have many data tables to handle. You cannot place "Initialize variable" actions in a Scope however, as Power Automate requires this to be on the top-level and it cannot be nested in any action. When placing actions in a Scope, order is important as these actions depend on the one before. 
+
+[Back to top](#top)
 
 #### Case 3: Nested multiple choice
 
 {: .no_toc}
 
+Data tables that have drop-downs with multiple choices or data that translates to multiple checkboxes or radio buttons on the template will require you to add new properties to the JSON objects in the JSON array. For example, Schedule B Part 5 M's data table asks the subcontractor to list all options that apply and has several checkboxes. 
 
-TO DO 
+![Schedule B P5 M Data Table]({{ site.baseurl }}/assets/images/microsoftWordTemplate/SBP5MDataTable.png)
 
-#### Case 4: Default values 
+To accomplish this follow the below steps:
+
+1. Initialize an array of all of the checkbox/button internal names.
+
+    ![Array of checkbox internal names]({{ site.baseurl }}/assets/images/powerAutomate/handlingDataTablesInitializeArrayMultipleChoices.png)
+
+2. Follow steps 1-2 in [Case 2](#case-2-dates-currencies-andor-percentages).
+
+3. Set the data table variable equal to the output of the "Parse JSON" action.
+
+    ![Set data table variable equal to "Parse JSON" action]({{ site.baseurl }}/assets/images/powerAutomate/handlingDataTablesNestedMultipleChoiceStep3.png)
+
+4. Create an "Apply to each" action and select the output of the "Parse JSON" action. Give this a descriptive name. 
+
+5. Within the "Apply to each" action, add another "Apply to each" action and select the array of internal names you made in Step 1. 
+
+6. Append each property to each JSON object within the data table array. Add a "Compose" action and in the "Inputs" field, add an expression with the function `addProperty`. Provide this the following arguments:
+    1. The JSON object to add a property to - "Current item" from the outer "Apply to each" action in Step 4
+    2. The key to add to the JSON object - "Current item" rom the inner "Apply to each" action in Step 5
+    3. The value of the key to be added - an empty string `''`
+
+    Example expression: `addProperty(items('Add_checkbox_fields_to_each_object_in_SB_P5_M1_Data_Table_Array'), items('Iterate_through_the_list_of_checkbox_fields_SB_P5_M1_Data_Table_Array'), '')`
+
+    ![Nested checkbox steps 4-6]({{ site.baseurl }}/assets/images/powerAutomate/handlingDataTablesNestedMultipleChoiceSteps4-6.png)
+
+7. Add a "Select" action. Provide the following arguments:
+    * From: the array of JSON objects to select from
+    * Map: the left column will be the key and the right column will be the value. Copy and paste in the names of all the columns that you want to include in your data table on the left (usually all of them except for `__id`). On the right, format the outputs from the "Parse JSON" action using `formatDateTime` and `formatNumber` if needed. Use the `if` function if you need to process the inputs further for specific outputs based on a condition. Otherwise, you can simply map the corresponding output for text fields.
+
+    Example: `if(contains(item()['colddmcSBP5MemployedBy'], 'MTA'), '☑', '☐')`
+
+    ![Select action nested checkbox]({{ site.baseurl }}/assets/images/powerAutomate/handlingDataTablesNestedMultipleChoiceStep7.png)
+
+    ![Map Text, Dates, and Number Key Values]({{ site.baseurl }}/assets/images/powerAutomate/parseJSONMapDatesAndNumbers.png)
+
+8. Set the data table variable equal to the output of the "Select" action.
+
+9. Map the variable to the corresponding Content Control.
+
+10. [OPTIONAL] You can place your "Parse JSON," "Select," "Apply to each," and "Set variable" actions in a "Scope" to organize them into one block. This can be helpful especially if you have many data tables to handle. You cannot place "Initialize variable" actions in a Scope however, as Power Automate requires this to be on the top-level and it cannot be nested in any action. When placing actions in a Scope, order is important as these actions depend on the one before. 
+
+11. You're done! Below is an overview of what a completed sequence looks like. The initialization of arrays occurs above these actions and is not shown. 
+
+    ![Overview of nested multiple choice]({{ site.baseurl }}/assets/images/powerAutomate/overviewOfNestedMultipleChoice.png)
+
+[Back to Top](#top)
+
+#### Case 4: Non-required data tables
 
 {: .no_toc}
 
-TO DO
+Add a "Condition" block to check whether the data table is applicable. Then nest the actual processing of the data table inside one of the blocks. 
+
+![Scope example with non-required data tables]({{ site.baseurl }}/assets/images/powerAutomate/handlingDataTablesScopeExample.png)
+
+![Conditional Data Tables]({{ site.baseurl }}/assets/images/powerAutomate/handlingDataTablesConditionalDataTables.png)
+[Back to Top](#top)
+
+#### Case 5: Default values
+
+{: .no_toc}
+
+Follow the steps in [Case 2](#case-2-dates-currencies-andor-percentages). After creating your data table array variable, selecting the properties, and setting the variable, create an "Append to array variable" action. Append to that data table array variable an object with the keys `"__id"` and all of the other keys with default values. 
+
+![Append default values]({{ site.baseurl }}/assets/images/powerAutomate/handlingDataTablesAppendDefaultValues.png)
 
 [Back to Top](#top)
 
