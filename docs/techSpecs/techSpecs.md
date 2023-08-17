@@ -17,7 +17,8 @@ permalink: /docs/techSpecs
 
 ## Applications Used
 
-This project utilizes four main pieces of software: 
+This project utilizes five main pieces of software: 
+
 1. [Plumsail Forms]: Plumsail forms is the interface of this project: It is what subcontractors and TCE employees interact with.
 2. [JavaScript]: JavaScript controls the form to make it interactive and dynamically respond to user input.
 3. [Power Automate]: Power Automate runs the backend, from merging PDFs to processing submitted data.
@@ -36,8 +37,28 @@ Plumsail Forms' free plan allows only 100 submissions per month, reset on the 1s
 
 ## Process Flow
 
-![Process Flow Chart: from start to finish]({{ site.baseurl }}/assets/images/processFlowchart.png)
+![Process Flow Chart: from start to finish]({{ site.baseurl }}/assets/images/processFlowchart/processFlowchart.png)
 *This is a flowchart that describes the subcontractor process from initialization to correction.*
+
+### Initialization
+
+![Initialization portion of the flowchart]({{ site.baseurl }}/assets/images/processFlowchart/initialization.jpg)
+
+When the [initialization form] is filled out, the above process occurs. There is no preprocessing before TCE fills out this form, except for including the "federally funded" question. 
+
+### Subcontractor Form 
+
+![Subcontractor Form Portion of the flowchart]({{ site.baseurl }}/assets/images/processFlowchart/subcontractorLoading.jpg)
+*This shows the internal javascript process that takes place when the subcontractor form is loaded*
+
+![Subcontractor submit portion of the flowchart]({{ site.baseurl }}/assets/images/processFlowchart/subcontractorSubmit.jpg)
+*This shows the internal javascript process that takes place when the subcontractor clicks "submit" on the form*
+
+### Correction
+
+![Correction flow of the built process]({{ site.baseurl }}/assets/images/processFlowchart/correction.jpg)
+
+*This shows the internal javascript and power automate process that takes place when the contractor needs to correct items that the subcontractor has messed up*
 
 ## Register/Login
 
@@ -75,5 +96,6 @@ Aside: You will notice that the pattern will update accordingly when you specify
 [Jekyll/GitHub Pages]: https://pages.github.com/
 [just-the-docs]: https://just-the-docs.github.io/just-the-docs/
 
+[initialization form]: https://tce-innovation.github.io/Subcontractor-Automation/forms/initialization.html
 
 [Back to Top](#top)
