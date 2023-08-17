@@ -57,7 +57,7 @@ Now you should have more space to write and view expressions and "Dynamic Value"
 
 ### Finding Plumsail Fields/Control Names When Populating Fields in Power Automate
 
-Familiarizing yourself with the [naming conventions]({{ site.baseurl }}/docs/techSpecs/conventions.md) will be helpful. The first step is always to look in Dynamic Value. 
+Familiarizing yourself with the [naming conventions]({{ site.baseurl }}/docs/techSpecs/conventions/#formatting-names-and-properties) will be helpful. The first step is to look in Dynamic Value. 
 
 ![Add a Dynamic Value]({{ site.baseurl }}/assets/images/powerAutomate/addADynamicValue.png)
 

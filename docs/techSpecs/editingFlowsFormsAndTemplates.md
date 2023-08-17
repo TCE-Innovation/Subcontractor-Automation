@@ -17,7 +17,7 @@ This process involved editing through several platforms:
 
 See the below links for help on the appropriate software.
 
-* [Editing a Microsoft Word Template](/docs/techSpecs/editingFlowsFormsAndTemplates/editingAMicrosoftWordTemplate.md)
-* [Editing a Plumsail Form](/docs/techSpecs/plumsail.md)
-* [Editing a Power Automate Flow](/docs/techSpecs/editingFlowsFormsAndTemplates/editingAPowerAutomateFlow.md)
-* [Editing JavaScript](/docs/techSpecs/javascript.md)
+* [Editing a Microsoft Word Template]({{ site.baseurl }}/docs/techSpecs/editingFlowsFormsAndTemplates/editingAMicrosoftWordTemplate)
+* [Editing a Plumsail Form]({{ site.baseurl }}/docs/techSpecs/plumsail)
+* [Editing a Power Automate Flow]({{ site.baseurl }}/docs/techSpecs/editingFlowsFormsAndTemplates/editingAPowerAutomateFlow)
+* [Editing JavaScript]({{ site.baseurl }}/docs/techSpecs/js)

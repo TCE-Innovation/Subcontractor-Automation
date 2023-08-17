@@ -93,7 +93,7 @@ Word Template Content Controls include the following properties:
 * `Title`: text used to describe the content control it belongs to
 * `Tag`: a unique identifier for the content control it belongs to
 
-To maintain consistency for easier maintainability in the future, when naming the `Title` and `Tag`, follow the [naming conventions]({{ site.baseurl }}/docs/techSpecs/conventions.md). 
+To maintain consistency for easier maintainability in the future, when naming the `Title` and `Tag`, follow the [naming conventions]({{ site.baseurl }}/docs/techSpecs/conventions). 
 
 There are several types of Content Controls, but not all of them are supported for template population. Below are the Content Controls used in the "Process Subcontractor Form and Send PDFs" flow:
 
@@ -142,7 +142,7 @@ In addition to the `Title` and `Tag`, Plain Text Content Controls have a few oth
 
 ![Plain Text Content Control]({{ site.baseurl }}/assets/images/microsoftWordTemplate/plainTextContentControlBtn.png)
 
-3. With your cursor inside the Plain Text Content Control of choice, click on "Properties" to edit the `Title` and `Tag`. Follow the [naming conventions]({{ site.baseurl }}/docs/techSpecs/conventions.md).
+3. With your cursor inside the Plain Text Content Control of choice, click on "Properties" to edit the `Title` and `Tag`. Follow the [naming conventions]({{ site.baseurl }}/docs/techSpecs/conventions).
 
 ![Properties Button]({{ site.baseurl }}/assets/images/microsoftWordTemplate/propertiesBtn.png)
 
@@ -163,7 +163,7 @@ The Repeating Section Content Control is used for cases where you want to repeat
 ![Add a table step 1]({{ site.baseurl }}/assets/images/microsoftWordTemplate/addTableRepeatingContentControlStep1.png)
 ![Add a table step 2]({{ site.baseurl }}/assets/images/microsoftWordTemplate/addTableRepeatingContentControlStep2.png)
 
-2. Go to the Developer Tab in the Word ribbon and click on the Repeating Section Control button. Add any text and other Content Controls within the Repeating Content Control and add their `Title`, `Tag`, and any other properties based on the [conventions]({{ site.baseurl }}/docs/techSpecs/conventions.md). Any content controls inside the repeating content control should begin with "col" because they will correspond to a column within the corresponding Plumsail Data Table column. 
+2. Go to the Developer Tab in the Word ribbon and click on the Repeating Section Control button. Add any text and other Content Controls within the Repeating Content Control and add their `Title`, `Tag`, and any other properties based on the [conventions]({{ site.baseurl }}/docs/techSpecs/conventions). Any content controls inside the repeating content control should begin with "col" because they will correspond to a column within the corresponding Plumsail Data Table column. 
 
 ![Repeating Section Content Control button]({{ site.baseurl }}/assets/images/microsoftWordTemplate/repeatingSectionContentControlBtn.png)
 
@@ -174,7 +174,7 @@ Repeating Section Content Control on a Line:
 Repeating Section Content Control on a Table Row:
 ![Add Repeating Section Content Control on a Table Row]({{ site.baseurl }}/assets/images/microsoftWordTemplate/addTableRepeatingContentControlStep3.png)
 
-3. Give the Repeating Section Content Control a `Title` and `Tag` according to the [conventions]({{ site.baseurl }}/docs/techSpecs/conventions.md). Follow the conventions for Plumsail Data Tables as Repeating Section Content Controls correspond to them.
+3. Give the Repeating Section Content Control a `Title` and `Tag` according to the [conventions]({{ site.baseurl }}/docs/techSpecs/conventions). Follow the conventions for Plumsail Data Tables as Repeating Section Content Controls correspond to them.
 
 [Back to Top](#top)
 
@@ -212,7 +212,7 @@ A simple way to get around these problems is to use text boxes and position them
 
 #### Adding Radio Buttons and Checkboxes
 
-As of 8/14/23, the ["Populate a Word template" action in Power Flow Automate and Word do not support automatic population of checkboxes, radio buttons, or date pickers](https://learn.microsoft.com/en-us/connectors/wordonlinebusiness/#createfileitem). Due to this limitation, we will have to add a Plain Text Content Control for every radio button or checkbox separately. Generally, you will follow the same steps to add a Plain Text Content Control and follow the conventions for naming [radio buttons]({{ site.baseurl }}/docs/techSpecs/conventions.md) or [checkboxes]({{ site.baseurl }}/docs/techSpecs/conventions.md). You may have to also follow the steps in [Manipulating the Location of a Content Control](#manipulating-the-location-of-a-control) if you want to overlay the contents of the content control over a box for example. 
+As of 8/14/23, the ["Populate a Word template" action in Power Flow Automate and Word do not support automatic population of checkboxes, radio buttons, or date pickers](https://learn.microsoft.com/en-us/connectors/wordonlinebusiness/#createfileitem). Due to this limitation, we will have to add a Plain Text Content Control for every radio button or checkbox separately. Generally, you will follow the same steps to add a Plain Text Content Control and follow the conventions for naming [radio buttons]({{ site.baseurl }}/docs/techSpecs/conventions/#radio-buttons-and-checkbox-groups) or [checkboxes]({{ site.baseurl }}/docs/techSpecs/conventions/#radio-buttons-and-checkbox-groups). You may have to also follow the steps in [Manipulating the Location of a Content Control](#manipulating-the-location-of-a-control) if you want to overlay the contents of the content control over a box for example. 
 
 Example Checkbox:
 ![Example Checkbox]({{ site.baseurl }}/assets/images/microsoftWordTemplate/exampleCheckbox.png)
