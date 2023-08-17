@@ -386,6 +386,7 @@ let eventListener = {
         //Set up validators: this only happens one time.
         this.OCIPAValidator();
         this.genInfoValidator();
+        this.validateMT();
 
         //Then, we call the functions once such that all the values update to their default configuration
         this.generalInfoCallback();
