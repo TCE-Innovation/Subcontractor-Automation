@@ -344,7 +344,9 @@ If you are creating a new form, create a parallel branch to the other branches t
 
     * Fill in the fields as needed by formatting and matching the appropriate fields. 
     * Rename the action to be a descriptive and unique name.
-![Populate a Word template]({{ site.baseurl }}/assets/images/powerAutomate/populateScheduleAWordTemplate.png)
+
+    ![Populate a Word template]({{ site.baseurl }}/assets/images/powerAutomate/populateScheduleAWordTemplate.png)
+
 2. Add a "Create file" action. This action will create the Word Document from the template filled with the data specified in Step 1 and place it in a SharePoint folder. 
     * Site Address: base URL to place the populated Word Document in.
     * Folder Path: the relative path of the Word Document to be created. Using the conventions, the folder path for an individual Word Document is:
@@ -357,7 +359,9 @@ If you are creating a new form, create a parallel branch to the other branches t
     * File Name: the file name of the Word Document. 
     The file name prefix has already been defined in a variable called `Form Order and Filenames` - a JSON object which is parsed with a "Parse JSON" action called `Parse subcontractor form filenames JSON` in [Block 1]({{ site.baseurl }}/docs/threeForms/subcontractorForm.md). Each property's key is the abbreviated version of the corresponding form and the value is the file name prefix. If you are adding a new form, you will need to add the file name prefix to `Form Order and Filenames` and update the schema in the `Parse subcontractor form filenames JSON` action. Then, in this field use the "Dynamic values" and find the appropriate output from the `Parse subcontractor form filenames JSON` action and append it with `docx`.
     * File Content: in "Dynamic values," select the Microsoft Word Document output from the "Populate a Word template" action from before.
-![Create a Word Document]({{ site.baseurl }}/assets/images/powerAutomate/createScheduleAWordDocument.png)
+
+    ![Create a Word Document]({{ site.baseurl }}/assets/images/powerAutomate/createScheduleAWordDocument.png)
+
 3. Add a "Convert Word Document to PDF" action.
 
     * Location: website where the Word Document to convert is located
@@ -368,6 +372,7 @@ If you are creating a new form, create a parallel branch to the other branches t
     > It's recommended that you use the folder icon to navigate to the template yourself first, then cut the text from the box and re-paste it. This will ensure that you have the correct directory. There are also path properties from the "Create file" action that can be used here to access the file, but because at the time of writing this, we have not received a final official folder/directory to place these files and the path attained using the folder icon is different from using a similar method in the "Create file" action, we simply appended on the `Word Docs File path` variable and a `/` followed by the file name from the "Create file" action in "Dynamic values." In the future, this can be adjusted for easier maintenance.
 
     ![Convert Word Document to PDF]({{ site.baseurl }}/assets/images/powerAutomate/convertScheduleAWordToPDF.png)
+
 4. Add another "Create file" action. This will create the PDF file that resulted from the conversion. The fields are filled out in a similar fashion to Step 2:
     * Site Address: same as Step 2
     * Folder Path: same as Step 2 except instead of `Individual Word Documents` it is `Individual PDF Documents`:
@@ -396,18 +401,23 @@ If you are creating a new form, create a parallel branch to the other branches t
 
 Many forms have data tables in them, and depending on the contents, further processing may be needed. When populating Repeating Section Content Controls, there will be a corresponding Plumsail Data Table. Data tables are arrays of JSON objects and examples of schemas are provided. Passing an empty array to a Repeating Section Content Control when populating a Word Template will result in zero instances of that Repeating Section Content Control. Outlined below are some cases that occurred in the flows. Schedule B's branch has the most data tables and will be most helpful if you need  examples. 
 
-#### Case 1: No extra formatting needed
+* [Case 1: No Extra Formatting Needed](#case-1-no-extra-formatting-needed)
+* [Case 2: Dates, Currencies, and/or Percentages](#case-2-dates-currencies-andor-percentages)
+* [Case 3: Multiple Choice Drop Down](#case-3-multiple-choice-drop-down)
+* [Case 4: Non-Required Data Tables](#case-4-non-required-data-tables)
+* [Case 5: Default Values](#case-5-default-values)
 
+#### Case 1: No Extra Formatting Needed
 {: .no_toc}
 
 Change the input of the data table field in Power Automate so that it takes an array by clicking the blue icon in the top-right corner. Then find the corresponding data table in "Dynamic values" and add that as the input. 
 
 ![Case 1: Simple matching]({{ site.baseurl }}/assets/images/powerAutomate/handlingDataTablesSimpleMatch.png)
 
+[Back to Handling Data Table Cases](#handling-data-tables)
 [Back to Top](#top)
 
-#### Case 2: Dates, currencies, and/or percentages
-
+#### Case 2: Dates, Currencies, and/or Percentages
 {: .no_toc}
 
 1. Initialize an array variable for your data table. Give the name of the action and the name of the variable descriptive names. 
@@ -436,10 +446,10 @@ Change the input of the data table field in Power Automate so that it takes an a
 
 6. [OPTIONAL] You can place your "Parse JSON," "Select," and "Set variable" actions in a "Scope" to organize them into one block. This can be helpful especially if you have many data tables to handle. You cannot place "Initialize variable" actions in a Scope however, as Power Automate requires this to be on the top-level and it cannot be nested in any action. When placing actions in a Scope, order is important as these actions depend on the one before. 
 
+[Back to Handling Data Table Cases](#handling-data-tables)
 [Back to top](#top)
 
-#### Case 3: Nested multiple choice
-
+#### Case 3: Multiple Choice Drop Down
 {: .no_toc}
 
 Data tables that have drop-downs with multiple choices or data that translates to multiple checkboxes or radio buttons on the template will require you to add new properties to the JSON objects in the JSON array. For example, Schedule B Part 5 M's data table asks the subcontractor to list all options that apply and has several checkboxes. 
@@ -491,10 +501,10 @@ To accomplish this follow the below steps:
 
     ![Overview of nested multiple choice]({{ site.baseurl }}/assets/images/powerAutomate/overviewOfNestedMultipleChoice.png)
 
+[Back to Handling Data Table Cases](#handling-data-tables)
 [Back to Top](#top)
 
-#### Case 4: Non-required data tables
-
+#### Case 4: Non-Required Data Tables
 {: .no_toc}
 
 Add a "Condition" block to check whether the data table is applicable. Then nest the actual processing of the data table inside one of the blocks. 
@@ -502,16 +512,18 @@ Add a "Condition" block to check whether the data table is applicable. Then nest
 ![Scope example with non-required data tables]({{ site.baseurl }}/assets/images/powerAutomate/handlingDataTablesScopeExample.png)
 
 ![Conditional Data Tables]({{ site.baseurl }}/assets/images/powerAutomate/handlingDataTablesConditionalDataTables.png)
+
+[Back to Handling Data Table Cases](#handling-data-tables)
 [Back to Top](#top)
 
-#### Case 5: Default values
-
+#### Case 5: Default Values
 {: .no_toc}
 
 Follow the steps in [Case 2](#case-2-dates-currencies-andor-percentages). After creating your data table array variable, selecting the properties, and setting the variable, create an "Append to array variable" action. Append to that data table array variable an object with the keys `"__id"` and all of the other keys with default values. 
 
 ![Append default values]({{ site.baseurl }}/assets/images/powerAutomate/handlingDataTablesAppendDefaultValues.png)
 
+[Back to Handling Data Table Cases](#handling-data-tables)
 [Back to Top](#top)
 
 ### Handling Ink Sketch Controls
