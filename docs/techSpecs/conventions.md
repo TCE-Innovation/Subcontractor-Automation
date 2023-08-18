@@ -50,7 +50,7 @@ SG.T-00001.Case3RMSA
 
 [Back to Top](#top)
 
-## Word Template Controls and Plumsail Public Forms Fields (Plumsail Fields)
+## Word Template Controls and Plumsail Public Forms Fields and Controls (Plumsail Fields and Controls)
 
 ### Description of Properties
 
@@ -60,9 +60,9 @@ When creating form templates, it is essential that the names of Word Template Co
 * `Tag`: a unique identifier for the control it belongs to
 * Default Value: the value to be populated in the template if no value is provided. This is also shown in the "Populate a Microsoft Word template" action when the field is empty and can thus be used as a helpful hint for matching fields when editing the Power Automate Flow.
 
-Plumsail Fields have the properties:
+Plumsail Fields and Controls have the properties:
 * `Name`: the internal name used to access the particular field within the JSON object containing the form responses
-* `Title`: the text to be displayed with the field to describe the field and may include instructions on how to fill the field if needed
+* `Title`: the text to be displayed with the field to describe the field and may include instructions on how to fill the field if needed. This will also be shown on the correction form as the field that needs to be corrected. Therefore, `Title`s of fields and controls in every tab of the Wizard in Plumsail must be unique and descriptive so users know where to find fields.
 * `Class`: an optional field that can be used to enter a class name that specifies a set of characteristics 
 
 [Back to top](#top)
