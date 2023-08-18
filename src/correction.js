@@ -5,7 +5,7 @@
 |                    The functions inside are responsible for updating what the user sees                     |
 |                                          upon something updating.                                           |
 |                                                                                                             |
-|        $on('edit'...) will change the dropdowns on Column1 and Column2 upon clicking the dropdowns.         |
+|        $on('edit'...) will change the dropdowns on formName and itemToChange upon clicking the dropdowns.         |
 |                                                                                                             |
 |$on('change'...) will update the rightmost column with the internal name once the dropdown has been selected.|
 |                                                                                                             |
@@ -61,8 +61,8 @@ fd.rendered(function() {
 +-------------------------------------------------------------------------------------------------------------------------+
 */
 fd.beforeSave(function() {
-    if (dataTableFunctions.checkColumn3FIlled()) {
-        console.log(dataTableFunctions.checkColumn3FIlled());
+    if (dataTableFunctions.checkitemInternalNameFIlled()) {
+        console.log(dataTableFunctions.checkitemInternalNameFIlled());
         throw new Error("Your form is not completed - there are still missing components");
     }
     
@@ -125,8 +125,8 @@ let dataHandling = {
         dataToSend = formData;
 
         //I forgot to rename the first datatable, so it is now known as "DataTable1"
-        formToCorrect = dataTableFunctions.extractData("DataTable1", "Column1");
-        questionsToCorrect = dataTableFunctions.extractData("DataTable1", "Column2");
+        formToCorrect = dataTableFunctions.extractData("DataTable1", "formName");
+        questionsToCorrect = dataTableFunctions.extractData("DataTable1", "itemToChange");
     
         bodyOfEmail = [];
         emptyString = "";
@@ -135,7 +135,7 @@ let dataHandling = {
             //console.log(bodyOfEmail);
         }
         dataToSend.bodyOfEmail = bodyOfEmail;
-        dataToSend.editableItems = dataTableFunctions.extractData("DataTable1", "Column3");
+        dataToSend.editableItems = dataTableFunctions.extractData("DataTable1", "itemInternalName");
         
         
         dataToSend.email = dataTableFunctions.extractData("dt.email", "Email");
@@ -186,11 +186,11 @@ let dataHandling = {
             //Everytime the datatable is edited, it will update the drop downs with the correct infomration
             fd.control('DataTable1').$on('edit', function(e) {
                 //console.log(e);
-                if (e.column.field === 'Column1') {
-                    dataTableFunctions.populateColumn(e.widget, e.model.Column1, jsonData.MTAForms);
+                if (e.column.field === 'formName') {
+                    dataTableFunctions.populateColumn(e.widget, e.model.formName, jsonData.MTAForms);
                 }
-                if (e.column.field === 'Column2') {
-                    dataTableFunctions.populateColumn(e.widget, e.model.Column2, jsonData.MTAForms[e.model.Column1]);
+                if (e.column.field === 'itemToChange') {
+                    dataTableFunctions.populateColumn(e.widget, e.model.itemToChange, jsonData.MTAForms[e.model.formName]);
                 }
             });
             
@@ -199,12 +199,12 @@ let dataHandling = {
                 for (var i = 0; i < value.length; i++) {
                     //console.log(value);
                     try{
-                    value[i].set('Column3', jsonData.MTAForms[value[i].Column1][value[i].Column2]); 
+                    value[i].set('itemInternalName', jsonData.MTAForms[value[i].formName][value[i].itemToChange]); 
                     } catch {
-                        console.log(jsonData.MTAForms[value[i].Column1]);
+                        console.log(jsonData.MTAForms[value[i].formName]);
                     }
                 }
-                console.log(dataTableFunctions.checkColumn3FIlled());
+                console.log(dataTableFunctions.checkitemInternalNameFIlled());
             });
         })
         .catch(error => {
@@ -224,20 +224,20 @@ let dataTableFunctions = {
     /*
     +--------------------------------------------------------------------------------------------------------+
     |                                                                                                        |
-    |                 This function, dataTableFunctions.checkColumn3FIlled(), iterates through the data table                   |
-    |"DataTable1" and counts the number of rows where the value in "Column3" is undefined (i.e., not filled).|
+    |                 This function, dataTableFunctions.checkitemInternalNameFIlled(), iterates through the data table                   |
+    |"DataTable1" and counts the number of rows where the value in "itemInternalName" is undefined (i.e., not filled).|
     |                                                                                                        |
-    |                 returns {number} The count of rows with undefined values in "Column3".                 |
+    |                 returns {number} The count of rows with undefined values in "itemInternalName".                 |
     |                                                                                                        |
     |                                                                                                        |
     +--------------------------------------------------------------------------------------------------------+
     */
-    checkColumn3FIlled: function() {
+    checkitemInternalNameFIlled: function() {
         //This function should loop through the data table and return 1 if the column something is undefined (ie. not filled)
         //Thus, lets count the number of undefineds. If it exceeds 1, then we have an empty row, and we should return the number of undefineds. Otherwise, return 0
         var i = 0;
         fd.control("DataTable1").value.forEach(row => {
-            if (row.Column3 === undefined) {
+            if (row.itemInternalName === undefined) {
                 i++;
             }
         });
@@ -270,14 +270,14 @@ let dataTableFunctions = {
     +-------------------------------------------------------------------------------------+
     |                                                                                     |
     |               This function, disableLastColumn(), is used to disable                |
-    |the editing capability of the last column ('Column3') in the data table "DataTable1".|
+    |the editing capability of the last column ('itemInternalName') in the data table "DataTable1".|
     |                                                                                     |
     |              @returns {void} This function does not return any value.               |
     |                                                                                     |
     +-------------------------------------------------------------------------------------+
     */
     disableLastColumn: function() {
-        const premiumColumn = fd.control("DataTable1").columns.find(c => c.field === 'Column3');
+        const premiumColumn = fd.control("DataTable1").columns.find(c => c.field === 'itemInternalName');
         premiumColumn.editable = () => false;
     },
 
