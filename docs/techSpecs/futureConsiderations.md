@@ -15,11 +15,8 @@ permalink: /docs/future
 * Consider changing 10b on Schedule F to a data table and match a variable that parses the arguments of the data table
 * Consider changing the order of "No"s and "Yes"s in Schedule B Parts 3, 4, and 5
 * In OCIP Form B, the running total is correct unless the user filters the responses, in which case the running total does not get recalculated with the different order
-* Corrections form - rename Plumsail field/control names for easier finding of corrections
 * When refilling the form for corrections, this does not check that the field is different than what was submitted
 * Fields that were not required and not filled out are able to be edited with the corrections link
-* Attachment and multiple choice fields (arrays) are able to be edited in Corrections when not specified
-* Subcontractor name does not automatically populate in Corrections
 * Emails still look spammy
 
 # Tips
