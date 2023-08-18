@@ -22,9 +22,9 @@ permalink: /docs/future
 # Tips
 * If a flow fails to run, debug the flow and rerun the flow by clicking on the failed run and clicking "Resubmit" as this will not use up another Plumsail submission. 
 
-# In the future
+## In the Future
 
-1. If I were to do this again, I would build an application from the ground up with the key difference of using a relational database. That way, all data is under our control instead of being sent between Plumsail, Power Automate, and SharePoint. A relational database would allow for more control over the data and how it is manipulated.
+* If I were to do this again, I would build an application from the ground up with the key difference of using a relational database. That way, all data is under our control instead of being sent between Plumsail, Power Automate, and SharePoint. A relational database would allow for more control over the data and how it is manipulated.
 
 ## Lessons Learned
 
