@@ -9,6 +9,7 @@ permalink: /docs/future
 
 ## Known Issues
 * Subcontractor can submit multiple times with the same link.
+* Need to update the final file path. Right now, all the submissions are existing in the Summer Intern 2023 project.
 * Currently, Rachel's account is being used for the connection to Adobe PDF Services API. 
 * Currently, the Adobe Acrobat Pro account is under Annalisa.
 * Consider standardizing error messages for formatting things like zip-codes and phone numbers. This can help subcontractors better find where the errors are. 
@@ -32,7 +33,7 @@ permalink: /docs/future
 
 ## Lessons Learned
 
-* Defintely plan before coding
+* Definitely plan before coding
 * Understand the full scope of the project to effectively plan and program
 * Go in with the Object-Oriented Programming (OOP) mindset: it will help clean up the code.
     Each page gets its own object, in a separate ``.js` file. That way, each object would have "Events that can occur".
