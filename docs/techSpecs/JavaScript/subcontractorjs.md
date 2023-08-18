@@ -109,7 +109,7 @@ This function makes use of [setRequiredInClass]{#setRequiredInClass()}
 
 **Description:** setRequiredInClass() changes the requirements of fields and controls inside a given css class. The parameter `requiredOrNot` dictates the requirement of the field/control after the function has run. The array parameter `arrDontChange` contains the internal names of the fields/controls which will never be required when this function is run.
 
-This uses the **hide using class** technique in [Javascript Control]({{ site.baseurl }}{% link docs/techSpecs/javascript/javascript.md %})
+This uses the **hide using class** technique in [Javascript Control]({{ site.baseurl }}{% link docs/techSpecs/JavaScript/javascript.md %})
 
 {: .note }
 >I don't actually know what how the following conditional works, I just know that it does. I got it from the linked forum post
@@ -128,12 +128,12 @@ This uses the **hide using class** technique in [Javascript Control]({{ site.bas
 
 ### fieldVisAndReq()
 
-**Description:** This is the sister function to [showHideInClass()]{#showHideInClass()}. Instead of using the class based method, we use the **Hide Using Method** technique discussed in [Javascript Control]({{ site.baseurl }}{% link docs/techSpecs/javascript/javascript.md %}). It toggles/hides individual fields.
+**Description:** This is the sister function to [showHideInClass()]{#showHideInClass()}. Instead of using the class based method, we use the **Hide Using Method** technique discussed in [Javascript Control]({{ site.baseurl }}{% link docs/techSpecs/JavaScript/javascript.md %}). It toggles/hides individual fields.
 
 **Parameters:**
 - @param {String} fieldName: The internal name of the field to be affected.
 - @param {Bool} requiredOrNot: If set true, the field/control will be shown/required. Vice versa for false.
-- @param {String} dataTableOrField: datatable specifies it belongs to the control group, field suggests it belongs to the field group. For more information about this, see the **Form Manager** section of [Javascript Control]({{ site.baseURL }}{% link docs/techSpecs/javascript/javascript.md %})
+- @param {String} dataTableOrField: datatable specifies it belongs to the control group, field suggests it belongs to the field group. For more information about this, see the **Form Manager** section of [Javascript Control]({{ site.baseURL }}{% link docs/techSpecs/JavaScript/javascript.md %})
 
 **Returns:**
 - @returns {void}: This function does not return any value.
