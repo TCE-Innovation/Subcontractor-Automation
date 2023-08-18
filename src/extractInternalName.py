@@ -11,6 +11,7 @@ relPathOut = "..\data\correctionData.json"
 fileIn = os.path.join(script_dir, rel_path)
 fileOut = os.path.join(script_dir, relPathOut)
 
+#Old testing: I was trying to use regex to find the data instaed of using the key/value pair I am now
 
 # f = open(fileIn, "r", encoding="utf8")
 
@@ -26,9 +27,14 @@ fileOut = os.path.join(script_dir, relPathOut)
 
 
 
+#A recursive function that should extract every object with the property "_internalName"
+#For some reason, does not work with the wizards in OCIPA, B, or COI\
+#isinstance returns true if object is a specified type, otherwise false
 def extract_data(obj):
     result = []
 
+#If it is a list or a dictionary, keep recursively running this function until you've found an internal name/title/text combo. 
+#This doesn't exactly work for all scenerios. For some reasons, OCIPA, B, and COI do not work. I believe that could be due to 
     if isinstance(obj, list):
         for item in obj:
             result.extend(extract_data(item))
@@ -46,6 +52,7 @@ def extract_data(obj):
 with open(fileIn, 'r', encoding="utf8") as file:
     data = json.load(file)
 
+#Extract all information from the plumsail form
 resultArray = extract_data(data)
 
 GI = {}
@@ -71,6 +78,7 @@ MTAForms = {
     "OCIP COI": OCIPCOI
 }
 
+#Sort the data extracted
 for item in resultArray:
     if '.GI.' in item[0]:
         GI[item[1]] = item[0]
