@@ -174,6 +174,15 @@ function autopopulate() {
     //Extract editable fields
     //Loop through each field and control in the form. If the item has a value or is not on the "editable items" list, disable
     fd.clear();
+
+    //Hide the save/load buttons. This is for debugging purposes only, as it takes too long for data to be loaded
+    //I believe this is because the "For each" functions are running for every single update of the form, due to the event listeners all updating at the same time.
+    //This would be simpler if we could remove the forEach functions or to eliminate the update functions at first.
+    fd.control("loadButton").hidden = true;
+    fd.control("saveButton").hidden = true;
+    fd.control("Text6").hidden = true;
+
+
     //Any un-autofilled code should be editable. Thus, we reset before disabling.
     fd.fields().forEach(el => {
         fd.field(el.internalName).disabled = false;

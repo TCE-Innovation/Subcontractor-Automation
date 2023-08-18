@@ -28,10 +28,13 @@ permalink: /docs/future
 
 ## Lessons Learned
 
-Defintely plan before coding
-Understand the full scope of the project to effectively plan and program
-Go in with the OOP mindset: it will help clean up the code.
-    Each page gets its own object, in a seperate .js file. That way, each object would have "Events that can occur".
+1. Defintely plan before coding. Understand the scope of the project, and then start planning around that.
+2. Start coding with maintainability in mind: OOP is more readable than spagetti coded stuff, even if you're just trying things out. Trying things out in spaghetti code can end up messing up the final readability of the code. Start with OOP.
+    * In this case, I would create a general class named "Form" which contains an event listener array, response, fields in arrays, and the PDF link.
+    * The schedule A, schedule B, etc would become children of these forms that extend the capabilities to their specific functions.
+    * Each page should also be in a seperate .js file, in order to truly break it down.
+
+
 
 Class Form has attributes: 
 - PDF link
