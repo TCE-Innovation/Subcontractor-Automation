@@ -7,7 +7,7 @@ nav_order: 7
 permalink: /docs/future
 ---
 
-# Known Issues
+## Known Issues
 * Subcontractor can submit multiple times with the same link.
 *  Currently, Rachel's account is being used for the connection to Adobe PDF Services API. 
 * Currently, the Adobe Acrobat Pro account is under Annalisa.
@@ -19,7 +19,7 @@ permalink: /docs/future
 * Fields that were not required and not filled out are able to be edited with the corrections link
 * Emails still look spammy
 
-# Tips
+## Tips
 * If a flow fails to run, debug the flow and rerun the flow by clicking on the failed run and clicking "Resubmit" as this will not use up another Plumsail submission. 
 
 ## In the Future
