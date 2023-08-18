@@ -18,6 +18,8 @@ permalink: /docs/future
 * When refilling the form for corrections, this does not check that the field is different than what was submitted
 * Fields that were not required and not filled out are able to be edited with the corrections link
 * Emails still look spammy
+* When Schedule A and Schedule F are populated with a very long description, the signature may get pushed off the page. Consider adding a text box with the content control inside first.
+* If there is too much content to fit in a text box, when the text box is populated the extra content will be cropped out (applies to text and images)
 
 ## Tips
 * If a flow fails to run, debug the flow and rerun the flow by clicking on the failed run and clicking "Resubmit" as this will not use up another Plumsail submission. 
@@ -29,10 +31,10 @@ permalink: /docs/future
 
 ## Lessons Learned
 
-Defintely plan before coding
-Understand the full scope of the project to effectively plan and program
-Go in with the OOP mindset: it will help clean up the code.
-    Each page gets its own object, in a seperate .js file. That way, each object would have "Events that can occur".
+* Defintely plan before coding
+* Understand the full scope of the project to effectively plan and program
+* Go in with the Object-Oriented Programming (OOP) mindset: it will help clean up the code.
+    Each page gets its own object, in a separate ``.js` file. That way, each object would have "Events that can occur".
 
 Class Form has attributes: 
 - PDF link
