@@ -8,7 +8,7 @@ permalink: /docs/future
 ---
 
 * Subcontractor can submit multiple times with the same link.
-* Currently, Rachel's account is being used for the connection to Adobe PDF Services API. 
+*  Currently, Rachel's account is being used for the connection to Adobe PDF Services API. 
 * Currently, the Adobe Acrobat Pro account is under Annalisa.
 * Consider standardizing error messages for formatting things like zip-codes and phone numbers. This can help subcontractors better find where the errors are. 
 * If a flow fails to run, debug the flow and rerun the flow by clicking on the failed run and clicking "Resubmit" as this will not use up another submission. 
