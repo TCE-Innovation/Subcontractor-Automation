@@ -9,11 +9,11 @@ permalink: /theForms
 # The Three Forms
 This process involves 3 Plumsail Forms:
 
-1. Initialization Form
-2. Subcontractor Form
-3. Correction Form 
+1. [Initialization Form]({{ site.baseurl }}{% link docs/threeForms/initializationForm.md %})
+2. [Subcontractor Form]({{ site.baseurl }}{% link docs/threeForms/subcontractorForm.md %})
+3. [Correction Form]({{ site.baseurl }}{% link docs/threeForms/correctionForm.md %})
 
-All forms employ the same formatting restrictions, the rules for which can be found in [Formatting](/docs/formatting.md).
+All forms employ the same formatting restrictions, the rules for which can be found in [Formatting]({{ site.baseurl }}{% link docs/formatting.md %}).
 
 The initialization form kickstarts the process with a little bit of known good information from the general contractor.
 

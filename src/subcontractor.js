@@ -184,8 +184,14 @@ function autopopulate() {
         fd.data(data);
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
+
+        //This should always be in the URL parameters
         fd.field("t.GI.primeContractorRepresentativeEmail").value = urlParams.get('primeContact');
-        fd.field("t.GI.subcontractorName").value = urlParams.get('name');
+        //If this is already autofilled, then do nothing. If it is blank, then the name should be in the URL as this is a fresh subcontractor form.
+        if (fd.field("t.GI.subcontractorName").value !== null) {
+            fd.field("t.GI.subcontractorName").value = urlParams.get('name');
+        }
+        
         
 
         let editable = [];
