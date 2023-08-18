@@ -188,7 +188,7 @@ function autopopulate() {
         //This should always be in the URL parameters
         fd.field("t.GI.primeContractorRepresentativeEmail").value = urlParams.get('primeContact');
         //If this is already autofilled, then do nothing. If it is blank, then the name should be in the URL as this is a fresh subcontractor form.
-        if (fd.field("t.GI.subcontractorName").value !== null) {
+        if (fd.field("t.GI.subcontractorName").value === null) {
             fd.field("t.GI.subcontractorName").value = urlParams.get('name');
         }
         
@@ -242,14 +242,16 @@ function autopopulate() {
                         case "d.":
                         case "nu":
                         case "n.":
+                        case "is":
                             if(fd.field(el.internalName).value !== null) {
                                 fd.field(el.internalName).disabled = true;
                             }
                             break;
                         //When the following has not been edited by the user, its length is 0
                         case "mc":
+                        case "a.":
                             if (fd.field(el.internalName).value.length !== 0) {
-                                fd.field()(el.internalName).disabled = true;
+                                fd.field(el.internalName).disabled = true;
                             }
                             break;
                         default:
