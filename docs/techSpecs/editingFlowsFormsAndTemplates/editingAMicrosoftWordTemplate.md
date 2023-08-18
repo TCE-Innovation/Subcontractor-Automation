@@ -57,15 +57,15 @@ If your starting file is a PDF, open the file in Adobe Acrobat Pro and convert t
 
 1. Open Adobe Acrobat Pro.
 
-![Open Adobe Acrobat Pro]({{ site.baseurl }}/assets/images/adobeAcrobat/excelToPDFMethod2Step1.png)
+    ![Open Adobe Acrobat Pro]({{ site.baseurl }}/assets/images/adobeAcrobat/excelToPDFMethod2Step1.png)
 
 2. Select the tool "Export PDF" from either the Tools menu or the menu on the right. If the tool is not on the right side, you can select "Add" under the "Export PDF" tool to add it to the menu.
 
-![Export PDF Tool]( {{ site.baseurl }}/assets/images/adobeAcrobat/exportPDFTool.png)
+    ![Export PDF Tool]( {{ site.baseurl }}/assets/images/adobeAcrobat/exportPDFTool.png)
 
 3. Select the file to be converted from your computer and Microsoft Word --> Word Document.
 
-![Export PDF as Word Document]( {{ site.baseurl }}/assets/images/adobeAcrobat/pdfToWordStep3.png)
+    ![Export PDF as Word Document]( {{ site.baseurl }}/assets/images/adobeAcrobat/pdfToWordStep3.png)
 
 4. Click "Export" and choose the directory to save the Word Document. Also add a file name. The templates were named in CamelCase, like `ScheduleATemplate.docx`.
 
@@ -75,7 +75,7 @@ If your starting file is a PDF, open the file in Adobe Acrobat Pro and convert t
 
 To edit a Microsoft Word Template, you will need the Developer Tab in the ribbon. This is only available on the desktop version of Microsoft Word. If this is already enabled, you will see the Developer Tab as shown below and can move onto [Adding/Editing Content Controls](#addingediting-content-controls):
 
-![Developer Tab Picture]({{ site.baseurl }}/assets/images/microsoftWordTemplate/DeveloperTab.png)
+    ![Developer Tab Picture]({{ site.baseurl }}/assets/images/microsoftWordTemplate/DeveloperTab.png)
 
 If it does not appear, go to Word Options in one of two ways:
 1. Right click on the ribbon and click on "Customize Ribbon" or...
@@ -83,7 +83,7 @@ If it does not appear, go to Word Options in one of two ways:
 
 Next, check the Developer box in the right column and click "OK". You may have to scroll down to find it.
 
-![Check the Developer Box]({{ site.baseurl }}/assets/images/microsoftWordTemplate/CheckDeveloperBox.png)
+    ![Check the Developer Box]({{ site.baseurl }}/assets/images/microsoftWordTemplate/CheckDeveloperBox.png)
 
 [Back to top](#top)
 
@@ -112,25 +112,25 @@ This is the most common content control that you will use. It is used for whenev
 
 2. If you only want to edit a control, skip to Step 3. Otherwise, go to the Developer Tab and click on the Plain Text Content Control button. 
 
-![Plain Text Content Control]({{ site.baseurl }}/assets/images/microsoftWordTemplate/plainTextContentControlBtn.png)
+    ![Plain Text Content Control]({{ site.baseurl }}/assets/images/microsoftWordTemplate/plainTextContentControlBtn.png)
 
 3. With your cursor inside the Plain Text Content Control of choice, click on "Properties" to edit the `Title` and `Tag`. 
 
-![Properties Button]({{ site.baseurl }}/assets/images/microsoftWordTemplate/propertiesBtn.png)
+    ![Properties Button]({{ site.baseurl }}/assets/images/microsoftWordTemplate/propertiesBtn.png)
 
 4. Fill in any of the other properties as necessary. 
 
-In addition to the `Title` and `Tag`, Plain Text Content Controls have a few other properties. The ones of interest are:
+    In addition to the `Title` and `Tag`, Plain Text Content Controls have a few other properties. The ones of interest are:
 
-* Default Value: the value to be populated in the template if no value is provided. This is helpful for matching values when editing the "Populate a Word Template" actions in Power Automate. In the picture below, "Name of Signer" is the default text. 
-{: .note}
-> In Step 1, you can also highlight the text where you want to make the control. The text you highlight will become the Default Text of the Plain Text Content Control. 
+    * Default Value: the value to be populated in the template if no value is provided. This is helpful for matching values when editing the "Populate a Word Template" actions in Power Automate. In the picture below, "Name of Signer" is the default text. 
+    {: .note}
+    > In Step 1, you can also highlight the text where you want to make the control. The text you highlight will become the Default Text of the Plain Text Content Control. 
 
-![Default Value]({{ site.baseurl }}/assets/images/microsoftWordTemplate/defaultText.png)
+    ![Default Value]({{ site.baseurl }}/assets/images/microsoftWordTemplate/defaultText.png)
 
-* Allow carriage returns (multiple paragraphs): allows newline characters to be entered in the content control. Useful if you anticipate that text needs to wrap onto another line. 
+    * Allow carriage returns (multiple paragraphs): allows newline characters to be entered in the content control. Useful if you anticipate that text needs to wrap onto another line. 
 
-![Plain Text Content Control Properties]({{ site.baseurl }}/assets/images/microsoftWordTemplate/plainTextContentControlProperties.png)
+    ![Plain Text Content Control Properties]({{ site.baseurl }}/assets/images/microsoftWordTemplate/plainTextContentControlProperties.png)
 
 [Back to Top](#top)
 
@@ -140,11 +140,11 @@ In addition to the `Title` and `Tag`, Plain Text Content Controls have a few oth
 
 2. If you only want to edit a control, skip to Step 3. Otherwise, go to the Developer Tab and click on the Plain Text Content Control button. 
 
-![Plain Text Content Control]({{ site.baseurl }}/assets/images/microsoftWordTemplate/plainTextContentControlBtn.png)
+    ![Plain Text Content Control]({{ site.baseurl }}/assets/images/microsoftWordTemplate/plainTextContentControlBtn.png)
 
 3. With your cursor inside the Plain Text Content Control of choice, click on "Properties" to edit the `Title` and `Tag`. Follow the [naming conventions]({{ site.baseurl }}/docs/techSpecs/conventions).
 
-![Properties Button]({{ site.baseurl }}/assets/images/microsoftWordTemplate/propertiesBtn.png)
+    ![Properties Button]({{ site.baseurl }}/assets/images/microsoftWordTemplate/propertiesBtn.png)
 
 4. Fill in any of the other properties as necessary.
 
@@ -157,22 +157,22 @@ In addition to the `Title` and `Tag`, Plain Text Content Controls have a few oth
 The Repeating Section Content Control is used for cases where you want to repeat a specific section for a known or unknown number of times, determined by the length of the array of contents to be placed into it. Anything enclosed by the Repeating Section Content Control will be repeated in every instance.You can add other content controls within the Repeating Section Content control as well. This is useful for anything that requires a Data Table in Plumsail. 
 
 1. Select the area that you want to add a Repeating Section Content Control. You can only add one around entire paragraphs or rows:
-    a. If you just want to add a Repeating Section Content Control around a whole line, select the line that you want to add it. 
-    b. If you want to make a rows of a table a Repeating Section Content Control, and do not have a table yet, create a new table by going to Insert --> Table. Select the number of rows and columns as needed. Then select the rows that you want to repeat.
+    * If you just want to add a Repeating Section Content Control around a whole line, select the line that you want to add it. 
+    * If you want to make a rows of a table a Repeating Section Content Control, and do not have a table yet, create a new table by going to Insert --> Table. Select the number of rows and columns as needed. Then select the rows that you want to repeat.
 
-![Add a table step 1]({{ site.baseurl }}/assets/images/microsoftWordTemplate/addTableRepeatingContentControlStep1.png)
-![Add a table step 2]({{ site.baseurl }}/assets/images/microsoftWordTemplate/addTableRepeatingContentControlStep2.png)
+    ![Add a table step 1]({{ site.baseurl }}/assets/images/microsoftWordTemplate/addTableRepeatingContentControlStep1.png)
+    ![Add a table step 2]({{ site.baseurl }}/assets/images/microsoftWordTemplate/addTableRepeatingContentControlStep2.png)
 
 2. Go to the Developer Tab in the Word ribbon and click on the Repeating Section Control button. Add any text and other Content Controls within the Repeating Content Control and add their `Title`, `Tag`, and any other properties based on the [conventions]({{ site.baseurl }}/docs/techSpecs/conventions). Any content controls inside the repeating content control should begin with "col" because they will correspond to a column within the corresponding Plumsail Data Table column. 
 
-![Repeating Section Content Control button]({{ site.baseurl }}/assets/images/microsoftWordTemplate/repeatingSectionContentControlBtn.png)
+    ![Repeating Section Content Control button]({{ site.baseurl }}/assets/images/microsoftWordTemplate/repeatingSectionContentControlBtn.png)
 
-Repeating Section Content Control on a Line:
-![Add Repeating Section Content Control around a line step 1]({{ site.baseurl }}/assets/images/microsoftWordTemplate/addSingleLineRepeatingContentControlStep1.png)
-![Add Repeating Section Content Control around a line step 2]({{ site.baseurl }}/assets/images/microsoftWordTemplate/addSingleLineRepeatingContentControlStep2.png)
+    Repeating Section Content Control on a Line:
+    ![Add Repeating Section Content Control around a line step 1]({{ site.baseurl }}/assets/images/microsoftWordTemplate/addSingleLineRepeatingContentControlStep1.png)
+    ![Add Repeating Section Content Control around a line step 2]({{ site.baseurl }}/assets/images/microsoftWordTemplate/addSingleLineRepeatingContentControlStep2.png)
 
-Repeating Section Content Control on a Table Row:
-![Add Repeating Section Content Control on a Table Row]({{ site.baseurl }}/assets/images/microsoftWordTemplate/addTableRepeatingContentControlStep3.png)
+    Repeating Section Content Control on a Table Row:
+    ![Add Repeating Section Content Control on a Table Row]({{ site.baseurl }}/assets/images/microsoftWordTemplate/addTableRepeatingContentControlStep3.png)
 
 3. Give the Repeating Section Content Control a `Title` and `Tag` according to the [conventions]({{ site.baseurl }}/docs/techSpecs/conventions). Follow the conventions for Plumsail Data Tables as Repeating Section Content Controls correspond to them.
 
@@ -191,22 +191,22 @@ A simple way to get around these problems is to use text boxes and position them
 
 1. Go to Insert and click "Draw Text Box."
 
-![Draw Text Box]({{ site.baseurl }}/assets/images/microsoftWordTemplate/drawTextBox.png)
+    ![Draw Text Box]({{ site.baseurl }}/assets/images/microsoftWordTemplate/drawTextBox.png)
 
 2. Click and hold until you have the size of text box that you need. Alternatively, you can just click and resize later. If you need to resize your text box, move your cursor to the edge of the text box over any of the corner or center dots. At this point, click and drag to resize the box to whatever you need. 
 
 3. Go to "Shape Format" in the Word ribbon to change the shape fill and shape border. If you want the text box to have a transparent background, select the "No color" under Shape Fill If you want the text box to have no outline, select the "No outline" option under Shape Outline. 
 
-![No fill and no outline buttons]({{ site.baseurl }}/assets/images/microsoftWordTemplate/noFillNoOutlineBtns.png)
+    ![No fill and no outline buttons]({{ site.baseurl }}/assets/images/microsoftWordTemplate/noFillNoOutlineBtns.png)
 
 4. Click within the text box and add your content control as indicated in [Adding/Editing Content Controls](#addingediting-content-controls).
 
 5. If you need to adjust the position of your text box again, move your cursor to the edge of the text box until it changes into the move symbol (a crosshair with arrows). At this point, click and drag the text box to wherever you need to. 
 
-{: .note}
-> Text wrapping is important when positioning the text box. If you drew a text box, then it will have the "In Front of Text" option. Otherwise it will be the "In Line with Text" option. You can toggle between the "Move with Text" and "Fix Position on Page" options as well depending on whether you want the box to move with the text.
+    {: .note}
+    > Text wrapping is important when positioning the text box. If you drew a text box, then it will have the "In Front of Text" option. Otherwise it will be the "In Line with Text" option. You can toggle between the "Move with Text" and "Fix Position on Page" options as well depending on whether you want the box to move with the text.
 
-![Text Wrapping Options]({{ site.baseurl }}/assets/images/microsoftWordTemplate/wrapTextTextBox.png)
+    ![Text Wrapping Options]({{ site.baseurl }}/assets/images/microsoftWordTemplate/wrapTextTextBox.png)
 
 [Back to Top](#top)
 
@@ -218,6 +218,7 @@ Example Checkbox:
 ![Example Checkbox]({{ site.baseurl }}/assets/images/microsoftWordTemplate/exampleCheckbox.png)
 
 Example Radio Button:
+
 {: .note}
 > Although this does not have the circular button shape associated with a radio button, the nature of this question is such that only one choice should be made.
 
