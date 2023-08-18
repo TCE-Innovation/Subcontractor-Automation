@@ -246,10 +246,6 @@ function autopopulate() {
                                 fd.field(el.internalName).disabled = true;
                             }
                             break;
-                        case "is":
-                            if(fd.control(el.internalName).value !== null) {
-                                fd.control(el.internalName).disabled = true;
-                            }
                         //When the following has not been edited by the user, its length is 0
                         case "mc":
                         case "a.":
@@ -271,10 +267,24 @@ function autopopulate() {
         //We will also check if it needs to be edited
         fd.controls().forEach(el => {
             try{
-                let internalName = el.internalName;
-                if(internalName.substr(0, 2) === 'dt' && fd.control(el.internalName).value.length > 0 && !editable.includes(el.internalName)) {
-                    fd.control(el.internalName).disabled = true;
+                if (!editable.includes(el.internalName)) {
+                    switch(el.internalName.substr(0,2)) {
+                        case "dt": 
+                            if(fd.control(el.internalName).value.length > 0) {
+                                fd.control(el.internalName).disabled = true;
+                            }
+                            break;
+                        case "is":
+                            console.log(el.internalName);
+                            if(fd.control(el.internalName).value !== null) {
+                                fd.control(el.internalName).disabled = true;
+                            }
+                            break;
+                        default: 
+                            fd.control(el.internalName).disabled = false;
+                    }
                 }
+                
             } catch (err) {
                 //console.log(err);
             }
