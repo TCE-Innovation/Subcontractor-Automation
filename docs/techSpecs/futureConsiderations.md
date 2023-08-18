@@ -9,7 +9,7 @@ permalink: /docs/future
 
 ## Known Issues
 * Subcontractor can submit multiple times with the same link.
-*  Currently, Rachel's account is being used for the connection to Adobe PDF Services API. 
+* Currently, Rachel's account is being used for the connection to Adobe PDF Services API. 
 * Currently, the Adobe Acrobat Pro account is under Annalisa.
 * Consider standardizing error messages for formatting things like zip-codes and phone numbers. This can help subcontractors better find where the errors are. 
 * Consider changing 10b on Schedule F to a data table and match a variable that parses the arguments of the data table
@@ -20,6 +20,7 @@ permalink: /docs/future
 * Emails still look spammy
 * When Schedule A and Schedule F are populated with a very long description, the signature may get pushed off the page. Consider adding a text box with the content control inside first.
 * If there is too much content to fit in a text box, when the text box is populated the extra content will be cropped out (applies to text and images)
+* We aren't sure exactly how strict formatting is for certain documents. This may become an issue if a form doesn't look exactly like the template, but we never found out for sure on a form by form basis and instead used our best judgment. We assume that the forms originally provided to us as PDFs should have the same exact format, but the forms originally provided in .xlsx and .docx format are less strict (e.g. can have more lines). The original forms can be found at this link: [https://judlauent.sharepoint.com/:f:/r/sites/A37139/Shared%20Documents/General/11-Legal%20%26%20Subcontractor%20and%20Suppliers/05-Subcontractors%20%26%20Suppliers/01-Subcontractor%20Approval%20Forms/MTA%20Specified%20Forms?csf=1&web=1&e=x5o39y](https://judlauent.sharepoint.com/:f:/r/sites/A37139/Shared%20Documents/General/11-Legal%20%26%20Subcontractor%20and%20Suppliers/05-Subcontractors%20%26%20Suppliers/01-Subcontractor%20Approval%20Forms/MTA%20Specified%20Forms?csf=1&web=1&e=x5o39y)
 
 ## Tips
 * If a flow fails to run, debug the flow and rerun the flow by clicking on the failed run and clicking "Resubmit" as this will not use up another Plumsail submission. 
