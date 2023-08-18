@@ -24,6 +24,9 @@ Plumsail comes with a JavaScript editor built in. However, this isn't ideal in t
 
 All Plumsail JavaScript features can be found here: [Plumsail Documentation], but listed are the highlights - what was useful or what can be used/referenced in the future. 
 
+{: .note }
+While these are the official way to interact with the Plumsail form, I wrote encompassing functions to use this code in a different way. Please see [SubcontractorJS]({{ site.baseurl }}{% link docs/techSpecs/JavaScript/subcontractorjs.md %}) for more information.
+
 ## Internal Editor
 
 For all three forms, the internal JavaScript editor has the exact same code. Once the page is rendered and JQuery (A necessary component to interacting with values on the submission forms) is loaded, then it calles the external file located in this github repo.
@@ -59,13 +62,7 @@ Below are some important properties and methods using the fd object.
 |`fd.controls()`|Returns all the controls in the form|`fd.beforeSave();`|This is how I handle data manipulation to send to the API|
 |||`fd.saved();`|Run after the form has been completely submitted|
 
-```js
-fd.save();
-fd.clear();
-fd.data();
-fd.fields();
-fd.controls();
-```
+
 More information can be found in the [Plumsail Docs Form Manager]
 
 ### Fields
@@ -96,7 +93,7 @@ Fields include
 
 Additional documentation on fields can be found on the [Plumsail Forms Control Docs]
 
-## Populating Fields
+## Populating Values
 
 {: .note }
 There is a difference between Controls and Fields. Make sure you reference them the correct way, as both fields and containers can be set.
