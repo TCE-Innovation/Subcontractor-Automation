@@ -30,7 +30,7 @@ As of Aug. 2023, a premium [Power Automate license](https://powerautomate.micros
 
 Only one account with the Power Automate Premium is required. Currently, the TCIG@tcelect.net email has Power Automate Premium and is being used to maintain the Power Automate Flows used in this system.
 
-Flows must be turned on to work, but they automatically turn off after 60 days of not being triggered. At the moment, we have not implemented a way to keep them on, but this website outlines the steps required to make a Power Automate flow to re-anable flows: https://sharepains.com/2020/12/02/re-enable-flows-power-automate/. For now, to turn on/off a flow manually:
+Flows must be turned on to work, but you will get a warning after 90 days of inactivity that the flow will be shut off automatically if it is not run in the 30 days after the notification. At the moment, we have not implemented a way to keep them on, but this website outlines the steps required to make a Power Automate flow to re-anable flows: https://sharepains.com/2020/12/02/re-enable-flows-power-automate/. For now, to turn on/off a flow manually:
 
 1. Navigate to "My Flows" and click on the flow to turn on.
 
@@ -50,7 +50,7 @@ As of Aug. 2023, Plumsail Public Forms offers [several tiers](https://plumsail.c
 
 ![Plumsail Public Forms Pricing]({{ site.baseurl }}/assets/images/plumsail/plumsailFormsPricing.png)
 
-The free tier allows 100 submissions/month and 100 Mb of file storage. The next tier is \$12/month which allows for 1000 submissions/month and 1Gb of storage. Each submission takes up very little storage, so this will not be a worry, however the 100 submissions/month effectively limits this form to be used up to a maximum of 100 times per month to stay within the free tier. 
+The free tier allows 100 submissions/month and 100 Mb of file storage. The next tier is \$12/month which allows for 1000 submissions/month and 1Gb of storage. Each submission takes up very little storage, so this will not be a worry, however the 100 submissions/month effectively limits this process form to be used up to a maximum of 50 times per month to stay within the free tier (1 from initialization, 1 for subcontractor form).
 
 [Back to Top](#top)
 
