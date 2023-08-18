@@ -41,7 +41,9 @@ File name format:
 ```
 [<orderInPacket>.]<formName>.[<section1>.<section2>.<section3>. ...]<contractNumber>.<subcontractorName>.<fileExtension>
 ```
+
 Example file names: 
+
 ```
 1.0.OCIP.FAFB.T-00001.Case2SQS.pdf
 5.1.SB.P3.attachment.T-00001.Case3RMSA
@@ -50,7 +52,7 @@ SG.T-00001.Case3RMSA
 
 [Back to Top](#top)
 
-## Word Template Controls and Plumsail Public Forms Fields (Plumsail Fields)
+## Word Template Controls and Plumsail Public Forms Fields and Controls (Plumsail Fields and Controls)
 
 ### Description of Properties
 
@@ -60,9 +62,9 @@ When creating form templates, it is essential that the names of Word Template Co
 * `Tag`: a unique identifier for the control it belongs to
 * Default Value: the value to be populated in the template if no value is provided. This is also shown in the "Populate a Microsoft Word template" action when the field is empty and can thus be used as a helpful hint for matching fields when editing the Power Automate Flow.
 
-Plumsail Fields have the properties:
+Plumsail Fields and Controls have the properties:
 * `Name`: the internal name used to access the particular field within the JSON object containing the form responses
-* `Title`: the text to be displayed with the field to describe the field and may include instructions on how to fill the field if needed
+* `Title`: the text to be displayed with the field to describe the field and may include instructions on how to fill the field if needed. This will also be shown on the correction form as the field that needs to be corrected. Therefore, `Title`s of fields and controls in every tab of the Wizard in Plumsail must be unique and descriptive so users know where to find fields.
 * `Class`: an optional field that can be used to enter a class name that specifies a set of characteristics 
 
 [Back to top](#top)
@@ -122,16 +124,20 @@ It is crucial to name the `Tag` of the Word Template control and `Name` of the P
 
     * A short description of the field
     * If there are repeated occurrences of the field or control in the same subsection, the name of the value of that field or the number of the order of occurrence of the field or control within that subsection
-    * If the Word Template control is NOT within a repeating content control, or in other words not a column of a cooresponding Plumsail data table
+    * If the Word Template content control is NOT within a Repeating Section Content Control, or in other words not a column of a corresponding Plumsail Data Table
         * The `Tag` is then named in the following way: 
-        ```
-        <fieldOrControlType>.<form>[.<subsection1>.<subsection2>.<subsection3> ...].<descriptionOfField>[.<numberOfRepeatedOccurrence>][.<choiceName>]
-        ```
-        where each of the above items are formatted in camelCase: the first word is lowercase and any subsequent words to be capitalized and appended on without a space. If any of the above items are abbreviations then all of the letters are fully capitalized for that item.
+
+            ```
+            <fieldOrControlType>.<form>[.<subsection1>.<subsection2>.<subsection3> ...].<descriptionOfField>[.<numberOfRepeatedOccurrence>][.<choiceName>]
+            ```
+
+        Each of the above items are formatted in camelCase: the first word is lowercase and any subsequent words to be capitalized and appended on without a space. If any of the above items are abbreviations then all of the letters are fully capitalized for that item.
+
         * Otherwise it is named:
-        ```
-        col<fieldOrControlType><Form>[<Subsection1><Subsection2>.]
-        ```
+
+            ```
+            col<fieldOrControlType><Form>[<Subsection1><Subsection2>.]
+            ```
         where each of the above items are formatted in CamelCase all words are capitalized and appended without spaces.
 
 [Back to Top](#top)
@@ -143,17 +149,18 @@ It is crucial to name the `Tag` of the Word Template control and `Name` of the P
 
 #### Fields and Controls Only Present in the Plumsail Form
 
-While there should always be a corresponding Plumsail Field to match to every field in the Word Template, there may be extra Plumsail fields to facilitate the completion of the forms. For example, toggles are added to hide and show PDFs and the "Are you required to fill out ..." single choice questions guide the subcontractor through filling the forms. These will not appear as Word Template controls but can still be used to format the data to be populated in them.
+While there should always be a corresponding Plumsail Field to match to every field in the Word Template, there may be extra Plumsail fields to facilitate the completion of the forms. For example, toggles are added to hide and show PDFs and the "Are you required to fill out ..." single choice questions guide the subcontractor through filling the forms. These will not appear as Word Template content controls but can still be used to format the data to be populated in them.
 
 #### Fields and Controls Shared Across Forms
 
-Common fields such as the name of the subcontractor and title of the person completing the form are consolidated into General Information or Summary. When naming the `Title` and `Tag` of the Word Template controls will still be specific to the form that they are in, but the `Name` of the Plumsail field/control will use `GI` as the form they belong to.
+Common fields such as the name of the subcontractor and title of the person completing the form are consolidated into General Information or Summary. When naming the `Title` and `Tag` of the Word Template controls will still be specific to the form that they are in, but the `Name` of the Plumsail field or control will use `GI` as the form they belong to.
 
 [Back to Top](#top)
 
 ### Examples
 
 #### Plumsail Names
+
 ```
 t.SA.titleOfPersonExecutingCertification
 n.SB1.1.explanation
@@ -179,9 +186,11 @@ A drop down field was used for the state field in RMSA to ensure only accepted s
 Word Template Title and Tag: `dd.RMSA.supplier.state`
 
 Word Template Default Text: `Supplier State`
+
 ![RMSA Example Default Text]({{ site.baseurl }}/assets/images/microsoftWordTemplate/RMSAExampleDefaultText.png)
 
 Plumsail Forms Name: `dd.RMSA.supplier.state`
+
 ![RMSA Example Plumsail Forms Name]({{ site.baseurl }}/assets//images/plumsail/RMSAExampleName.png)
 
 Plumsail Forms Class: no class was provided.
@@ -192,7 +201,7 @@ Plumsail Forms Class: no class was provided.
 
 In RMSA, there are single choice or radio "buttons" for the question of whether the proposed supplier is D/M/WBE. There are two choices: `Yes` and `No`. There is one Word Template control for each choice and only one Plumsail Field that corresponds to this group of controls.
 
-Word Template `Title` and `Tag` of the two controls:  `sc.RMSA.isProposedSupplierDMWBE.yes` and `sc.RMSA.isProposedSupplierDMWBE.no`
+Word Template `Title` and `Tag` of the two controls: `sc.RMSA.isProposedSupplierDMWBE.yes` and `sc.RMSA.isProposedSupplierDMWBE.no`
 
 ![RMSA Example Single Choice]({{ site.baseurl }}/assets/images/microsoftWordTemplate/RMSATitleAndTagExampleSingleChoice.png)
 
@@ -207,14 +216,19 @@ Plumsail Forms Name: `sc.RMSA.isProposedSupplierDMWBE`
 The name of the person completing the form is listed on several forms including Schedule A and Schedule F.
 
 Word Template `Title` and `Tag` in Schedule A: `t.SA.nameOfPersonExecutingCertification`
+
 Word Template Default Text in Schedule A: `Name of Person Executing Certification`
+
 ![Schedule A Example Title and Tag for Name of Signer]({{ site.baseurl }}/assets/images/microsoftWordTemplate/SAExampleNameOfSignerDefaultText.png)
 
 Word Template `Title` and `Tag` in Schedule F: `t.SF.FF1.nameOfAuthorizedOfficial`
+
 Word Template Default Test in Schedule F: `Name of Authorized Official`
+
 ![Schedule F Example Title and Tag for Name of Signer]({{ site.baseurl }}/assets/images/microsoftWordTemplate/SFExampleNameOfSignerDefaultText.png)
 
 Plumsail Forms Name: `t.GI.nameOfPersonCompletingForm`
+
 Plumsail Forms Class: no class was provided
 
 [Back to Top](#top)
@@ -224,6 +238,7 @@ Plumsail Forms Class: no class was provided
 For every individual MTA-required form except for the COI, there is a corresponding toggle field that allows the subcontractor to hide or show the PDF of the blank form. There is also a corresponding "Have you read and understood..." question. The values of these fields do not have to be shown in Word Templates so there is no corresponding Word Template control, only a Plumsail field. Below is an example of this:
 
 Plumsail Forms Name: `tog.SB1.hidePDF`
+
 Plumsail Forms Class: no class was provided
 
 ![Example of Schedule B1 Toggle]({{ site.baseurl }}/assets/images/plumsail/SB1ExampleToggle.png)
@@ -235,6 +250,7 @@ Plumsail Forms Class: no class was provided
 In Schedule B1, an attachment may be required, but not all the time. Thus, `SB1Required` is added as a class to the Plumsail Forms field to allow JavaScript to identify which fields should be shown. See the documentation on JavaScript for more information. As this is an attachment, there is also no corresponding Word Template control.
 
 Plumsail Forms Name: `sc.SB1.1.attachment`
+
 Plumsail Forms Class: `SB1Required`
 
 ![Example of Schedule B1 Conditional Attachment]({{ site.baseurl }}/assets/images/plumsail/SB1ExampleConditionalAttachment.png)
