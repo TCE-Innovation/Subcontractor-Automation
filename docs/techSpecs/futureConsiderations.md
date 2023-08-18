@@ -21,6 +21,7 @@ permalink: /docs/future
 
 ## Tips
 * If a flow fails to run, debug the flow and rerun the flow by clicking on the failed run and clicking "Resubmit" as this will not use up another Plumsail submission. 
+* This documentation was created in the last two weeks of our internship. The original documentation Word Document that we were working on throughout the internship can be found here (it may be outdated): [https://judlauent.sharepoint.com/:w:/s/TCEInnovation/EbuxTeRDPmxGoOcbfOaEysEB4_idfI3x9IEexufmbTFBqQ?e=wQ9qzX](https://judlauent.sharepoint.com/:w:/s/TCEInnovation/EbuxTeRDPmxGoOcbfOaEysEB4_idfI3x9IEexufmbTFBqQ?e=wQ9qzX)
 
 ## In the Future
 
