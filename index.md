@@ -92,7 +92,7 @@ We have tried our best to implement as many error checking features as possible.
 
 In this case, we would utilize the [Correction Form]. Open the completed PDF and the correction form side by side. 
 
-If everything on the forms appear correct, simply jump to [Step 7](##Step-7)
+If everything on the forms appear correct, simply jump to [Step 7](#step-7-finish)
 
 ### Step 6a: Contract Number and Subcontractor Name
 
@@ -111,7 +111,7 @@ In the second table, add the emails of the representative that needs to correct 
 ![](assets/images/correctionFormsProcess.png)
 *In this case, I am instructing Rory O'Neill to correct questions 10 and 11 on the SQS form. *
 
-The subcontractor will get another email indicating to correct their mistakes. Jump back to [Step 3](##Step-3)
+The subcontractor will get another email indicating to correct their mistakes. Jump back to [Step 3](#step-3-completion)
 
 ## Step 7: Finish!
 
