@@ -34,13 +34,13 @@ Flows must be turned on to work, but you will get a warning after 90 days of ina
 
 1. Navigate to "My Flows" and click on the flow to turn on.
 
-![Turn on a flow step 1]({{ site.baseurl }}/assets/images/powerAutomate/turnOnAFlowStep1.png)
+    ![Turn on a flow step 1]({{ site.baseurl }}/assets/images/powerAutomate/turnOnAFlowStep1.png)
 
 2. Click the "Turn On/Off" Button.
 
-![Turn on a flow step 2]({{ site.baseurl }}/assets/images/powerAutomate/turnOnAFlowStep2.png)
+    ![Turn on a flow step 2]({{ site.baseurl }}/assets/images/powerAutomate/turnOnAFlowStep2.png)
 
-Alternatively, click the three dots from Step 1 and then the Turn On/Off button.
+    Alternatively, click the three dots from Step 1 and then the Turn On/Off button.
 
 [Back to Top](#top)
 
@@ -66,13 +66,13 @@ It is possible to check the current amount of Document Transactions used by logg
 
 2. Click on the "Check usage" button in the top right.
 
-![Check Usage Step 1]({{ site.baseurl }}/assets/images/adobeAcrobat/checkUsageStep1.png)
+    ![Check Usage Step 1]({{ site.baseurl }}/assets/images/adobeAcrobat/checkUsageStep1.png)
 
 3. Select the period and client ID to check usage for and click on the "Generate Report" button.
 
-![Check Usage Step 2]({{ site.baseurl }}/assets/images/adobeAcrobat/checkUsageStep2.png)
+    ![Check Usage Step 2]({{ site.baseurl }}/assets/images/adobeAcrobat/checkUsageStep2.png)
 
-Staying on the free tier for Adobe PDF Services API requires that ths flow only be used up to a maximum of 250 times using one free connection. 
+    Staying on the free tier for Adobe PDF Services API requires that ths flow only be used up to a maximum of 250 times using one free connection. 
 
 [Back to Top](#top)
 
