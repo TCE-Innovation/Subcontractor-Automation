@@ -242,11 +242,14 @@ function autopopulate() {
                         case "d.":
                         case "nu":
                         case "n.":
-                        case "is":
                             if(fd.field(el.internalName).value !== null) {
                                 fd.field(el.internalName).disabled = true;
                             }
                             break;
+                        case "is":
+                            if(fd.control(el.internalName).value !== null) {
+                                fd.control(el.internalName).disabled = true;
+                            }
                         //When the following has not been edited by the user, its length is 0
                         case "mc":
                         case "a.":
