@@ -133,7 +133,7 @@ This uses the **hide using class** technique in [Javascript Control]({{ site.bas
 **Parameters:**
 - @param {String} fieldName: The internal name of the field to be affected.
 - @param {Bool} requiredOrNot: If set true, the field/control will be shown/required. Vice versa for false.
-- @param {String} dataTableOrField: datatable specifies it belongs to the control group, field suggests it belongs to the field group. For more information about this, see the **Form Manager** section of [Javascript Control]({{ site.baseURL }}{% link docs/techSpecs/JavaScript/javascript.md %})
+- @param {String} dataTableOrField: datatable specifies it belongs to the control group, field suggests it belongs to the field group. For more information about this, see the **Form Manager** section of [Javascript Control]({{ site.baseurl }}{% link docs/techSpecs/JavaScript/javascript.md %})
 
 **Returns:**
 - @returns {void}: This function does not return any value.
