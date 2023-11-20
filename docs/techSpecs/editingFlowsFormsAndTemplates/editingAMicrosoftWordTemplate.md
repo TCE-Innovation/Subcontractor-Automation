@@ -35,21 +35,19 @@ If your starting file is an .xlsx, there unfortunately isn't a way to directly c
 **Method 2**
 1. Open Adobe Acrobat Pro.
 
-![Open Adobe Acrobat Pro]({{ site.baseurl }}/assets/images/adobeAcrobat/excelToPDFMethod2Step1.png)
+    ![Open Adobe Acrobat Pro]({{ site.baseurl }}/assets/images/adobeAcrobat/excelToPDFMethod2Step1.png)
 
 2. Select the tool "Create PDF" from the Tools Menu. You can find this on the right side. If it does not appear, you can add this tol by clicking "Add" under "Create PDF" in the Tools Menu. 
 
-![Create PDF tool]({{ site.baseurl }}/assets/images/adobeAcrobat/excelToPDFMethod2Step2.png)
+    ![Create PDF tool]({{ site.baseurl }}/assets/images/adobeAcrobat/excelToPDFMethod2Step2.png)
 
 3. Select the file to be converted from your computer. You can do either a single or or multiple files. 
 
-![Select file to convert]({{ site.baseurl }}/assets/images/adobeAcrobat/excelToPDFMethod2Step3.png)
+    ![Select file to convert]({{ site.baseurl }}/assets/images/adobeAcrobat/excelToPDFMethod2Step3.png)
 
-4. If you selected the wrong file, click "Change File" and otherwise click "Create".
+4. If you selected the wrong file, click "Change File" and otherwise click "Create". If your starting file is a PDF, open the file in Adobe Acrobat Pro and convert the PDF to Word.
 
-If your starting file is a PDF, open the file in Adobe Acrobat Pro and convert the PDF to Word.
-
-![Create PDF file from Excel]({{ site.baseurl }}/assets/images/adobeAcrobat/excelToPDFMethod2Step4.png)
+    ![Create PDF file from Excel]({{ site.baseurl }}/assets/images/adobeAcrobat/excelToPDFMethod2Step4.png)
 
 5. Select the directory and file name for your PDF file by either clicking the "Save" button or the "Print" button.
 
