@@ -1,5 +1,5 @@
 ---
-title: Subcontractor Form
+title: The Subcontractor Form
 layout: home
 nav_order: 2
 parent: The Three Forms
@@ -26,7 +26,7 @@ Subcontractors will receive an invitation to fill out this form via email after 
 
 ![Subcontractor Form Wizard]({{ site.baseurl }}/assets/images/subcontractorForm/wizard.png)
 
-Submitting the form will trigger the [Process Subcontractor Form and Send PDFs Power Automate flow]({{ site.baseurl }}/docs/techSpecs/Power%20Automate%20Flows/processSubcontractorFormAndSendPDFs.md) that will generate the PDFs to be reviewed and submitted to the MTA.
+Submitting the form will trigger the [Process Subcontractor Form and Send PDFs Power Automate Flow]({{ site.baseurl }}/docs/techSpecs/Power%20Automate%20Flows/processSubcontractorFormAndSendPDFs) that will generate the PDFs to be reviewed and submitted to the MTA.
 
 [Back to top](#top)
 
