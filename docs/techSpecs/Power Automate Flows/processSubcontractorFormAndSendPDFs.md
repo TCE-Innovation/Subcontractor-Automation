@@ -56,7 +56,7 @@ Several connectors and actions are used in the creation of this flow:
 | [Office 365 Outlook](https://learn.microsoft.com/en-us/connectors/office365/) | Send an email (V2) |
 
 >*Premium connectors require a Premium Power Automate license which costs $15/user/month as of Aug. 2023
->**Every occurrence of Merge PDFs counts as one Document Transaction. There are two Document Transactions occur each time this flow is run - once for each packet that gets merged since the Merge PDFs action is used. See [Pricing and Limitation Considerations](/doc/pricingAndLimitationConsiderations.md) for more information.
+>**Every occurrence of Merge PDFs counts as one Document Transaction. There are two Document Transactions occur each time this flow is run - once for each packet that gets merged since the Merge PDFs action is used. See [Pricing and Limitation Considerations]({{ site.baseurl }}/docs/techSpecs/pricingAndLimitationConsiderations.md) for more information.
 
 [Back to Top](#top)
 
