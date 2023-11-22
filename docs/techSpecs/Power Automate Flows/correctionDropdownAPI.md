@@ -17,7 +17,7 @@ grand_parent: Technical Specifications
 
 ## Purpose
 
-This flow is an automated process that runs after an HTTP POST request is recieved. This flow is primarily called when the subcontractor opens the link to the [correction form]. Depending on what is included in the POST request, this API will do something different. If `getContract: true` is recieved, then the API will respond with the folder names in the submission folder, regardless of anything else.
+This flow is an automated process that runs after an HTTP POST request is recieved. This flow is primarily called when the document controller opens the link to the [correction form]. Depending on what is included in the POST request, this API will do something different. If `getContract: true` is recieved, then the API will respond with the folder names in the submission folder, regardless of anything else.
 
 If `getContract: false` is recieved, then `getSubcontractors` is searched. If `getSubcontractors` is not null, then it contains a contract number. The flow will retrieve all JSON files inside that contract folder and return that directly. 
 
