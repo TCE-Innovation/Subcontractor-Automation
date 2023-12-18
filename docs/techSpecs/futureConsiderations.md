@@ -9,8 +9,8 @@ permalink: /docs/future
 
 ## Known Issues
 * Subcontractor can submit multiple times with the same link.
-* Need to update the final file path. Right now, all the submissions are existing in the Summer Intern 2023 project.
-* Currently, Rachel's account is being used for the connection to Adobe PDF Services API. 
+* Files now are located in the [TCE Admin/Subcontractor Executed Forms folder](https://judlauent.sharepoint.com/:f:/s/TCEAdmin/EikmQjjLqVBJtShPEEi-JEUBoo0IqSsCM4JR9QkHdM9jQg?e=FpfP11). ~~Need to update the final file path. Right now, all the submissions are existing in the Summer Intern 2023 project.~~ [Updated Mon. 12/18/23]
+* Currently, ~~Rachel's~~ Jacob's account is being used for the connection to Adobe PDF Services API. [Updated Mon. 12/18/23]
 * Currently, the Adobe Acrobat Pro account is under Annalisa.
 * Consider standardizing error messages for formatting things like zip-codes and phone numbers. This can help subcontractors better find where the errors are. 
 * Consider changing 10b on Schedule F to a data table and match a variable that parses the arguments of the data table

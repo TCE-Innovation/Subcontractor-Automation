@@ -754,7 +754,7 @@ There are several other arguments as well that you can fill in as needed.
 
 [Back to Top](#top)
 
-### Changing File Locations
+### Changing File Locations, Names, or Merge Order
 
 In case files need to be redirected to another location, file paths and file names have been broken down into variables defined early in the flow. These variables are:
 
@@ -762,6 +762,7 @@ In case files need to be redirected to another location, file paths and file nam
 * `Individual PDFs File path`: path for the subfolder to place generated individual PDF Documents.
 * `File prefix for converting`: path to the "Individual Word Documents" subfolder.Includes `Word Docs File path`
 * `File prefix for creating files`: path to the "Individual PDF Documents" subfolder. Used in conjunction with either the `Word Docs File path` or `Individual PDFs File path`
-* `Merged PDF Packets file path`: path to place the merged PDF packets
+* `Merged PDF Packets file path`: path to place the merged PDF packets.
+* `Form Order and Filenames`: JSON object defining the list of names for each form. The number in the beginning is the order that the form is to be merged in, followed by the name of the form, and appended by the file name contract number and subcontractor name. Change the key-value pairs here to update the name or order of the forms when they are generated and merged.
 
 [Back to Top](#top)
