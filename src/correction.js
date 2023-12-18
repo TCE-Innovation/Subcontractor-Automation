@@ -89,7 +89,7 @@ let dataHandling = {
 
                 //New Method
                 //If {IsFolder} is true, then we can notate the value {Name} as the name of the folder
-                if ("{IsFolder}" == true) {
+                if (el['{IsFolder}'] == true) {
                     contractNumbers.push(el['{Name}']);
                 }
             });
