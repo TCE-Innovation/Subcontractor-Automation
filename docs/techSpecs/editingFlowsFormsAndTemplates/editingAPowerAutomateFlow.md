@@ -372,9 +372,9 @@ For help on specific Power Automate Actions, see [Additional Notes on Actions](#
 If you are creating a new form, create a parallel branch to the other branches that populate a Word Document from a template and generate a PDF. 
 
 1. Add a "Populate a Word template" action.
-    * Location: website where template file is located
-    * Document Library: document library where template file is located
-    * File: the relative path of the template. 
+    * Location: website where template file is located (SharePoint Site - TCE Admin)
+    * Document Library: document library where template file is located (Documents)
+    * File: the relative path of the template. (/Subcontractor Executed Forms/Templates/\<template name\>)
     {: .note}
     > It's recommended that you use the folder icon to navigate to the template yourself first, then cut the text from the box and re-paste it. This will ensure that you have the correct directory and avoid errors from Power Automate being unable to find the file if you update the template and reupload with the same name.
 
@@ -387,7 +387,7 @@ If you are creating a new form, create a parallel branch to the other branches t
     * Site Address: base URL to place the populated Word Document in.
     * Folder Path: the relative path of the Word Document to be created. Using the conventions, the folder path for an individual Word Document is:
     `.../<contractNumber>/<subcontractorName>/<timestamp>/Individual Word Documents`
-    In the image, the above expression has already been formatted into a variable called `Word Docs File path` located in [Block 1]({{ site.baseurl }}/docs/threeForms/subcontractorForm.md) which you can access through "Dynamic Value"
+    In the image, the above expression has already been formatted as a variable `File prefix for creating files` appended by another variable called `Word Docs File path` located in [Block 1]({{ site.baseurl }}/docs/threeForms/subcontractorForm.md) which you can access through "Dynamic Value"
 
     {: .note}
     > It's recommended that you use the folder icon to navigate to the template yourself first, then cut the text from the box and re-paste it. This will ensure that you have the correct base directory. 
@@ -405,7 +405,7 @@ If you are creating a new form, create a parallel branch to the other branches t
     * File: the relative file path of the Word Document to convert
 
     {: .note}
-    > It's recommended that you use the folder icon to navigate to the template yourself first, then cut the text from the box and re-paste it. This will ensure that you have the correct directory. There are also path properties from the "Create file" action that can be used here to access the file, but because at the time of writing this, we have not received a final official folder/directory to place these files and the path attained using the folder icon is different from using a similar method in the "Create file" action, we simply appended on the `Word Docs File path` variable and a `/` followed by the file name from the "Create file" action in "Dynamic Value." In the future, this can be adjusted for easier maintenance.
+    > The File is the variable `File prefix for converting` appended by `Name` from the previous "Create file" action.
 
     ![Convert Word Document to PDF]({{ site.baseurl }}/assets/images/powerAutomate/convertScheduleAWordToPDF.png)
 
@@ -413,7 +413,7 @@ If you are creating a new form, create a parallel branch to the other branches t
     * Site Address: same as Step 2
     * Folder Path: same as Step 2 except instead of `Individual Word Documents` it is `Individual PDF Documents`:
     `.../<contractNumber>/<subcontractorName>/<timestamp>/Individual PDF Documents`
-    In the image, the above expression has already been formatted into a variable called `Individual PDFs File path` located in [Block 1]({{ site.baseurl }}/docs/threeForms/subcontractorForm.md) which you can access through "Dynamic Value"
+    In the image, the above expression has already been formatted as a variable `File prefix for creating files` appended by another variable called `Individual PDFs File path` located in [Block 1]({{ site.baseurl }}/docs/threeForms/subcontractorForm.md) which you can access through "Dynamic Value"
 
     {: .note}
     > It's recommended that you use the folder icon to navigate to the template yourself first, then cut the text from the box and re-paste it. This will ensure that you have the correct base directory. 
@@ -593,7 +593,7 @@ All attachments from Plumsail Forms are PDFs in this workflow. This is ensured b
     * Site Address: base URL to place the attachment in.
     * Folder Path: the relative path of the attachment to be created. Using the conventions, the folder path for an individual Word Document is:
     `.../<contractNumber>/<subcontractorName>/<timestamp>/Individual PDF Documents`
-    In the image, the above expression has already been formatted into a variable called `Individual PDFs File path` located in [Block 1]({{ site.baseurl }}/docs/threeForms/subcontractorForm.md) which you can access through "Dynamic Value"
+    In the image, the above expression has already been formatted as a variable `File prefix for creating files` appended by another variable called `Individual PDFs File path` located in [Block 1]({{ site.baseurl }}/docs/threeForms/subcontractorForm.md) which you can access through "Dynamic Value"
     * File Name: the file name of the Word Document. 
     The file name prefix has already been defined in a variable called `Form Order and Filenames` - a JSON object which is parsed with a "Parse JSON" action called `Parse subcontractor form filenames JSON` in [Block 1]({{ site.baseurl }}/docs/threeForms/subcontractorForm.md). Each property's key is the abbreviated version of the corresponding form and the value is the file name prefix. If you are adding a new form, you will need to add the file name prefix to `Form Order and Filenames` and update the schema in the `Parse subcontractor form filenames JSON` action. Then, in this field use the "Dynamic Value" and find the appropriate output from the `Parse subcontractor form filenames JSON` action and append it with `pdf`.
     * File Content: in "Dynamic Value," select the "Result file" output from the "Download attachment" action from before.
@@ -624,7 +624,7 @@ All attachments from Plumsail Forms are PDFs in this workflow. This is ensured b
     * Site Address: base URL to find the files to be merged
     * File Path: the relative path of the attachment to be created. Using the conventions, the folder path for an individual Word Document is:
     `.../<contractNumber>/<subcontractorName>/<timestamp>/Individual PDF Documents`
-    In the image, the above expression has already been formatted into a variable called `Individual PDFs File path` located in [Block 1]({{ site.baseurl }}/docs/threeForms/subcontractorForm.md) which you can access through "Dynamic Value".  This should then also be appended with `/`, the "Current item" output from the "Apply to each action" that you created before which is the file name prefix, and finally `pdf`.
+    In the image, the above expression has already been formatted as a variable `File prefix for creating files` appended by another variable called `Individual PDFs File path`  located in [Block 1]({{ site.baseurl }}/docs/threeForms/subcontractorForm.md) which you can access through "Dynamic Value".  This should then also be appended with `/`, the "Current item" output from the "Apply to each action" that you created before which is the file name prefix, and finally `pdf`.
 
     ![Get file content using path]({{ site.baseurl }}/assets/images/powerAutomate/mergePDFsStep3.png)
 
@@ -751,5 +751,17 @@ There are several other arguments as well that you can fill in as needed.
 13. You're done! Below is an overview of what the complete sequence looks like:
 
     ![Overview of Emailing Variable Number of Attachments from SharePoint to a Variable Number of Recipients]({{ site.baseurl }}/assets/images/powerAutomate/emailingVariableNumberOfAttachmentsFromSharePointStep13.png)
+
+[Back to Top](#top)
+
+### Changing File Locations
+
+In case files need to be redirected to another location, file paths and file names have been broken down into variables defined early in the flow. These variables are:
+
+* `Word Docs File path`: path for subfolder to place generated individual Word Documents. 
+* `Individual PDFs File path`: path for the subfolder to place generated individual PDF Documents.
+* `File prefix for converting`: path to the "Individual Word Documents" subfolder.Includes `Word Docs File path`
+* `File prefix for creating files`: path to the "Individual PDF Documents" subfolder. Used in conjunction with either the `Word Docs File path` or `Individual PDFs File path`
+* `Merged PDF Packets file path`: path to place the merged PDF packets
 
 [Back to Top](#top)
