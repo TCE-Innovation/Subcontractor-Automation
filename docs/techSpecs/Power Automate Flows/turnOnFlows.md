@@ -1,5 +1,5 @@
 ---
-title: "Turn on all flows"
+title: "Turn On All Flows"
 layout: page
 nav_order: 7
 parent: The Power Automate Flows
