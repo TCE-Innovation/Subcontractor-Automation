@@ -995,7 +995,7 @@ let dataTableFunctions = {
                 fd.control(el).addColumnValidator(column, {
                     error: 'Email formatting is not correct. example@example.com',
                     validate: (value) => {
-                        return /^[^@\s]+@[^@\s]+\.[^@\s]+$|^n\/a$/i.test(value);
+                        return /^[^@\s]+@[^@\s]+\.[^@\s]+$|^n\/a$|^na$/i.test(value);
                     } 
                 })
             })
