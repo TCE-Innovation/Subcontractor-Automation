@@ -30,7 +30,7 @@ As of Aug. 2023, a premium [Power Automate license](https://powerautomate.micros
 
 Only one account with the Power Automate Premium is required. Currently, the TCIG@tcelect.net email has Power Automate Premium and is being used to maintain the Power Automate Flows used in this system.
 
-Flows must be turned on to work, but you will get a warning after 90 days of inactivity that the flow will be shut off automatically if it is not run in the 30 days after the notification. As of 12/18/23, a [flow to automatically turn on all required flows]({{ site.baseurl }}/docs/techSpecs/Power%20Automate%20Flows/turnOnFlows.md) has been created. To turn on/off a flow manually:
+Flows must be turned on to work, but you will get a warning after 90 days of inactivity that the flow will be shut off automatically if it is not run in the 30 days after the notification. As of 12/18/23, a [flow to automatically turn on all required flows]({{ site.baseurl }}/docs/techSpecs/Power%20Automate%20Flows/turnOnFlows) has been created. To turn on/off a flow manually:
 
 1. Navigate to "My Flows" and click on the flow to turn on.
 
