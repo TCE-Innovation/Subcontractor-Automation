@@ -19,21 +19,21 @@ nav_order: 3
 
 ## getContracts()
 
-**Description:** Utilizes the *interactWithAPI()* method to pull all available contract numbers (That is, all the folder names in the *Submission* folder). The API will return an array of objects: we need to specifcally extract the title. Used to autopopulate the dropdown `dd.GI.contractNo`
+**Description:** Utilizes the *interactWithAPI()* method to pull all available contract numbers (That is, all the folder names in the *Submission* folder). The API will return an array of objects: we need to specifically extract the title. Used to auto-populate the dropdown `dd.GI.contractNo`
 
 **Parameters:** null
 
 **Returns:** 
-- @returns {Array}: When the promise is resolved, will loop and extract the titles of all the objects returned. WIll return an array of folder names.
+- @returns {Array}: When the promise is resolved, will loop and extract the titles of all the objects returned. Will return an array of folder names.
 
 ## getSubcontractors()
 
-**Description:** Utilizes the *interactWithAPI()* method to pull all available subcontractors, given a selected contract number. (That is, all the file names in the [ContractNumber] folder). The API will return an array of objects: we need to specifcally extract the title. Used to autopopulate the dropdown `dd.GI.subcontractorName`
+**Description:** Utilizes the *interactWithAPI()* method to pull all available subcontractors, given a selected contract number. (That is, all the file names in the [ContractNumber] folder). The API will return an array of objects: we need to specifically extract the title. Used to auto-populate the dropdown `dd.GI.subcontractorName`
 
 **Parameters:** null
 
 **Returns:** 
-- @returns {Array}: When the promise is resolved, will loop and extract the titles of all the objects returned. WIll return an array of file names.
+- @returns {Array}: When the promise is resolved, will loop and extract the titles of all the objects returned. Will return an array of file names.
 
 ## submitData()
 
@@ -45,7 +45,6 @@ nav_order: 3
 - @returns {void} This function does not return any value.
 
 ## interactWithAPI()
-
 
 **Description:** 
 
@@ -60,21 +59,20 @@ nav_order: 3
 
 **Description:** This async function prepares the datatable `Editable Items` with the drop down data necessary to complete this form. This data must be loaded for everything else to work, so it is built as a fetch/then method due to network latency.
 
-Everytime the datatable is *edited* (A user has begun to edit a cell), it will update the first and second columns. 
+Every time the datatable is *edited* (A user has begun to edit a cell), it will update the first and second columns. 
 
-Everytime the datatable has *changed* (A value has offically been selected by the user), this function will update the last column. 
+Every time the datatable has *changed* (A value has officially been selected by the user), this function will update the last column. 
 
-The two-step change/edit is used to ensure that the selection is valid. If the selection is invalid, the third row will not show up. Third row fill is checked using `dataTableFunctions.checkColumn3FIlled()`
+The two-step change/edit is used to ensure that the selection is valid. If the selection is invalid, the third row will not show up. Third row fill is checked using `dataTableFunctions.checkColumn3Filled()`
 
 **Parameters:** null
 
 **Returns:** 
 - @returns {void} This function does not return any value.
 
-
 # dataTableFunctions
 
-## checkColumn3FIlled
+## checkColumn3Filled
 
 **Description:** Loops through the data table [editableItems] and verifies that column 3 is filled. 
 
@@ -91,7 +89,6 @@ The two-step change/edit is used to ensure that the selection is valid. If the s
 - @param {Object} widget: Specifies the widget. See documentation linked above.
 - @Param {Any} value: Previous Value.
 - @param {Array} arrayName: The array containing the data to populate dropdown column.
-
 
 **Returns:** 
 - @returns {void} This function does not return any value.
@@ -115,3 +112,4 @@ The two-step change/edit is used to ensure that the selection is valid. If the s
 
 **Returns:** 
 - @returns {Array} Returns an array of all the column values.
+

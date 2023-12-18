@@ -15,7 +15,6 @@ nav_order: 1
 1. TOC
 {:toc}
 
-
 ## UML Diagram
 ![]({{ site.baseurl }}/assets/images/umlDiagrams/initializationjs.png)
 
@@ -29,12 +28,12 @@ When the [initialization form] is filled out, the above process occurs. There is
 
 ### autopopulateGenInfo()
 
-**Description:** A replica of the same from the Subcontractor javascript file, this one prefills any information that is knonw to be true and correct. It autofills from the *prefilled* parameter, and only has one item (Which can be added onto later).
+**Description:** A replica of the same from the Subcontractor JavaScript file, this one prefills any information that is known to be true and correct. It auto-fills from the *prefilled* parameter, and only has one item (Which can be added onto later).
 
 It currently contains:
 ```js
 preconfigured = {
-	"sc.GI.federallyFunded": "Yes"
+    "sc.GI.federallyFunded": "Yes"
 };
 ```
 
@@ -50,7 +49,7 @@ preconfigured = {
 **Description:** Calling this function will send the provided objects to the URL given and returns the response of the server.
 
 **Parameters:** 
-- @param {Object} data: The data to be sent to the API, given as a javscript option.
+- @param {Object} data: The data to be sent to the API, given as a JavaScript option.
 - @param {String} url: The string URL of the API that we are interfacing with.
 
 **Returns:** 
@@ -58,16 +57,16 @@ preconfigured = {
 
 ### getFormData()
 
-**Description:** Returns form data as a plumsail native object. The only code run here is fd.data().
+**Description:** Returns form data as a Plumsail native object. The only code run here is fd.data().
 
 **Parameters:** null
 
 **Returns:** 
-- @returns {Object} Returns the form data in a plumsail native object.
+- @returns {Object} Returns the form data in a Plumsail native object.
 
 ### init()
 
-**Description:** The public facing function. This simply calls interactWithAPI() to do work for them. Will send data to the api. 
+**Description:** The public facing function. This simply calls interactWithAPI() to do work for them. Will send data to the API. 
 
 **Parameters:** null
 
@@ -116,17 +115,17 @@ preconfigured = {
 - @param {Array} dtArray: An array of all data tables in the code.
 
 **Returns:** 
-- @returns {Bool}: True if the condition is met, false if the user needs to correct somthing. Generated from *isDTFilled()*
+- @returns {Bool}: True if the condition is met, false if the user needs to correct something. Generated from *isDTFilled()*
 
 #### completeTableValidator.isDTFilled()
 
 **Description:** Loops through each and every one of the cells in a data table and checks for an empty slot. If none of the slots are empty, then we have a complete data table. Return true/false.
 
 **Parameters:**
-- @param {String} dtName: Interal name of the data table to read and record the value.
+- @param {String} dtName: Internal name of the data table to read and record the value.
 
 **Returns:** 
-- @returns {Bool}: True if the condition is met, false if the user needs to correct somthing. Generated from *isDTFilled()*.
+- @returns {Bool}: True if the condition is met, false if the user needs to correct something. Generated from *isDTFilled()*.
 
 ### columnValidators()
 
@@ -136,3 +135,4 @@ preconfigured = {
 
 **Returns:** 
 - @returns {Bool}: Returns the result of a regex test.
+

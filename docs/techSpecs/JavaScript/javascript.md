@@ -29,7 +29,7 @@ While these are the official way to interact with the Plumsail form, I wrote enc
 
 ## Internal Editor
 
-For all three forms, the internal JavaScript editor has the exact same code. Once the page is rendered and JQuery (A necessary component to interacting with values on the submission forms) is loaded, then it calles the external file located in this github repo.
+For all three forms, the internal JavaScript editor has the exact same code. Once the page is rendered and jQuery (A necessary component to interacting with values on the submission forms) is loaded, then it calles the external file located in this GitHub repo.
 
 ```js
 fd.beforeRender(function(vue){
@@ -61,7 +61,6 @@ Below are some important properties and methods using the fd object.
 |`fd.fields()`|Returns all the fields in the form|`fd.rendered();`|This is where the main code is run out of|
 |`fd.controls()`|Returns all the controls in the form|`fd.beforeSave();`|This is how I handle data manipulation to send to the API|
 |||`fd.saved();`|Run after the form has been completely submitted|
-
 
 More information can be found in the [Plumsail Docs Form Manager]
 
@@ -145,7 +144,7 @@ fd.field("<internalName>").hidden = false;
 
 ## Field Change
 
-This is a special function enabled by JQuery. Using this, we can create an event listener for the field or control using the `$on()` method. `change` indicates when the user is done altering the item, while `edit` is when the user first edits an item. More triggers can be found on https://docs.telerik.com/kendo-ui/api/javascript/, as the plumsail form is based on the Kendo UI for jQuery.
+This is a special function enabled by jQuery. Using this, we can create an event listener for the field or control using the `$on()` method. `change` indicates when the user is done altering the item, while `edit` is when the user first edits an item. More triggers can be found on https://docs.telerik.com/kendo-ui/api/javascript/, as the Plumsail form is based on the Kendo UI for jQuery.
 
 ```js
 fd.field("<internalName>").$on('change', callbackFunction);
@@ -158,7 +157,7 @@ function callbackFunction() {
 
 ## Validators
 
-Validators can be added to check for input errors. Validators can be added to pretty much anything, and is checked when running `fd.isValid`. `fd.isValid` will return a boolean value and throw errors at the top of the page. The validity check is done everytime the user clicks next on the wizard, allowing us to verify per MTA-required form. 
+Validators can be added to check for input errors. Validators can be added to pretty much anything, and is checked when running `fd.isValid`. `fd.isValid` will return a Boolean value and throw errors at the top of the page. The validity check is done every time the user clicks next on the wizard, allowing us to verify per MTA-required form. 
 
 ```js
 //This adds a validator to the date field 'd.OCIP.FA.S2.workersCompExpiration'
@@ -184,7 +183,7 @@ fd.field('d.OCIP.FA.S2.workersCompExpiration').addValidator({
 
 ## Return Promises
 
-The internet is slow - when we request information, the data cannot be recieved right away. Take for example, the subcontractor form: when it requests autofill information, it must wait to recieve that information. Promises represent the eventual completion of an asynchronous operation. It frees up the CPU to complete other tasks while the data is still in transit.
+The internet is slow - when we request information, the data cannot be received right away. Take for example, the subcontractor form: when it requests autofill information, it must wait to receive that information. Promises represent the eventual completion of an asynchronous operation. It frees up the CPU to complete other tasks while the data is still in transit.
 
 Here is an example of a promise use case in the `subcontractor.js` file.
 
@@ -235,13 +234,13 @@ try {
                 if (!editable.includes(el.internalName)) {
                     switch(internalName.substr(0, 2)) {
                         ...
-                        //The code here autofills the form with information.
+                        //The code here auto fills the form with information.
                         //Maybe that information might not match anything and the computer throws an error saying its location can't be found.
                         //Maybe somehow a user breaks the insertion using a character that was never accounted for.
                         ...
                 }
             } catch (err) {
-                //Whatever the error is, we can simply print it to the console and move on to finishe verything else.
+                //Whatever the error is, we can simply print it to the console and move on to finished verything else.
                 console.log(err);
             }
 ```
@@ -269,4 +268,6 @@ Callback functions are passed as an argument to another function. In the case he
 [Plumsail Forms Control Docs]: https://plumsail.com/docs/forms-web/designer/controls/index.html
 [Mozilla Docs for Promises]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
 [Mozilla Docs for Async/Await]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function
-[Forms for Sharepoint]: https://plumsail.com/docs/forms-sp/index.html
+[Forms for SharePoint]: https://plumsail.com/docs/forms-sp/index.html
+
+
