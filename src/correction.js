@@ -81,9 +81,16 @@ let dataHandling = {
         }
         return this.interactWithAPI(dataToSend, this.getURL).then(data => {
             data.forEach(el => {
+                //Old Method
                 //If the title is defined, note it down to return as an array.
-                if (el.Title !== undefined) {
-                    contractNumbers.push(el.Title);
+                // if (el.Title !== undefined) {
+                //     contractNumbers.push(el.Title);
+                // }
+
+                //New Method
+                //If {IsFolder} is true, then we can notate the value {Name} as the name of the folder
+                if (el['{IsFolder}'] == true) {
+                    contractNumbers.push(el['{Name}']);
                 }
             });
             return contractNumbers;

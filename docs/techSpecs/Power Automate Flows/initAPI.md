@@ -18,7 +18,7 @@ grand_parent: Technical Specifications
 
 ## Purpose
 
-This flow is an automated process that runs after an HTTP POST request is recieved. When the [subcontractor inititalization form] is submitted, it contacts this API to submit the data. It process the data recieved and creates the folder structure inside the `submissions` folder. This flow also sends an email to everyone in the email list **and will send a reminder email to everyone in 2 days. (THIS NEEDS TO BE IMPLEMENTED)**
+This flow is an automated process that runs after an HTTP POST request is recieved. When the [subcontractor inititalization form] is submitted, it contacts this API to submit the data. It process the data recieved and creates the folder structure inside the `submissions` folder. This flow also sends an email to everyone in the email list 
 
 {: .note }
 This flow mail fail due to a undelivered HTTP response. This doesn't matter - as long as the emails and such are sent.
